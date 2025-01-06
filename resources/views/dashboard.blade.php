@@ -5,7 +5,7 @@
             <div class="d-flex justify-content-center align-items-center flex-column" style="height: 250px;">
                 <!-- Centered Header Text -->
                 <h1 class="display-2 fw-bolder text-gradient text-center mb-3">
-                    Hello, halaman landing edit 1
+                    Selamat datang di halaman landing
                 </h1>
             </div>
         </div>
