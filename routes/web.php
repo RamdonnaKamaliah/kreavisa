@@ -3,6 +3,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\KaryawanAbsenController;
 use App\Http\Controllers\LandingController;
 use App\Http\Middleware\Gudang;
 use App\Http\Middleware\karyawan;
@@ -32,8 +33,9 @@ Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
-Route::middleware(['auth', Karyawan::class])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
+    Route::get('/karyawan/dashboard/absen', [KaryawanAbsenController::class, 'index'])->name('karyawan.absen');
 });
 
 

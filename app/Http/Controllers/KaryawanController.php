@@ -8,7 +8,7 @@ class KaryawanController extends Controller
 {
     /**
      * Display the karyawan dashboard.
-     *
+     
      * @return \Illuminate\View\View
      */
     public function index()
