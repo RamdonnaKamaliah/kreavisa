@@ -10,6 +10,8 @@
 <body>
     <h1>Halaman Absen</h1>
     <h2>hahaha</h2>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis hic consequuntur quis quos rem rerum cupiditate
+        assumenda, laudantium nihil a.</p>
 </body>
 
 </html>
