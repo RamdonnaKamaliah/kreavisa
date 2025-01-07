@@ -12,6 +12,11 @@
     <h2>hahaha</h2>
     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis hic consequuntur quis quos rem rerum cupiditate
         assumenda, laudantium nihil a.</p>
+
+        <section>
+            <h2>hai</h2>
+            <p>ini uji coba</p>
+        </section>
 </body>
 
 </html>
