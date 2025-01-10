@@ -1,58 +1,54 @@
-<div>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top py-3">
-       <div class="container">
-            <a class="navbar-brand" href="#header"><span class="fw-bolder text-primary">Portfolio</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">
-                            Logout
-                        </button>
-                    </form>
-                    <li class="nav-item"><a class="nav-link" href="#landing1">Landing</a></li>  
-                    @if (Route::has('login'))
-    @auth
-        @php
-            $redirectTo = '#'; // Default route if no role matches
-            if (auth()->user()->hasRole('admin')) {
-                $redirectTo = url('/admin/dashboard');
-            } elseif (auth()->user()->hasRole('karyawan')) {
-                $redirectTo = url('/');
-            } elseif (auth()->user()->hasRole('gudang')) {
-                $redirectTo = url('/gudang/dashboard');
-            }
-        @endphp
-        <a 
-            href="{{ $redirectTo }}" 
-            class="nav-item nav-link"
-        >
-            Dashboard
-        </a>
-    @else
-        <a 
-            href="{{ url('/login') }}" 
-            class="nav-item nav-link"
-        >
-            Log in
-        </a>
-
-        @if (Route::has('register'))
-            <a 
-                href="{{ url('/register') }}" 
-                class="nav-item nav-link"
-            >
-                Register
+<header class="fixed top-0 right-0 left-0 md:py-1 transition-all duration-300 z-50">
+    <nav class="w-full mx-0 bg-gradient-to-r from-[#FD7170] to-[#FDC5B5] p-5 fixed top-0 z-50 ">
+        <div class="flex items-center justify-between max-w-7xl mx-auto">
+            <!-- Logo -->
+            <a href="/" class="text-white text-2xl flex items-center gap-3">
+                Kreavisa
             </a>
-        @endif
-    @endauth
-@endif
-                                                                       
-                </ul>
+
+            <!-- Navigation Links + Button -->
+            <div class="hidden md:flex md:items-center md:space-x-8">
+                <a href="#home" class="text-white font-medium hover:text-gray-200 transition-all duration-200">
+                    Home
+                </a>
+                <button
+                    class="bg-gradient-to-r from-pink-500 to-red-400 text-white px-6 py-2 rounded-md shadow-md hover:from-red-400 hover:to-pink-500 hover:shadow-lg transition-all duration-300">
+                    Login
+                </button>
             </div>
-       </div>
-   </nav>
-</div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-white text-2xl">
+                <i class="bx bx-menu"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-gradient-to-r from-[#FDC5B5] to-[#FD7170] mt-4 rounded-lg p-4 space-y-4">
+            <a href="#home"
+                class="block text-white font-medium hover:text-gray-200 transition-all duration-200">Home</a>
+            <button
+                class="bg-gradient-to-r from-pink-500 to-red-400 text-white w-full py-2 rounded-md shadow-md hover:from-red-400 hover:to-pink-500 hover:shadow-lg transition-all duration-300">
+                Login
+            </button>
+        </div>
+    </nav>
+
+
+    <!-- only for large device -->
+    {{-- <div class="hidden md:flex space-x-10">
+                <a href="#home" class="text-primary hover:text-gray-300">Home</a>
+                <a href="#projects" class="text-white hover:text-gray-300">Projects</a>
+                <a href="#resume" class="text-white hover:text-gray-300">Resume</a>
+            </div> --}}
+    <!-- menu btn, only disply on mobile -->
+    <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-white text-2xl">
+            <i class="bx bx-menu"></i>
+        </button>
+    </div>
+    </div>
+    </nav>
+
+</header>
