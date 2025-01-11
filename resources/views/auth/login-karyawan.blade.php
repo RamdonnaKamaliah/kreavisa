@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="text-center mb-4">
-        <h1 class="h3 text-gray-900"><i class="fa-solid fa-r"></i> Login</h1>
+        <h1 class="h3 text-gray-900"><i class="fa-solid fa-user"></i> Login Karyawan/Gudang</h1>
     </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -32,22 +32,5 @@
         <button type="submit" class="btn btn-primary btn-user btn-block mb-4">
             {{ __('Log in') }}
         </button>
-
-        <hr>
-
-        <!-- Additional Login Options -->
-        <div class="d-flex justify-content-center mt-4">
-            <a href="mailto:rifdah.a122@gmail.com" class="btn btn-outline-primary btn-circle mx-2">
-                <i class="fas fa-envelope"></i>
-            </a>
-            
-        </div>
-
-        <!-- Forgot Password -->
-        <div class="text-center mt-3">
-            @if (Route::has('password.request'))
-                <a class="small" href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a>
-            @endif
-        </div>
     </form>
 </x-guest-layout>

@@ -23,22 +23,32 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     
-    public function store(LoginRequest $request): RedirectResponse
+     public function store(LoginRequest $request): RedirectResponse
+     {
+         $request->authenticate();
+         $request->session()->regenerate();
+     
+         if ($request->user()->usertype === 'admin') {
+             return redirect('/admin/dashboard');
+         }
+     
+         if ($request->user()->usertype === 'gudang') {
+             return redirect('/gudang/dashboard');
+         }
+     
+         if ($request->user()->usertype === 'karyawan') {
+             return redirect('/karyawan/dashboard');
+         }
+     
+         // Default redirect jika usertype tidak cocok
+         return redirect('/');
+     }
+     
+     
+
+    public function createKaryawanGudang(): View
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        if ($request->user()->usertype == 'admin') {
-            return redirect('/admin/dashboard');
-        } elseif ($request->user()->usertype == 'karyawan') {
-            return redirect('/karyawan/dashboard');
-        } elseif ($request->user()->usertype == 'gudang') {
-            return redirect('/gudang/dashboard');
-        }
-        
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        return view('auth.login-karyawan');
     }
 
     /**

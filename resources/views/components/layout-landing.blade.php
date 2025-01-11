@@ -1,110 +1,78 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Landing</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Custom Google font-->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{{ asset('asset-landing-page/css/styles.css') }}" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    </head>
-    <style>
-         .text-gradient {
-        background: linear-gradient(90deg, #6a11cb, #2575fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
 
-    /* Optional: Additional spacing adjustments */
-    h1 {
-        margin-bottom: 1rem; /* Adjust the space between <h1> and buttons */
-    }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kreavisa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    @vite('resources/css/app.css')
 
-    .btn {
-        margin-top: 0; /* Ensure no extra margin is added */
-    }
-    .navbar-nav .nav-link.active {
-        border-bottom: 2px solid #000000;
-        padding-bottom: 10px;
-    }
-    @media (max-width: 768px) {
-        .about-description {
-            font-size: 0.9rem; /* Ukuran teks lebih kecil untuk mobile */
-            line-height: 1.4; /* Menyesuaikan tinggi baris agar tetap nyaman dibaca */
-        }
-    }
-    body, html {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Cegah scroll horizontal */
-}
+</head>
+<main>
+    <x-navbar-landing></x-navbar-landing>
+    <!-- In your parent Blade view -->
+
+    {{ $slot }}
+</main>
+<!-- Footer-->
+<footer class="max-w-7xl mx-auto px-6 py-12  text-black">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Kolom Logo atau Info Perusahaan -->
+        <div>
+            <h4 class="text-2xl font-bold text-gray-800">Kreavisa</h4>
+            <p class="text-sm mt-2 text-gray-600">Your Creative Partner</p>
+            <p class="mt-4 text-gray-500 text-sm">&copy; 2025 Kreavisa. All rights reserved.</p>
+        </div>
+
+        <!-- Kolom Resources -->
+        <div>
+            <h5 class="text-lg font-semibold text-gray-800 mb-4">Resources</h5>
+            <ul class="space-y-2">
+                <li><a href="#" class="text-gray-600 hover:text-black transition">Privacy Policy</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-black transition">Terms and Condition</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-black transition">Blog</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-black transition">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Kolom Company -->
+        <div>
+            <h5 class="text-lg font-semibold text-gray-800 mb-4">Company</h5>
+            <ul class="space-y-2">
+                <li><a href="#" class="text-gray-600 hover:text-black transition">About Us</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-black transition">Why Choose Us</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-black transition">Pricing</a></li>
+                <li><a href="#" class="text-gray-600 hover:text-black transition">Testimonial</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Media Sosial -->
+    <div class="mt-8 flex justify-center items-center gap-6">
+        <!-- Shopee -->
+        <a href="https://shopee.co.id/username_anda" target="_blank" rel="noopener noreferrer" class="group">
+            <img src="{{ asset('asset-landing-page/img/logo-shopee.png') }}" alt="Shopee"
+                class="w-8 h-8 hover:opacity-80 transition">
+        </a>
+        <!-- TikTok -->
+        <a href="https://www.tiktok.com/@username_anda" target="_blank" rel="noopener noreferrer" class="group">
+            <i class='bx bxl-tiktok text-3xl text-black group-hover:text-gray-800 transition'></i>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/username_anda" target="_blank" rel="noopener noreferrer" class="group">
+            <i class='bx bxl-instagram text-3xl text-pink-500 group-hover:text-pink-600 transition'></i>
+        </a>
+    </div>
+</footer>
 
 
-.navbar {
-    width: 100%; /* Pastikan navbar tidak melebihi viewport */
-    box-sizing: border-box; /* Pastikan padding termasuk dalam lebar elemen */
-}
 
-    </style>
-    <body class="d-flex flex-column h-100">
+<script src="{{ asset('asset-landing-page/js/app.js') }}"></script>
+</body>
 
-        <main class="flex-shrink-0">
-           <x-navbar-landing></x-navbar-landing>
-           <!-- In your parent Blade view -->
-
-            {{ $slot }}
-        </main>
-        <!-- Footer-->
-        <footer class="bg-white py-4 mt-auto">
-            <div class="container px-5">
-                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0">Copyright &copy; Rifdahtul Aisya</div></div>
-                    <div class="col-auto">
-                        <a class="small" href="#contact">Contact</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="{{ asset('asset-landing-page/js/scripts.js') }}"></script>
-        <script>
-                        // Fungsi untuk menambahkan class active pada link yang sesuai dengan id section
-            function setActiveLink() {
-            const sections = document.querySelectorAll('section');
-            const links = document.querySelectorAll('.nav-link');
-
-            sections.forEach((section) => {
-                const id = section.id;
-                const link = document.querySelector(`.nav-link[href="#${id}"]`);
-
-                if (link) {
-                if (window.scrollY >= section.offsetTop - 100 && window.scrollY < section.offsetTop + section.offsetHeight - 100) {
-                    links.forEach((link) => link.classList.remove('active'));
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-                }
-            });
-            }
-
-            // Jalankan fungsi setActiveLink saat scroll
-            window.addEventListener('scroll', setActiveLink);
-
-            // Jalankan fungsi setActiveLink saat halaman dimuat
-            document.addEventListener('DOMContentLoaded', setActiveLink);
-        </script>
-    </body>
 </html>

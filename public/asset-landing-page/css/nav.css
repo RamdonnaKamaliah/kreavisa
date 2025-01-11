@@ -1,0 +1,6 @@
+@font-face {
+    font-family: "Protest Riot";
+    src: url("/assets/fonts/ProtestRiot.woff2") format("woff2"),
+        url("/assets/fonts/ProtestRiot.woff") format("woff"),
+        url("/assets/fonts/ProtestRiot.ttf") format("truetype");
+}

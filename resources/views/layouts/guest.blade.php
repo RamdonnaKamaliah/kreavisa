@@ -42,9 +42,7 @@
                 <div class="card o-hidden border-0 shadow-lg">
                     <div class="card-body p-5">
                         <!-- Form Content -->
-                        <div class="text-center mb-4">
-                            <h1 class="h3 text-gray-900"><i class="fa-solid fa-r"></i> Login</h1>
-                        </div>
+                       
                         {{ $slot }}
                     </div>
                 </div>

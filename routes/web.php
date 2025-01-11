@@ -22,6 +22,7 @@ Route::get('/register', function () {
 // routes/web.php
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
+Route::get('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'createKaryawanGudang'])->name('login.karyawan-gudang');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
