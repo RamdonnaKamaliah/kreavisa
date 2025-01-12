@@ -1,4 +1,7 @@
 <x-guest-layout>
+    <div class="text-center mb-4">
+        <h1 class="h3 text-gray-900"><i class="fa-solid fa-user"></i> Login Admin</h1>
+    </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
