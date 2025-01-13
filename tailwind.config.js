@@ -45,6 +45,8 @@ export default {
                 },
             },
             fontFamily: {
+                montserrat: ["Montserrat", "sans-serif"],
+                Garamond: ["Garamond", "sans-serif"],
                 protest: ["Protest Riot", "sans-serif"],
                 sans: [
                     "Inter",

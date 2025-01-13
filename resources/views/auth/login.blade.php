@@ -20,7 +20,7 @@
         <!-- Password -->
         <div class="form-group">
             <input type="password"
-                class="text-sm  w-full px-4 py-2 border border-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[#FD7170] focus:border-transparent placeholder-gray-400"
+                class="text-sm  w-full px-4 py-2 border border-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[#302C42] focus:border-transparent placeholder-gray-400"
                 id="password" name="password" required autocomplete="current-password" placeholder="Enter Password...">
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -35,7 +35,7 @@
 
         <!-- Login Button -->
         <button type="submit"
-            class="mb-4 bg-[#FD7170] text-white font-semibold py-2 px-56 rounded-full shadow-md hover:shadow-lg hover:bg-opacity-90 transition duration-300 ease-in-out transform hover:scale-105">
+            class="mb-4 bg-[#302C42] text-white font-semibold py-2 px-56 rounded-full shadow-md hover:shadow-lg hover:bg-opacity-90 transition duration-300 ease-in-out transform hover:scale-105">
             {{ __('Log in') }}
         </button>
 

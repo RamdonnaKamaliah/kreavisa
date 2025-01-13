@@ -34,7 +34,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="d-flex align-items-center min-vh-100" style="background: linear-gradient(to right,  #FD7170, #FDC5B5);">
+<body class="d-flex align-items-center min-vh-100"
+    style="background: linear-gradient(135deg, #343045, #C0B7E8, #8176AF, #343045);">
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">

@@ -1,21 +1,29 @@
 <header class="fixed top-0 right-0 left-0 md:py-1 transition-all duration-300 z-50">
-    <nav class="w-full mx-0 bg-gradient-to-r from-[#FD7170] to-[#FDC5B5] p-5 fixed top-0 z-50 ">
+    <nav class="w-full mx-0 bg-[#302C42] p-5 fixed top-0 z-50 ">
         <div class="flex items-center justify-between max-w-7xl mx-auto">
             <!-- Logo -->
-            <a href="/" class="text-white text-2xl flex items-center gap-3">
-                Kreavisa
+            <a href="/" class="flex items-center gap-3 text-white">
+                <!-- Logo Image -->
+                <img src="{{ asset('asset-landing-page/img/logo kreavisa.png') }}" alt="Kreavisa Logo" class="h-10 w-auto">
+                <!-- Logo Text -->
+                <span class="text-3xl font-Garamond">Kreavisa</span>
             </a>
-
             <!-- Navigation Links + Button -->
+            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-primary">
+                    Logout
+                </button>
+            </form>
             <div class="hidden md:flex md:items-center md:space-x-8">
                 <a href="#home" class="text-white font-medium hover:text-gray-200 transition-all duration-200">
                     Home
                 </a>
                 <a href="/login-karyawan-gudang">
-                <button
-                    class="bg-gradient-to-r from-pink-500 to-red-400 text-white px-6 py-2 rounded-md shadow-md hover:from-red-400 hover:to-pink-500 hover:shadow-lg transition-all duration-300">
-                    Login
-                </button>
+                    <button
+                        class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-[#343045] px-6 py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] font-montserrat hover:shadow-lg transition-all duration-300">
+                        LOGIN
+                    </button>
                 </a>
             </div>
 
@@ -27,7 +35,7 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu"
-            class="hidden md:hidden bg-gradient-to-r from-[#FDC5B5] to-[#FD7170] mt-4 rounded-lg p-4 space-y-4">
+            class="hidden md:hidden bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-white mt-4 rounded-lg p-4 space-y-4">
             <a href="#home"
                 class="block text-white font-medium hover:text-gray-200 transition-all duration-200">Home</a>
             <button

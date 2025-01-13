@@ -1,8 +1,6 @@
 <x-layout-landing>
     <!-- Header -->
-    <section class="relative w-full mx-auto min-h-screen bg-cover bg-center overflow-hidden" id="home"
-        style="background-image: url('{{ asset('asset-landing-page/img/blurry-gradient-haikei (3).svg') }}');"
-        id="home">
+    <section class="relative w-full mx-auto min-h-screen bg-[#302C42]" id="home">
         <!-- Gelombang -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1323 199" fill="none"
             class="absolute bottom-0 left-0 right-0 w-full">
@@ -16,14 +14,9 @@
             class="flex flex-col-reverse md:flex-row justify-between items-center text-black gap-8 md:gap-16 relative z-10 px-4 md:px-20 pt-12 md:pt-10">
             <!-- Kolom Kiri -->
             <div class="md:w-1/2 z-10 text-center md:text-left">
-                <p class="text-xl font-medium mb-6">
-                    Welcome<span class="bg-black text-transparent bg-clip-text">
-                        To
-                    </span>
-                </p>
-                <h1 class="font-bold font-protest text-4xl tracking-wide mb-5 bg-black text-transparent bg-clip-text">
-                    Krevisa
-                    Management System</h1>
+                <h1
+                    class="font-bold font-montserrat text-4xl tracking-wide mb-5 bg-[#C0B7E8] text-transparent bg-clip-text">
+                    Navisa Basic Collection <span class="text-white">System management</span></h1>
                 <p class="text-2xl font-montserrat mb-5">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est a dolorem delectus commodi modi sit
                     reiciendis voluptates molestiae fugiat quos.
