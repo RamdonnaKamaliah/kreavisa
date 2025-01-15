@@ -58,4 +58,3 @@
     </div>
 </div>
 
-<x-footer-admin></x-footer-admin>

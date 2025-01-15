@@ -34,7 +34,7 @@
 
         <!-- Absen Karyawan -->
         <li class="nav-item">
-            <a class="nav-link" href="absen-karyawan.html">
+            <a class="nav-link" href="absen-karyawan">
                 <i class="fas fa-fw fa-calendar-check"></i>
                 <span>Absen Karyawan</span>
             </a>
@@ -50,7 +50,7 @@
 
         <!-- Jadwal Karyawan -->
         <li class="nav-item">
-            <a class="nav-link" href="jadwal-karyawan.html">
+            <a class="nav-link" href="{{ route('jadwalkaryawan.index') }}">
                 <i class="fas fa-fw fa-calendar-alt"></i>
                 <span>Jadwal Karyawan</span>
             </a>
@@ -81,30 +81,6 @@
         </div>
     </ul>
 
-    <style>
-        /* Sidebar background color */
-        .bg-custom-red {
-            background-color: #302C42;
-            color: white;
-        }
-
-        /* Sidebar text color */
-        .sidebar-light .nav-link {
-            color: white;
-        }
-
-        /* Hover effect for nav links */
-        .sidebar-light .nav-link:hover {
-            color: #FFEDED;
-            /* Sedikit lebih terang saat hover */
-        }
-
-        /* Sidebar brand */
-        .sidebar-light .sidebar-brand {
-            color: white;
-            font-weight: bold;
-        }
-    </style>
 
     <!-- End of Sidebar -->
 
@@ -348,11 +324,6 @@
                     </li>
                 </ul>
             </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            {{-- <div class="container-fluid">
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                </div> --}}
+        </div>
+    </div>
+</div>
