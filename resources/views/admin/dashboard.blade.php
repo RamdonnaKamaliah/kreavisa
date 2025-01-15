@@ -1,3 +1,5 @@
 <x-layout-admin>
-    TES
 </x-layout-admin>
+
+
+<x-footer-admin></x-footer-admin>

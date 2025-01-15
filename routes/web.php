@@ -5,6 +5,7 @@ use App\Http\Controllers\GudangController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KaryawanAbsenController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\AdmindataController;
 use App\Http\Middleware\Gudang;
 use App\Http\Middleware\karyawan;
 use App\Http\Middleware\admin;
@@ -45,5 +46,7 @@ Route::middleware(['auth', Gudang::class])->group(function () {
 });
 
 Route::get('/',[LandingController::class, 'index'])->name('dashboard');
+
+Route::resource('/admin/datakaryawan', AdmindataController::class);
 
 require __DIR__.'/auth.php';

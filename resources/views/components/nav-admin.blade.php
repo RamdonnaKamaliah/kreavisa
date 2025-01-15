@@ -18,7 +18,7 @@
 
         <!-- Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ route('admin.dashboard') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -26,7 +26,7 @@
 
         <!-- Data Karyawan -->
         <li class="nav-item">
-            <a class="nav-link" href="data-karyawan.html">
+            <a class="nav-link" href="{{ route('datakaryawan.index') }}">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Data Karyawan</span>
             </a>
@@ -114,7 +114,8 @@
         <!-- Main Content -->
         <div id="content">
             <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow"
+                style="background-color: #151924;">
                 <!-- Sidebar Toggle (Topbar) -->
                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                     @csrf
@@ -350,11 +351,8 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
+            {{-- <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i>
-                        Generate Report</a>
-                </div>
+                </div> --}}

@@ -48,6 +48,6 @@
 <script src="{{ asset('asset-landing-admin/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('asset-landing-admin/js/demo/chart-pie-demo.js') }}"></script>
 
-<x-footer-admin></x-footer-admin>
+
 
 </html>

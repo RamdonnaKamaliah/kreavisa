@@ -9,12 +9,12 @@
                 <span class="text-3xl font-Garamond">Kreavisa</span>
             </a>
             <!-- Navigation Links + Button -->
-            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+            {{-- <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
                 <button type="submit" class="btn btn-primary">
                     Logout
                 </button>
-            </form>
+            </form> --}}
             <div class="hidden md:flex md:items-center md:space-x-8">
                 <a href="#home" class="text-white font-medium hover:text-gray-200 transition-all duration-200">
                     Home

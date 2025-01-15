@@ -17,7 +17,7 @@
                 <h1
                     class="font-bold font-montserrat text-4xl tracking-wide mb-5 bg-[#C0B7E8] text-transparent bg-clip-text">
                     Navisa Basic Collection <span class="text-white">System management</span></h1>
-                <p class="text-2xl font-montserrat mb-5">
+                <p class="text-2xl font-montserrat mb-5 text-white">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est a dolorem delectus commodi modi sit
                     reiciendis voluptates molestiae fugiat quos.
                 </p>
