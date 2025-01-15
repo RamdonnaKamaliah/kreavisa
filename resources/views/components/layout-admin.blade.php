@@ -22,10 +22,49 @@
 
 <!-- Custom styles for this template-->
 <link href="{{ asset('asset-landing-admin/css/sb-admin-2.css') }}" rel="stylesheet">
+<style>
+    /* Sidebar background color */
+    .bg-custom-red {
+        background-color: #302C42;
+        color: white;
+    }
+
+    /* Sidebar text color */
+    .sidebar-light .nav-link {
+        color: white;
+    }
+
+    /* Hover effect for nav links */
+    .sidebar-light .nav-link:hover {
+        color: #FFEDED;
+        /* Sedikit lebih terang saat hover */
+    }
+
+    /* Sidebar brand */
+    .sidebar-light .sidebar-brand {
+        color: white;
+        font-weight: bold;
+    }
+</style>
 
 <body>
     <x-nav-admin></x-nav-admin>
-    {{ $slot }}
+    <div>
+        {{ $slot }}
+    </div>
+    <div>
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2021</span>
+                </div>
+            </div>
+        </footer>
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        
+    </div>
 
 </body>
 <!-- Bootstrap core JavaScript-->
