@@ -19,12 +19,40 @@
                 <a href="#home" class="text-white font-medium hover:text-gray-200 transition-all duration-200">
                     Home
                 </a>
+                @if (auth()->check())
+                @php
+                    // Tentukan URL berdasarkan usertype
+                    $redirectTo = '#'; // Default URL jika usertype tidak cocok
+                    switch (auth()->user()->usertype) {
+                        case 'admin':
+                            $redirectTo = url('/admin/dashboard');
+                            break;
+                        case 'karyawan':
+                            $redirectTo = url('/karyawan/dashboard');
+                            break;
+                        case 'gudang':
+                            $redirectTo = url('/gudang/dashboard');
+                            break;
+                    }
+                @endphp
+                <!-- Tombol Landing -->
+                <a href="{{ $redirectTo }}">
+                    <button
+                        class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-[#343045] px-6 py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] font-montserrat hover:shadow-lg transition-all duration-300">
+                        LANDING
+                    </button>
+                </a>
+            @else
+                <!-- Tombol Login -->
                 <a href="/login-karyawan-gudang">
                     <button
                         class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-[#343045] px-6 py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] font-montserrat hover:shadow-lg transition-all duration-300">
                         LOGIN
                     </button>
                 </a>
+            @endif
+            
+            
             </div>
 
             <!-- Mobile Menu Button -->

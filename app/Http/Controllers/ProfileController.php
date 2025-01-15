@@ -14,6 +14,22 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+ 
+     public function index(Request $request): View
+     {
+         $user = $request->user();
+     
+         // Periksa usertype dan sesuaikan data yang ditampilkan
+         $view = match ($user->usertype) {
+             'admin' => 'admin.profile-index',
+             'gudang' => 'gudang.profile-index',
+             'karyawan' => 'karyawan.profile-index',
+             default => abort(403, 'Unauthorized'),
+         };
+     
+         return view($view, compact('user'));
+     }
+     
     public function edit(Request $request): View
     {
         return view('profile.edit', [
