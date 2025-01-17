@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class Karyawan
+class karyawan
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class Karyawan
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->usertype !== 'karyawan') {
-            return redirect('/');
+      if (Auth::check() && Auth::user()->usertype !== 'karyawan') {
+            return redirect('/'); // Arahkan pengguna yang bukan gudang
         }
         return $next($request);
     }

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="sweetalert2.min.css">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Kreavisa Login</title>
 
     <!-- Custom fonts for this template-->
     <!-- Di dalam <head> -->

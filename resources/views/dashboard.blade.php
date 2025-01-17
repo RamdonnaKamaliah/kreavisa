@@ -24,56 +24,34 @@
             </div>
 
             <!-- Kolom Gambar -->
-
-
             <div class="md:w-1/2 z-10 text-center">
                 <img id="landingImage" src="{{ asset('asset-landing-page/img/gambar-landing3_.png') }}"
                     alt="Landing Image"
-                    class="w-full md:mr-20 max-w-full rounded-xl opacity-100 visibility-visible transition-opacity duration-1000" />
+                    class="w-full md:mr-20 max-w-full rounded-xl opacity-100 visibility-visible bounce" />
             </div>
 
-            <script>
-                const images = [
-                    '{{ asset('asset-landing-page/img/landing-page-4.png') }}',
-                    '{{ asset('asset-landing-page/img/landing-page-2.png') }}',
-                ];
+        </div>
 
-                let currentImageIndex = 0;
+        <!-- Animasi Mantul-mantul -->
+        <style>
+            /* Animasi mantul-mantul */
+            .bounce {
+                animation: bounce 4s infinite;
+            }
 
-                function changeImage() {
-                    const imgElement = document.getElementById('landingImage');
+            @keyframes bounce {
 
-                    // Menambahkan efek fade-out dengan mengubah opacity dan visibility
-                    imgElement.classList.add('opacity-0'); // Fade-out gambar lama
-                    imgElement.classList.add('visibility-hidden'); // Menyembunyikan gambar lama sepenuhnya
-
-                    setTimeout(() => {
-                        currentImageIndex = (currentImageIndex + 1) % images.length;
-                        imgElement.src = images[currentImageIndex]; // Mengubah gambar
-
-                        // Memberi waktu untuk gambar baru tampil
-                        imgElement.classList.remove('opacity-0');
-                        imgElement.classList.remove('visibility-hidden');
-                    }, 1000); // Delay untuk memberi waktu agar gambar lama fade-out sepenuhnya
-
+                0%,
+                100% {
+                    transform: translateY(0);
                 }
 
-                setInterval(changeImage, 3000); // Mengganti gambar setiap 2 detik (2000ms)
-            </script>
-
-            <style>
-                .transition-opacity {
-                    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+                50% {
+                    transform: translateY(-20px);
                 }
+            }
+        </style>
 
-                .opacity-0 {
-                    opacity: 0;
-                }
-
-                .visibility-hidden {
-                    visibility: hidden;
-                }
-            </style>
 
 
     </section>

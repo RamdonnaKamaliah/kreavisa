@@ -78,9 +78,6 @@
         </a>
     </div>
 </footer>
-
-
-
 <script src="{{ asset('asset-landing-page/js/app.js') }}"></script>
 </body>
 
