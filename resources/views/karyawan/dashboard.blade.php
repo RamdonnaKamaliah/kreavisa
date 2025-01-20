@@ -1,3 +1,5 @@
 <x-layout-karyawan>
-    <h1>Selamat Datang Di Halaman Dashboard</h1>
+    <section>
+        <h1>dashboard karyawan</h1>
+    </section>
 </x-layout-karyawan>
