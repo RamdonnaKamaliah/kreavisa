@@ -12,26 +12,19 @@
             <p><strong>Email:</strong> {{ $user->email }}</p>
             <p><strong>Usertype:</strong> {{ $user->usertype }}</p>
             <!-- Tambahkan data lain sesuai kebutuhan -->
-            
-            <div class="flex justify-between items-center mb-4">
-                <!-- Tombol ke Edit Profile -->
-                <a href="{{ route('profile.edit') }}" 
-                   class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
-                    Edit Profile
-                </a>
-            </div>
-            
+
             <div class="flex justify-between items-center mb-4">
                 <!-- Form Logout -->
                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                     @csrf
-                    <button type="submit" 
-                            class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">
+                    <button type="submit"
+                        class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">
                         Logout
                     </button>
                 </form>
+
+
             </div>
-            
         </div>
     </div>
 </x-app-layout>

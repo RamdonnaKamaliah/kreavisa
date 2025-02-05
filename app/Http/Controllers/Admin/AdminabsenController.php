@@ -20,7 +20,7 @@ class AdminabsenController extends Controller
      */
     public function create()
     {
-        return view ('admin.absenkaryawan.create');
+       
     }
 
     /**
@@ -36,7 +36,7 @@ class AdminabsenController extends Controller
      */
     public function show(string $id)
     {
-        //
+       
     }
 
     /**

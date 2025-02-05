@@ -1,0 +1,45 @@
+<x-layout-admin>
+    <div id="layoutSidenav_content">
+
+
+        <!-- Card Container -->
+        <main class="d-flex justify-content-center align-items-center" style="min-height: 100vh; padding-top: 2px;">
+            <!-- Card Container -->
+            <div class="card mx-auto shadow p-4"
+                style="max-width: 600px; background-color: #f8f9fa; border-radius: 12px;">
+                <div class="container">
+                    <h1 class="text-center my-4"
+                        style="font-family: 'Arial', sans-serif; color: #333; padding-top: 10px;">
+                        Create Data Karyawan
+                    </h1>
+
+                    <!-- Form -->
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="row g-3">
+                            <!-- Nama -->
+                            <div class="col-12">
+                                <label for="name" class="form-label fw-bold">Jabatan</label>
+                                <input type="text" id="name" name="name" placeholder="Input Jabatan"
+                                    class="form-control rounded-pill" required>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary w-100">Create</button>
+                        </div>
+                    </form>
+
+                    <!-- Back to list -->
+                    <div class="text-center mt-3">
+                        <a href="{{ route('datakaryawan.index') }}" class="btn btn-link text-primary">Back to
+                            list</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+</x-layout-admin>
