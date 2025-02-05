@@ -142,8 +142,13 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle d-flex align-items-center"
                             href="{{ route('profile.index') }}" role="button">
-                            <!-- Menampilkan Nama Pengguna yang Login -->
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
+                            @if (auth()->check())
+                                <!-- Menampilkan Nama Pengguna yang Login -->
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
+                            @else
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Guest</span>
+                            @endif
                             <img class="img-profile rounded-circle"
                                 src="{{ asset('asset-landing-admin/img/undraw_profile.svg') }}" alt="User Profile">
                         </a>

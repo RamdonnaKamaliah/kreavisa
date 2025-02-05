@@ -1,110 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Kreavisa</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Custom Google font-->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{{ asset('asset-landing-page/css/styles.css') }}" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    </head>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <title>Kreavisa User</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('asset-landing-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <style>
-         .text-gradient {
-        background: linear-gradient(90deg, #6a11cb, #2575fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    /* Optional: Additional spacing adjustments */
-    h1 {
-        margin-bottom: 1rem; /* Adjust the space between <h1> and buttons */
-    }
-
-    .btn {
-        margin-top: 0; /* Ensure no extra margin is added */
-    }
-    .navbar-nav .nav-link.active {
-        border-bottom: 2px solid #000000;
-        padding-bottom: 10px;
-    }
-    @media (max-width: 768px) {
-        .about-description {
-            font-size: 0.9rem; /* Ukuran teks lebih kecil untuk mobile */
-            line-height: 1.4; /* Menyesuaikan tinggi baris agar tetap nyaman dibaca */
+        /* Action button styles */
+        .btn-outline-primary,
+        .btn-outline-warning,
+        .btn-outline-danger {
+            border-radius: 30px;
+            transition: all 0.3s ease;
         }
-    }
-    body, html {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Cegah scroll horizontal */
-}
 
+        .btn-outline-primary:hover {
+            background-color: #5a67d8;
+            color: #fff;
+        }
 
-.navbar {
-    width: 100%; /* Pastikan navbar tidak melebihi viewport */
-    box-sizing: border-box; /* Pastikan padding termasuk dalam lebar elemen */
-}
+        .btn-outline-warning:hover {
+            background-color: #ecc94b;
+            color: #fff;
+        }
 
+        .btn-outline-danger:hover {
+            background-color: #e53e3e;
+            color: #fff;
+        }
+
+        /* Footer styles */
+        .sticky-footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #ffffff;
+        }
     </style>
-    <body class="d-flex flex-column h-100">
+</head>
 
-        <main class="flex-shrink-0">
-           <x-navbar-gudang></x-navbar-gudang>
-           <!-- In your parent Blade view -->
 
-            {{ $slot }}
-        </main>
-        <!-- Footer-->
-        <footer class="bg-white py-4 mt-auto">
-            <div class="container px-5">
-                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0">Copyright &copy; Rifdahtul Aisya</div></div>
-                    <div class="col-auto">
-                        <a class="small" href="#contact">Contact</a>
-                    </div>
-                </div>
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: #212529;">
+        <x-navbar-gudang></x-navbar-gudang>
+    </ul>
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        {{ $slot }}
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white text-center">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Kreavisa</span>
             </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="{{ asset('asset-landing-page/js/scripts.js') }}"></script>
-        <script>
-                        // Fungsi untuk menambahkan class active pada link yang sesuai dengan id section
-            function setActiveLink() {
-            const sections = document.querySelectorAll('section');
-            const links = document.querySelectorAll('.nav-link');
+        </div>
+    </footer>
+    <!-- End of Footer -->
 
-            sections.forEach((section) => {
-                const id = section.id;
-                const link = document.querySelector(`.nav-link[href="#${id}"]`);
+</div>
+<!-- End of Page Wrapper -->
 
-                if (link) {
-                if (window.scrollY >= section.offsetTop - 100 && window.scrollY < section.offsetTop + section.offsetHeight - 100) {
-                    links.forEach((link) => link.classList.remove('active'));
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-                }
-            });
-            }
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
 
-            // Jalankan fungsi setActiveLink saat scroll
-            window.addEventListener('scroll', setActiveLink);
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-            // Jalankan fungsi setActiveLink saat halaman dimuat
-            document.addEventListener('DOMContentLoaded', setActiveLink);
-        </script>
-    </body>
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    let table = new DataTable('#myTable');
+
+    @if (session('added'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'Berhasil Menambah Data!',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    @endif
+
+    @if (session('edited'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'Berhasil Mengedit Data!',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    @endif
+
+    function deleted(button) {
+        Swal.fire({
+            icon: "warning",
+            title: "Yakin ingin menghapus?",
+            text: "You won't be able to revert this!",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                button.parentElement.submit();
+            };
+        });
+    }
+
+    @if (session('deleted'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'Berhasil Mengedit Data!',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    @endif
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('asset-landing-admin/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('asset-landing-admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('asset-landing-admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('asset-landing-admin/js/sb-admin-2.min.js') }}"></script>
+<script src="{{ asset('asset-landing-admin/vendor/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('asset-landing-admin/js/demo/chart-area-demo.js') }}"></script>
+<script src="{{ asset('asset-landing-admin/js/demo/chart-pie-demo.js') }}"></script>
+
+
 </html>

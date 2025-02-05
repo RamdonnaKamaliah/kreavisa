@@ -1,7 +1,7 @@
 <x-layout-admin>
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="h4 text-secondary">Data Karyawan</h2>
+            <h1 class="h4 text-secondary">Data Karyawan</h1>
             <a href="{{ route('datakaryawan.create') }}" class="btn btn-primary">
                 + Tambah Data
             </a>

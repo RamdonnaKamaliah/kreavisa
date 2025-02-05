@@ -1,7 +1,7 @@
 <x-layout-admin>
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="h4 text-secondary">Absensi Karyawan</h2>
+            <h1 class="h4 text-secondary">Absensi Karyawan</h1>
             {{-- <a href="{{ route('absenkaryawan.create') }}" class="btn btn-primary">
                 + Tambah Data
             </a> --}}
@@ -13,6 +13,7 @@
                 <thead class="table-dark text-white">
                     <tr>
                         <th class="text-start">Nama</th>
+                        <th class="text-start">Tanggal</th>
                         <th class="text-start">Keterangan</th>
                         <th class="text-start">Foto</th>
                         <th class="text-center">Aksi</th>
@@ -22,6 +23,7 @@
                     <!-- Contoh data statis -->
                     <tr>
                         <td>Rizky</td>
+                        <td>30/01/2025</td>
                         <td>Hadir</td>
                         <td>
                             <img src="{{ asset('asset-landing-admin/img/profile1.jpeg') }}" class="rounded-circle me-2"

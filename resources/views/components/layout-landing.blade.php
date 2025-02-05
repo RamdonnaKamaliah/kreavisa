@@ -19,8 +19,9 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
+
+
 </head>
-<body>
 <main>
     <x-navbar-landing></x-navbar-landing>
     <!-- In your parent Blade view -->
