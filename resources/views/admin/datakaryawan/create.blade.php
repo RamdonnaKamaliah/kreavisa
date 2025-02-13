@@ -56,23 +56,13 @@
                                 <input name="no_telepon" type="tel" id="phone" placeholder="Input No Telpon"
                                     class="form-control rounded-pill">
                             </div>
-
-                            <div class="col-md-6">
-                                <label for="password" class="form-label">Create Password</label>
-                                <div class="input-group">
-                                    <input name="password" type="password" id="password" placeholder="Input Password"
-                                        class="form-control rounded-pill" required>
-                                    <button type="button" class="btn btn-outline-secondary rounded-pill ms-2" onclick="togglePassword()">
-                                        <i type="button" id="toggleIcon" onclick="togglePassword()"  class="fa-solid fa-eye"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            
                             
                             <div class="col-md-6">
                                 <label for="age" class="form-label">Umur</label>
-                                <input name="usia" type="number" id="age" placeholder="Input Umur"
-                                    class="form-control rounded-pill" required>
+                                <input name="usia" type="number" id="age" class="form-control rounded-pill" readonly>
                             </div>
+                            
                             
 
                             <div class="col-md-6">
@@ -132,4 +122,20 @@
             }
         }
     </script>
+    <script>
+        document.getElementById('dob').addEventListener('change', function() {
+            var dob = new Date(this.value);
+            var today = new Date();
+            var age = today.getFullYear() - dob.getFullYear();
+            var monthDiff = today.getMonth() - dob.getMonth();
+            var dayDiff = today.getDate() - dob.getDate();
+    
+            // Koreksi umur jika belum ulang tahun tahun ini
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--;
+            }
+    
+            document.getElementById('age').value = age;
+        });
+    </script>    
 </x-layout-admin>

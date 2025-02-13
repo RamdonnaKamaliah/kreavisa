@@ -9,6 +9,7 @@ use App\Models\JabatanKaryawan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail; // Add this line
 use App\Mail\SendPasswordEmail; // Add this line
+use Illuminate\Support\Str;
 
 
 class AdmindataController extends Controller
@@ -34,7 +35,9 @@ class AdmindataController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+ 
+
+public function store(Request $request)
 {
     $request->validate([
         'name' => 'required|string|max:100',
@@ -43,13 +46,15 @@ class AdmindataController extends Controller
         'tanggal_lahir' => 'required|date',
         'no_telepon' => 'required|string|unique:users,no_telepon',
         'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6',
         'jabatan_id' => 'required|exists:jabatan_karyawans,id',
         'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
+    // Generate password random
+    $randomPassword = Str::random(8);
+    
     $data = $request->except('password', 'foto');
-    $data['password'] = Hash::make($request->password);
+    $data['password'] = Hash::make($randomPassword);
 
     $jabatan = JabatanKaryawan::find($request->jabatan_id);
     $data['usertype'] = ($jabatan && strtolower($jabatan->nama_jabatan) === 'gudang') ? 'gudang' : 'karyawan';
@@ -62,10 +67,11 @@ class AdmindataController extends Controller
         $data['foto'] = $destinationPath . '/' . $fileName;
     }
 
+    // Simpan data karyawan
     User::create($data);
 
-    // Kirim email dengan password
-    Mail::to($request->email)->send(new SendPasswordEmail($request->password));
+    // Kirim email dengan password yang dihasilkan
+    Mail::to($request->email)->send(new SendPasswordEmail($randomPassword));
 
     return redirect()->route('datakaryawan.index')->with('added', 'true');
 }

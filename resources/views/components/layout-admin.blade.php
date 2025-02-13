@@ -155,7 +155,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
-                text: 'Berhasil Mengedit Data!',
+                text: 'Berhasil Menghapus Data!',
                 showConfirmButton: false,
                 timer: 1500 // Close automatically after 1.5 seconds
             });
