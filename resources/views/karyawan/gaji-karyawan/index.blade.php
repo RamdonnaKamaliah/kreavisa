@@ -1,5 +1,4 @@
-<x-layout-karyawan2>
-    <x-layout-class></x-layout-class>
+<x-layout-karyawan>
     <div class="card-body">
 
         <!-- Membungkus tabel dengan class table-responsive untuk membuatnya responsif -->
@@ -82,4 +81,4 @@
             }
         }
     </style>
-</x-layout-karyawan2>
+</x-layout-karyawan>

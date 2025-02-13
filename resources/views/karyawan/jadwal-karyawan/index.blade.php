@@ -1,3 +1,3 @@
-<x-layout-karyawan2>
+<x-layout-karyawan>
     p
-</x-layout-karyawan2>
+</x-layout-karyawan>

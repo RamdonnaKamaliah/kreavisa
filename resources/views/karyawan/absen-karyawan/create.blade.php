@@ -1,6 +1,6 @@
-<x-layout-karyawan2>
+<x-layout-karyawan>
 
-    <x-layout-class></x-layout-class>
+
     <main class="flex-grow flex justify-center items-center mt-[-10px] pt-10 pb-10">
         <div class="bg-[#343A40] p-8 rounded-xl shadow-lg text-center max-w-md relative w-full">
             <!-- Tombol Kembali -->
@@ -80,4 +80,4 @@
             video.classList.add("hidden");
         }
     </script>
-</x-layout-karyawan2>
+</x-layout-karyawan>

@@ -24,8 +24,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('asset-landing-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    {{-- <!-- Custom styles for this template-->
+    <link href="{{ asset('asset-landing-admin/css/sb-admin-2.min.css') }}" rel="stylesheet"> --}}
     <style>
         /* Action button styles */
         .btn-outline-primary,

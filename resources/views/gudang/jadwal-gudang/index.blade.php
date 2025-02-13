@@ -1,3 +1,5 @@
-<x-navbar-gudang>
+<x-layout-gudang>
+
     <x-layout-class></x-layout-class>
-</x-navbar-gudang>
+
+</x-layout-gudang>
