@@ -17,59 +17,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Contoh data statis -->
+                    @foreach ($jabatanKaryawan as $row)
                     <tr>
-                        <td>Live</td>
+                        <td>{{ $row->nama_jabatan }}</td>
                         <td class="text-center">
                             <div class="d-flex flex-wrap justify-content-center gap-2">
-                                <a href="#" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">View</span>
+                                <a href="{{ route('jabatankaryawan.show', $row->id) }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline"> View</span>
                                 </a>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i> <span class="d-none d-sm-inline">Hapus</span>
-                                </button>
+                                <a href="{{ route('jabatankaryawan.edit', $row->id) }}"  class="btn btn-sm btn-outline-warning">
+                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline"> Edit</span>
+                                </a>
+                                <form action="{{ route('jabatankaryawan.destroy', $row->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-sm btn-outline-danger" 
+                                    onclick="deleted(this)"><i class="fas fa-trash-alt"></i> Delete</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Gudang</td>
-                        <td class="text-center">
-                            <div class="d-flex flex-wrap justify-content-center gap-2">
-                                <a href="#" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">View</span>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i> <span class="d-none d-sm-inline">Hapus</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Admin</td>
-                        <td class="text-center">
-                            <div class="d-flex flex-wrap justify-content-center gap-2">
-                                <a href="#" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">View</span>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i> <span class="d-none d-sm-inline">Hapus</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Packing</td>
-                        <td class="text-center">
-                            <div class="d-flex flex-wrap justify-content-center gap-2">
-                                <a href="#" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">View</span>
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i> <span class="d-none d-sm-inline">Hapus</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

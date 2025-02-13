@@ -23,39 +23,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Contoh data statis -->
+                    @foreach ($dataKaryawan as $row)
                     <tr>
                         <td>
-                            <img src="{{ asset('asset-landing-admin/img/profile1.jpeg') }}" class="rounded-circle me-2"
+                            <img src="{{ $row->foto ? asset($row->foto) : asset('asset-landing-admin/img/profile.png') }}" class="rounded-circle me-2"
                                 alt="Foto Profil" style="width: 50px; height: 50px; object-fit: cover;">
-                        </td>
-                        <td>Rizky</td>
-                        <td>25th</td>
-                        <td>Laki-laki</td>
-                        <td>6 April 1998</td>
-                        <td>085642576182</td>
-                        <td>Gudang</td>
+                        </td>                        
+                        <td>{{ $row->name }}</td>
+                        <td>{{ $row->usia }} th</td>
+                        <td>{{ $row->gender }}</td>
+                        <td>{{ \Carbon\Carbon::parse($row->tanggal_lahir)->format('d M Y') }}</td>
+                        <td>{{ $row->no_telepon }}</td>
+                        <td>{{ $row->jabatan->nama_jabatan ?? '-' }}</td>
                         <td class="text-center">
                             <div class="d-flex flex-wrap justify-content-center gap-2">
                                 <!-- Edit Button -->
-                                <a href="#" class="btn btn-sm btn-outline-warning">
+                                <a href="{{ route('datakaryawan.edit', $row->id) }}" class="btn btn-sm btn-outline-warning">
                                     <i class="fas fa-edit"></i> <span class="d-none d-sm-inline">Edit</span>
                                 </a>
 
                                 <!-- Cek Profile Button -->
-                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ route('datakaryawan.show', $row->id) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">Cek Profile</span>
                                 </a>
 
-                                <!-- Hapus Button -->
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i> <span class="d-none d-sm-inline">Hapus</span>
-                                </button>
+                                <form action="{{ route('datakaryawan.destroy', $row->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-sm btn-outline-danger" 
+                                    onclick="deleted(this)"><i class="fas fa-trash-alt"></i> Delete</button>
+                                </form>
                             </div>
 
                         </td>
                     </tr>
-                    <!-- Tambahkan data lainnya di sini -->
+                    @endforeach
                 </tbody>
             </table>
         </div>

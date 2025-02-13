@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\JabatanKaryawan;
 
-class AdminjabatanController extends Controller
+class AdminJabatanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view ('admin.jabatankaryawan.index');
+        $jabatanKaryawan = JabatanKaryawan::all();
+        return view('admin.jabatankaryawan.index', compact('jabatanKaryawan'));
     }
 
     /**
@@ -20,7 +22,7 @@ class AdminjabatanController extends Controller
      */
     public function create()
     {
-        return view ('admin.jabatankaryawan.create');
+        return view('admin.jabatankaryawan.create');
     }
 
     /**
@@ -28,38 +30,61 @@ class AdminjabatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_jabatan' => 'required|string|max:50',
+        ]);
+    
+        JabatanKaryawan::create([
+            'nama_jabatan' => $request->nama_jabatan,
+        ]);
+    
+        return redirect()->route('jabatankaryawan.index')->with('added', 'true');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(JabatanKaryawan $jabatankaryawan)
     {
-        //
+        return view('admin.jabatankaryawan.show', compact('jabatankaryawan'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        return view ('admin.jabatankaryawan.edit');
+        $jabatan = JabatanKaryawan::findOrFail($id);
+        return view('admin.jabatankaryawan.edit', compact('jabatan'));
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_jabatan' => 'required|string|max:50',
+        ]);
+    
+        $jabatan = JabatanKaryawan::findOrFail($id);
+        $jabatan->update([
+            'nama_jabatan' => $request->nama_jabatan,
+        ]);
+    
+        return redirect()->route('jabatankaryawan.index')->with('edited', 'true');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $jabatan = JabatanKaryawan::findOrFail($id);
+        $jabatan->delete();
+
+        return redirect()->route('jabatankaryawan.index')->with('deleted', 'true');
     }
 }

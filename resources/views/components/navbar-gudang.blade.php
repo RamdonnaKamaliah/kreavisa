@@ -34,13 +34,6 @@
         </a>
     </li>
 
-    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-        @csrf
-        <button type="submit" class="btn btn-primary">
-            Logout
-        </button>
-    </form>
-    
     <li class="nav-item">
         <a class="nav-link" href="{{ route('absen-gudang.index') }}">
             <i class="fas fa-fw fa-users"></i>

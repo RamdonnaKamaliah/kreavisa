@@ -1,79 +1,89 @@
 <x-layout-admin>
     <div id="layoutSidenav_content">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <main>
             <div class="container">
                 <h1 class="text-center my-4" style="font-family: 'Arial', sans-serif; color: #333;">
                     Create Data Karyawan
                 </h1>
 
-                <!-- Card Container -->
-                <div class="card mx-auto shadow p-4"
-                    style="max-width: 800px; background-color: #f8f9fa; border-radius: 12px;">
+                <div class="card mx-auto shadow p-4" style="max-width: 800px; background-color: #f8f9fa; border-radius: 12px;">
 
-                    <!-- Upload Foto -->
-                    <div class="text-center mb-4">
-                        <label for="photoUpload" class="d-block">
-                            <img src="{{ asset('asset-landing-admin/img/profile1.jpeg') }}" alt="Upload Foto"
-                                class="rounded-circle shadow" style="width: 100px; height: 100px; cursor: pointer;">
-                        </label>
-                        <input type="file" id="photoUpload" name="photo" class="d-none">
-                        <p class="text-muted mt-2">Upload Foto</p>
-                    </div>
-
-                    <!-- Form -->
-                    <form action="#" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('datakaryawan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
+                        <!-- Upload Foto -->
+                        <div class="text-center mb-4">
+                            <label for="foto" class="d-block">
+                                <img id="preview" src="{{ asset('asset-landing-admin/img/profile.png') }}" alt="Upload Foto"
+                                    class="rounded-circle shadow" style="width: 100px; height: 100px; cursor: pointer;">
+                            </label>
+                            <input type="file" id="foto" name="foto" accept="image/*" class="d-none"  onchange="previewImage(event)">
+                            <p class="text-muted mt-2">Upload Foto</p>
+                            @error('foto')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <div class="row g-3">
-                            <!-- Nama -->
                             <div class="col-md-6">
                                 <label for="name" class="form-label fw-bold">Nama</label>
                                 <input type="text" id="name" name="name" placeholder="Input Nama"
                                     class="form-control rounded-pill" required>
                             </div>
 
-                            <!-- Tanggal Lahir !-->
                             <div class="col-md-6">
                                 <label for="dob" class="form-label">Tanggal Lahir</label>
-                                <input type="date" id="dob" class="form-control rounded-pill">
+                                <input name="tanggal_lahir" type="date" id="dob" class="form-control rounded-pill">
                             </div>
 
-                            <!-- Email !-->
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" placeholder="Input Email"
+                                <input name="email" type="email" id="email" placeholder="Input Email"
                                     class="form-control rounded-pill">
                             </div>
 
-                            <!-- NO Telpon !-->
                             <div class="col-md-6">
                                 <label for="phone" class="form-label">No Telpon</label>
-                                <input type="tel" id="phone" placeholder="Input No Telpon"
+                                <input name="no_telepon" type="tel" id="phone" placeholder="Input No Telpon"
                                     class="form-control rounded-pill">
                             </div>
 
-                            <!-- password -->
                             <div class="col-md-6">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" id="password" placeholder="Input Password"
-                                    class="form-control rounded-pill">
+                                <label for="password" class="form-label">Create Password</label>
+                                <div class="input-group">
+                                    <input name="password" type="password" id="password" placeholder="Input Password"
+                                        class="form-control rounded-pill" required>
+                                    <button type="button" class="btn btn-outline-secondary rounded-pill ms-2" onclick="togglePassword()">
+                                        <i type="button" id="toggleIcon" onclick="togglePassword()"  class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
                             </div>
-
-                            <!-- Umur -->
+                            
                             <div class="col-md-6">
                                 <label for="age" class="form-label">Umur</label>
-                                <input type="number" id="age" name="age" placeholder="Input Umur"
+                                <input name="usia" type="number" id="age" placeholder="Input Umur"
                                     class="form-control rounded-pill" required>
                             </div>
+                            
 
-                            <!-- jabatan -->
                             <div class="col-md-6">
                                 <label for="position" class="form-label">Jabatan</label>
-                                <input type="text" id="position" name="position" placeholder="Input jabatan"
-                                    class="form-control rounded-pill" required>
+                                <select name="jabatan_id" id="position" class="form-control rounded-pill" required>
+                                @foreach($jabatanKaryawan as $row)
+                                    <option value="{{ $row->id }}">{{ $row->nama_jabatan }}</option>
+                                @endforeach
+                                </select>
                             </div>
 
-                            <!-- Gender -->
                             <div class="col-md-6">
                                 <label for="gender" class="form-label">Gender</label>
                                 <select id="gender" name="gender" class="form-control rounded-pill" required>
@@ -84,7 +94,6 @@
                             </div>
                         </div>
 
-                        <!-- Submit Button -->
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary w-100">Create</button>
                         </div>
@@ -97,4 +106,30 @@
             </div>
         </main>
     </div>
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("password");
+            var toggleIcon = document.getElementById("toggleIcon");
+    
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("bi-eye-slash");
+                toggleIcon.classList.add("bi-eye");
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("bi-eye");
+                toggleIcon.classList.add("bi-eye-slash");
+            }
+        }
+    </script>
 </x-layout-admin>
