@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,10 +16,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'foto',
         'name',
+        'usia',
+        'gender',
+        'tanggal_lahir',
+        'no_telepon',
+        'jabatan_id',
+        'usertype',
         'email',
         'password',
     ];
+    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -33,7 +40,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
      * @return array<string, string>
      */
@@ -45,15 +52,22 @@ class User extends Authenticatable
         ];
     }
 
-        /**
-     * Check if the user has a specific role.
-     *
-     * @param string $role
-     * @return bool
+    /**
+     * Relasi ke tabel jabatan_karyawans.
      */
-    public function hasRole($role)
+    public function jabatan()
     {
-        return $this->role === $role;
+        return $this->belongsTo(JabatanKaryawan::class, 'jabatan_id');
     }
 
+    /**
+     * Check if the user has a specific usertype.
+     *
+     * @param string $usertype
+     * @return bool
+     */
+    public function hasUsertype($usertype)
+    {
+        return $this->usertype === $usertype;
+    }
 }

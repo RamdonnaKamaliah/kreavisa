@@ -1,102 +1,58 @@
-<x-layout-karyawan2>
-    <x-layout-class></x-layout-class>
-    <div style="background: #F0F0F0; padding: 20px; border-radius: 10px; max-width: 900px; margin: 20px auto;">
-        <!-- Header -->
-
-        <!-- Foto Profil dan Info -->
-        <div style="display: flex; align-items: center; gap: 20px; padding: 20px; flex-wrap: wrap;">
-            <label for="photoUpload" style="cursor: pointer;">
-                <img src="{{ asset('asset-landing-admin/img/profile1.jpeg') }}" alt="Upload Foto"
-                    class="rounded-circle shadow" style="width: 120px; height: 120px;">
-            </label>
-            <div>
-                <h2 style="margin: 0; font-weight: bold;">romusha</h2>
-                <p style="margin: 5px 0; font-size: 1.1em; color: #555;">rama1@gmail.com</p>
-                <p style="margin: 5px 0; font-size: 1em;">Karyawan Navisa Basic Collection</p>
+<x-layout-karyawan>
+    <div class="max-w-4xl mx-auto py-16 px-6 bg-gray-800 rounded-2xl shadow-2xl md:mr-20 mt-10">
+        <div class="flex flex-wrap items-center gap-6">
+            <div
+                class="w-32 h-32 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+                <span class="text-6xl text-white">👤</span>
             </div>
-            <a href="{{ route('profile.edit') }}"
-                style="margin-left: auto; padding: 8px 16px; background: #D3D3D3; color: black; border-radius: 5px; text-decoration: none; font-weight: bold;">
-                Edit Profile
-            </a>
-            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-primary">
-                    Logout
-                </button>
-            </form>
+            <div class="flex-1 min-w-[200px]">
+                <h1 class="text-3xl font-extrabold text-white">romusha</h1>
+                <p class="text-gray-400">rama1@gmail.com</p>
+                <p class="text-gray-400">Karyawan Navisa Basic Collection</p>
+            </div>
+            <div class="flex gap-3">
+                <button
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-lg">Edit
+                    Profile</button>
+                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                    @csrf
+                    <button type="submit"
+                        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 shadow-lg">
+                        Logout
+                    </button>
+                </form>
+            </div>
         </div>
 
-        <input type="file" id="photoUpload" name="photo" class="d-none">
-
-        <!-- Data Profile -->
-        <div
-            style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; border-radius: 10px; color: white;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
             <div>
-                <label class="form-label text-black fw-bold">Username</label>
-                <div class="form-control text-white" style="background: #1E1E1E; padding: 10px; border-radius: 5px;">
-                    romusha</div>
+                <label class="block text-gray-400 font-medium">Username</label>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner">romusha</div>
             </div>
             <div>
-                <label class="form-label text-black fw-bold">No Telepon</label>
-                <div class="form-control text-white" style="background: #1E1E1E; padding: 10px; border-radius: 5px;">
-                    08675468997
-                </div>
+                <label class="block text-gray-400 font-medium">No Telepon</label>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner">08675468997</div>
             </div>
             <div>
-                <label class="form-label text-black fw-bold">Password</label>
-                <div class="form-control text-white" style="background: #1E1E1E; padding: 10px; border-radius: 5px;">
-                    ********</div>
+                <label class="block text-gray-400 font-medium">Jabatan</label>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner">Live</div>
             </div>
             <div>
-                <label class="form-label text-black fw-bold">Jabatan</label>
-                <div class="form-control text-white" style="background: #1E1E1E; padding: 10px; border-radius: 5px;">
-                    Live</div>
+                <label class="block text-gray-400 font-medium">Nama Lengkap</label>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner">Romusha Sarif</div>
             </div>
             <div>
-                <label class="form-label text-black fw-bold">Nama Lengkap</label>
-                <div class="form-control text-white" style="background: #1E1E1E; padding: 10px; border-radius: 5px;">
-                    Romusha Sarif
-                </div>
+                <label class="block text-gray-400 font-medium">Gender</label>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner">Laki-laki</div>
             </div>
             <div>
-                <label class="form-label text-black fw-bold">Gender</label>
-                <div class="form-control text-white" style="background: #1E1E1E; padding: 10px; border-radius: 5px;">
-                    Laki-laki
-                </div>
+                <label class="block text-gray-400 font-medium">Tanggal Lahir</label>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner">13-10-2007</div>
             </div>
-            <div>
-                <label class="form-label text-black fw-bold">Umur</label>
-                <div class="form-control text-white" style="background: #1E1E1E; padding: 10px; border-radius: 5px;">17
-                    th</div>
-            </div>
-            <div>
-                <label class="form-label text-black fw-bold">Tanggal Lahir</label>
-                <div class="form-control text-white" style="background: #1E1E1E ; padding: 10px; border-radius: 5px;">
-                    13-10-2007
-                </div>
+            <div class="sm:col-span-2">
+                <label class="block text-gray-400 font-medium">Umur</label>
+                <div class="bg-gray-700 p-4 rounded-lg shadow-inner">17 th</div>
             </div>
         </div>
     </div>
-
-    <style>
-        @media (max-width: 768px) {
-            .form-control {
-                width: 100%;
-            }
-
-            div[style*="grid-template-columns: repeat(2, 1fr)"] {
-                grid-template-columns: 1fr !important;
-            }
-
-            div[style*="display: flex; align-items: center; gap: 20px; padding: 20px;"] {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            a[style*="margin-left: auto;"] {
-                margin-left: 0 !important;
-                margin-top: 10px;
-            }
-        }
-    </style>
-</x-layout-karyawan2>
+</x-layout-karyawan>

@@ -22,29 +22,52 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    
-     public function store(LoginRequest $request): RedirectResponse
-     {
-         $request->authenticate();
-         $request->session()->regenerate();
+    public function store(LoginRequest $request): RedirectResponse
+{
+    // Autentikasi hanya untuk karyawan atau gudang
+    if (!Auth::attempt($request->only('email', 'password'))) {
+        return back()->withErrors(['email' => 'Email atau password salah']);
+    }
+
+    $request->session()->regenerate();
+
+    $user = Auth::user();
+
+    // Redirect berdasarkan usertype
+    if ($user->usertype === 'admin') {
+        return redirect('/admin/dashboard');
+    }
+
+    Auth::logout();
+    return redirect('/login')->withErrors(['email' => 'Anda tidak memiliki akses']);
+}
+
+   
      
-         if ($request->user()->usertype === 'admin') {
-             return redirect('/admin/dashboard');
-         }
-     
-         if ($request->user()->usertype === 'gudang') {
-             return redirect('/gudang/dashboard');
-         }
-     
-         if ($request->user()->usertype === 'karyawan') {
-             return redirect('/karyawan/dashboard');
-         }
-     
-         // Default redirect jika usertype tidak cocok
-         return redirect('/');
-     }
-     
-     
+     public function storeKaryawanGudang(LoginRequest $request): RedirectResponse
+{
+    // Autentikasi hanya untuk karyawan atau gudang
+    if (!Auth::attempt($request->only('email', 'password'))) {
+        return back()->withErrors(['email' => 'Email atau password salah']);
+    }
+
+    $request->session()->regenerate();
+
+    $user = Auth::user();
+
+    // Redirect berdasarkan usertype
+    if ($user->usertype === 'karyawan') {
+        return redirect('/karyawan/dashboard');
+    }
+
+    if ($user->usertype === 'gudang') {
+        return redirect('/gudang/dashboard');
+    }
+
+    Auth::logout();
+    return redirect('/login-karyawan-gudang')->withErrors(['email' => 'Anda tidak memiliki akses']);
+}
+
 
     public function createKaryawanGudang(): View
     {
@@ -56,12 +79,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $user = Auth::user();
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
+    
+        if ($user && $user->usertype === 'admin') {
+            return redirect('/');
+        }
+    
         return redirect('/');
     }
+    
 }

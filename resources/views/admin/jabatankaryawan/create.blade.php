@@ -14,14 +14,14 @@
                     </h1>
 
                     <!-- Form -->
-                    <form action="#" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('jabatankaryawan.store') }}" method="POST">
                         @csrf
 
                         <div class="row g-3">
                             <!-- Nama -->
                             <div class="col-12">
-                                <label for="name" class="form-label fw-bold">Jabatan</label>
-                                <input type="text" id="name" name="name" placeholder="Input Jabatan"
+                                <label for="name" class="form-label fw-bold">Nama Jabatan</label>
+                                <input type="text" id="nama_jabatan" name="nama_jabatan" placeholder="Input Nama Jabatan" value="{{ old('nama_jabatan') }}"
                                     class="form-control rounded-pill" required>
                             </div>
                         </div>
@@ -31,12 +31,6 @@
                             <button type="submit" class="btn btn-primary w-100">Create</button>
                         </div>
                     </form>
-
-                    <!-- Back to list -->
-                    <div class="text-center mt-3">
-                        <a href="{{ route('datakaryawan.index') }}" class="btn btn-link text-primary">Back to
-                            list</a>
-                    </div>
                 </div>
             </div>
         </main>

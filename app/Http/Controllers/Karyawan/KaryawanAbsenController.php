@@ -11,4 +11,12 @@ class KaryawanAbsenController extends Controller
     {
         return view('karyawan.absen'); // Langsung merender view
     }
-}
+
+    //*absen store
+
+    public function store(Request $request)
+    {
+       
+    }
+    }
+

@@ -1,182 +1,135 @@
-<div>
+<div class="flex min-h-screen">
+    <!-- Tombol Toggle untuk Sidebar (Muncul hanya di layar mobile) -->
+    <button id="sidebarToggle" class="md:hidden fixed top-4 left-4 p-2 bg-gray-900 text-white rounded">
+        <i class='bx bx-menu'></i>
+    </button>
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon">
-            <h1 class="font-protest">K</h1>
-        </div>
-        <div class="sidebar-brand-text mx-3">Admin</div>
-    </a>
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="w-64 bg-gray-900 text-white h-screen p-4 fixed top-0 left-0 z-40 transition-transform transform md:translate-x-0 -translate-x-full">
+        <a class="flex items-center justify-center" href="index.html">
+            <div>
+                <h1 class="font-protest text-4xl pb-5">A</h1> <!-- Ukuran teks lebih besar -->
+            </div>
+            <div class="mx-4 text-2xl pb-5">dmin</div>
+            <!-- Ukuran teks lebih besar dan margin horizontal lebih lebar -->
+        </a>
+        <hr class="border-gray-700 mb-4">
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+        <!-- Profile Section -->
+        <a href="{{ route('profile.index') }}">
+            <div class="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg mb-4 cursor-pointer">
+                <img src="{{ asset('asset-landing-admin/img/undraw_profile.svg') }}"
+                    class="w-12 h-12 rounded-full cursor-pointer" alt="User Profile">
+                <div>
+                    <span
+                        class="text-sm font-semibold block">{{ auth()->check() ? auth()->user()->name : 'Guest' }}</span>
+                    <span class="text-xs text-gray-400">Karyawan</span>
+        </a>
+</div>
+</div>
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('admin.dashboard') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+<ul class="space-y-2">
+    <li>
+        <a href="{{ route('admin.dashboard') }}"
+            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
+                    {{ Request::routeIs('admin.dashboard') ? 'bg-gray-700 text-blue-400' : 'hover:bg-gray-700 hover:text-blue-400' }}">
+            <span
+                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
+                    {{ Request::routeIs('admin.dashboard') ? 'block' : 'hidden group-hover:block' }}"></span>
+            <i class='bx bx-home'></i>
+            <span class="font-popins">Dashboard</span>
         </a>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0" />
-
-    <!-- Data Karyawan -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('datakaryawan.index') }}">
-            <i class="fas fa-fw fa-users"></i>
+    <li>
+        <a href="{{ route('datakaryawan.index') }}"
+            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
+                    {{ Request::routeIs('datakaryawan.index') ? 'bg-gray-700 text-blue-400' : 'hover:bg-gray-700 hover:text-blue-400' }}">
+            <span
+                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
+                    {{ Request::routeIs('datakaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+            <i class='bx bx-archive'></i>
             <span>Data Karyawan</span>
         </a>
     </li>
-
-    <!-- Absen Karyawan -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('absenkaryawan.index') }}">
-            <i class="fas fa-fw fa-calendar-check"></i>
-            <span>Absen Karyawan</span>
-        </a>
-    </li>
-
-    <!-- Jabatan Karyawan -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('jabatankaryawan.index') }}">
-            <i class="fas fa-fw fa-briefcase"></i>
+    <li>
+        <a href="{{ route('jabatankaryawan.index') }}"
+            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
+                    {{ Request::routeIs('jabatankaryawan.index') ? 'bg-gray-700 text-blue-400' : 'hover:bg-gray-700 hover:text-blue-400' }}">
+            <span
+                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
+                    {{ Request::routeIs('jabatankaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+            <i class='bx bx-vector'></i>
             <span>Jabatan Karyawan</span>
         </a>
     </li>
-
-    <!-- Jadwal Karyawan -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('jadwalkaryawan.index') }}">
-            <i class="fas fa-fw fa-calendar-alt"></i>
-            <span>Jadwal Karyawan</span>
+    <li>
+    <li>
+        <a href="{{ route('absenkaryawan.index') }}"
+            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
+                        {{ Request::routeIs('absenkaryawan.index') ? 'bg-gray-700 text-blue-400' : 'hover:bg-gray-700 hover:text-blue-400' }}">
+            <span
+                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
+                        {{ Request::routeIs('absenkaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+            <i class='bx bx-bell'></i>
+            <span>Absensi</span>
         </a>
     </li>
+    <a href="{{ route('jadwalkaryawan.index') }}"
+        class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
+                    {{ Request::routeIs('jadwalkaryawan.index') ? 'bg-gray-700 text-blue-400' : 'hover:bg-gray-700 hover:text-blue-400' }}">
+        <span
+            class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
+                    {{ Request::routeIs('jadwalkaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+        <i class='bx bx-calendar'></i>
+        <span>Jadwal Kerja</span>
+    </a>
+    </li>
 
-    <!-- Gaji Karyawan -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('gajikaryawan.index') }}">
-            <i class="fas fa-fw fa-money-bill"></i>
+
+    <li>
+        <a href="{{ route('gajikaryawan.index') }}"
+            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
+                    {{ Request::routeIs('gajikaryawan.index') ? 'bg-gray-700 text-blue-400' : 'hover:bg-gray-700 hover:text-blue-400' }}">
+            <span
+                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
+                    {{ Request::routeIs('gajikaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+            <i class='bx bx-dollar'></i>
             <span>Gaji Karyawan</span>
         </a>
     </li>
-
-    <!-- Stok Barang -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('stokkaryawan.index') }}">
-            <i class="fas fa-fw fa-boxes"></i>
+    <li>
+        <a href="{{ route('stokkaryawan.index') }}"
+            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
+                    {{ Request::routeIs('stokkaryawan.index') ? 'bg-gray-700 text-blue-400' : 'hover:bg-gray-700 hover:text-blue-400' }}">
+            <span
+                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
+                    {{ Request::routeIs('stokkaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+            <i class='bx bx-package'></i>
             <span>Stok Barang</span>
         </a>
     </li>
+</ul>
+</aside>
+</div>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+<script>
+    // Toggle Sidebar
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
 
-    <!-- Sidebar Toggler (Sidebar) -->
-    <center>
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-    </center>
+    sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('-translate-x-full');
+    });
 
+    // Menutup Sidebar Saat Mengklik di Luar Sidebar
+    document.addEventListener('click', function(event) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnToggle = sidebarToggle.contains(event.target);
 
-    </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
-        <div id="content">
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background: #302c42;">
-
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
-
-                <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                            aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn" style="background-color: #ffffff;" type="button">
-                                <i class="fa-solid fa-magnifying-glass" style="color: rgb(0, 0, 0);"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <!-- Topbar Navbar -->
-                <ul class="navbar-nav ml-auto">
-
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                            aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                        placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-
-                    <div class="topbar-divider d-none d-sm-block"></div>
-
-                    <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center"
-                            href="{{ route('profile.index') }}" role="button">
-                            @if (auth()->check())
-                                <!-- Menampilkan Nama Pengguna yang Login -->
-                                <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
-                            @else
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Guest</span>
-                            @endif
-                            <img class="img-profile rounded-circle"
-                                src="{{ asset('asset-landing-admin/img/undraw_profile.svg') }}" alt="User Profile">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Yakin untuk keluar?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Tekan "Logout" untuk keluar</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <!-- Form Logout -->
-                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">
-                                    Logout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        if (!isClickInsideSidebar && !isClickOnToggle && !sidebar.classList.contains('-translate-x-full')) {
+            sidebar.classList.add('-translate-x-full');
+        }
+    });
+</script>

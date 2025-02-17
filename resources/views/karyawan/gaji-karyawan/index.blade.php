@@ -1,84 +1,54 @@
-<x-layout-karyawan>
-    <div class="card-body">
+<div class="p-20 md:ml-[250px] md:pt-16">
+    <!-- Card Wrapper -->
+    <div class="bg-white shadow-lg rounded-lg p-6 md:p-8">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Data Pegawai</h2>
 
-        <!-- Membungkus tabel dengan class table-responsive untuk membuatnya responsif -->
-        <div class="table-responsive" style="overflow-x: auto;">
-            <table class="table table-bordered table-striped" id="myTable" style="min-width: 1000px;">
-                <thead class="table-dark text-white">
+        <!-- Wrapper responsif untuk scroll horizontal -->
+        <div class="overflow-x-auto w-full">
+            <table id="myTable" class="display nowrap min-w-full border border-gray-300">
+                <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th class="text-start">Nama</th>
-                        <th class="text-start">Jabatan</th>
-                        <th class="text-start">Tanggal</th>
-                        <th class="text-start">Nomor Rekening</th>
-                        <th class="text-start">Tipe Pembayaran</th>
-                        <th class="text-start">Gaji Pokok</th>
-                        <th class="text-start">Bonus</th>
-                        <th class="text-start">Potongan</th>
-                        <th class="text-start">Total Gaji</th>
-                        <th class="text-center" style="min-width: 200px;">Aksi</th> <!-- Lebar kolom aksi diperbesar -->
+                        <th class="border border-gray-300 px-4 py-2 text-left">Nama</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Jabatan</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Tanggal</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Nomor Rekening</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Tipe Pembayaran</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Gaji Pokok</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Bonus</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Potongan</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Total Gaji</th>
+                        <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Contoh data statis -->
                     <tr>
-                        <td>Rizky</td>
-                        <td>Packing</td>
-                        <td>02/02/2025</td>
-                        <td>87868575</td>
-                        <td>DANA</td>
-                        <td>Rp. 500.000</td>
-                        <td>Rp. 200.000</td>
-                        <td>2%</td>
-                        <td>Rp. 700.000</td>
-                        <td class="text-center">
-                            <div class="d-flex justify-content-center gap-2" style="flex-wrap: nowrap;">
-                                <!-- Tombol sejajar ke samping -->
-                                <!-- Edit Button -->
-                                <a href="#" class="btn btn-sm btn-outline-warning">
-                                    <i class="fas fa-edit"></i> <span class="d-none d-sm-inline">Edit</span>
+                        <td class="border border-gray-300 px-4 py-2">Rizky</td>
+                        <td class="border border-gray-300 px-4 py-2">Packing</td>
+                        <td class="border border-gray-300 px-4 py-2">02/02/2025</td>
+                        <td class="border border-gray-300 px-4 py-2">87868575</td>
+                        <td class="border border-gray-300 px-4 py-2">DANA</td>
+                        <td class="border border-gray-300 px-4 py-2">Rp. 500.000</td>
+                        <td class="border border-gray-300 px-4 py-2">Rp. 200.000</td>
+                        <td class="border border-gray-300 px-4 py-2">2%</td>
+                        <td class="border border-gray-300 px-4 py-2">Rp. 700.000</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">
+                            <div class="flex justify-center gap-2 flex-wrap">
+                                <a href="#"
+                                    class="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-sm">
+                                    Edit
                                 </a>
-
-                                <!-- Cek Profile Button -->
-                                <a href="#" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">Cek Profile</span>
+                                <a href="#"
+                                    class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-sm">
+                                    Cek Profile
                                 </a>
-
-                                <!-- Hapus Button -->
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i> <span class="d-none d-sm-inline">Hapus</span>
+                                <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">
+                                    Hapus
                                 </button>
                             </div>
                         </td>
                     </tr>
-                    <!-- Tambahkan data lainnya di sini -->
                 </tbody>
             </table>
         </div>
     </div>
-
-    <style>
-        /* Responsif untuk layar kecil */
-        @media (max-width: 768px) {
-            .card-body {
-                margin-left: 0;
-                /* Hilangkan margin saat di mobile */
-            }
-
-            #myTable {
-                min-width: 100%;
-                /* Tabel mengambil lebar penuh */
-            }
-
-            .btn span {
-                display: none;
-                /* Sembunyikan teks pada tombol saat di mobile */
-            }
-
-            /* Tombol aksi ditampilkan vertikal saat di mobile */
-            .d-flex.justify-content-center.gap-2 {
-                flex-direction: column;
-                gap: 5px !important;
-            }
-        }
-    </style>
-</x-layout-karyawan>
+</div>

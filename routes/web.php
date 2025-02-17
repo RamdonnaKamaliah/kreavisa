@@ -24,6 +24,15 @@ use App\Http\Middleware\Karyawan;
 use App\Http\Middleware\Admin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    Mail::raw('Test email from Laravel', function ($message) {
+        $message->to('rifdah.a122@gmail.com')->subject('Test Mail');
+    });
+    return "Email has been sent!";
+});
+
 
 Route::get('/',[LandingController::class, 'index'])->name('dashboard');
 
@@ -39,41 +48,43 @@ Route::get('/register', function () {
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
 Route::get('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'createKaryawanGudang'])->name('login.karyawan-gudang');
+Route::post('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'storeKaryawanGudang'])->name('login.karyawan-gudang.process');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index'); // Tambahkan rute ini
+    Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
 });
 
 
 Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::resource('/admin/datakaryawan', AdmindataController::class);
+    Route::resource('/admin/jabatankaryawan', AdminjabatanController::class);
+    Route::resource('/admin/absenkaryawan', AdminabsenController::class);
+    Route::resource('/admin/jadwalkaryawan', AdminjadwalController::class);
+    Route::resource('/admin/gajikaryawan', AdmingajiController::class);
+    Route::resource('/admin/stokkaryawan', AdminstokController::class);
 });
 
 Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
     Route::get('/karyawan/absen', [KaryawanAbsenController::class, 'index'])->name('karyawan.absen');
+    Route::get('/absen-karyawan/{absen_karyawan}/edit', [AbsenKaryawanController::class, 'edit'])->name('absen-karyawan.edit');
+    Route::resource('absen-karyawan', AbsenController::class);
+    Route::resource('gaji-karyawan', GajiController::class);
+    Route::resource('jadwal-karyawan', JadwalController::class);
 });
 
 
 Route::middleware(['auth', Gudang::class])->group(function () {
     Route::get('/gudang/dashboard', [GudangController::class, 'index'])->name('gudang.dashboard');
+    Route::resource('absen-gudang', AbsenGudangController::class);
+    Route::resource('gaji-gudang', GajiGudangController::class);
+    Route::resource('jadwal-gudang', JadwalGudangController::class);
+    Route::resource('stok-gudang', StokGudangController::class);
 });
 
-Route::resource('/admin/datakaryawan', AdmindataController::class);
-Route::resource('/admin/absenkaryawan', AdminabsenController::class);
-Route::resource('/admin/jabatankaryawan', AdminjabatanController::class);
-Route::resource('/admin/jadwalkaryawan', AdminjadwalController::class);
-Route::resource('/admin/gajikaryawan', AdmingajiController::class);
-Route::resource('/admin/stokkaryawan', AdminstokController::class);
-Route::resource('absen-karyawan', AbsenController::class);
-Route::resource('gaji-karyawan', GajiController::class);
-Route::resource('jadwal-karyawan', JadwalController::class);
-Route::resource('absen-gudang', AbsenGudangController::class);
-Route::resource('gaji-gudang', GajiGudangController::class);
-Route::resource('jadwal-gudang', JadwalGudangController::class);
-Route::resource('stok-gudang', StokGudangController::class);
 
 require __DIR__.'/auth.php';

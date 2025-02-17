@@ -1,100 +1,42 @@
 <x-layout-admin>
-<div class="row">
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Earnings (Monthly)
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            $40,000
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Earnings (Monthly) Card -->
+        <div class="bg-white border-l-4 border-blue-500 shadow-md p-4 rounded-lg flex items-center justify-between">
+            <div>
+                <div class="text-xs font-bold text-blue-500 uppercase mb-1">Earnings (Monthly)</div>
+                <div class="text-lg font-bold text-gray-800">$40,000</div>
             </div>
+            <i class="fas fa-calendar text-gray-300 text-3xl"></i>
         </div>
-    </div>
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Earnings (Annual)
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            $215,000
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                </div>
+        <!-- Earnings (Annual) Card -->
+        <div class="bg-white border-l-4 border-green-500 shadow-md p-4 rounded-lg flex items-center justify-between">
+            <div>
+                <div class="text-xs font-bold text-green-500 uppercase mb-1">Earnings (Annual)</div>
+                <div class="text-lg font-bold text-gray-800">$215,000</div>
             </div>
+            <i class="fas fa-dollar-sign text-gray-300 text-3xl"></i>
         </div>
-    </div>
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Tasks
-                        </div>
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                    50%
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="progress progress-sm mr-2">
-                                    <div class="progress-bar bg-info" role="progressbar"
-                                        style="
-                                            width: 50%;
-                                        "
-                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
+        <!-- Tasks Card -->
+        <div class="bg-white border-l-4 border-blue-400 shadow-md p-4 rounded-lg">
+            <div class="text-xs font-bold text-blue-400 uppercase mb-1">Tasks</div>
+            <div class="flex items-center">
+                <span class="text-lg font-bold text-gray-800 mr-3">50%</span>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-400 h-2 rounded-full" style="width: 50%;"></div>
                 </div>
             </div>
+            <i class="fas fa-clipboard-list text-gray-300 text-3xl mt-2"></i>
         </div>
-    </div>
 
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pending Requests
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            18
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
-                </div>
+        <!-- Pending Requests Card -->
+        <div class="bg-white border-l-4 border-yellow-500 shadow-md p-4 rounded-lg flex items-center justify-between">
+            <div>
+                <div class="text-xs font-bold text-yellow-500 uppercase mb-1">Pending Requests</div>
+                <div class="text-lg font-bold text-gray-800">18</div>
             </div>
+            <i class="fas fa-comments text-gray-300 text-3xl"></i>
         </div>
     </div>
-</div>
 </x-layout-admin>

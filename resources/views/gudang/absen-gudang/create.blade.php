@@ -1,83 +1,38 @@
 <x-layout-gudang>
+    <section class="flex items-center justify-center min-h-screen md:ml-24 ">
+        <div class="bg-gray-800 text-white p-12 rounded-2xl shadow-lg text-center w-[500px]">
+            <h2 class="text-2xl font-bold">Anda Sudah Melakukan Absensi Hari Ini</h2>
+            <div class="my-6 flex justify-center">
+                <img src="{{ asset('asset-landing-page/img/gambar-sudah-absen.png') }}" alt="Absensi"
+                    class="w-40 h-40 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full">
 
-    <x-layout-class></x-layout-class>
-    <main class="flex-grow flex justify-center items-center mt-[-10px] pt-10 pb-10">
-        <div class="bg-[#343A40] p-8 rounded-xl shadow-lg text-center max-w-md relative w-full">
-            <!-- Tombol Kembali -->
-            <a href="{{ url()->previous() }}" class="absolute top-4 left-4 text-white hover:text-gray-300">
-                <i class="fas fa-arrow-left text-2xl"></i>
-            </a>
-
-            <!-- Kamera & Preview Foto -->
-            <div class="mb-6">
-                <video id="video" autoplay class="w-40 h-40 mx-auto rounded-lg border-2 border-gray-600 mb-4"></video>
-                <canvas id="canvas" class="hidden"></canvas>
-                <img id="previewImage" class="w-40 h-40 mx-auto rounded-lg border-2 border-gray-600 mb-4 hidden">
-                <button onclick="takePhoto()"
-                    class="bg-black text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2 mx-auto">
-                    <span>Ambil Foto</span>
-                    <i class="fas fa-camera"></i>
-                </button>
             </div>
+            <p class="text-gray-300">Hitung Mundur Absensi berikutnya :</p>
+            <p id="countdown" class="text-3xl font-bold mt-2">06:00:00 Wib</p>
+            <div class="mt-6 flex justify-center">
+                <a href="#"
+                    class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-xl flex items-center justify-center gap-2">
+                    Rekap Absensimu ➝
+                </a>
 
-            <!-- Keterangan (Dropdown dengan Panah) -->
-            <div class="mb-6 relative">
-                <label for="keterangan" class="block text-white mb-2 text-left">Keterangan:</label>
-                <div class="relative">
-                    <select name="keterangan" id="keterangan"
-                        class="w-full bg-gray-700 text-white rounded-lg px-4 py-2 appearance-none focus:outline-none">
-                        <option value="hadir">Hadir</option>
-                        <option value="sakit">Sakit</option>
-                        <option value="izin">Izin</option>
-                    </select>
-                    <i class="fas fa-chevron-down absolute right-4 top-3 text-white"></i>
-                </div>
-            </div>
 
-            <!-- Tombol Submit -->
-            <div class="flex justify-end">
-                <button type="submit"
-                    class="bg-blue-500 text-white px-6 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-600 transition-all">
-                    <span>Submit</span>
-                    <i class="fas fa-check"></i>
-                </button>
             </div>
         </div>
-    </main>
-
+    </section>
     <script>
-        // Menyalakan kamera saat halaman dimuat
-        document.addEventListener("DOMContentLoaded", function() {
-            const video = document.getElementById("video");
-
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function(error) {
-                    console.error("Kamera tidak bisa diakses!", error);
-                });
-        });
-
-        // Fungsi untuk mengambil foto
-        function takePhoto() {
-            const video = document.getElementById("video");
-            const canvas = document.getElementById("canvas");
-            const previewImage = document.getElementById("previewImage");
-
-            const context = canvas.getContext("2d");
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-
-            // Ambil gambar dari video
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            previewImage.src = canvas.toDataURL("image/png");
-
-            // Tampilkan hasil foto & sembunyikan video
-            previewImage.classList.remove("hidden");
-            video.classList.add("hidden");
+        function updateCountdown() {
+            const now = new Date();
+            const nextAbsensi = new Date();
+            nextAbsensi.setHours(8, 0, 0, 0);
+            if (now.getHours() >= 8) {
+                nextAbsensi.setDate(nextAbsensi.getDate() + 1);
+            }
+            const diff = nextAbsensi - now;
+            const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+            const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+            const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+            document.getElementById("countdown").textContent = `${hours}:${minutes}:${seconds} Wib`;
         }
+        setInterval(updateCountdown, 1000);
     </script>
 </x-layout-gudang>
