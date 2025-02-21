@@ -1,108 +1,133 @@
 <x-layout-admin>
-    <div id="layoutSidenav_content">
+    <div class="p-6 md:ml-32">
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="bg-red-500 text-white p-4 rounded-md">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
-        @endif
-
+        @endif  
         <main>
-            <div class="container flex justify-center">
-                <div class="w-full max-w-2xl">
-                    <div class="mb-4">
-                        <a href="{{ route('datakaryawan.index') }}" class="text-blue-600 hover:underline">&larr;
-                            Kembali</a>
+            <div class="container mx-auto">
+
+                <div class="bg-white shadow-lg rounded-lg p-6 max-w-2xl mx-auto">
+                    <!-- Container untuk tombol kembali dan judul -->
+                    <div class="flex items-center mb-4">
+                        <!-- Ikon Kembali -->
+                        <a href="{{ route('datakaryawan.index') }}"
+                            class="text-blue-500 hover:text-blue-600 text-2xl flex items-center mr-4">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <!-- Judul tetap di tengah -->
+                        <h1 class="text-2xl font-bold flex-1 text-center">Create Data Karyawan</h1>
                     </div>
 
-                    <h1 class="text-center my-4 text-2xl font-bold text-gray-700">
-                        Create Data Karyawan
-                    </h1>
+                    <form action="{{ route('datakaryawan.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <form action="{{ route('datakaryawan.store') }}" method="POST" enctype="multipart/form-data"
-                            class="space-y-4">
-                            @csrf
+                        <!-- Upload Foto -->
+                        <div class="text-center mb-4">
+                            <label for="foto" class="block cursor-pointer">
+                                <img id="preview" src="{{ asset('asset-landing-admin/img/profile.png') }}"
+                                    alt="Upload Foto" class="w-24 h-24 rounded-full shadow-md mx-auto">
+                            </label>
+                            <input type="file" id="foto" name="foto" accept="image/*" class="hidden"
+                                onchange="previewImage(event)">
+                            <p class="text-gray-500 mt-2">Klik foto untuk mengunggah</p>
+                            @error('foto')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                            <div class="text-center">
-                                <label for="foto" class="cursor-pointer inline-block">
-                                    <img id="preview" src="{{ asset('asset-landing-admin/img/profile.png') }}"
-                                        alt="Upload Foto"
-                                        class="w-24 h-24 rounded-full object-cover border border-gray-300">
-                                </label>
-                                <input type="file" id="foto" name="foto" accept="image/*" class="hidden"
-                                    onchange="previewImage(event)">
-                                <p class="text-sm text-gray-600 mt-2">Upload Foto</p>
-                                @error('foto')
-                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Nama -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
+                                <input type="text" id="name" name="name" placeholder="Input Nama"
+                                    class="w-full px-4 py-2 border rounded-md" required>
+                                @error('name')
+                                    <span class="text-red-500">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="name" class="block text-gray-700 font-medium">Nama</label>
-                                    <input type="text" id="name" name="name" placeholder="Input Nama"
-                                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        required>
-                                </div>
-
-                                <div>
-                                    <label for="dob" class="block text-gray-700 font-medium">Tanggal Lahir</label>
-                                    <input name="tanggal_lahir" type="date" id="dob"
-                                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                </div>
-
-                                <div>
-                                    <label for="email" class="block text-gray-700 font-medium">Email</label>
-                                    <input name="email" type="email" id="email" placeholder="Input Email"
-                                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                </div>
-
-                                <div>
-                                    <label for="phone" class="block text-gray-700 font-medium">No Telpon</label>
-                                    <input name="no_telepon" type="tel" id="phone" placeholder="Input No Telpon"
-                                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                </div>
-
-                                <div>
-                                    <label for="position" class="block text-gray-700 font-medium">Jabatan</label>
-                                    <select name="jabatan_id" id="position"
-                                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        required>
-                                        @foreach ($jabatanKaryawan as $row)
-                                            <option value="{{ $row->id }}">{{ $row->nama_jabatan }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label for="gender" class="block text-gray-700 font-medium">Gender</label>
-                                    <select id="gender" name="gender"
-                                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        required>
-                                        <option value="" disabled selected>Pilih Gender</option>
-                                        <option value="Laki-laki">Laki-laki</option>
-                                        <option value="Perempuan">Perempuan</option>
-                                    </select>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label for="age" class="block text-gray-700 font-medium">Umur</label>
-                                    <input name="usia" type="number" id="age"
-                                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                        readonly>
-                                </div>
+                            <!-- Tanggal Lahir -->
+                            <div>
+                                <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal
+                                    Lahir</label>
+                                <input type="date" id="tanggal_lahir" name="tanggal_lahir"
+                                    class="w-full px-4 py-2 border rounded-md" required>
+                                @error('tanggal_lahir')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
 
-                            <div class="text-center">
-                                <button type="submit"
-                                    class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Create</button>
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Input Email"
+                                    class="w-full px-4 py-2 border rounded-md" required>
+                                @error('email')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
-                        </form>
-                    </div>
+
+                            <!-- No Telepon -->
+                            <div>
+                                <label for="no_telepon" class="block text-sm font-medium text-gray-700">No
+                                    Telepon</label>
+                                <input type="tel" id="no_telepon" name="no_telepon" placeholder="Input No Telpon"
+                                    class="w-full px-4 py-2 border rounded-md" required>
+                                @error('no_telepon')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Jabatan -->
+                            <div>
+                                <label for="jabatan_id" class="block text-sm font-medium text-gray-700">Jabatan</label>
+                                <select name="jabatan_id" id="jabatan_id" class="w-full px-4 py-2 border rounded-md"
+                                    required>
+                                    @foreach ($jabatanKaryawan as $row)
+                                        <option value="{{ $row->id }}">{{ $row->nama_jabatan }}</option>
+                                    @endforeach
+                                </select>
+                                @error('jabatan_id')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Gender -->
+                            <div>
+                                <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                                <select id="gender" name="gender" class="w-full px-4 py-2 border rounded-md"
+                                    required>
+                                    <option value="" disabled selected>Pilih Gender</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                                @error('gender')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Usia -->
+                        <div>
+                            <label for="usia" class="block text-sm font-medium text-gray-700">Usia</label>
+                            <input type="number" id="usia" name="usia"
+                                class="w-full px-4 py-2 border rounded-md" readonly>
+                            @error('usia')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit"
+                                class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Create</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </main>
@@ -112,13 +137,12 @@
         function previewImage(event) {
             var reader = new FileReader();
             reader.onload = function() {
-                var output = document.getElementById('preview');
-                output.src = reader.result;
+                document.getElementById('preview').src = reader.result;
             };
             reader.readAsDataURL(event.target.files[0]);
         }
 
-        document.getElementById('dob').addEventListener('change', function() {
+        document.getElementById('tanggal_lahir').addEventListener('change', function() {
             var dob = new Date(this.value);
             var today = new Date();
             var age = today.getFullYear() - dob.getFullYear();
@@ -129,7 +153,7 @@
                 age--;
             }
 
-            document.getElementById('age').value = age;
+            document.getElementById('usia').value = age;
         });
     </script>
 </x-layout-admin>
