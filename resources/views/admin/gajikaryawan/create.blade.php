@@ -1,78 +1,109 @@
 <x-layout-admin>
     <div id="layoutSidenav_content">
-        <div id="layoutSidenav_content">
-            <main>
-                <div id="layoutSidenav_content">
-                    <h1 class="container text-center my-4" style="font-family: 'Arial', sans-serif; color: #333;">
-                        Create Gaji
-                        Karyawan</h1>
+        <main class="flex justify-center items-center min-h-screen py-10">
+            <div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+                
+                <!-- Judul -->
+                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">
+                    Create Gaji Karyawan
+                </h1>
 
-                    <form class="admin-form container" action="#" method="POST" enctype="multipart/form-data"
-                        style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
-                        @csrf
+                <!-- Form -->
+                <form action="{{ route('gajikaryawan.store') }}" method="POST" class="space-y-4">
+                    @csrf
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label"
-                                style="font-weight: bold; color: #495057;">Nama</label>
-                            <input type="text" id="name" name="name" class="form-control form-control-sm"
-                                required
-                                style="border-radius: 8px; border-color: #007bff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="position" class="form-label"
-                                style="font-weight: bold; color: #495057;">Jabatan</label>
-                            <input type="text" id="position" name="position" class="form-control form-control-sm"
-                                required
-                                style="border-radius: 8px; border-color: #007bff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="metode pembayaran" class="form-label"
-                                style="font-weight: bold; color: #495057">Metode Pembayaran</label>
-                            <input type="text" id="metode pembayaran" name="metode pembayaran"
-                                class="form-control from-control-sm" required
-                                style=style="border-radius: 8px; border-color: #007bff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);">
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="bonus" class="form-label" style="font-weight: bold; color:#495057">Bonus
-                            </label>
-                            <input type="number" name="bonus" id="bonus" class="form-control form-control-sm"
-                                required
-                                style="border-radius: 8px; border-color: #007bff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0, 0.12); ">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="potongan gaji" class="form-label"
-                                style="font-weight: bold; color:#495057">Potongan Gaji
-                            </label>
-                            <input type="text" name="potongan gaji" id="potongan gaji"
-                                class="form-control form-control-sm" required
-                                style="border-radius: 8px; border-color: #007bff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0, 0.12); ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="potongan gaji" class="form-label" style="font-weight: bold; color:#495057">Total
-                                Gaji
-                            </label>
-                            <input type="number" name="potongan gaji" id="potongan gaji"
-                                class="form-control form-control-sm" required
-                                style="border-radius: 8px; border-color: #007bff; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0, 0.12); ">
-                        </div>
-
-
-                        <button type="submit" class="btn btn-primary btn-sm"
-                            style="padding: 8px 16px; border-radius: 5px; font-weight: bold; text-transform: uppercase; width: 100%;">Create</button>
-                    </form>
-
-                    <div class="container mt-4 text-center">
-                        <a href="#" class="btn btn-link"
-                            style="text-decoration: none; color: #007bff; font-weight: bold; text-transform: uppercase;">Back
-                            to list</a>
+                    <!-- Pilih Karyawan -->
+                    <div>
+                        <label for="user_id" class="block text-gray-700 font-medium">Nama Karyawan</label>
+                        <select id="user_id" name="user_id" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required onchange="getGajiPokok()">
+                            <option value="">-- Pilih Karyawan --</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}" data-jabatan="{{ $user->jabatan->id }}">
+                                    {{ $user->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
+                    
+                    <!-- Gaji Pokok -->
+                    <div>
+                        <label for="gaji_pokok" class="block text-gray-700 font-medium">Gaji Pokok</label>
+                        <input type="number" id="gaji_pokok" name="gaji_pokok" class="w-full p-3 border rounded-lg bg-gray-100" required readonly>
+                    </div>
+
+                    <!-- Tanggal -->
+                    <div>
+                        <label for="tanggal" class="block text-gray-700 font-medium">Tanggal</label>
+                        <input type="date" id="tanggal" name="tanggal" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+                    </div>
+
+                    <!-- Tipe Pembayaran -->
+                    <div>
+                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium">Tipe Pembayaran</label>
+                        <select id="tipe_pembayaran" name="tipe_pembayaran" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required onchange="handleTipePembayaran()">
+                            <option value="non_tunai">Non Tunai</option>
+                            <option value="tunai">Tunai</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Nomor Rekening -->
+                    <div>
+                        <label for="nomor_rekening" class="block text-gray-700 font-medium">Nomor Rekening</label>
+                        <input type="text" id="nomor_rekening" name="nomor_rekening" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+                    </div>
+                    
+                    <!-- Bonus -->
+                    <div>
+                        <label for="bonus" class="block text-gray-700 font-medium">Bonus (Rp)</label>
+                        <input type="number" id="bonus" name="bonus" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
+                    </div>
+                    
+                    <!-- Potongan -->
+                    <div>
+                        <label for="potongan" class="block text-gray-700 font-medium">Potongan (Rp)</label>
+                        <input type="number" id="potongan" name="potongan" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
+                    </div>
+
+                    <!-- Tombol Submit -->
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-200">
+                        Create
+                    </button>
+                </form>
+
+                <!-- Tombol Back to List -->
+                <div class="mt-6 text-center">
+                    <a href="{{ route('gajikaryawan.index') }}" class="text-blue-600 hover:text-blue-800 font-medium transition">Back to List</a>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
+
+    <script>
+        function handleTipePembayaran() {
+            var tipePembayaran = document.getElementById('tipe_pembayaran').value;
+            var nomorRekening = document.getElementById('nomor_rekening');
+
+            if (tipePembayaran === 'tunai') {
+                nomorRekening.value = '-';
+                nomorRekening.readOnly = true;
+            } else {
+                nomorRekening.value = '';
+                nomorRekening.readOnly = false;
+            }
+        }
+
+        function getGajiPokok() {
+            var userId = document.getElementById('user_id').value;
+            if (userId) {
+                fetch(`/get-gaji-pokok/${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('gaji_pokok').value = data.gaji_pokok ?? 0;
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                document.getElementById('gaji_pokok').value = '';
+            }
+        }
+    </script>
 </x-layout-admin>

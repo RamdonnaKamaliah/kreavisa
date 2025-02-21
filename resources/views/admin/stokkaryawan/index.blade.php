@@ -83,45 +83,7 @@
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
-                <table class="w-full max-w-full border border-gray-300 text-xs md:text-sm">
-                    <thead class="bg-gray-800 text-white">
-                        <tr>
-                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Kategori Barang</th>
-                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal</th>
-                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jumlah</th>
-                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">0-1 - Cream - 36</td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">30/01/2025</td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">100</td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
-                                <div class="flex justify-center space-x-1 md:space-x-2">
-                                    <a href="{{ route('stok-gudang.edit', ['stok_gudang' => 1, 'type' => 'keluar']) }}"
-                                        class="px-2 py-1 text-yellow-600 border border-yellow-600 rounded-full hover:bg-yellow-100 flex items-center gap-1 text-xs md:text-sm">
-                                        <i class="fas fa-edit"></i> <span class="hidden sm:inline">Edit</span>
-                                    </a>
-
-                                    <a href="#"
-                                        class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
-                                        <i class="fas fa-eye"></i> <span class="hidden sm:inline">View</span>
-                                    </a>
-                                    <form action="#" method="POST" class="inline">
-                                        <button type="button"
-                                            class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm"
-                                            onclick="deleted(this)">
-                                            <i class="fas fa-trash-alt"></i> <span
-                                                class="hidden sm:inline">Delete</span>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Repeat rows as needed -->
-                    </tbody>
-                </table>
+               
             </div>
         </div>
     </div>
@@ -133,3 +95,4 @@
         });
     </script>
 </x-layout-admin>
+

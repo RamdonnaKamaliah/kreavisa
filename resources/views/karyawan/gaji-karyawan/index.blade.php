@@ -1,3 +1,4 @@
+<x-layout-karyawan>
 <div class="p-20 md:ml-[250px] md:pt-16">
     <!-- Card Wrapper -->
     <div class="bg-white shadow-lg rounded-lg p-6 md:p-8">
@@ -52,3 +53,4 @@
         </div>
     </div>
 </div>
+</x-layout-karyawan>

@@ -1,39 +1,33 @@
 <x-layout-admin>
     <div id="layoutSidenav_content">
-
-
-        <!-- Card Container -->
-        <main class="d-flex justify-content-center align-items-center" style="min-height: 100vh; padding-top: 2px;">
-            <!-- Card Container -->
-            <div class="card mx-auto shadow p-4"
-                style="max-width: 600px; background-color: #f8f9fa; border-radius: 12px;">
-                <div class="container">
-                    <h1 class="text-center my-4"
-                        style="font-family: 'Arial', sans-serif; color: #333; padding-top: 10px;">
-                        Create Data Karyawan
-                    </h1>
-
-                    <!-- Form -->
-                    <form action="{{ route('jabatankaryawan.store') }}" method="POST">
-                        @csrf
-
-                        <div class="row g-3">
-                            <!-- Nama -->
-                            <div class="col-12">
-                                <label for="name" class="form-label fw-bold">Nama Jabatan</label>
-                                <input type="text" id="nama_jabatan" name="nama_jabatan" placeholder="Input Nama Jabatan" value="{{ old('nama_jabatan') }}"
-                                    class="form-control rounded-pill" required>
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-primary w-100">Create</button>
-                        </div>
-                    </form>
+        <div class="flex justify-center items-center min-h-screen background-color: #f8f9fa; py-6 px-4">
+            <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+                <div class="mb-4">
+                    <a href="{{ route('jabatankaryawan.index') }}" class="text-blue-600 hover:text-blue-800">
+                        <i class='bx bx-arrow-back text-2xl'></i>
+                    </a>
                 </div>
-            </div>
-        </main>
+                <!-- Judul -->
+                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">Create Data Jabatan</h1>
+                
 
+                <!-- Form -->
+                <form action="{{ route('jabatankaryawan.store') }}" method="POST">
+                    @csrf
+
+                    <!-- Input Nama Jabatan -->
+                    <div class="mb-4">
+                        <label for="nama_jabatan" class="block text-gray-700 font-semibold mb-2">Nama Jabatan</label>
+                        <input type="text" id="nama_jabatan" name="nama_jabatan" placeholder="Input Nama Jabatan" value="{{ old('nama_jabatan') }}"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
+                    </div>
+
+                    <!-- Tombol Submit -->
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                        Create
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </x-layout-admin>

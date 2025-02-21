@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminabsenController;
 use App\Http\Controllers\Admin\AdminjabatanController;
 use App\Http\Controllers\Admin\AdminjadwalController;
 use App\Http\Controllers\Admin\AdmingajiController;
+use App\Http\Controllers\Admin\AdminGajiPokokController;
 use App\Http\Controllers\Admin\AdminstokController;
 use App\Http\Controllers\Admin\AdminprofileController;
 use App\Http\Controllers\AbsenController;
@@ -66,13 +67,15 @@ Route::middleware(['auth', Admin::class])->group(function () {
     Route::resource('/admin/jadwalkaryawan', AdminjadwalController::class);
     Route::resource('/admin/gajikaryawan', AdmingajiController::class);
     Route::resource('/admin/stokkaryawan', AdminstokController::class);
+    Route::resource('/admin/gajipokok', AdminGajiPokokController::class);
+    Route::get('/jadwalkaryawan/events', [AdminjadwalController::class, 'getEvents'])->name('jadwalkaryawan.events');
+    Route::get('/get-gaji-pokok/{user_id}', [AdminGajiController::class, 'getGajiPokok']);
 });
 
 Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
     Route::get('/karyawan/absen', [KaryawanAbsenController::class, 'index'])->name('karyawan.absen');
-    Route::get('/absen-karyawan/{absen_karyawan}/edit', [AbsenKaryawanController::class, 'edit'])->name('absen-karyawan.edit');
-    Route::resource('absen-karyawan', AbsenController::class);
+  
     Route::resource('gaji-karyawan', GajiController::class);
     Route::resource('jadwal-karyawan', JadwalController::class);
 });

@@ -1,65 +1,60 @@
 <x-layout-admin>
     <div id="layoutSidenav_content">
-        <main class="d-flex justify-content-center align-items-center" style="min-height: 100vh; padding-top: 2px;">
-            <div class="card mx-auto shadow p-4" style="max-width: 600px; background-color: #f8f9fa; border-radius: 12px;">
-                <div class="container">
-                    <h1 class="text-center my-4" style="font-family: 'Arial', sans-serif; color: #333; padding-top: 10px;">
-                        View Data Karyawan
-                    </h1>
+        <div class="flex justify-center items-center min-h-screen background-color: #f8f9fa; py-6 px-4">
+            <div class="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
+                
+                <!-- Judul -->
+                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">View Data Karyawan</h1>
 
-                    <!-- Foto Karyawan -->
-                    <div class="text-center">
-                        @if ($datakaryawan->foto)
-                            <img src="{{ asset($datakaryawan->foto) }}" class="rounded-circle shadow" alt="Foto Karyawan"
-                                style="width: 120px; height: 120px; object-fit: cover;">
-                        @else
-                            <img src="{{ asset('asset-landing-admin/img/profile.png') }}" class="rounded-circle shadow" alt="Default Foto"
-                                style="width: 120px; height: 120px; object-fit: cover;">
-                        @endif
+                <!-- Foto Karyawan -->
+                <div class="flex justify-center mb-4">
+                    @if ($datakaryawan->foto)
+                        <img src="{{ asset($datakaryawan->foto) }}" class="w-24 h-24 rounded-full shadow-md object-cover">
+                    @else
+                        <img src="{{ asset('asset-landing-admin/img/profile.png') }}" class="w-24 h-24 rounded-full shadow-md object-cover">
+                    @endif
+                </div>
+
+                <!-- Data Karyawan -->
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-gray-600 font-semibold">Nama:</span>
+                        <p class="text-gray-800">{{ $datakaryawan->name }}</p>
                     </div>
 
-                    <div class="row g-3">
-                        <!-- Nama Karyawan -->
-                        <div class="col-12">
-                            <strong>Nama:</strong>
-                            <p>{{ $datakaryawan->name }}</p>
-                        </div>
-                        
-                        <!-- Jabatan -->
-                        <div class="col-12">
-                            <strong>Jabatan:</strong>
-                            <p>{{ $datakaryawan->jabatan->nama_jabatan ?? '-' }}</p>
-
-                        </div>
-                        
-                        <!-- Email -->
-                        <div class="col-12">
-                            <strong>Email:</strong>
-                            <p>{{ $datakaryawan->email }}</p>
-                        </div>
-
-                        <!-- No Telepon -->
-                        <div class="col-12">
-                            <strong>No Telepon:</strong>
-                            <p>{{ $datakaryawan->no_telepon }}</p>
-                        </div>
-
-                        <!-- Gender -->
-                        <div class="col-12">
-                            <strong>Gender:</strong>
-                            <p>{{ $datakaryawan->gender }}</p>
-                        </div>
-
-                        <!-- Usia -->
-                        <div class="col-12">
-                            <strong>Usia:</strong>
-                            <p>{{ $datakaryawan->usia }} tahun</p>
-                        </div>
-
+                    <div>
+                        <span class="text-gray-600 font-semibold">Jabatan:</span>
+                        <p class="text-gray-800">{{ $datakaryawan->jabatan->nama_jabatan ?? '-' }}</p>
                     </div>
-                    <a href="{{ route('datakaryawan.index') }}" class="btn btn-modern mt-4" style="background-color: #000000; color: white;">Back to List</a>
+
+                    <div>
+                        <span class="text-gray-600 font-semibold">Email:</span>
+                        <p class="text-gray-800">{{ $datakaryawan->email }}</p>
+                    </div>
+
+                    <div>
+                        <span class="text-gray-600 font-semibold">No Telepon:</span>
+                        <p class="text-gray-800">{{ $datakaryawan->no_telepon }}</p>
+                    </div>
+
+                    <div>
+                        <span class="text-gray-600 font-semibold">Gender:</span>
+                        <p class="text-gray-800">{{ $datakaryawan->gender }}</p>
+                    </div>
+
+                    <div>
+                        <span class="text-gray-600 font-semibold">Usia:</span>
+                        <p class="text-gray-800">{{ $datakaryawan->usia }} tahun</p>
+                    </div>
+                </div>
+
+                <!-- Tombol Kembali -->
+                <div class="text-center mt-6">
+                    <a href="{{ route('datakaryawan.index') }}" class="w-full bg-gray-900 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition">
+                        Kembali
+                    </a>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 </x-layout-admin>

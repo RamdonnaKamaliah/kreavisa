@@ -4,62 +4,143 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\GajiKaryawan;
+use App\Models\User;
+use App\Models\JabatanKaryawan;
 
-class AdmingajiController extends Controller
+class AdminGajiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar gaji karyawan.
      */
     public function index()
     {
-        return view ('admin.gajikaryawan.index');
+        // Ambil data gaji karyawan beserta relasi user dan jabatan
+        $gajiKaryawan = GajiKaryawan::with(['user', 'user.jabatan'])->get();
+        return view('admin.gajikaryawan.index', compact('gajiKaryawan'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk membuat gaji karyawan baru.
      */
     public function create()
     {
-        return view ('admin.gajikaryawan.create');
+        // Ambil data user (karyawan) dan jabatan
+        $users = User::where('usertype', '!=', 'admin')->get();
+        $jabatan = JabatanKaryawan::all();
+        return view('admin.gajikaryawan.create', compact('users', 'jabatan'));
     }
 
+    public function getGajiPokok($user_id)
+    {
+        $user = User::with('jabatan', 'gajiPokok')->find($user_id);
+        if ($user && $user->gajiPokok) {
+            return response()->json(['gaji_pokok' => $user->gajiPokok->gaji_pokok]);
+        }
+        return response()->json(['gaji_pokok' => 0]);
+    }
+    
+
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan gaji karyawan baru ke database.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required',
+            'tanggal' => 'required|date',
+            'nomor_rekening' => 'required',
+            'tipe_pembayaran' => 'required',
+            'bonus' => 'nullable|numeric',
+            'potongan' => 'nullable|numeric',
+        ]);
+    
+        $user = User::with('jabatan', 'gajiPokok')->find($request->user_id);
+    
+        if (!$user || !$user->gajiPokok) {
+            return back()->with('error', 'Gaji pokok tidak ditemukan untuk karyawan ini.');
+        }
+    
+        $gaji_pokok = $user->gajiPokok->gaji_pokok ?? 0;
+    
+        // Ambil nilai bonus dan potongan langsung dalam rupiah
+        $bonus = $request->bonus ?? 0;
+        $potongan = $request->potongan ?? 0;
+    
+        $total_gaji = $gaji_pokok + $bonus - $potongan;
+    
+        GajiKaryawan::create([
+            'user_id' => $request->user_id,
+            'tanggal' => $request->tanggal,
+            'nomor_rekening' => $request->nomor_rekening,
+            'tipe_pembayaran' => $request->tipe_pembayaran,
+            'gaji_pokok' => $gaji_pokok,
+            'bonus' => $bonus,
+            'potongan' => $potongan,
+            'total_gaji' => $total_gaji,
+        ]);
+    
+        return redirect()->route('gajikaryawan.index')->with('success', 'Gaji karyawan berhasil ditambahkan.');
+    }
+    
+    /**
+     * Menampilkan form untuk mengedit gaji karyawan.
+     */
+    public function edit($id)
+    {
+        // Ambil data gaji karyawan berdasarkan ID
+        $gajiKaryawan = GajiKaryawan::findOrFail($id);
+        $users = User::where('usertype', '!=', 'admin')->get();
+        $jabatan = JabatanKaryawan::all();
+        return view('admin.gajikaryawan.edit', compact('gajiKaryawan', 'users', 'jabatan'));
     }
 
     /**
-     * Display the specified resource.
+     * Mengupdate data gaji karyawan di database.
      */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi input
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'tanggal' => 'required|date',
+            'nomor_rekening' => 'required|string',
+            'tipe_pembayaran' => 'required|string',
+            'gaji_pokok' => 'required|numeric',
+            'bonus' => 'nullable|numeric',
+            'potongan' => 'nullable|numeric',
+        ]);
+    
+        // Hitung total gaji
+        $totalGaji = $request->gaji_pokok + ($request->bonus ?? 0) - ($request->potongan ?? 0);
+    
+        // Update data gaji karyawan
+        $gajiKaryawan = GajiKaryawan::findOrFail($id);
+        $gajiKaryawan->update([
+            'user_id' => $request->user_id,
+            'tanggal' => $request->tanggal,
+            'nomor_rekening' => $request->nomor_rekening,
+            'tipe_pembayaran' => $request->tipe_pembayaran,
+            'gaji_pokok' => $request->gaji_pokok,
+            'bonus' => $request->bonus ?? 0,
+            'potongan' => $request->potongan ?? 0,
+            'total_gaji' => $totalGaji,
+        ]);
+    
+        // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('gajikaryawan.index')->with('success', 'Data gaji karyawan berhasil diperbarui.');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menghapus data gaji karyawan dari database.
      */
-    public function edit(string $id)
+    public function destroy($id)
     {
-        return view ('admin.gajikaryawan.edit');
-    }
+        // Cari dan hapus data gaji karyawan berdasarkan ID
+        $gajiKaryawan = GajiKaryawan::findOrFail($id);
+        $gajiKaryawan->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('gajikaryawan.index')->with('success', 'Data gaji karyawan berhasil dihapus.');
     }
 }
