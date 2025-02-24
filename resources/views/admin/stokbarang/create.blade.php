@@ -1,8 +1,6 @@
-@push('page-title')
-    Data Stok Barang
-@endpush
-<x-layout-admin> 
-    <div class="p-4 md:p-6 md:ml-[250px] overflow-x-hidden flex justify-center">
+@extends('layout.main')
+@section('content')
+    <div class="p-4 md:p-6 overflow-x-hidden flex justify-center">
         <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
             <h2 class="text-center text-xl font-bold text-gray-900 mb-4">Tambah Stok Barang</h2>
 
@@ -57,4 +55,4 @@
             </form>
         </div>
     </div>
-</x-layout-admin>
+    @endsection

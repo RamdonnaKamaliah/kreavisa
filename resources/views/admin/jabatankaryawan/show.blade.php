@@ -1,15 +1,14 @@
-@push('page-title')
-    Data Jabatan Karyawan
-@endpush
-<x-layout-admin>
+@extends('layout.main')
+@section('content')
     <div id="layoutSidenav_content">
         <!-- Card Container -->
         <main class="flex justify-center items-center min-h-screen py-6 px-4">
             <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-                
+
                 <!-- Tombol Kembali -->
                 <div class="mb-4">
-                    <a href="{{ route('jabatankaryawan.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition">
+                    <a href="{{ route('jabatankaryawan.index') }}"
+                        class="inline-flex items-center text-blue-600 hover:text-blue-800 transition">
                         <i class='bx bx-arrow-back text-2xl'></i>
                         <span class="ml-2 text-lg font-medium"></span>
                     </a>
@@ -25,4 +24,4 @@
             </div>
         </main>
     </div>
-</x-layout-admin>
+@endsection

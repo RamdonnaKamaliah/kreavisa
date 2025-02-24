@@ -49,8 +49,8 @@ class KaryawanAbsenController extends Controller
     $userLng = floatval(trim($userLng));
 
     // Koordinat titik absen
-    $titikAbsen = ['lat' => -6.6048297669848015, 'lng' => 106.72811341936045];
-    $radiusMaksimum = 30; // 10 meter
+    $titikAbsen = ['lat' => -6.610085340619139, 'lng' => 106.76667964842298];
+    $radiusMaksimum = 10000; // 10 meter
 
     // Fungsi hitung jarak (Haversine formula)
     function hitungJarak($lat1, $lon1, $lat2, $lon2) {

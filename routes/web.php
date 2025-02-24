@@ -79,8 +79,15 @@ Route::middleware(['auth', Admin::class])->group(function () {
 
 Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
-    Route::get('/karyawan/absen', [KaryawanAbsenController::class, 'index'])->name('karyawan.absen');
-  
+    Route::get('karyawan/absen/sakit', [KaryawanAbsenController::class, 'createSakit'])
+    ->name('karyawan.absen.sakit');
+Route::post('karyawan/absen/sakit', [KaryawanAbsenController::class, 'storeSakit'])
+    ->name('karyawan.absen.sakit.store');
+Route::get('karyawan/absen/izin', [KaryawanAbsenController::class, 'createIzin'])
+    ->name('karyawan.absen.izin');
+Route::post('karyawan/absen/izin', [KaryawanAbsenController::class, 'storeIzin'])
+    ->name('karyawan.absen.izin.store');
+Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
     Route::resource('gaji-karyawan', GajiController::class);
     Route::resource('jadwal-karyawan', JadwalController::class);
 });

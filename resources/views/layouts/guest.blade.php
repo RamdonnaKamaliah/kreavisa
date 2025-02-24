@@ -34,13 +34,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="d-flex align-items-center min-vh-100"
-    style="background: linear-gradient(135deg, #343045, #C0B7E8, #8176AF, #343045);">
+<body class="d-flex align-items-center min-vh-100" style="background: linear-gradient(135deg, #fff, #fff, #1D232A);">
     <div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-10">
-                <div class="card o-hidden border-0 shadow-lg">
+                <div class="card o-hidden border-0">
                     <div class="card-body p-5">
                         <!-- Form Content -->
 

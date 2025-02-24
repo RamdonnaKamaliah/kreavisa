@@ -1,7 +1,5 @@
-@push('page-title')
-    Data Gaji Karyawan
-@endpush
-<x-layout-admin>
+@extends('layout.main')
+@section('content')
     <div id="layoutSidenav_content">
         <main class="flex justify-center items-center min-h-screen py-10">
             <div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
@@ -109,4 +107,4 @@
             }
         }
     </script>
-</x-layout-admin>
+@endsection

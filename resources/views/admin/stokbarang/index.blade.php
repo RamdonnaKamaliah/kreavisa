@@ -1,9 +1,6 @@
-@push('page-title')
-    Data Stok Barang
-@endpush
-
-<x-layout-admin> 
-    <div class="p-4 md:p-6 md:ml-[250px] overflow-x-hidden">
+@extends('layout.main')
+@section('content')
+    <div class="p-4 md:p-6  overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel -->
         <div class="mb-4">
             <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
@@ -149,4 +146,5 @@
             </div>
         </div>
     </div>
-</x-layout-admin>
+
+    @endsection

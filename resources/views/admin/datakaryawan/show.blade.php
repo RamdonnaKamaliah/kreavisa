@@ -1,60 +1,45 @@
-<x-layout-admin>
+@extends('layout.main')
+@section('content')
     <div id="layoutSidenav_content">
-        <div class="flex justify-center items-center min-h-screen background-color: #f8f9fa; py-6 px-4">
-            <div class="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
-                
-                <!-- Judul -->
-                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">View Data Karyawan</h1>
+        <div class="relative flex justify-center items-center py-8 px-6 md:ml-64">
+            <!-- Background Ellipse -->
+            <svg class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 w-full top-[-50px]" width="1320"
+                height="372" viewBox="0 0 1320 372" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="660" cy="17" rx="660" ry="355" fill="#1d232a" />
+            </svg>
+
+            <div class="w-full max-w-5xl text-white relative z-10">
+                <div class="flex items-center mb-4">
+                    <a href="{{ route('datakaryawan.index') }}"
+                        class="text-blue-500 hover:text-blue-600 text-2xl flex items-center mr-4">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
 
                 <!-- Foto Karyawan -->
-                <div class="flex justify-center mb-4">
-                    @if ($datakaryawan->foto)
-                        <img src="{{ asset($datakaryawan->foto) }}" class="w-24 h-24 rounded-full shadow-md object-cover">
-                    @else
-                        <img src="{{ asset('asset-landing-admin/img/profile.png') }}" class="w-24 h-24 rounded-full shadow-md object-cover">
-                    @endif
-                </div>
-
-                <!-- Data Karyawan -->
-                <div class="space-y-4">
-                    <div>
-                        <span class="text-gray-600 font-semibold">Nama:</span>
-                        <p class="text-gray-800">{{ $datakaryawan->name }}</p>
-                    </div>
-
-                    <div>
-                        <span class="text-gray-600 font-semibold">Jabatan:</span>
-                        <p class="text-gray-800">{{ $datakaryawan->jabatan->nama_jabatan ?? '-' }}</p>
-                    </div>
-
-                    <div>
-                        <span class="text-gray-600 font-semibold">Email:</span>
-                        <p class="text-gray-800">{{ $datakaryawan->email }}</p>
-                    </div>
-
-                    <div>
-                        <span class="text-gray-600 font-semibold">No Telepon:</span>
-                        <p class="text-gray-800">{{ $datakaryawan->no_telepon }}</p>
-                    </div>
-
-                    <div>
-                        <span class="text-gray-600 font-semibold">Gender:</span>
-                        <p class="text-gray-800">{{ $datakaryawan->gender }}</p>
-                    </div>
-
-                    <div>
-                        <span class="text-gray-600 font-semibold">Usia:</span>
-                        <p class="text-gray-800">{{ $datakaryawan->usia }} tahun</p>
+                <div class="flex justify-center mb-8 relative">
+                    <div class="rounded-full p-2 border-4 border-blue-600 bg-gray-900 cursor-pointer" id="profilePic">
+                        @if ($datakaryawan->foto)
+                            <img src="{{ asset($datakaryawan->foto) }}"
+                                class="w-48 h-48 rounded-full shadow-md object-cover border border-gray-600">
+                        @else
+                            <img src="{{ asset('asset-landing-admin/img/profile.png') }}"
+                                class="w-32 h-32 rounded-full shadow-md object-cover border border-gray-600">
+                        @endif
                     </div>
                 </div>
 
-                <!-- Tombol Kembali -->
-                <div class="text-center mt-6">
-                    <a href="{{ route('datakaryawan.index') }}" class="w-full bg-gray-900 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition">
-                        Kembali
-                    </a>
+                <!-- Data Form -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                    @foreach ([['label' => 'Nama Lengkap', 'icon' => 'user', 'value' => $datakaryawan->name], ['label' => 'User Name', 'icon' => 'user-circle', 'value' => 'Anonymous'], ['label' => 'Gender', 'icon' => 'venus-mars', 'value' => $datakaryawan->gender], ['label' => 'Email', 'icon' => 'envelope', 'value' => $datakaryawan->email], ['label' => 'No. Telp', 'icon' => 'phone', 'value' => $datakaryawan->no_telepon], ['label' => 'Jabatan', 'icon' => 'briefcase', 'value' => $datakaryawan->jabatan->nama_jabatan ?? '-'], ['label' => 'Tanggal Lahir', 'icon' => 'calendar', 'value' => $datakaryawan->tanggal_lahir], ['label' => 'Usia', 'icon' => 'birthday-cake', 'value' => $datakaryawan->usia . ' th']] as $item)
+                        <div class="pb-3 border-b border-gray-600">
+                            <label class="block text-gray-400 text-sm mb-1"><i
+                                    class="fas fa-{{ $item['icon'] }} mr-2"></i>{{ $item['label'] }}</label>
+                            <p class="font-bold text-lg">{{ $item['value'] }}</p>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-</x-layout-admin>
+@endsection

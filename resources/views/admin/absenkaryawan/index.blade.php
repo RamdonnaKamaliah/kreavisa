@@ -1,51 +1,101 @@
-@push('page-title')
-    Data Absen Karyawan
-@endpush
-<x-layout-admin>
-    <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h4 text-secondary">Absensi Karyawan</h1>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped" id="myTable">
-                <thead class="table-dark text-white">
-                    <tr>
-                        <th>Nama</th>
-                        <th>Tanggal</th>
-                        <th>Keterangan</th>
-                        <th>Foto</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($absens as $absen)
-                    <tr>
-                        <td>{{ $absen->user->name }}</td>
-                        <td>{{ $absen->tanggal_absensi }}</td>
-                        <td>{{ ucfirst($absen->status) }}</td>
-                        <td>
-                            @if($absen->foto)
-                            <img src="{{ asset('storage/' . $absen->foto) }}" class="rounded-circle" width="50">
-                            @else
-                            Tidak ada foto
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('admin.absensi.show', $absen->id) }}" class="btn btn-outline-primary btn-sm">
-                                <i class="fas fa-eye"></i> Lihat
-                            </a>
-                            <form action="{{ route('admin.absensi.destroy', $absen->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Hapus
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+@extends('layout.main')
+@section('content')
+    <div class="p-4 md:p-6 overflow-x-hidden">
+        <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md">
+            <h2 class="text-center text-xl font-bold mb-4">Rekap Absen Karyawan</h2>
+            <div class="flex justify-between items-center mb-4">
+                <div class="relative flex items-center border border-gray-300 rounded-md overflow-hidden bg-white">
+                    <input type="date" id="filterDate" class="p-2 text-black border-none focus:ring-0 bg-white">
+                    <button onclick="applyFilter()" class="p-2 text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button onclick="resetFilter()" class="p-2 text-gray-600 hover:text-red-600">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto mt-4">
+                <table class="w-full border border-gray-300 text-xs md:text-sm">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2">Nama</th>
+                            <th class="border border-gray-300 px-4 py-2">Jabatan</th>
+                            <th class="border border-gray-300 px-4 py-2">Tanggal</th>
+                            <th class="border border-gray-300 px-4 py-2">Status</th>
+                            <th class="border border-gray-300 px-4 py-2">Lokasi</th>
+                            <th class="border border-gray-300 px-4 py-2">Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($absen->isEmpty())
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-gray-500">Tabel kosong</td>
+                            </tr>
+                        @else
+                            @foreach ($absen as $item)
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2">{{ $item->user->name ?? '-' }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $item->user->jabatan->nama_jabatan ?? '-' }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $item->tanggal_absensi }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ ucfirst($item->status) }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ $item->lokasi ?? '-' }}</td>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    @if ($item->foto)
+                                        <a href="{{ asset($item->foto) }}" target="_blank">
+                                            <img src="{{ asset($item->foto) }}" alt="Foto Absen" class="foto-absen">
+                                        </a>
+                                    @else
+                                        <span>-</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                    
+                </table>
+            </div>
+
+            <div class="mt-4">
+                {{ $absen->links() }}
+            </div>
         </div>
     </div>
-</x-layout-admin>
+
+    <style>
+        .foto-absen {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function applyFilter() {
+            let date = document.getElementById("filterDate").value;
+            let url = new URL(window.location.href);
+            if (date) {
+                url.searchParams.set('tanggal', date);
+            } else {
+                url.searchParams.delete('tanggal');
+            }
+            window.location.href = url.toString();
+        }
+
+        function resetFilter() {
+            let url = new URL(window.location.href);
+            url.searchParams.delete('tanggal');
+            window.location.href = url.toString();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('tanggal')) {
+                document.getElementById("filterDate").value = params.get('tanggal');
+            }
+        });
+    </script>
+@endsection

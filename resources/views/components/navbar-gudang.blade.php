@@ -14,7 +14,7 @@
         <!-- Profile Section -->
         <a href="{{ route('profile.index') }}">
             <div class="flex items-center space-x-3 p-3 bg-gray-800 rounded-lg mb-4 cursor-pointer">
-                <img src="{{ asset('asset-landing-admin/img/undraw_profile.svg') }}" class="w-12 h-12 rounded-full cursor-pointer" alt="User Profile">
+                <img src="{{ asset('asset-landing-page/img/profile.png') }}" class="w-12 h-12 rounded-full cursor-pointer" alt="User Profile">
                 <div>
                     <span class="text-sm font-semibold block">{{ auth()->check() ? auth()->user()->name : 'Guest' }}</span>
                     <span class="text-xs text-gray-400">Karyawan</span>
