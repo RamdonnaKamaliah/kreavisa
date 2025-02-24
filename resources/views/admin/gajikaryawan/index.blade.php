@@ -1,19 +1,51 @@
+@push('page-title')
+    Data Gaji Karyawan
+@endpush
 <x-layout-admin> 
     <div class="p-4 md:p-6 md:ml-[250px] overflow-x-hidden">
+        <!-- Dropdown Pilihan Tabel -->
+        <!-- Dropdown Pilihan Tabel -->
+<div class="mb-4">
+    <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
+    <div class="max-w-xs">
+        <select id="tableSelect" class="p-2 border border-gray-300 rounded-md w-full">
+            <option value="gajiKaryawan">Laporan Gaji Karyawan</option> 
+            <option value="gajiPokok">Laporan Gaji Pokok</option> 
+        </select>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ambil URL saat ini
+        let currentURL = window.location.href;
+
+        // Ambil elemen select
+        let selectElement = document.getElementById("tableSelect");
+
+        // Cek URL untuk menentukan opsi yang dipilih
+        if (currentURL.includes("gajikaryawan")) {
+            selectElement.value = "gajiKaryawan";
+        } else if (currentURL.includes("gajipokok")) {
+            selectElement.value = "gajiPokok";
+        }
+
+        // Tambahkan event listener untuk redirect ketika dropdown berubah
+        selectElement.addEventListener("change", function() {
+            let selectedValue = this.value;
+            if (selectedValue === "gajiKaryawan") {
+                window.location.href = "{{ route('gajikaryawan.index') }}";
+            } else if (selectedValue === "gajiPokok") {
+                window.location.href = "{{ route('gajipokok.index') }}";
+            }
+        });
+    });
+</script>
+
         <!-- Laporan Stok Masuk -->
         <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md">
             <h2 class="text-center text-xl font-bold mb-4">Laporan Gaji Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
-                <div class="space-x-2">
-                    <a href="{{ route('gajikaryawan.index') }}"
-                        class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md">
-                        Gaji Karyawan
-                    </a>
-                    <a href="{{ route('gajipokok.index') }}"
-                        class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md">
-                        Gaji Pokok
-                    </a>
-                </div>
                 <a href="{{ route('gajikaryawan.create') }}"
                     class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md">
                     + Tambah Data

@@ -1,3 +1,6 @@
+@push('page-title')
+    Absen Karyawan
+@endpush
 <x-layout-gudang>
     <section class="flex-grow flex items-center justify-center min-h-screen md:ml-16 md:mr-0 md:pl-40 pt-20">
         <div class="p-6 rounded-xl shadow-lg text-center max-w-4xl w-full mx-auto md:ml-auto md:mr-auto bg-gray-800">

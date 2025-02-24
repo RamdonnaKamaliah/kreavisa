@@ -1,3 +1,6 @@
+@push('page-title')
+    Data Absen Karyawan
+@endpush
 <x-layout-admin>
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-4">

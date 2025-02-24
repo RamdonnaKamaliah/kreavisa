@@ -1,3 +1,6 @@
+@push('page-title')
+    Data Gaji Karyawan
+@endpush
 <x-layout-admin>
     <div id="layoutSidenav_content">
         <!-- Container utama -->

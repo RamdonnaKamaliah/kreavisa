@@ -1,4 +1,7 @@
-<x-layout-karyawan>
+@push('page-title')
+    Profile Karyawan
+@endpush
+<x-layout-gudang>
     <div class="max-w-4xl mx-auto py-16 px-6 bg-gray-800 rounded-2xl shadow-2xl md:mr-20 mt-10">
         <div class="flex flex-wrap items-center gap-6">
             <div
@@ -55,4 +58,4 @@
             </div>
         </div>
     </div>
-</x-layout-karyawan>
+</x-layout-gudang>

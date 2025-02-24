@@ -1,3 +1,6 @@
+@push('page-title')
+    Data Jabatan Karyawan
+@endpush
 <x-layout-admin>
     <div id="layoutSidenav_content">
         <div class="flex justify-center items-center min-h-screen background-color: #f8f9fa; py-6 px-4">

@@ -40,6 +40,7 @@ class AdmindataController extends Controller
 public function store(Request $request)
 {
     $request->validate([
+        'nama_lengkap' => 'required|string|max:100',
         'name' => 'required|string|max:100',
         'usia' => 'required|integer|min:18|max:65',
         'gender' => 'required|in:Laki-laki,Perempuan',
@@ -93,20 +94,28 @@ public function store(Request $request)
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $karyawan = User::findOrFail($id);
+{
+    $karyawan = User::findOrFail($id);
+
+    $request->validate([
+        'jabatan_id' => 'required|exists:jabatan_karyawans,id',
+    ]);
+
+    // Ambil data jabatan berdasarkan ID
+    $jabatan = JabatanKaryawan::findOrFail($request->jabatan_id);
     
-        $request->validate([
-            'jabatan_id' => 'required|exists:jabatan_karyawans,id',
-        ]);
-    
-        // Hanya memperbarui jabatan
-        $karyawan->update([
-            'jabatan_id' => $request->jabatan_id,
-        ]);
-    
-        return redirect()->route('datakaryawan.index')->with('edited', 'true');
-    }
+    // Tentukan usertype berdasarkan jabatan
+    $usertype = (strtolower($jabatan->nama_jabatan) === 'gudang') ? 'gudang' : 'karyawan';
+
+    // Update jabatan dan usertype di database
+    $karyawan->update([
+        'jabatan_id' => $request->jabatan_id,
+        'usertype' => $usertype,
+    ]);
+
+    return redirect()->route('datakaryawan.index')->with('edited', 'true');
+}
+
     
 
 public function show($id)

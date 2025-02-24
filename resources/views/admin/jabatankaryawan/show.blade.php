@@ -1,3 +1,6 @@
+@push('page-title')
+    Data Jabatan Karyawan
+@endpush
 <x-layout-admin>
     <div id="layoutSidenav_content">
         <!-- Card Container -->

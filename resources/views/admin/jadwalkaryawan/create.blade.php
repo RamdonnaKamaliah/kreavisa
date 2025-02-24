@@ -1,3 +1,6 @@
+@push('page-title')
+    Data Jadwal Karyawan
+@endpush
 <x-layout-admin>
     <div class="container mt-5">
         <div class="card shadow-sm">

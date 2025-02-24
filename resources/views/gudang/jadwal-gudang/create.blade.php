@@ -1,1 +1,3 @@
-<h1>jkjg</h1>
+@push('page-title')
+    Jadwal Karyawan
+@endpush

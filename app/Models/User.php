@@ -16,6 +16,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'nama_lengkap',
         'foto',
         'name',
         'usia',
@@ -56,6 +57,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(GajiPokok::class, 'jabatan_id', 'jabatan_id');
     }
+
+
     /**
      * Relasi ke tabel jabatan_karyawans.
      */

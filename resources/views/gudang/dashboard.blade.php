@@ -3,7 +3,7 @@
 
         <!-- Header -->
         <div class="mb-8 text-center md:text-left">
-            <h1 class="text-4xl font-bold text-white font-protest">Hai, Ramdona 👋</h1>
+            <h1 class="text-4xl font-bold text-white font-protest">Hai, {{ auth()->check() ? auth()->user()->nama_lengkap : 'Guest' }} 👋</h1>
             <p class="text-lg text-gray-300 font-popins">Selamat datang di platform digital management karyawan</p>
         </div>
 
@@ -40,7 +40,7 @@
                 class="bg-[#191E24] p-6 rounded-xl shadow-lg border border-gray-600 flex flex-col items-center justify-center transition hover:scale-105">
                 <i data-feather="briefcase" class="text-gray-400 text-4xl mb-3"></i>
                 <p class="text-gray-300 text-lg">Jabatan Anda:</p>
-                <p class="text-2xl font-bold text-white">Packing</p>
+                <p class="text-2xl font-bold text-white">{{ auth()->check() ? auth()->user()->jabatan->nama_jabatan : 'Guest' }}</p>
             </div>
 
         </div>

@@ -1,3 +1,6 @@
+@push('page-title')
+    Data Gaji Karyawan
+@endpush
 <x-layout-admin>
     <div id="layoutSidenav_content">
         <main class="flex justify-center items-center min-h-screen py-10">

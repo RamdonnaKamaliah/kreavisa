@@ -1,5 +1,7 @@
-<x-layout-admin>
-    
+@push('page-title')
+    Data Jabatan Karyawan
+@endpush
+<x-layout-admin> 
     <div class="p-4 md:p-6 md:ml-[250px] overflow-x-hidden">
         <!-- Laporan Stok Masuk -->
         <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md">

@@ -1,3 +1,6 @@
+@push('page-title')
+    Jadwal Karyawan
+@endpush
 <x-layout-gudang>
     <div class="flex justify-center items-center min-h-screen px-4 md:ml-64 pt-20">
         <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-4xl">
