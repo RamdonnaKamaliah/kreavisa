@@ -2,49 +2,45 @@
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h4 text-secondary">Absensi Karyawan</h1>
-            {{-- <a href="{{ route('absenkaryawan.create') }}" class="btn btn-primary">
-                + Tambah Data
-            </a> --}}
-
         </div>
-        <!-- Membungkus tabel dengan class table-responsive untuk membuatnya responsif -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped" id="myTable">
                 <thead class="table-dark text-white">
                     <tr>
-                        <th class="text-start">Nama</th>
-                        <th class="text-start">Tanggal</th>
-                        <th class="text-start">Keterangan</th>
-                        <th class="text-start">Foto</th>
-                        <th class="text-center">Aksi</th>
+                        <th>Nama</th>
+                        <th>Tanggal</th>
+                        <th>Keterangan</th>
+                        <th>Foto</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Contoh data statis -->
+                    @foreach($absens as $absen)
                     <tr>
-                        <td>Rizky</td>
-                        <td>30/01/2025</td>
-                        <td>Hadir</td>
+                        <td>{{ $absen->user->name }}</td>
+                        <td>{{ $absen->tanggal_absensi }}</td>
+                        <td>{{ ucfirst($absen->status) }}</td>
                         <td>
-                            <img src="{{ asset('asset-landing-admin/img/profile1.jpeg') }}" class="rounded-circle me-2"
-                                alt="Foto Profil" style="width: 50px; height: 50px; object-fit: cover;">
+                            @if($absen->foto)
+                            <img src="{{ asset('storage/' . $absen->foto) }}" class="rounded-circle" width="50">
+                            @else
+                            Tidak ada foto
+                            @endif
                         </td>
                         <td class="text-center">
-                            <div class="d-flex flex-wrap justify-content-center gap-2">
-                                <!-- Cek Profile Button -->
-                                <a href="#" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> <span class="d-none d-sm-inline">View</span>
-                                </a>
-
-                                <!-- Hapus Button -->
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i> <span class="d-none d-sm-inline">Hapus</span>
+                            <a href="{{ route('admin.absensi.show', $absen->id) }}" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-eye"></i> Lihat
+                            </a>
+                            <form action="{{ route('admin.absensi.destroy', $absen->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Hapus
                                 </button>
-                            </div>
-
+                            </form>
                         </td>
                     </tr>
-                    <!-- Tambahkan data lainnya di sini -->
+                    @endforeach
                 </tbody>
             </table>
         </div>

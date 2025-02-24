@@ -52,6 +52,10 @@ class User extends Authenticatable
         ];
     }
 
+    public function gajiPokok()
+    {
+        return $this->hasOne(GajiPokok::class, 'jabatan_id', 'jabatan_id');
+    }
     /**
      * Relasi ke tabel jabatan_karyawans.
      */

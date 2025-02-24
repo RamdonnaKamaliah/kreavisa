@@ -1,65 +1,45 @@
-<x-layout-admin>
+@extends('layout.main')
+@section('content')
     <div id="layoutSidenav_content">
-        <main class="d-flex justify-content-center align-items-center" style="min-height: 100vh; padding-top: 2px;">
-            <div class="card mx-auto shadow p-4" style="max-width: 600px; background-color: #f8f9fa; border-radius: 12px;">
-                <div class="container">
-                    <h1 class="text-center my-4" style="font-family: 'Arial', sans-serif; color: #333; padding-top: 10px;">
-                        View Data Karyawan
-                    </h1>
+        <div class="relative flex justify-center items-center py-8 px-6 md:ml-64">
+            <!-- Background Ellipse -->
+            <svg class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 w-full top-[-50px]" width="1320"
+                height="372" viewBox="0 0 1320 372" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="660" cy="17" rx="660" ry="355" fill="#1d232a" />
+            </svg>
 
-                    <!-- Foto Karyawan -->
-                    <div class="text-center">
+            <div class="w-full max-w-5xl text-white relative z-10">
+                <div class="flex items-center mb-4">
+                    <a href="{{ route('datakaryawan.index') }}"
+                        class="text-blue-500 hover:text-blue-600 text-2xl flex items-center mr-4">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+
+                <!-- Foto Karyawan -->
+                <div class="flex justify-center mb-8 relative">
+                    <div class="rounded-full p-2 border-4 border-blue-600 bg-gray-900 cursor-pointer" id="profilePic">
                         @if ($datakaryawan->foto)
-                            <img src="{{ asset($datakaryawan->foto) }}" class="rounded-circle shadow" alt="Foto Karyawan"
-                                style="width: 120px; height: 120px; object-fit: cover;">
+                            <img src="{{ asset($datakaryawan->foto) }}"
+                                class="w-48 h-48 rounded-full shadow-md object-cover border border-gray-600">
                         @else
-                            <img src="{{ asset('asset-landing-admin/img/profile.png') }}" class="rounded-circle shadow" alt="Default Foto"
-                                style="width: 120px; height: 120px; object-fit: cover;">
+                            <img src="{{ asset('asset-landing-admin/img/profile.png') }}"
+                                class="w-32 h-32 rounded-full shadow-md object-cover border border-gray-600">
                         @endif
                     </div>
+                </div>
 
-                    <div class="row g-3">
-                        <!-- Nama Karyawan -->
-                        <div class="col-12">
-                            <strong>Nama:</strong>
-                            <p>{{ $datakaryawan->name }}</p>
+                <!-- Data Form -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                    @foreach ([['label' => 'Nama Lengkap', 'icon' => 'user', 'value' => $datakaryawan->name], ['label' => 'User Name', 'icon' => 'user-circle', 'value' => 'Anonymous'], ['label' => 'Gender', 'icon' => 'venus-mars', 'value' => $datakaryawan->gender], ['label' => 'Email', 'icon' => 'envelope', 'value' => $datakaryawan->email], ['label' => 'No. Telp', 'icon' => 'phone', 'value' => $datakaryawan->no_telepon], ['label' => 'Jabatan', 'icon' => 'briefcase', 'value' => $datakaryawan->jabatan->nama_jabatan ?? '-'], ['label' => 'Tanggal Lahir', 'icon' => 'calendar', 'value' => $datakaryawan->tanggal_lahir], ['label' => 'Usia', 'icon' => 'birthday-cake', 'value' => $datakaryawan->usia . ' th']] as $item)
+                        <div class="pb-3 border-b border-gray-600">
+                            <label class="block text-gray-400 text-sm mb-1"><i
+                                    class="fas fa-{{ $item['icon'] }} mr-2"></i>{{ $item['label'] }}</label>
+                            <p class="font-bold text-lg">{{ $item['value'] }}</p>
                         </div>
-                        
-                        <!-- Jabatan -->
-                        <div class="col-12">
-                            <strong>Jabatan:</strong>
-                            <p>{{ $datakaryawan->jabatan->nama_jabatan ?? '-' }}</p>
-
-                        </div>
-                        
-                        <!-- Email -->
-                        <div class="col-12">
-                            <strong>Email:</strong>
-                            <p>{{ $datakaryawan->email }}</p>
-                        </div>
-
-                        <!-- No Telepon -->
-                        <div class="col-12">
-                            <strong>No Telepon:</strong>
-                            <p>{{ $datakaryawan->no_telepon }}</p>
-                        </div>
-
-                        <!-- Gender -->
-                        <div class="col-12">
-                            <strong>Gender:</strong>
-                            <p>{{ $datakaryawan->gender }}</p>
-                        </div>
-
-                        <!-- Usia -->
-                        <div class="col-12">
-                            <strong>Usia:</strong>
-                            <p>{{ $datakaryawan->usia }} tahun</p>
-                        </div>
-
-                    </div>
-                    <a href="{{ route('datakaryawan.index') }}" class="btn btn-modern mt-4" style="background-color: #000000; color: white;">Back to List</a>
+                    @endforeach
                 </div>
             </div>
-        </main>
+        </div>
     </div>
-</x-layout-admin>
+@endsection

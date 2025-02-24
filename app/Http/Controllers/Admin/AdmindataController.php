@@ -93,41 +93,21 @@ public function store(Request $request)
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-{
-    $karyawan = User::findOrFail($id);
-
-    $request->validate([
-        'name' => 'required|string|max:100',
-        'usia' => 'required|integer|min:18|max:65',
-        'gender' => 'required|in:Laki-laki,Perempuan',
-        'tanggal_lahir' => 'required|date',
-        'no_telepon' => 'required|string|unique:users,no_telepon,' . $id,
-        'email' => 'required|email|unique:users,email,' . $id,
-        'jabatan_id' => 'required|exists:jabatan_karyawans,id',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'password' => 'nullable|min:6',
-        'confirm_password' => 'nullable|same:password',
-    ]);
-
-    $data = $request->except('password', 'confirm_password', 'foto');
-
-    if ($request->filled('password')) {
-        $data['password'] = Hash::make($request->password);
-        $data['confirm_password'] = $request->confirm_password;
+    {
+        $karyawan = User::findOrFail($id);
+    
+        $request->validate([
+            'jabatan_id' => 'required|exists:jabatan_karyawans,id',
+        ]);
+    
+        // Hanya memperbarui jabatan
+        $karyawan->update([
+            'jabatan_id' => $request->jabatan_id,
+        ]);
+    
+        return redirect()->route('datakaryawan.index')->with('edited', 'true');
     }
-
-    if ($request->hasFile('foto')) {
-        $file = $request->file('foto');
-        $destinationPath = 'uploads/datakaryawan';
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path($destinationPath), $fileName);
-        $data['foto'] = $destinationPath . '/' . $fileName;
-    }
-
-    $karyawan->update($data);
-
-    return redirect()->route('datakaryawan.index')->with('edited', 'true');
-}
+    
 
 public function show($id)
 {

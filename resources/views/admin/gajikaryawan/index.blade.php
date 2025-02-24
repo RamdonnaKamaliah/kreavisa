@@ -1,53 +1,84 @@
-<x-layout-admin>
-    <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h4 text-secondary">Data Gaji</h1>
-            <a href="{{ route('gajikaryawan.create') }}" class="btn btn-primary">
-                + Tambah Data
-            </a>
-
-        </div>
-        <!-- Membungkus tabel dengan class table-responsive untuk membuatnya responsif -->
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped" id="myTable">
-                <thead class="table-dark text-white">
-                    <tr>
-                        <th class="text-start">Nama</th>
-                        <th class="text-start">Jabatan</th>
-                        <th class="text-start">Metode Pembayaran</th>
-                        <th class="text-start">Bonus</th>
-                        <th class="text-start">Potongan Gaji</th>
-                        <th class="text-start">Total Gaji</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Contoh data statis -->
-                    <tr>
-                        <td>Rizky</td>
-                        <td>Live</td>
-                        <td>DANA</td>
-                        <td>Rp.200.000</td>
-                        <td>2%</td>
-                        <td>Rp.1.200.000</td>
-                        <td class="text-center">
-                            <div class="d-flex justify-content-center gap-2">
-                                <a href="#" class="btn btn-sm btn-outline-warning">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a href="#" class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i> Cek Profile
-                                </a>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                    Hapus
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- Tambahkan data lainnya di sini -->
-                </tbody>
-            </table>
+@extends('layout.main')
+@section('content')
+    <div class="p-4 md:p-6 overflow-x-hidden">
+        <!-- Laporan Stok Masuk -->
+        <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md">
+            <h2 class="text-center text-xl font-bold mb-4">Laporan Gaji Karyawan</h2>
+            <div class="flex justify-between items-center mb-4">
+                <div class="space-x-2">
+                    <a href="{{ route('gajikaryawan.index') }}"
+                        class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md">
+                        Gaji Karyawan
+                    </a>
+                    <a href="{{ route('gajipokok.index') }}"
+                        class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md">
+                        Gaji Pokok
+                    </a>
+                </div>
+                <a href="{{ route('gajikaryawan.create') }}"
+                    class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md">
+                    + Tambah Data
+                </a>
+            </div>
+            <div class="overflow-x-auto mt-4">
+                <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Gaji Pokok</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Metode Pembayaran</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Bonus</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Potongan</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Total Gaji</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal Diberikan</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($gajiKaryawan as $row)
+                            <tr>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->user->name }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                    {{ $row->user->jabatan->nama_jabatan }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->gaji_pokok, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->tipe_pembayaran }}
+                                </td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->bonus, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->potongan, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->total_gaji, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->tanggal }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
+                                    <div class="flex justify-center space-x-1 md:space-x-2">
+                                        <a href="{{ route('gajikaryawan.edit', $row->id) }}"
+                                            class="px-2 py-1 text-yellow-600 border border-yellow-600 rounded-full hover:bg-yellow-100 flex items-center gap-1 text-xs md:text-sm">
+                                            <i class="fas fa-edit"></i> <span class="hidden sm:inline">Edit</span>
+                                        </a>
+                                        <a href="{{ route('gajikaryawan.show', $row->id) }}"
+                                            class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
+                                            <i class="fas fa-eye"></i> <span class="hidden sm:inline">View</span>
+                                        </a>
+                                        <form action="{{ route('gajikaryawan.destroy', $row->id) }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" onclick="deleted(this)"
+                                                class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
+                                                <i class="fas fa-trash-alt"></i> <span
+                                                    class="hidden sm:inline">Delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</x-layout-admin>
+@endsection

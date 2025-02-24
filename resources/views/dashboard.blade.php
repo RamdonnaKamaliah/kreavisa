@@ -1,59 +1,99 @@
 <x-layout-landing>
     <!-- Header -->
-    <section class="relative w-full mx-auto min-h-screen bg-[#302C42]" id="home">
-        <!-- Gelombang -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1323 199" fill="none"
-            class="absolute bottom-0 left-0 right-0 w-full">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M0 39.8L73.8675 59.7C146.632 79.6 294.367 119.4 441 142.617C587.633 165.833 735.367 172.467 882 145.933C1028.63 119.4 1176.37 59.7 1249.13 29.85L1323 0V199H1249.13C1176.37 199 1028.63 199 882 199C735.367 199 587.633 199 441 199C294.367 199 146.632 199 73.8675 199H0V39.8Z"
-                fill="white" />
-        </svg>
+    <section
+        class="relative w-full mx-auto min-h-screen bg-gradient-to-b from-gray-900 to-[#1D232A] flex flex-col items-center justify-center px-4 pt-24 pb-64">
 
-        <!-- Flex Container -->
-        <div
-            class="flex flex-col-reverse md:flex-row justify-between items-center text-black gap-8 md:gap-16 relative z-10 px-4 md:px-20 pt-12 md:pt-10">
-            <!-- Kolom Kiri -->
-            <div class="md:w-1/2 z-10 text-center md:text-left">
-                <h1
-                    class="font-bold font-montserrat text-4xl tracking-wide mb-5 bg-[#C0B7E8] text-transparent bg-clip-text">
-                    Navisa Basic Collection <span class="text-white">System management</span></h1>
-                <p class="text-2xl font-montserrat mb-5 text-white">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est a dolorem delectus commodi modi sit
-                    reiciendis voluptates molestiae fugiat quos.
-                </p>
-            </div>
-
-            <!-- Kolom Gambar -->
-            <div class="md:w-1/2 z-10 text-center">
-                <img id="landingImage" src="{{ asset('asset-landing-page/img/gambar-landing3_.png') }}"
-                    alt="Landing Image"
-                    class="w-full md:mr-20 max-w-full rounded-xl opacity-100 visibility-visible bounce" />
-            </div>
-
+        <!-- Teks Header di Atas Kotak -->
+        <div class="text-center mb-8">
+            <h2
+                class="text-2xl md:text-4xl font-semibold bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
+                Management Karyawan
+            </h2>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mt-2">
+                Navisa Basic Collection
+            </h1>
         </div>
 
-        <!-- Animasi Mantul-mantul -->
-        <style>
-            /* Animasi mantul-mantul */
-            .bounce {
-                animation: bounce 4s infinite;
-            }
+        <!-- Kotak Utama -->
+        <div
+            class="relative w-full max-w-5xl bg-black/40 backdrop-blur-lg rounded-2xl p-8 shadow-[0_0_40px_rgba(165,95,255,0.4)] border border-white/10 flex items-center border-white">
 
-            @keyframes bounce {
+            <!-- Gambar di Kiri (Animasi Mantul) -->
+            <div class="w-1/2 flex justify-center">
+                <img id="landingImage" src="{{ asset('asset-landing-page/img/gambar-landing3_.png') }}" alt="Landing Image"
+                    class="w-5/6 rounded-lg opacity-90 shadow-lg bounce" />
+            </div>
 
-                0%,
-                100% {
-                    transform: translateY(0);
-                }
+            <!-- Konten di Kanan -->
+            <div class="w-1/2 pl-8">
+                <h1 class="text-3xl font-bold text-white">
+                    Start your US company in minutes
+                </h1>
+                <p class="text-gray-300 text-lg mt-3">
+                    The simplest way to launch and run a business in the US. Incorporate your company in minutes.
+                </p>
 
-                50% {
-                    transform: translateY(-20px);
-                }
-            }
-        </style>
+                <!-- Langkah-langkah -->
+                <div class="mt-6">
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-300">
+                            <span
+                                class="w-6 h-6 flex items-center justify-center bg-purple-600 text-white rounded-full mr-3">1</span>
+                            Company Type
+                        </li>
+                        <li class="flex items-center text-white font-semibold">
+                            <span
+                                class="w-6 h-6 flex items-center justify-center bg-pink-500 text-white rounded-full mr-3">2</span>
+                            Registration State
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <span
+                                class="w-6 h-6 flex items-center justify-center bg-purple-600 text-white rounded-full mr-3">3</span>
+                            Company Name
+                        </li>
+                    </ul>
+                </div>
 
+                <!-- Pilihan Pendaftaran -->
+                <div class="mt-6">
+                    <h3 class="text-white font-semibold text-lg">Choose your registration state</h3>
+                    <div class="mt-4 space-y-3">
+                        <div class="p-3 bg-white/10 rounded-lg border border-white/20 text-gray-300">
+                            <p class="font-semibold text-white">Delaware</p>
+                            <p class="text-sm">Best for startups with legal protections.</p>
+                        </div>
+                        <div class="p-3 bg-white/10 rounded-lg border border-white/20 text-gray-300">
+                            <p class="font-semibold text-white">Wyoming</p>
+                            <p class="text-sm">Great for small businesses with lower costs.</p>
+                        </div>
+                    </div>
+                    <button
+                        class="mt-4 w-full px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-600 transition">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
 
 
     </section>
 
+    <!-- Animasi Mantul -->
+    <style>
+        .bounce {
+            animation: bounce 4s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
 </x-layout-landing>

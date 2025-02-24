@@ -1,54 +1,60 @@
 <x-guest-layout>
-    <div class="text-center mb-4">
-        <h1 class="h3 text-gray-900"><i class="fa-solid fa-user"></i> Login Karyawan</h1>
-    </div>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="flex min-h-screen items-center justify-center p-6">
+        <div class="bg-white rounded-2xl shadow-lg flex flex-col md:flex-row overflow-hidden w-full max-w-4xl md:ml-20">
+            <!-- Form Login -->
+            <div class="md:w-1/2 p-8 flex flex-col justify-center">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fa-solid fa-user mr-2"></i> Login Karyawan
+                </h1>
 
-    <form method="POST" action="{{ route('login.karyawan-gudang.process') }}" class="user">
-        @csrf
+                <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Email Address -->
-        <div class="form-group">
-            <input type="email"
-                class=" text-sm w-full px-4 py-2 border border-gray-700 rounded-full  focus:outline-none focus:ring-2 focus:ring-[#302C42] focus:border-transparent placeholder-gray-400 "
-                id="email" name="email" :value="old('email')" required autofocus autocomplete="username"
-                placeholder="Enter Email Address...">
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+                <form method="POST" action="{{ route('login.karyawan-gudang.process') }}" class="space-y-4">
+                    @csrf
 
-        <!-- Password -->
-        <div class="form-group">
-            <input type="password"
-                class="text-sm  w-full px-4 py-2 border border-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-[#302C42] focus:border-transparent placeholder-gray-400"
-                id="password" name="password" required autocomplete="current-password" placeholder="Enter Password...">
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                    <!-- Email Address -->
+                    <div>
+                        <input type="email" name="email" id="email" required autofocus autocomplete="username"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
+                            placeholder="Enter Email Address..." :value="old('email')">
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
 
-        <!-- Remember Me -->
-        <div class="form-group">
-            <div class="custom-control custom-checkbox small">
-                <input type="checkbox" class="custom-control-input" id="remember_me" name="remember">
-                <label class="custom-control-label" for="remember_me">{{ __('Remember Me') }}</label>
+                    <!-- Password -->
+                    <div>
+                        <input type="password" name="password" id="password" required autocomplete="current-password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
+                            placeholder="Enter Password...">
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember_me" name="remember" class="mr-2">
+                        <label for="remember_me" class="text-gray-600">Remember Me</label>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit"
+                        class="w-full bg-gray-900 text-white font-semibold py-2 rounded-lg hover:bg-gray-700 transition duration-300">
+                        Log in
+                    </button>
+                </form>
+
+                <!-- Forgot Password -->
+                <div class="text-center mt-4">
+                    @if (Route::has('password.request'))
+                        <a class="text-blue-500 hover:underline" href="{{ route('password.request') }}">Forgot your
+                            password?</a>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Ilustrasi -->
+            <div
+                class="hidden md:flex md:w-1/2 bg-gradient-to-r from-white via-gray-300 to-[#1D232A] items-center justify-center p-8">
+                <img src="{{ asset('assets/img/foto-login-admin.png') }}" alt="Illustration" class="w-3/4">
             </div>
         </div>
-
-        <!-- Login Button -->
-        <button type="submit"
-            class="w-full max-w-xs md:max-w-md lg:max-w-lg bg-[#302C42] text-white font-semibold py-2 px-4 rounded-full shadow-md hover:shadow-lg hover:bg-opacity-90 transition duration-300 ease-in-out transform hover:scale-105">
-            {{ __('Log in') }}
-        </button>
-
-
-        <hr>
-
-
-
-        <!-- Forgot Password -->
-        <div class="text-center mt-3">
-            @if (Route::has('password.request'))
-                <a class="small" href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</a>
-            @endif
-        </div>
-    </form>
+    </div>
 </x-guest-layout>
