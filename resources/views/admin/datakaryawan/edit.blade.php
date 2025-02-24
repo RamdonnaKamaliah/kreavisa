@@ -12,7 +12,7 @@
         @endif
         <main>
             <div class="container mx-auto">
-                <div class="bg-white shadow-lg rounded-2xl p-8 max-w-5xl mx-auto text-gray-900 relative">
+                <div class="bg-white shadow-lg rounded-2xl p-8 max-w-full mx-auto text-gray-900 relative">
                     <!-- Tombol Kembali -->
                     <div class="absolute top-4 left-4">
                         <a href="{{ route('datakaryawan.index') }}" class="p-2 rounded-full text-blue-500">

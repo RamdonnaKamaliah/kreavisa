@@ -1,5 +1,6 @@
-<x-layout-admin>
-    <div class="p-4 md:p-6 md:ml-[250px] overflow-x-hidden">
+@extends('layout.main')
+@section('content')
+    <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel -->
         <div class="mb-4">
             <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
@@ -55,8 +56,7 @@
                                         <button type="button"
                                             class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm"
                                             onclick="deleted(this)">
-                                            <i class="fas fa-trash-alt"></i> <span
-                                                class="hidden sm:inline">Delete</span>
+                                            <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
                                         </button>
                                     </form>
                                 </div>
@@ -83,7 +83,7 @@
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
-               
+
             </div>
         </div>
     </div>
@@ -94,5 +94,4 @@
             document.getElementById('stokKeluar').classList.toggle('hidden', this.value !== 'stokKeluar');
         });
     </script>
-</x-layout-admin>
-
+@endsection
