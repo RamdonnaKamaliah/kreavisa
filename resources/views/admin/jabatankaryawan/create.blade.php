@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('content')
-    <div id="layoutSidenav_content">
-        <div class="flex justify-center items-center min-h-screen py-6 px-4">
+    <div id="layoutSidenav_content pt-1">
+        <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
             <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
                 <div class="mb-4">
                     <a href="{{ route('jabatankaryawan.index') }}" class="text-blue-600 hover:text-blue-800">

@@ -3,9 +3,9 @@
     <div class="p-4 md:p-6 overflow-x-hidden">
       <!-- Dropdown Pilihan Tabel -->
       <div class="mb-4">
-        <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
+        <label for="tableSelect" class="block text-gray-900 text-lg mb-2">Pilih Laporan:</label>
         <div class="max-w-xs">
-            <select id="tableSelect" name="tableSelect" class="p-2 border border-gray-300 rounded-md w-full">
+            <select id="tableSelect" name="tableSelect" class="p-2 border border-gray-300 rounded-md w-full bg-white text-gray-900">
                 <option value="{{ route('stokbarang.index') }}">Laporan List Stok Barang</option> 
                 <option value="{{ route('stokbarang.stokmasuk') }}">Laporan Stok Masuk</option>
                 <option value="{{ route('stokbarang.stokkeluar') }}">Laporan Stok Keluar</option>  
@@ -34,12 +34,12 @@
 });
     </script>
 
-        <!-- Laporan Stok Keluar -->
-        <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md">
+        <!-- Laporan Stok Masuk -->
+        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md">
             <h2 class="text-center text-xl font-bold mb-4">Laporan Stok Masuk</h2>
             <div class="overflow-x-auto mt-4">
                 <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
-                    <thead class="bg-gray-800 text-white">
+                    <thead class="bg-gray-200 text-gray-900">
                         <tr>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Kode Barang</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jumlah Masuk</th>
@@ -59,4 +59,4 @@
             </div>
         </div>
     </div>
-    @endsection
+@endsection

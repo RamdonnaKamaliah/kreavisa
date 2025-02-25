@@ -12,7 +12,7 @@
         @endif
         <main>
             <div class="container mx-auto">
-                <div class="bg-white shadow-lg rounded-2xl p-8 max-w-5xl mx-auto text-gray-900 relative">
+                <div class="bg-white shadow-lg rounded-2xl p-8 max-w-full mx-auto text-gray-900 relative">
                     <!-- Tombol Kembali -->
                     <div class="absolute top-4 left-4">
                         <a href="{{ route('datakaryawan.index') }}" class="p-2 rounded-full text-blue-500">
@@ -25,9 +25,16 @@
                         <!-- Nama Karyawan (Tidak Bisa Diedit) -->
                         <div class="border-r border-gray-300 pr-8">
                             <div class="flex flex-col items-center">
-                                <div class="w-32 h-32 bg-gray-300 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-user text-4xl text-gray-600"></i>
-                                </div>
+                                <!-- Foto Karyawan -->
+<div class="w-32 h-32 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">
+    @if ($karyawan->foto && file_exists(public_path('storage/datakkaryawan/' . $karyawan->foto)))
+        <img accept="image/*" onchange="previewImage(event)" alt="Foto Karyawan" class="w-full h-full object-cover">
+    @else
+    <img src="{{ $karyawan->foto ? asset($karyawan->foto) : asset('asset-landing-admin/img/profile.png') }}" alt="Default Profile" class="w-full h-full object-cover">
+    @endif
+</div>
+
+
                                 <label class="block text-lg font-medium text-gray-600 mt-4">Nama Lengkap</label>
                                 <input type="text"
                                     class="w-full px-3 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-center text-lg"

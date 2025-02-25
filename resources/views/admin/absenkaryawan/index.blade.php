@@ -1,8 +1,9 @@
 @extends('layout.main')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
-        <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md">
-            <h2 class="text-center text-xl font-bold mb-4">Rekap Absen Karyawan</h2>
+        <!-- Laporan Stok Masuk -->
+        <div class="bg-white text-black p-4 rounded-lg shadow-md border border-gray-300">
+            <h2 class="text-center text-xl font-bold mb-4 text-gray-800">Rekap Absensi Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
                 <div class="relative flex items-center border border-gray-300 rounded-md overflow-hidden bg-white">
                     <input type="date" id="filterDate" class="p-2 text-black border-none focus:ring-0 bg-white">
@@ -14,55 +15,49 @@
                     </button>
                 </div>
             </div>
-
             <div class="overflow-x-auto mt-4">
-                <table class="w-full border border-gray-300 text-xs md:text-sm">
-                    <thead class="bg-gray-800 text-white">
+                <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
+                    <thead class="bg-gray-200 text-gray-800">
                         <tr>
-                            <th class="border border-gray-300 px-4 py-2">Nama</th>
-                            <th class="border border-gray-300 px-4 py-2">Jabatan</th>
-                            <th class="border border-gray-300 px-4 py-2">Tanggal</th>
-                            <th class="border border-gray-300 px-4 py-2">Status</th>
-                            <th class="border border-gray-300 px-4 py-2">Lokasi</th>
-                            <th class="border border-gray-300 px-4 py-2">Foto</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Status</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Lokasi</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Foto</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if ($absen->isEmpty())
-                            <tr>
-                                <td colspan="6" class="text-center py-4 text-gray-500">Tabel kosong</td>
-                            </tr>
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-gray-500">Tabel kosong</td>
+                        </tr>
                         @else
-                            @foreach ($absen as $item)
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">{{ $item->user->name ?? '-' }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $item->user->jabatan->nama_jabatan ?? '-' }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $item->tanggal_absensi }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ ucfirst($item->status) }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $item->lokasi ?? '-' }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    @if ($item->foto)
-                                        <a href="{{ asset($item->foto) }}" target="_blank">
-                                            <img src="{{ asset($item->foto) }}" alt="Foto Absen" class="foto-absen">
-                                        </a>
-                                    @else
-                                        <span>-</span>
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
+                        @foreach ($absen as $item)
+                        <tr>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->name ?? '-' }}</td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->jabatan->nama_jabatan ?? '-' }}</td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->tanggal_absensi }}</td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ ucfirst($item->status) }}</td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->lokasi ?? '-' }}</td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                @if ($item->foto)
+                                    <a href="{{ asset($item->foto) }}" target="_blank">
+                                        <img src="{{ asset($item->foto) }}" alt="Foto Absen" class="foto-absen">
+                                    </a>
+                                @else
+                                    <span>-</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
                         @endif
                     </tbody>
                     
                 </table>
             </div>
-
-            <div class="mt-4">
-                {{ $absen->links() }}
-            </div>
         </div>
     </div>
-
     <style>
         .foto-absen {
             width: 50px;
@@ -72,7 +67,7 @@
             cursor: pointer;
         }
     </style>
-
+    
     <script>
         function applyFilter() {
             let date = document.getElementById("filterDate").value;
@@ -84,13 +79,13 @@
             }
             window.location.href = url.toString();
         }
-
+    
         function resetFilter() {
             let url = new URL(window.location.href);
             url.searchParams.delete('tanggal');
             window.location.href = url.toString();
         }
-
+    
         document.addEventListener("DOMContentLoaded", function() {
             const params = new URLSearchParams(window.location.search);
             if (params.has('tanggal')) {

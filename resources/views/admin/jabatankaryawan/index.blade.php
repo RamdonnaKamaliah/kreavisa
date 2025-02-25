@@ -2,19 +2,19 @@
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Laporan Stok Masuk -->
-        <div class="bg-gray-50 text-white p-4 rounded-lg shadow-md">
-            <h2 class="text-center text-xl font-bold mb-4 text-white">Laporan Jabatan Karyawan</h2>
+        <div class="bg-white text-black p-4 rounded-lg shadow-md border border-gray-300">
+            <h2 class="text-center text-xl font-bold mb-4 text-gray-800">Laporan Jabatan Karyawan</h2>
             <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                 <a href="{{ route('jabatankaryawan.create') }}">
                     <button
-                        class="bg-gray-300 text-black px-3 py-1.5 text-sm md:px-4 md:py-2 md:text-base rounded-md hover:bg-gray-400">
+                        class="bg-blue-500 text-white px-3 py-1.5 text-sm md:px-4 md:py-2 md:text-base rounded-md hover:bg-blue-600">
                         Tambah Data
                     </button>
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
                 <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
-                    <thead class="bg-gray-800 text-white">
+                    <thead class="bg-gray-200 text-gray-800">
                         <tr>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Jabatan</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Aksi</th>
