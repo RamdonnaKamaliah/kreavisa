@@ -44,7 +44,7 @@ class GajiGudangController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('gudang.gaji.show');
     }
 
     /**

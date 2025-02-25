@@ -22,20 +22,20 @@
     <link rel="icon" type="image/png" href="{{ asset('asset-landing-admin/img/Kreavisa Logo.png') }}" />
 
     <title>Kreavisa</title>
-    @include('layout2.partial2.link2')
+    @include('layout3.partial3.link3')
 </head>
 
 <body
     class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
-    @include('layout2.partial2.header2')
+    @include('layout3.partial3.header3')
 
     @yield('content')
 
 
-    @include('layout2.partial2.footer2')
+    @include('layout3.partial3.footer3')
     </main>
 
 </body>
-@include('layout2.partial2.script2')
+@include('layout3.partial3.script3')
 
 </html>

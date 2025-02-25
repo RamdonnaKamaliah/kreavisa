@@ -1,16 +1,17 @@
-@push('page-title')
-    Stok Barang
-@endpush
-<x-layout-gudang>
-    <div class="p-4 md:p-6 md:ml-[250px] overflow-x-hidden">
+@extends('layout2.karyawan')
+@section('content')
+    @push('page-title')
+        Stok Barang
+    @endpush
+    <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel -->
         <div class="mb-4">
             <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" name="tableSelect" class="p-2 border border-gray-300 rounded-md w-full">
-                    <option value="{{ route('gudang.stok.index') }}">Laporan List Stok Barang</option> 
+                    <option value="{{ route('gudang.stok.index') }}">Laporan List Stok Barang</option>
                     <option value="{{ route('gudang.stok.masuk') }}">Laporan Stok Masuk</option>
-                    <option value="{{ route('gudang.stok.keluar') }}">Laporan Stok Keluar</option>  
+                    <option value="{{ route('gudang.stok.keluar') }}">Laporan Stok Keluar</option>
                 </select>
             </div>
         </div>
@@ -56,15 +57,17 @@
                     </thead>
                     <tbody>
                         @foreach ($stokMasuk as $row)
-                        <tr>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->stokBarang->kode_barang }}</td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->jumlah }}</td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->tanggal_keluar }}</td>
-                        </tr>
+                            <tr>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                    {{ $row->stokBarang->kode_barang }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->jumlah }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->tanggal_keluar }}
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</x-layout-gudang>
+@endsection

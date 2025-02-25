@@ -40,7 +40,7 @@
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('gajipokok.create') }}"
                     class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
-                    Tambah Data
+                    + Tambah Data
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">

@@ -1,8 +1,9 @@
-@push('page-title')
-    Jadwal Karyawan
-@endpush
-<x-layout-gudang>
-    <div class="flex justify-center items-center min-h-screen px-4 md:ml-64 pt-20">
+@extends('layout2.karyawan')
+@section('content')
+    @push('page-title')
+        Jadwal Karyawan
+    @endpush
+    <div class="flex justify-center items-center min-h-screen px-4 pt-20">
         <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-4xl">
             <h2 class="mb-4 text-2xl font-semibold text-center text-gray-800">Jadwal Karyawan</h2>
             <div class="overflow-hidden rounded-lg border border-gray-300">
@@ -13,4 +14,4 @@
             </div>
         </div>
     </div>
-</x-layout-gudang>
+@endsection

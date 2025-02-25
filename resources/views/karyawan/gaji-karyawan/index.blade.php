@@ -1,5 +1,6 @@
-<x-layout-karyawan>
-    <div class="p-20 md:ml-[250px] md:pt-16">
+@extends('layout3.karyawan3')
+@section('content')
+    <div class="p-20 md:pt-16">
         <!-- Card Wrapper -->
         <div class="bg-white shadow-lg rounded-lg p-6 md:p-8">
             <h2 class="text-xl font-semibold mb-4 text-gray-800">Data Pegawai</h2>
@@ -53,4 +54,4 @@
             </div>
         </div>
     </div>
-</x-layout-karyawan>
+@endsection

@@ -3,7 +3,7 @@
 <aside
     class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
     aria-expanded="false">
-    {{-- <x-nav-admin></x-nav-admin> --}}
+    <x-navbar-karyawan></x-navbar-karyawan>
 </aside>
 
 <!-- end sidenav -->
@@ -15,8 +15,11 @@
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
                 <h1 class="text-2xl text-white font-montserrat font-bold mb-2">Selamat Datang !</h1>
-                <h3 class="mb-0 font-bold text-white capitalize">Yo, {{ auth()->user()->name }}!
-                    Waktunya nge-admin, mari kita buat semuanya lebih lancar! 😎</h3>
+                <h3 class="mb-0 font-bold text-white capitalize font-protest">Yo, {{ auth()->user()->name }}!
+                    Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang terbaik dan menjaga keseimbangan
+                    antara kerja dan istirahat. 🚀"
+
+                </h3>
             </nav>
 
             <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
