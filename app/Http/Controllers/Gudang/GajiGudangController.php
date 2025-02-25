@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Gudang;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\GajiKaryawan;
 
 class GajiGudangController extends Controller
 {
@@ -12,7 +13,14 @@ class GajiGudangController extends Controller
      */
     public function index()
     {
-        return view('gudang.gaji-gudang.index');
+        $gajiKaryawan = GajiKaryawan::with(['user', 'user.jabatan'])
+    ->where('user_id', auth('web')->id()) // Gunakan 'web' atau guard yang sesuai
+    ->get();
+
+
+
+        // Kirim data ke view gudang.gaji.index
+        return view('gudang.gaji.index', compact('gajiKaryawan'));
     }
 
     /**
@@ -36,7 +44,7 @@ class GajiGudangController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('gudang.gaji.show');
     }
 
     /**

@@ -27,7 +27,7 @@
 
                         <div class="text-center">
                             <label for="foto" class="cursor-pointer inline-block">
-                                <img id="preview" src="{{ asset('asset-landing-admin/img/profile.png') }}"
+                                <img id="preview" src="{{ asset('asset-landing-page/img/profile.png') }}"
                                     alt="Upload Foto" class="w-24 h-24 rounded-full object-cover border border-gray-300">
                             </label>
                             <input type="file" id="foto" name="foto" accept="image/*" class="hidden"
@@ -40,14 +40,14 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4"> <!-- Ubah grid jadi 3 kolom -->
                             <div class="space-y-4">
-                                <label for="name" class="block text-gray-700 font-medium">Nama Lengkap</label>
-                                <input type="text" id="name" name="name" placeholder="Input Nama Lengkap"
+                                <label for="nama_lengkap" class="block text-gray-700 font-medium">Nama Lengkap</label>
+                                <input type="text" id="nama_lengkap" name="nama_lengkap" placeholder="Input Nama Lengkap"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                             </div>
 
                             <div class="space-y-4">
-                                <label for="username" class="block text-gray-700 font-medium">Username</label>
-                                <input type="text" id="username" name="username" placeholder="Input Username"
+                                <label for="name" class="block text-gray-700 font-medium">Username</label>
+                                <input type="text" id="name" name="name" placeholder="Input Username"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                             </div>
 

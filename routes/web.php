@@ -11,16 +11,16 @@ use App\Http\Controllers\Admin\AdminjabatanController;
 use App\Http\Controllers\Admin\AdminjadwalController;
 use App\Http\Controllers\Admin\AdmingajiController;
 use App\Http\Controllers\Admin\AdminGajiPokokController;
-use App\Http\Controllers\Admin\AdminstokController;
+use App\Http\Controllers\Admin\AdminStokBarangController;
 use App\Http\Controllers\Admin\AdminprofileController;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\JadwalController;
-use App\Http\Middleware\Gudang;
 use App\Http\Controllers\Gudang\AbsenGudangController;
 use App\Http\Controllers\Gudang\GajiGudangController;
 use App\Http\Controllers\Gudang\JadwalGudangController;
-use App\Http\Controllers\Gudang\StokGudangController;
+use App\Http\Controllers\Gudang\StokController;
+use App\Http\Middleware\Gudang;
 use App\Http\Middleware\Karyawan;
 use App\Http\Middleware\Admin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -66,16 +66,28 @@ Route::middleware(['auth', Admin::class])->group(function () {
     Route::resource('/admin/absenkaryawan', AdminabsenController::class);
     Route::resource('/admin/jadwalkaryawan', AdminjadwalController::class);
     Route::resource('/admin/gajikaryawan', AdmingajiController::class);
-    Route::resource('/admin/stokkaryawan', AdminstokController::class);
     Route::resource('/admin/gajipokok', AdminGajiPokokController::class);
-    Route::get('/jadwalkaryawan/events', [AdminjadwalController::class, 'getEvents'])->name('jadwalkaryawan.events');
     Route::get('/get-gaji-pokok/{user_id}', [AdminGajiController::class, 'getGajiPokok']);
+    Route::get('/jadwalkaryawan/events', [AdminjadwalController::class, 'getEvents'])->name('jadwalkaryawan.events');
+    // Route untuk melihat stok masuk dan keluar
+    Route::resource('/admin/stokbarang', AdminStokBarangController::class);
+    Route::get('/stokbarang/stokmasuk', [AdminStokBarangController::class, 'stokMasuk'])->name('stokbarang.stokmasuk');
+    Route::get('/stokbarang/stokkeluar', [AdminStokBarangController::class, 'stokKeluar'])->name('stokbarang.stokkeluar');
+    Route::get('stokbarang-export', [AdminStokBarangController::class, 'export'])->name('stokbarang.export');
+
 });
 
 Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
-    Route::get('/karyawan/absen', [KaryawanAbsenController::class, 'index'])->name('karyawan.absen');
-  
+    Route::get('karyawan/absen/sakit', [KaryawanAbsenController::class, 'createSakit'])
+    ->name('karyawan.absen.sakit');
+Route::post('karyawan/absen/sakit', [KaryawanAbsenController::class, 'storeSakit'])
+    ->name('karyawan.absen.sakit.store');
+Route::get('karyawan/absen/izin', [KaryawanAbsenController::class, 'createIzin'])
+    ->name('karyawan.absen.izin');
+Route::post('karyawan/absen/izin', [KaryawanAbsenController::class, 'storeIzin'])
+    ->name('karyawan.absen.izin.store');
+Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
     Route::resource('gaji-karyawan', GajiController::class);
     Route::resource('jadwal-karyawan', JadwalController::class);
 });
@@ -84,10 +96,21 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
 Route::middleware(['auth', Gudang::class])->group(function () {
     Route::get('/gudang/dashboard', [GudangController::class, 'index'])->name('gudang.dashboard');
     Route::resource('absen-gudang', AbsenGudangController::class);
-    Route::resource('gaji-gudang', GajiGudangController::class);
+    Route::get('/gudang/gaji', [GajiGudangController::class, 'index'])->name('gajiGudang.index');
     Route::resource('jadwal-gudang', JadwalGudangController::class);
-    Route::resource('stok-gudang', StokGudangController::class);
-});
+   // Halaman utama stok (List Stok Barang)
+Route::get('/gudang/stok', [StokController::class, 'index'])->name('gudang.stok.index');
 
+// Stok Masuk
+Route::get('/gudang/stok/masuk', [StokController::class, 'stokMasuk'])->name('gudang.stok.masuk');
+Route::get('/gudang/stok/create-masuk', [StokController::class, 'createMasuk'])->name('gudang.stok.create-masuk');
+Route::post('/gudang/stok/store-masuk', [StokController::class, 'storeMasuk'])->name('gudang.stok.store-masuk');
+
+// Stok Keluar
+Route::get('/gudang/stok/keluar', [StokController::class, 'stokKeluar'])->name('gudang.stok.keluar');
+Route::get('/gudang/stok/create-keluar', [StokController::class, 'createKeluar'])->name('gudang.stok.create-keluar');
+Route::post('/gudang/stok/store-keluar', [StokController::class, 'storeKeluar'])->name('gudang.stok.store-keluar');
+
+});
 
 require __DIR__.'/auth.php';

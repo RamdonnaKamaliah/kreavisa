@@ -17,4 +17,3 @@
  <script src="{{ asset('assets/js/plugins/Chart.extension.js') }}"></script>
  <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
  <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
- 

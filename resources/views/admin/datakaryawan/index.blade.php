@@ -18,7 +18,8 @@
                         <thead class="bg-gray-800 text-white">
                             <tr>
                                 <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Foto</th>
-                                <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama</th>
+                                <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
+                                <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Username</th>
                                 <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Usia</th>
                                 <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jenis Kelamin</th>
                                 <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal Lahir</th>
@@ -33,6 +34,8 @@
                                     <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
                                         <img src="{{ $row->foto ? asset($row->foto) : asset('asset-landing-admin/img/profile.png') }}"
                                             class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-gray-300">
+                                    </td>
+                                    <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->nama_lengkap }}
                                     </td>
                                     <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->name }}
                                     </td>

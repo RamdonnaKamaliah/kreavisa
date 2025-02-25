@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Admin</title>
 
     
 
@@ -59,8 +59,13 @@
                     <i class='bx bx-menu text-2xl'></i>
                 </button>
 
+<<<<<<< HEAD
+                <h1 class="text-xl font-bold">@stack('page-title', 'Dashboard')</h1>
+                
+=======
                 <h1 class="text-xl font-bold">Dashboard</h1>
 
+>>>>>>> 668c9690d3211d77906aced67b98f0f7f1e02fdf
                 <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-700 transition">
                     <i class="bx bx-moon text-2xl"></i>
                 </button>

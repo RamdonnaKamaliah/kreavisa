@@ -31,7 +31,7 @@
                                 <label class="block text-lg font-medium text-gray-600 mt-4">Nama Lengkap</label>
                                 <input type="text"
                                     class="w-full px-3 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-center text-lg"
-                                    value="{{ $karyawan->nama }}" disabled>
+                                    value="{{ $karyawan->nama_lengkap }}" disabled>
                             </div>
                             <p class="text-sm text-red-400 text-center mt-2">(Data sebelah kiri tidak dapat diedit)</p>
                         </div>
