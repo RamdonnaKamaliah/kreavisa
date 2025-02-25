@@ -14,8 +14,8 @@
         navbar-main navbar-scroll="false">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
-                <h1 class="text-2xl text-white font-montserrat font-bold mb-2">Selamat Datang !</h1>
-                <h3 class="mb-0 font-bold text-white capitalize">Yo, {{ auth()->user()->name }}!
+                <h1 class="text-2xl text-gray-600 font-montserrat font-bold mb-2">Selamat Datang !</h1>
+                <h3 class="mb-0 font-bold text-black capitalize">Yo, {{ auth()->user()->name }}!
                     Waktunya nge-admin, mari kita buat semuanya lebih lancar! 😎</h3>
             </nav>
 

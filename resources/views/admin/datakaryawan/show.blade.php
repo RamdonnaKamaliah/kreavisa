@@ -1,14 +1,9 @@
 @extends('layout.main')
 @section('content')
     <div id="layoutSidenav_content">
-        <div class="relative flex justify-center items-center py-8 px-6 md:ml-64">
-            <!-- Background Ellipse -->
-            <svg class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 w-full top-[-50px]" width="1320"
-                height="372" viewBox="0 0 1320 372" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="660" cy="17" rx="660" ry="355" fill="#1d232a" />
-            </svg>
+        <div class="relative flex justify-center items-center py-8 px-6">
 
-            <div class="w-full max-w-5xl text-white relative z-10">
+            <div class="w-full max-w-5xl text-gray-700 relative z-10">
                 <div class="flex items-center mb-4">
                     <a href="{{ route('datakaryawan.index') }}"
                         class="text-blue-500 hover:text-blue-600 text-2xl flex items-center mr-4">

@@ -42,8 +42,8 @@
             <h2 class="text-center text-xl font-bold mb-4">Laporan List Stok Barang</h2>
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('stokbarang.create') }}"
-                    class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md">
-                    + Tambah Data
+                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+                    Tambah Data
                 </a>
                 <div class="flex items-center space-x-2">
                     <div class="relative flex items-center border border-gray-400 rounded-md overflow-hidden bg-white">
@@ -59,6 +59,43 @@
                         <i class="fas fa-file-excel"></i> Export Excel
                     </button>
                 </div>
+<<<<<<< HEAD
+=======
+                
+                <script>
+                    function applyFilter() {
+                        let date = document.getElementById("filterDate").value;
+                        let url = new URL(window.location.href);
+                        if (date) {
+                            url.searchParams.set('date', date);
+                        } else {
+                            url.searchParams.delete('date');
+                        }
+                        window.location.href = url.toString();
+                    }
+                
+                    function resetFilter() {
+                        let url = new URL(window.location.href);
+                        url.searchParams.delete('date');
+                        window.location.href = url.toString();
+                    }
+                
+                    function exportExcel() {
+                        let date = document.getElementById("filterDate").value;
+                        let url = "{{ route('stokbarang.export') }}";
+                        if (date) url += "?date=" + encodeURIComponent(date);
+                        window.location.href = url;
+                    }
+                
+                    // Auto-fill tanggal saat halaman dimuat
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const params = new URLSearchParams(window.location.search);
+                        if (params.has('date')) {
+                            document.getElementById("filterDate").value = params.get('date');
+                        }
+                    });
+                </script>
+>>>>>>> 38fa16ea0a3f94e3b899aacc6a47b8bec1a529b1
             </div>
 
             <div class="overflow-x-auto mt-4">

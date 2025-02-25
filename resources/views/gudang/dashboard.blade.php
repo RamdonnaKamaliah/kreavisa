@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @extends('layout2.karyawan')
 @section('content')
     <div class="flex-1 p-6 text-gray-900">
@@ -43,6 +44,51 @@
 
         <!-- Footer -->
         <p class="mt-8 text-gray-500 text-center text-lg">CopyRight@Kreavisa</p>
+=======
+<div class="flex-1 p-6 md:pl-64">
+
+    <!-- Header -->
+    <div class="mb-8 text-center md:text-left">
+        <h1 class="text-4xl font-bold text-white font-protest">Hai, Rifdahtul Aisya 👋</h1>
+        <p class="text-lg text-gray-300 font-popins">Selamat datang di platform digital management karyawan</p>
+    </div>
+
+    <!-- Grid utama: 1 kolom di mobile, 2 kolom di desktop -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Kotak Absensi -->
+        <div class="bg-[#191E24] p-6 rounded-xl shadow-lg border border-gray-600 transition hover:scale-105 Z-10">
+            <p class="text-gray-300 text-lg mb-3">Anda belum melakukan absensi...</p>
+            <button
+                class="flex items-center justify-between w-full px-4 py-3 bg-white text-black rounded-lg font-semibold">
+                Lakukan absensi
+                <i data-feather="arrow-right-circle"></i>
+            </button>
+        </div>
+
+        <!-- Kotak Kalender -->
+        <div
+            class="bg-[#191E24] p-6 rounded-xl shadow-lg border border-gray-600 transition hover:scale-105 relative z-10">
+            <h3 class="text-xl font-semibold mb-4 text-white text-center" id="calendarTitle"></h3>
+            <div class="grid grid-cols-7 gap-2 text-center text-gray-300 text-lg" id="calendarDays"></div>
+        </div>
+
+        <!-- Kotak Waktu -->
+        <div
+            class="bg-[#191E24] p-6 rounded-xl shadow-lg border border-gray-600 flex flex-col items-center justify-center transition hover:scale-105">
+            <i data-feather="clock" class="text-gray-400 text-4xl mb-3"></i>
+            <p class="text-gray-300 text-lg">Waktu saat ini:</p>
+            <p class="text-3xl font-bold text-white" id="currentTime">00:00</p>
+        </div>
+
+        <!-- Kotak Jabatan -->
+        <div
+            class="bg-[#191E24] p-6 rounded-xl shadow-lg border border-gray-600 flex flex-col items-center justify-center transition hover:scale-105">
+            <i data-feather="briefcase" class="text-gray-400 text-4xl mb-3"></i>
+            <p class="text-gray-300 text-lg">Jabatan Anda:</p>
+            <p class="text-2xl font-bold text-white">Packing</p>
+        </div>
+>>>>>>> 38fa16ea0a3f94e3b899aacc6a47b8bec1a529b1
 
     </div>
 

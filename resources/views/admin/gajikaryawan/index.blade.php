@@ -40,7 +40,11 @@
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('gajikaryawan.create') }}"
                     class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+<<<<<<< HEAD
                     + Tambah Data
+=======
+                    Tambah Data
+>>>>>>> 38fa16ea0a3f94e3b899aacc6a47b8bec1a529b1
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
