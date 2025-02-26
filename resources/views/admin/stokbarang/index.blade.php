@@ -7,7 +7,7 @@
             <div class="max-w-xs">
                 <select id="tableSelect" name="tableSelect"
                     class="p-2 border border-gray-400 rounded-md w-full bg-white text-gray-800">
-                    <option value="{{ route('stokbarang.index') }}">Laporan List Stok Barang</option>
+                    <option value="{{ route('stokbarang.index') }}"> List Stok Barang</option>
                     <option value="{{ route('stokbarang.stokmasuk') }}">Laporan Stok Masuk</option>
                     <option value="{{ route('stokbarang.stokkeluar') }}">Laporan Stok Keluar</option>
                 </select>
@@ -42,12 +42,13 @@
             <h2 class="text-center text-xl font-bold mb-4">Laporan List Stok Barang</h2>
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('stokbarang.create') }}"
-                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
-                    Tambah Data
+                    class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md">
+                    + Tambah Data
                 </a>
-                <div class="flex items-center space-x-2">
-                    <div class="relative flex items-center border border-gray-400 rounded-md overflow-hidden bg-white">
-                        <input type="date" id="filterDate" class="p-2 text-gray-800 border-none focus:ring-0 bg-white">
+                <div class="flex items-center space-x-2 mb-4">
+                    <!-- Input Tanggal + Search & Reload -->
+                    <div class="relative flex items-center border border-gray-300 rounded-md overflow-hidden bg-white">
+                        <input type="date" id="filterDate" class="p-2 text-black border-none focus:ring-0 bg-white">
                         <button onclick="applyFilter()" class="p-2 text-gray-600 hover:text-blue-600">
                             <i class="fas fa-search"></i>
                         </button>
@@ -55,12 +56,12 @@
                             <i class="fas fa-sync-alt"></i>
                         </button>
                     </div>
+                
+                    <!-- Export Excel -->
                     <button onclick="exportExcel()" class="p-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md">
                         <i class="fas fa-file-excel"></i> Export Excel
                     </button>
                 </div>
-<<<<<<< HEAD
-=======
                 
                 <script>
                     function applyFilter() {
@@ -95,7 +96,7 @@
                         }
                     });
                 </script>
->>>>>>> 38fa16ea0a3f94e3b899aacc6a47b8bec1a529b1
+
             </div>
 
             <div class="overflow-x-auto mt-4">

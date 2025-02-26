@@ -1,25 +1,26 @@
 @extends('layout.main')
 @section('content')
     <div id="layoutSidenav_content">
-        <!-- Card Container -->
-        <main class="flex justify-center items-center min-h-screen py-6 px-4">
-            <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+        <main class="flex justify-center items-center min-h-screen py-6 px-4 text-gray-900 -mt-20">
+            <div
+                class="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md border border-gray-300 min-h-[250px] flex flex-col justify-center">
 
                 <!-- Tombol Kembali -->
                 <div class="mb-4">
                     <a href="{{ route('jabatankaryawan.index') }}"
                         class="inline-flex items-center text-blue-600 hover:text-blue-800 transition">
                         <i class='bx bx-arrow-back text-2xl'></i>
-                        <span class="ml-2 text-lg font-medium"></span>
                     </a>
                 </div>
 
                 <!-- Judul -->
-                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">View Jabatan Karyawan</h1>
+                <h1 class="text-center text-xl font-bold text-gray-800 mb-4">View Data Jabatan Karyawan</h1>
 
                 <!-- Informasi Jabatan -->
-                <div class="border border-gray-300 p-4 rounded-lg bg-gray-50">
-                    <p class="text-lg font-medium text-gray-700">{{ $jabatankaryawan->nama_jabatan }}</p>
+                <div class="bg-gray-200 p-6 rounded-lg shadow-inner text-center">
+                    <p class="text-md font-bold text-gray-700">Nama Jabatan :
+                        <span class="text-gray-600">{{ $jabatankaryawan->nama_jabatan }}</span>
+                    </p>
                 </div>
             </div>
         </main>

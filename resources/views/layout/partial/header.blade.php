@@ -140,18 +140,19 @@
                 <li class="border-l border-gray-300 mx-4 h-8"></li>
             </ul>
             <a href="{{ route('profile.index') }}">
-                <div class="flex items-center justify-between p-3 rounded-lg mb-4 cursor-pointer bg-white">
+                <div
+                    class="inline-flex items-center p-3 px-5 rounded-lg mb-4 cursor-pointer bg-white shadow-md gap-3 w-fit">
                     <div>
                         <span class="text-sm font-semibold block text-black">
                             {{ auth()->check() ? auth()->user()->name : 'Guest' }}
                         </span>
                         <span class="text-xs text-gray-900">Admin@gmail.com</span>
                     </div>
-                    <img src="{{ asset('assets/img/carousel-1.jpg') }}" class="w-12 h-12 rounded-full cursor-pointer"
+                    <img src="{{ asset('assets/img/carousel-1.jpg') }}"
+                        class="w-12 h-12 rounded-full cursor-pointer border-2 border-white shadow-lg"
                         alt="User Profile">
                 </div>
             </a>
-
         </div>
         </div>
     </nav>

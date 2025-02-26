@@ -130,50 +130,44 @@
 
             <!-- cards row 2 -->
             <!-- Card -->
-            <div class="flex flex-col md:flex-row justify-center gap-8">
+            <div class="flex flex-col md:flex-row justify-center gap-8 ml-4">
                 <!-- Chart Karyawan -->
-                <div class="bg-white shadow-lg rounded-xl p-6 w-full md:w-1/2 flex flex-col items-center mt-8">
-                    <div class="relative w-60 h-60 flex justify-center items-center">
-                        <canvas id="karyawanChart"></canvas>
-                        <p
-                            class="absolute text-center text-lg font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                            Total: <br />
-                            29 Karyawan
-                        </p>
-                    </div>
-                    <div class="p-4 bg-gray-100 rounded-lg text-left mt-4 w-full">
-                        <h3 class="text-md font-semibold mb-2">
-                            Jumlah Karyawan Berdasarkan Jabatan
-                        </h3>
-                        <ul class="text-sm">
-                            <li>
-                                <span class="text-blue-500 font-bold">●</span> Karyawan Gudang =
-                                17 Orang
-                            </li>
-                            <li>
-                                <span class="text-pink-400 font-bold">●</span> Karyawan Live = 19
-                                Orang
-                            </li>
-                            <li>
-                                <span class="text-orange-400 font-bold">●</span> Karyawan Packing
-                                = 20 Orang
-                            </li>
-                            <li>
-                                <span class="text-yellow-400 font-bold">●</span> Karyawan Admin =
-                                5 Orang
-                            </li>
-                        </ul>
+                <div class="bg-white shadow-lg rounded-xl p-6 w-full md:w-[55%] flex flex-col mt-6">
+                    <h2 class="text-lg font-bold mb-4 text-center">Jumlah Karyawan</h2>
+                    <div class="flex flex-row justify-center items-center gap-8">
+                        <!-- Chart Donut -->
+                        <div class="relative w-52 h-52 flex justify-center items-center mt-8">
+                            <canvas id="karyawanChart"></canvas>
+                            <p class="absolute text-center text-base font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                Total: <br /> 29 Karyawan
+                            </p>
+                        </div>
+                        <!-- Box Keterangan -->
+                        <div class="p-5 bg-gray-100 rounded-lg shadow text-left w-60">
+                            <h3 class="text-base font-semibold mb-3">Jumlah Karyawan Berdasarkan Jabatan</h3>
+                            <ul class="text-sm">
+                                <li><span class="text-blue-500 font-bold">●</span> Karyawan Gudang = 17 Orang</li>
+                                <li><span class="text-pink-400 font-bold">●</span> Karyawan Live = 19 Orang</li>
+                                <li><span class="text-orange-400 font-bold">●</span> Karyawan Packing = 20 Orang</li>
+                                <li><span class="text-yellow-400 font-bold">●</span> Karyawan Admin = 5 Orang</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
+            
                 <!-- Chart Absensi -->
-                <div class="bg-white shadow-lg rounded-xl p-6 w-full md:w-1/2 flex flex-col items-center mt-8">
+                <div class="bg-white shadow-lg rounded-xl p-6 w-full md:w-[45%] flex flex-col items-center mt-6">
                     <h2 class="text-lg font-bold mb-4">Total Absensi Minggu Ini</h2>
                     <div class="w-full flex justify-center">
-                        <canvas id="absensiChart"></canvas>
+                        <canvas id="absensiChart" class="h-56"></canvas>
                     </div>
+                    <a href="#" class="mt-6 w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-800 flex items-center justify-center gap-1 text-sm">
+                        Selengkapnya <i class='bx bx-right-arrow-alt text-lg'></i>
+                    </a>
                 </div>
             </div>
+            
+
 
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
@@ -296,7 +290,6 @@
                     });
                 });
             </script>
-            </body>
 
 
             <div class="bg-white dark:bg-gray-900 p-4 shadow-lg rounded-2xl w-full max-w-6xl mt-8">
@@ -319,49 +312,5 @@
                     </button>
                 </div>
             </div>
-
-
-            <footer class="pt-4">
-                <div class="w-full px-6 mx-auto">
-                    <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
-                        <div class="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
-                            <div class="text-sm leading-normal text-center text-slate-500 lg:text-left">
-                                ©
-                                <script>
-                                    document.write(new Date().getFullYear() + ",");
-                                </script>
-                                made with <i class="fa fa-heart"></i> by
-                                <a href="https://www.creative-tim.com" class="font-semibold text-slate-700 dark:text-white"
-                                    target="_blank">Creative Tim</a>
-                                for a better web.
-                            </div>
-                        </div>
-                        <div class="w-full max-w-full px-3 mt-0 shrink-0 lg:w-1/2 lg:flex-none">
-                            <ul class="flex flex-wrap justify-center pl-0 mb-0 list-none lg:justify-end">
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com"
-                                        class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500"
-                                        target="_blank">Creative Tim</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/presentation"
-                                        class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500"
-                                        target="_blank">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://creative-tim.com/blog"
-                                        class="block px-4 pt-0 pb-1 text-sm font-normal transition-colors ease-in-out text-slate-500"
-                                        target="_blank">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="https://www.creative-tim.com/license"
-                                        class="block px-4 pt-0 pb-1 pr-0 text-sm font-normal transition-colors ease-in-out text-slate-500"
-                                        target="_blank">License</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     @endsection
