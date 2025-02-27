@@ -1,15 +1,6 @@
 @extends('layout.main')
 @section('content')
     <div id="layoutSidenav_content">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
         <main class="flex justify-center py-6 p-6">
             <div class="w-full max-w-4xl"> <!-- Perluas lebar form agar muat 3 kolom -->
@@ -127,7 +118,24 @@
                 age--;
             }
 
-            document.getElementById('age').value = age;
+            document.getElementById('age').value = age < 0 ? 0 : age; // Pastikan usia minimal 0
         });
     </script>
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let errorMessages = "";
+            @foreach ($errors->all() as $error)
+                errorMessages += "{{ $error }}\n";
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMessages,
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script>
+@endif
 @endsection

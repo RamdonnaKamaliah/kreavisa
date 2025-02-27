@@ -26,7 +26,8 @@ class AdminGajiController extends Controller
     public function create()
     {
         // Ambil data user (karyawan) dan jabatan
-        $users = User::where('usertype', '!=', 'admin')->get();
+        $users = User::where('usertype', '!=', 'admin')->get(['id', 'nama_lengkap']);
+
         $jabatan = JabatanKaryawan::all();
         return view('admin.gajikaryawan.create', compact('users', 'jabatan'));
     }
@@ -40,6 +41,16 @@ class AdminGajiController extends Controller
         return response()->json(['gaji_pokok' => 0]);
     }
     
+    /**
+     * Menampilkan detail gaji karyawan.
+     */
+    public function show($id)
+    {
+        // Ambil data gaji karyawan beserta relasi user dan jabatan
+        $gajiKaryawan = GajiKaryawan::with(['user', 'user.jabatan'])->findOrFail($id);
+        return view('admin.gajikaryawan.show', compact('gajiKaryawan'));
+    }
+
 
     /**
      * Menyimpan gaji karyawan baru ke database.
@@ -80,7 +91,7 @@ class AdminGajiController extends Controller
             'total_gaji' => $total_gaji,
         ]);
     
-        return redirect()->route('gajikaryawan.index')->with('success', 'Gaji karyawan berhasil ditambahkan.');
+        return redirect()->route('gajikaryawan.index')->with('added', 'true');
     }
     
     /**
@@ -128,7 +139,7 @@ class AdminGajiController extends Controller
         ]);
     
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('gajikaryawan.index')->with('success', 'Data gaji karyawan berhasil diperbarui.');
+        return redirect()->route('gajikaryawan.index')->with('edited', 'true');
     }
 
     /**
@@ -141,6 +152,6 @@ class AdminGajiController extends Controller
         $gajiKaryawan->delete();
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('gajikaryawan.index')->with('success', 'Data gaji karyawan berhasil dihapus.');
+        return redirect()->route('gajikaryawan.index')->with('deleted', 'true');
     }
 }

@@ -14,9 +14,9 @@
         navbar-main navbar-scroll="false">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
-                <h1 class="text-2xl text-white font-montserrat font-bold mb-2">Selamat Datang !</h1>
-                <h3 class="mb-0 font-bold text-white capitalize font-protest">Yo, {{ auth()->user()->name }}!
-                    Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang terbaik dan menjaga keseimbangan
+                <h1 class="text-2xl text-gray-700 font-montserrat font-bold mt-3">Selamat Datang !</h1>
+                <h3 class="mb-0 font-bold text-black capitalize">Yo, {{ auth()->user()->name }}!
+                    Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang <br> terbaik dan menjaga keseimbangan
                     antara kerja dan istirahat. 🚀"
 
                 </h3>
@@ -139,21 +139,8 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Garis Pemisah -->
-                <li class="border-l border-gray-300 mx-4 h-8"></li>
             </ul>
-            <a href="{{ route('profile.index') }}">
-                <div class="flex items-center justify-between p-3 rounded-lg mb-4 cursor-pointer bg-white">
-                    <div>
-                        <span class="text-sm font-semibold block text-black">
-                            {{ auth()->check() ? auth()->user()->name : 'Guest' }}
-                        </span>
-                        <span class="text-xs text-gray-900">Admin@gmail.com</span>
-                    </div>
-                    <img src="{{ asset('assets/img/carousel-1.jpg') }}" class="w-12 h-12 rounded-full cursor-pointer"
-                        alt="User Profile">
-                </div>
-            </a>
+           
 
         </div>
         </div>

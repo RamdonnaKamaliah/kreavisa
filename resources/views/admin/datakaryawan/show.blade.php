@@ -1,14 +1,9 @@
 @extends('layout.main')
 @section('content')
     <div id="layoutSidenav_content">
-        <div class="relative flex justify-center items-center py-8 px-6 md:ml-64">
-            <!-- Background Ellipse -->
-            <svg class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/4 w-full top-[-50px]" width="1320"
-                height="372" viewBox="0 0 1320 372" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="660" cy="17" rx="660" ry="355" fill="#1d232a" />
-            </svg>
+        <div class="relative flex justify-center items-center py-8 px-6">
 
-            <div class="w-full max-w-5xl text-white relative z-10">
+            <div class="w-full max-w-5xl text-gray-700 relative z-10">
                 <div class="flex items-center mb-4">
                     <a href="{{ route('datakaryawan.index') }}"
                         class="text-blue-500 hover:text-blue-600 text-2xl flex items-center mr-4">
@@ -23,7 +18,7 @@
                             <img src="{{ asset($datakaryawan->foto) }}"
                                 class="w-48 h-48 rounded-full shadow-md object-cover border border-gray-600">
                         @else
-                            <img src="{{ asset('asset-landing-admin/img/profile.png') }}"
+                            <img src="{{ asset('asset-landing-page/img/profile.png') }}"
                                 class="w-32 h-32 rounded-full shadow-md object-cover border border-gray-600">
                         @endif
                     </div>
@@ -31,7 +26,8 @@
 
                 <!-- Data Form -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-                    @foreach ([['label' => 'Nama Lengkap', 'icon' => 'user', 'value' => $datakaryawan->name], ['label' => 'User Name', 'icon' => 'user-circle', 'value' => 'Anonymous'], ['label' => 'Gender', 'icon' => 'venus-mars', 'value' => $datakaryawan->gender], ['label' => 'Email', 'icon' => 'envelope', 'value' => $datakaryawan->email], ['label' => 'No. Telp', 'icon' => 'phone', 'value' => $datakaryawan->no_telepon], ['label' => 'Jabatan', 'icon' => 'briefcase', 'value' => $datakaryawan->jabatan->nama_jabatan ?? '-'], ['label' => 'Tanggal Lahir', 'icon' => 'calendar', 'value' => $datakaryawan->tanggal_lahir], ['label' => 'Usia', 'icon' => 'birthday-cake', 'value' => $datakaryawan->usia . ' th']] as $item)
+                    @foreach ([['label' => 'Username', 'icon' => 'user-circle', 'value' => $datakaryawan->name], ['label' => 'Nama Lengkap', 'icon' => 'user', 'value' =>
+                    $datakaryawan->nama_lengkap],  ['label' => 'Gender', 'icon' => 'venus-mars', 'value' => $datakaryawan->gender], ['label' => 'Email', 'icon' => 'envelope', 'value' => $datakaryawan->email], ['label' => 'No. Telp', 'icon' => 'phone', 'value' => $datakaryawan->no_telepon], ['label' => 'Jabatan', 'icon' => 'briefcase', 'value' => $datakaryawan->jabatan->nama_jabatan ?? '-'], ['label' => 'Tanggal Lahir', 'icon' => 'calendar', 'value' => $datakaryawan->tanggal_lahir], ['label' => 'Usia', 'icon' => 'birthday-cake', 'value' => $datakaryawan->usia . ' th']] as $item)
                         <div class="pb-3 border-b border-gray-600">
                             <label class="block text-gray-400 text-sm mb-1"><i
                                     class="fas fa-{{ $item['icon'] }} mr-2"></i>{{ $item['label'] }}</label>

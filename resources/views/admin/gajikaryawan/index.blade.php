@@ -61,7 +61,7 @@
                     <tbody>
                         @foreach($gajiKaryawan as $row)
                         <tr>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->user->name }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->user->nama_lengkap }}</td>
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->user->jabatan->nama_jabatan }}</td>
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Rp {{ number_format($row->gaji_pokok, 0, ',', '.') }}</td>
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->tipe_pembayaran }}</td>

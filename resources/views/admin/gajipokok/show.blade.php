@@ -7,19 +7,22 @@
 
                 <!-- Tombol Kembali -->
                 <div class="mb-4">
-                    <a href="{{ route('jabatankaryawan.index') }}"
+                    <a href="{{ route('gajipokok.index') }}"
                         class="inline-flex items-center text-blue-600 hover:text-blue-800 transition">
                         <i class='bx bx-arrow-back text-2xl'></i>
                     </a>
                 </div>
 
                 <!-- Judul -->
-                <h1 class="text-center text-xl font-bold text-gray-800 mb-4">View Data Jabatan Karyawan</h1>
+                <h1 class="text-center text-xl font-bold text-gray-800 mb-4">View Gaji Pokok Karyawan</h1>
 
                 <!-- Informasi Jabatan -->
                 <div class="bg-gray-200 p-6 rounded-lg shadow-inner text-center">
                     <p class="text-md font-bold text-gray-700">Nama Jabatan :
-                        <span class="text-gray-600">{{ $jabatankaryawan->nama_jabatan }}</span>
+                        <span class="text-gray-600">{{ $gajipokok->jabatan->nama_jabatan }}</span>
+                    </p>
+                    <p class="text-md font-bold text-gray-700">Gaji Pokok :
+                        <span class="text-gray-600">{{ $gajipokok->gaji_pokok }}</span>
                     </p>
                 </div>
             </div>

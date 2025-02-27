@@ -1,54 +1,53 @@
-@extends('layout3.karyawan3')
+@extends('layout2.karyawan')
 @section('content')
-    <div class="p-20 md:pt-16">
-        <!-- Card Wrapper -->
-        <div class="bg-white shadow-lg rounded-lg p-6 md:p-8">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800">Data Pegawai</h2>
-
-            <!-- Wrapper responsif untuk scroll horizontal -->
-            <div class="overflow-x-auto w-full">
-                <table id="myTable" class="display nowrap min-w-full border border-gray-300">
-                    <thead class="bg-gray-800 text-white">
+    @push('page-title')
+        Rekap Gaji Karyawan
+    @endpush
+    <div class="p-4 md:p-6 overflow-x-hidden">
+        <!-- Laporan Stok Barang -->
+        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md border border-gray-300">
+            <h2 class="text-center text-xl font-bold mb-4">Rekap Gaji</h2>
+            <div class="overflow-x-auto mt-4">
+                <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm bg-white text-gray-800">
+                    <thead class="bg-gray-200 text-gray-900">
                         <tr>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Nama</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Jabatan</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Tanggal</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Nomor Rekening</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Tipe Pembayaran</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Gaji Pokok</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Bonus</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Potongan</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Total Gaji</th>
-                            <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tipe Pembayaran</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Gaji Pokok</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Bonus</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Potongan</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Total Gaji</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="border border-gray-300 px-4 py-2">Rizky</td>
-                            <td class="border border-gray-300 px-4 py-2">Packing</td>
-                            <td class="border border-gray-300 px-4 py-2">02/02/2025</td>
-                            <td class="border border-gray-300 px-4 py-2">87868575</td>
-                            <td class="border border-gray-300 px-4 py-2">DANA</td>
-                            <td class="border border-gray-300 px-4 py-2">Rp. 500.000</td>
-                            <td class="border border-gray-300 px-4 py-2">Rp. 200.000</td>
-                            <td class="border border-gray-300 px-4 py-2">2%</td>
-                            <td class="border border-gray-300 px-4 py-2">Rp. 700.000</td>
-                            <td class="border border-gray-300 px-4 py-2 text-center">
-                                <div class="flex justify-center gap-2 flex-wrap">
-                                    <a href="#"
-                                        class="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-sm">
-                                        Edit
+                        @foreach ($gajiKaryawan as $row)
+                            <tr>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                    {{ $row->user->nama_lengkap }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                    {{ $row->user->jabatan->nama_jabatan }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->tanggal }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->tipe_pembayaran }}
+                                </td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->gaji_pokok, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->bonus, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->potongan, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
+                                    {{ number_format($row->total_gaji, 0, ',', '.') }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
+                                    <a href="{{ route('gajikaryawan.show', $row->id) }}"
+                                        class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100">
+                                        <i class="fas fa-eye"></i> Lihat
                                     </a>
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-sm">
-                                        Cek Profile
-                                    </a>
-                                    <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">
-                                        Hapus
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

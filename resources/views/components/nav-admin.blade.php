@@ -71,10 +71,10 @@
     <li>
         <a href="{{ route('gajikaryawan.index') }}"
             class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                    {{ Request::routeIs('gajikaryawan.index') ? 'bg-gray-100 text-blue-600' : 'hover:bg-blue-300 hover:text-blue-600' }}">
+                    {{ Request::routeIs('gajikaryawan.index') || Request::routeIs('gajipokok.index') ? 'bg-gray-100 text-blue-600' : 'hover:bg-blue-300 hover:text-blue-600' }}">
             <span
                 class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                        {{ Request::routeIs('gajikaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+                        {{ Request::routeIs('gajikaryawan.index') || Request::routeIs('gajipokok.index') ? 'block' : 'hidden group-hover:block' }}"></span>
             <i class='bx bx-dollar'></i>
             <span>Gaji Karyawan</span>
         </a>

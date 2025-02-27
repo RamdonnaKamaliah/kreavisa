@@ -28,9 +28,7 @@
                             onchange="getGajiPokok()">
                             <option value="">-- Pilih Karyawan --</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}" data-jabatan="{{ $user->jabatan->id }}">
-                                    {{ $user->name }}
-                                </option>
+                            <option value="{{ $user->id }}">{{ $user->nama_lengkap }}</option>
                             @endforeach
                         </select>
                     </div>

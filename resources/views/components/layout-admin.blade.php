@@ -59,13 +59,9 @@
                     <i class='bx bx-menu text-2xl'></i>
                 </button>
 
-<<<<<<< HEAD
-                <h1 class="text-xl font-bold">@stack('page-title', 'Dashboard')</h1>
-                
-=======
+
                 <h1 class="text-xl font-bold">Dashboard</h1>
 
->>>>>>> 668c9690d3211d77906aced67b98f0f7f1e02fdf
                 <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-700 transition">
                     <i class="bx bx-moon text-2xl"></i>
                 </button>
@@ -118,55 +114,7 @@
         let table = new DataTable('#stokMasukTable');
     </script>
 
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        @if (session('added'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: 'Berhasil Menambah Data!',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        @endif
-
-        @if (session('edited'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: 'Berhasil Mengedit Data!',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        @endif
-
-        function deleted(button) {
-            Swal.fire({
-                icon: "warning",
-                title: "Yakin ingin menghapus?",
-                text: "You won't be able to revert this!",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    button.parentElement.submit();
-                }
-            });
-        }
-
-        @if (session('deleted'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: 'Berhasil Menghapus Data!',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        @endif
-    </script>
+    
 
 </body>
 

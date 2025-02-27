@@ -29,17 +29,18 @@ class AdminJabatanController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama_jabatan' => 'required|string|max:50',
-        ]);
-    
-        JabatanKaryawan::create([
-            'nama_jabatan' => $request->nama_jabatan,
-        ]);
-    
-        return redirect()->route('jabatankaryawan.index')->with('added', 'true');
-    }
+{
+    $request->validate([
+        'nama_jabatan' => 'required|string|max:50|unique:jabatan_karyawans,nama_jabatan',
+    ]);
+
+    JabatanKaryawan::create([
+        'nama_jabatan' => $request->nama_jabatan,
+    ]);
+
+    return redirect()->route('jabatankaryawan.index')->with('added', 'true');
+}
+
 
     /**
      * Display the specified resource.

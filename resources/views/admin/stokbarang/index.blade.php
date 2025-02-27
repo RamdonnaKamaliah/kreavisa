@@ -7,7 +7,7 @@
             <div class="max-w-xs">
                 <select id="tableSelect" name="tableSelect"
                     class="p-2 border border-gray-400 rounded-md w-full bg-white text-gray-800">
-                    <option value="{{ route('stokbarang.index') }}">Laporan List Stok Barang</option>
+                    <option value="{{ route('stokbarang.index') }}"> List Stok Barang</option>
                     <option value="{{ route('stokbarang.stokmasuk') }}">Laporan Stok Masuk</option>
                     <option value="{{ route('stokbarang.stokkeluar') }}">Laporan Stok Keluar</option>
                 </select>
@@ -42,7 +42,7 @@
             <h2 class="text-center text-xl font-bold mb-4">Laporan List Stok Barang</h2>
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('stokbarang.create') }}"
-                    class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md">
+                    class="px-4 py-2 bg-blue-500 hover:bg-green-600 text-white rounded-md">
                     + Tambah Data
                 </a>
                 <div class="flex items-center space-x-2 mb-4">
@@ -112,14 +112,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($stokBarangs->isEmpty())
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-gray-500">Tabel kosong</td>
+                        </tr>
+                        @else
                         @foreach ($stokBarangs as $barang)
                             <tr>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->kode_barang }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->warna }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->size }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->total_stok }}</td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
-                                    {{ $barang->keterangan ?? '-' }}</td>
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->keterangan ?? '-' }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 text-center">
                                     <div class="flex justify-center space-x-1 md:space-x-2">
                                         <a href="{{ route('stokbarang.edit', $barang->id) }}"
@@ -136,14 +140,14 @@
                                             @method('DELETE')
                                             <button type="button" onclick="deleted(this)"
                                                 class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
-                                                <i class="fas fa-trash-alt"></i> <span
-                                                    class="hidden sm:inline">Delete</span>
+                                                <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
