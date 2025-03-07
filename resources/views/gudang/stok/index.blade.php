@@ -10,32 +10,20 @@
             <div class="max-w-xs">
                 <select id="tableSelect" name="tableSelect"
                     class="p-2 border border-gray-300 rounded-md w-full bg-white text-gray-800">
-                    <option value="{{ route('gudang.stok.index') }}">Laporan List Stok Barang</option>
-                    <option value="{{ route('gudang.stok.masuk') }}">Laporan Stok Masuk</option>
-                    <option value="{{ route('gudang.stok.keluar') }}">Laporan Stok Keluar</option>
+                    <option value="{{ route('gudang.stok.index') }}" {{ request()->routeIs('gudang.stok.index') ? 'selected' : '' }}>Laporan List Stok Barang</option>
+                    <option value="{{ route('gudang.stok.masuk') }}" {{ request()->routeIs('gudang.stok.masuk') ? 'selected' : '' }}>Laporan Stok Masuk</option>
+                    <option value="{{ route('gudang.stok.keluar') }}" {{ request()->routeIs('gudang.stok.keluar') ? 'selected' : '' }}>Laporan Stok Keluar</option>
                 </select>
             </div>
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById('exportExcel').addEventListener('click', function() {
-                    let selectedDate = document.getElementById('exportDate').value;
-                    let url = "{{ route('stokbarang.export') }}";
-
-                    if (!url) {
-                        alert("URL export tidak ditemukan.");
-                        return;
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById('tableSelect').addEventListener('change', function () {
+                    let selectedValue = this.value;
+                    if (selectedValue) {
+                        window.location.href = selectedValue;
                     }
-
-                    let finalUrl = url;
-                    if (selectedDate) {
-                        finalUrl += "?date=" + encodeURIComponent(selectedDate) + "&table=stok_barang";
-                    } else {
-                        finalUrl += "?table=stok_barang";
-                    }
-
-                    window.location.href = finalUrl;
                 });
             });
         </script>

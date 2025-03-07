@@ -37,45 +37,54 @@ class AdmindataController extends Controller
      */
  
 
-public function store(Request $request)
-{
-    $request->validate([
-        'nama_lengkap' => 'required|string|max:100',
-        'name' => 'required|string|max:100',
-        'usia' => 'required|integer|min:18|max:65',
-        'gender' => 'required|in:Laki-laki,Perempuan',
-        'tanggal_lahir' => 'required|date',
-        'no_telepon' => 'required|string|unique:users,no_telepon',
-        'email' => 'required|email|unique:users,email',
-        'jabatan_id' => 'required|exists:jabatan_karyawans,id',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    ]);
-
-    // Generate password random
-    $randomPassword = Str::random(8);
-    
-    $data = $request->except('password', 'foto');
-    $data['password'] = Hash::make($randomPassword);
-
-    $jabatan = JabatanKaryawan::find($request->jabatan_id);
-    $data['usertype'] = ($jabatan && strtolower($jabatan->nama_jabatan) === 'gudang') ? 'gudang' : 'karyawan';
-
-    if ($request->hasFile('foto')) {
-        $file = $request->file('foto');
-        $destinationPath = 'uploads/datakaryawan';
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path($destinationPath), $fileName);
-        $data['foto'] = $destinationPath . '/' . $fileName;
-    }
-
-    // Simpan data karyawan
-    User::create($data);
-
-    // Kirim email dengan password yang dihasilkan
-    Mail::to($request->email)->send(new SendPasswordEmail($randomPassword));
-
-    return redirect()->route('datakaryawan.index')->with('added', 'true');
-}
+     public function store(Request $request)
+     {
+         $request->validate([
+             'nama_lengkap' => 'required|string|max:100',
+             'name' => 'required|string|max:100',
+             'usia' => 'required|integer|min:18|max:65',
+             'gender' => 'required|in:Laki-laki,Perempuan',
+             'tanggal_lahir' => 'required|date',
+             'no_telepon' => 'required|string|unique:users,no_telepon',
+             'email' => 'required|email|unique:users,email',
+             'jabatan_id' => 'required|exists:jabatan_karyawans,id',
+             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Foto tidak wajib diisi
+         ]);
+     
+         // Generate password random
+         $randomPassword = Str::random(8);
+         
+         $data = $request->except('password', 'foto');
+         $data['password'] = Hash::make($randomPassword);
+     
+         // Tentukan usertype berdasarkan jabatan
+         $jabatan = JabatanKaryawan::find($request->jabatan_id);
+         $data['usertype'] = ($jabatan && strtolower($jabatan->nama_jabatan) === 'gudang') ? 'gudang' : 'karyawan';
+     
+         // Cek apakah ada foto yang diunggah
+         if ($request->hasFile('foto')) {
+             $file = $request->file('foto');
+             $destinationPath = 'uploads/datakaryawan';
+             $fileName = time() . '_' . $file->getClientOriginalName();
+             $file->move(public_path($destinationPath), $fileName);
+             $data['foto'] = $destinationPath . '/' . $fileName;
+         } else {
+             $data['foto'] = null; // Jika tidak ada foto, tetap simpan null
+         }
+     
+         // Simpan data karyawan
+         $user = User::create($data);
+     
+         // Kirim email dengan password yang dihasilkan (tetap terkirim meskipun tidak ada foto)
+         try {
+             Mail::to($request->email)->send(new SendPasswordEmail($randomPassword));
+         } catch (\Exception $e) {
+             return redirect()->route('datakaryawan.index')->with('added', 'true')->with('email_error', 'Email gagal dikirim.');
+         }
+     
+         return redirect()->route('datakaryawan.index')->with('added', 'true');
+     }
+     
 
 
 

@@ -1,5 +1,11 @@
 @extends('layout.main')
 @section('content')
+@if (session('email_error'))
+    <div class="alert alert-warning">
+        {{ session('email_error') }}
+    </div>
+@endif
+
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Laporan Stok Masuk -->
         <div class="bg-white text-black p-4 rounded-lg shadow-md border border-gray-300">

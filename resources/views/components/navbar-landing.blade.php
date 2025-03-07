@@ -4,7 +4,8 @@
             <!-- Logo -->
             <a href="/" class="flex items-center gap-3 text-white">
                 <!-- Logo Image -->
-                <img src="{{ asset('asset-landing-page/img/logo kreavisa.png') }}" alt="Kreavisa Logo" class="h-10 w-auto">
+                <img src="{{ asset('asset-landing-page/img/Kreavisa_Logo__3_-removebg-preview.png') }}"
+                    alt="Kreavisa Logo" class="h-10 w-auto">
                 <!-- Logo Text -->
                 <span class="text-3xl font-montserrat">Kreavisa</span>
             </a>
@@ -36,13 +37,15 @@
                     <!-- Tombol Login -->
                     <a href="/login-karyawan-gudang">
                         <button
-                            class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-[#343045] px-6 py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] font-montserrat hover:shadow-lg transition-all duration-300">
-                            LOGIN
+                            class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-[#343045] px-6 py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] font-popins hover:shadow-lg transition-all duration-300">
+                            Login
                         </button>
                     </a>
                 @endif
-
-
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleTheme()" class="text-white text-2xl ml-4">
+                    <i class="bx bx-moon"></i>
+                </button>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -56,12 +59,32 @@
             class="hidden md:hidden bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-white mt-4 rounded-lg p-4 space-y-4">
             <a href="#home"
                 class="block text-white font-medium hover:text-gray-200 transition-all duration-200">Home</a>
-            <button
+            <button id="loginButton"
                 class="bg-gradient-to-r from-pink-500 to-red-400 text-white w-full py-2 rounded-md shadow-md hover:from-red-400 hover:to-pink-500 hover:shadow-lg transition-all duration-300">
                 Login
             </button>
+
+            <!-- Dark Mode Toggle for Mobile -->
+            <button id="dark-mode-toggle-mobile"
+                class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-white w-full py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] hover:shadow-lg transition-all duration-300">
+                Dark Mode
+            </button>
+
         </div>
     </nav>
+
+    <script>
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+    </script>
+
 
 
     <!-- only for large device -->
