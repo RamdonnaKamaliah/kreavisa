@@ -25,17 +25,18 @@
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Status</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Lokasi</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Foto</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">File Surat</th> <!-- Tambahkan header -->
                         </tr>
                     </thead>
                     <tbody>
                         @if ($absen->isEmpty())
                         <tr>
-                            <td colspan="6" class="text-center py-4 text-gray-500">Tabel kosong</td>
+                            <td colspan="7" class="text-center py-4 text-gray-500">Tabel kosong</td> <!-- Sesuaikan colspan -->
                         </tr>
                         @else
                         @foreach ($absen as $item)
                         <tr>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->name ?? '-' }}</td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->nama_lengkap ?? '-' }}</td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->jabatan->nama_jabatan ?? '-' }}</td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->tanggal_absensi }}</td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ ucfirst($item->status) }}</td>
@@ -47,7 +48,7 @@
                                 @else
                                     <span>-</span>
                                 @endif
-                            </td>                            
+                            </td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
                                 @if ($item->foto)
                                     <a href="{{ asset($item->foto) }}" target="_blank">
@@ -57,11 +58,19 @@
                                     <span>-</span>
                                 @endif
                             </td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                @if ($item->file_surat)
+                                    <a href="{{ asset($item->file_surat) }}" target="_blank" class="text-blue-600 underline">
+                                        Lihat Surat
+                                    </a>
+                                @else
+                                    <span>-</span>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                         @endif
-                    </tbody>
-                    
+                    </tbody>                    
                 </table>
             </div>
         </div>

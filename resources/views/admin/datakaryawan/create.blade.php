@@ -68,11 +68,15 @@
                                 <label for="position" class="block text-gray-700 font-medium">Jabatan</label>
                                 <select name="jabatan_id" id="position"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+                                    <option value="" disabled selected>Pilih Jabatan</option>
                                     @foreach ($jabatanKaryawan as $row)
-                                        <option value="{{ $row->id }}">{{ $row->nama_jabatan }}</option>
+                                        <option value="{{ $row->id }}" {{ old('jabatan_id', $stokBarang->jabatan_id ?? '') == $row->id ? 'selected' : '' }}>
+                                            {{ $row->nama_jabatan }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
+                            
 
                             <div class="md:col-span-3 space-y-4">
                                 <label for="dob" class="block text-gray-700 font-medium">Tanggal Lahir</label>

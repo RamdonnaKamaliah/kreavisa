@@ -83,8 +83,8 @@
                 
                     function exportExcel() {
                         let date = document.getElementById("filterDate").value;
-                        let url = "{{ route('stokbarang.export') }}";
-                        if (date) url += "?date=" + encodeURIComponent(date);
+                        let url = "{{ route('stokbarang.export') }}?type=stok_barang"; // Pastikan type=stok_barang
+                        if (date) url += "&date=" + encodeURIComponent(date);
                         window.location.href = url;
                     }
                 
@@ -96,7 +96,7 @@
                         }
                     });
                 </script>
-
+            
             </div>
 
             <div class="overflow-x-auto mt-4">
@@ -134,15 +134,16 @@
                                             class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
                                             <i class="fas fa-eye"></i> <span class="hidden sm:inline">View</span>
                                         </a>
-                                        <form action="{{ route('stokbarang.destroy', $barang->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button" onclick="deleted(this)"
-                                                class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
-                                                <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
-                                            </button>
-                                        </form>
+                                         <form action="{{ route('stokbarang.destroy', $barang->id) }}" method="POST"
+                                        class="inline w-full md:w-auto">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="deleted(this)"
+                                            class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm md:inline-flex w-full md:w-auto justify-center">
+                                            <i class="fas fa-trash-alt"></i> <span class="ml-2">Delete</span>
+                                        </button>
+                                    </form>
+                                    
                                     </div>
                                 </td>
                             </tr>

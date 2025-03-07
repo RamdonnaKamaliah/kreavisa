@@ -11,23 +11,30 @@ class StokMasukExport implements FromCollection, WithHeadings
     protected $date;
 
     public function __construct($date = null)
-    {
-        $this->date = $date;
+{
+    $this->date = $date;
+}
+
+public function collection()
+{
+    $query = StokMasuk::with('stokBarang');
+
+    if ($this->date) {
+        $query->whereDate('tanggal_masuk', $this->date);
     }
 
-    public function collection()
-    {
-        $query = StokMasuk::with('stokBarang');
+    return $query->get()->map(function ($stokMasuk) {
+        return [
+            'Kode Barang' => $stokMasuk->stokBarang->kode_barang ?? 'N/A',
+            'Jumlah Masuk' => $stokMasuk->jumlah,
+            'Tanggal Masuk' => $stokMasuk->tanggal_masuk,
+        ];
+    });
+}
 
-        if ($this->date) {
-            $query->whereDate('tanggal_masuk', $this->date);
-        }
-
-        return $query->select('stok_barang_id', 'jumlah', 'tanggal_masuk')->get();
-    }
 
     public function headings(): array
     {
-        return ['ID Stok Barang', 'Jumlah Masuk', 'Tanggal Masuk'];
+        return ['Kode Barang', 'Jumlah Masuk', 'Tanggal Masuk'];
     }
 }

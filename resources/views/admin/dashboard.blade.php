@@ -16,7 +16,7 @@
                                         Total karyawan kreavisa
                                     </p>
                                     <h5 class="mb-2 font-bold dark:text-white mt-4">
-                                        {{ is_countable($datakaryawan) ? count($datakaryawan) : 0 }} Karyawan
+                                        {{ count($datakaryawan) }} Karyawan
                                     </h5>
                                     
                                 </div>
@@ -49,7 +49,8 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                         Jumlah Absen Hari ini
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($absenkaryawan) }} Karyawan</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($absenkaryawan) }} Karyawan
+                                    </h5>
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">

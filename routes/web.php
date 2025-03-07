@@ -74,6 +74,8 @@ Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/stokbarang/stokmasuk', [AdminStokBarangController::class, 'stokMasuk'])->name('stokbarang.stokmasuk');
     Route::get('/stokbarang/stokkeluar', [AdminStokBarangController::class, 'stokKeluar'])->name('stokbarang.stokkeluar');
     Route::get('stokbarang-export', [AdminStokBarangController::class, 'export'])->name('stokbarang.export');
+    Route::get('stokmasuk-export', [AdminStokBarangController::class, 'export'])->name('stokmasuk.export');
+    Route::get('stokkeluar-export', [AdminStokBarangController::class, 'export'])->name('stokkeluar.export');
 
 });
 
@@ -81,13 +83,13 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
     Route::get('karyawan/absen/sakit', [KaryawanAbsenController::class, 'createSakit'])
     ->name('karyawan.absen.sakit');
-Route::post('karyawan/absen/sakit', [KaryawanAbsenController::class, 'storeSakit'])
-    ->name('karyawan.absen.sakit.store');
-Route::get('karyawan/absen/izin', [KaryawanAbsenController::class, 'createIzin'])
-    ->name('karyawan.absen.izin');
-Route::post('karyawan/absen/izin', [KaryawanAbsenController::class, 'storeIzin'])
-    ->name('karyawan.absen.izin.store');
-Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
+    Route::post('karyawan/absen/sakit', [KaryawanAbsenController::class, 'storeSakit'])
+        ->name('karyawan.absen.sakit.store');
+    Route::get('karyawan/absen/izin', [KaryawanAbsenController::class, 'createIzin'])
+        ->name('karyawan.absen.izin');
+    Route::post('karyawan/absen/izin', [KaryawanAbsenController::class, 'storeIzin'])
+        ->name('karyawan.absen.izin.store');
+    Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
     Route::resource('gaji-karyawan', GajiController::class);
     Route::resource('jadwal-karyawan', JadwalController::class);
 });
