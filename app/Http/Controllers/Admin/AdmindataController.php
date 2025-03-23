@@ -21,7 +21,7 @@ class AdmindataController extends Controller
     {
         $dataKaryawan = User::with('jabatan')->where('usertype', '!=', 'admin')->get();
         return view('admin.datakaryawan.index', compact('dataKaryawan'));
-    }
+    }    
 
     /**
      * Show the form for creating a new resource.
@@ -41,19 +41,30 @@ class AdmindataController extends Controller
      {
          $request->validate([
              'nama_lengkap' => 'required|string|max:100',
-             'name' => 'required|string|max:100',
-             'usia' => 'required|integer|min:18|max:65',
+             'name' => 'required|string|max:100|unique:users,name',
+             'usia' => 'required|integer|min:0',
              'gender' => 'required|in:Laki-laki,Perempuan',
              'tanggal_lahir' => 'required|date',
              'no_telepon' => 'required|string|unique:users,no_telepon',
              'email' => 'required|email|unique:users,email',
              'jabatan_id' => 'required|exists:jabatan_karyawans,id',
-             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Foto tidak wajib diisi
+             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
          ]);
+     
+         // Cek apakah user sudah ada berdasarkan email atau username
+         $existingUser = User::where('email', $request->email)
+                             ->orWhere('name', $request->name)
+                             ->exists();
+         
+         if ($existingUser) {
+             return redirect()->route('datakaryawan.create')
+                 ->with('error', 'Data sudah ada! Silakan cek kembali.')
+                 ->withInput();
+         }
      
          // Generate password random
          $randomPassword = Str::random(8);
-         
+     
          $data = $request->except('password', 'foto');
          $data['password'] = Hash::make($randomPassword);
      
@@ -61,29 +72,29 @@ class AdmindataController extends Controller
          $jabatan = JabatanKaryawan::find($request->jabatan_id);
          $data['usertype'] = ($jabatan && strtolower($jabatan->nama_jabatan) === 'gudang') ? 'gudang' : 'karyawan';
      
-         // Cek apakah ada foto yang diunggah
+         // Simpan foto jika ada
          if ($request->hasFile('foto')) {
              $file = $request->file('foto');
              $destinationPath = 'uploads/datakaryawan';
              $fileName = time() . '_' . $file->getClientOriginalName();
              $file->move(public_path($destinationPath), $fileName);
              $data['foto'] = $destinationPath . '/' . $fileName;
-         } else {
-             $data['foto'] = null; // Jika tidak ada foto, tetap simpan null
          }
      
          // Simpan data karyawan
          $user = User::create($data);
      
-         // Kirim email dengan password yang dihasilkan (tetap terkirim meskipun tidak ada foto)
+         // Kirim email dengan password yang dihasilkan
          try {
              Mail::to($request->email)->send(new SendPasswordEmail($randomPassword));
          } catch (\Exception $e) {
-             return redirect()->route('datakaryawan.index')->with('added', 'true')->with('email_error', 'Email gagal dikirim.');
+             return redirect()->route('datakaryawan.index')
+                 ->with('success', 'Data berhasil ditambahkan, tetapi email gagal dikirim.');
          }
      
-         return redirect()->route('datakaryawan.index')->with('added', 'true');
+         return redirect()->route('datakaryawan.index')->with('added', true);
      }
+     
      
 
 
@@ -122,7 +133,8 @@ class AdmindataController extends Controller
         'usertype' => $usertype,
     ]);
 
-    return redirect()->route('datakaryawan.index')->with('edited', 'true');
+
+    return redirect()->route('datakaryawan.index')->with('edited', true);
 }
 
     
@@ -142,7 +154,8 @@ public function show($id)
         $karyawan = User::findOrFail($id);
         $karyawan->delete();
         
-        return redirect()->route('datakaryawan.index')->with('deleted', 'true');
+
+        return redirect()->route('datakaryawan.index')->with('deleted', true);
     }
 }
 

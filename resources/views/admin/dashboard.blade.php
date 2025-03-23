@@ -15,7 +15,10 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                         Total karyawan kreavisa
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">29 Karyawan</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">
+                                        {{ count($datakaryawan) }} Karyawan
+                                    </h5>
+                                    
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">
@@ -26,7 +29,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href="#"
+                            <a href="{{ route('datakaryawan.index') }}"
                                 class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
@@ -46,7 +49,8 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                         Jumlah Absen Hari ini
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">17 Karyawan</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($absenkaryawan) }} Karyawan
+                                    </h5>
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">
@@ -57,7 +61,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href="#"
+                            <a href="{{ route('absenkaryawan.index') }}"
                                 class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
@@ -77,7 +81,7 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                         Jumlah Stok MASUK
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">1.700 Stok</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($stokmasuk) }} Stok</h5>
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">
@@ -88,7 +92,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href="#"
+                            <a href="{{ route('stokbarang.stokmasuk') }}"
                                 class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
@@ -108,7 +112,7 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                         Jumlah Stok KELUAR
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">1.200 Stok</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($stokkeluar) }} Stok</h5>
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">
@@ -119,7 +123,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href="#"
+                            <a href="{{ route('stokbarang.stokkeluar') }}"
                                 class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
@@ -139,17 +143,19 @@
                         <div class="relative w-52 h-52 flex justify-center items-center mt-8">
                             <canvas id="karyawanChart"></canvas>
                             <p class="absolute text-center text-base font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                Total: <br /> 29 Karyawan
+                                Total: <br /> {{ $datakaryawan->count() }} Karyawan
                             </p>
                         </div>
                         <!-- Box Keterangan -->
                         <div class="p-5 bg-gray-100 rounded-lg shadow text-left w-60">
                             <h3 class="text-base font-semibold mb-3">Jumlah Karyawan Berdasarkan Jabatan</h3>
                             <ul class="text-sm">
-                                <li><span class="text-blue-500 font-bold">●</span> Karyawan Gudang = 17 Orang</li>
-                                <li><span class="text-pink-400 font-bold">●</span> Karyawan Live = 19 Orang</li>
-                                <li><span class="text-orange-400 font-bold">●</span> Karyawan Packing = 20 Orang</li>
-                                <li><span class="text-yellow-400 font-bold">●</span> Karyawan Admin = 5 Orang</li>
+                                @foreach ($datakaryawan->groupBy('jabatan.nama_jabatan') as $jabatan => $karyawan)
+                                <li>
+                                    <span class="font-bold" style="color: {{ ['#3B82F6', '#F472B6', '#F59E0B', '#FACC15'][$loop->index % 4] }};">●</span>
+                                    {{ $jabatan }} = {{ $karyawan->count() }} Orang
+                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -161,7 +167,7 @@
                     <div class="w-full flex justify-center">
                         <canvas id="absensiChart" class="h-56"></canvas>
                     </div>
-                    <a href="#" class="mt-6 w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-800 flex items-center justify-center gap-1 text-sm">
+                    <a href="{{ route('absenkaryawan.index') }}" class="mt-6 w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-800 flex items-center justify-center gap-1 text-sm">
                         Selengkapnya <i class='bx bx-right-arrow-alt text-lg'></i>
                     </a>
                 </div>
@@ -174,34 +180,35 @@
                     if (typeof ChartDataLabels !== "undefined") {
                         Chart.register(ChartDataLabels);
                     }
-
+            
                     function createKaryawanChart() {
                         const canvasKaryawan = document.getElementById("karyawanChart");
                         if (!canvasKaryawan) {
                             console.error("Elemen karyawanChart tidak ditemukan!");
                             return;
                         }
-
+            
                         const ctxKaryawan = canvasKaryawan.getContext("2d");
-
+            
                         if (window.karyawanChart instanceof Chart) {
                             window.karyawanChart.destroy();
                         }
-
+            
+                        // Ambil data karyawan dari Laravel
+                        const dataJabatan = @json($datakaryawan->groupBy('jabatan.nama_jabatan')->map->count());
+                        const labels = Object.keys(dataJabatan);
+                        const values = Object.values(dataJabatan);
+                        const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981", "#EF4444", "#8B5CF6"];
+            
                         window.karyawanChart = new Chart(ctxKaryawan, {
                             type: "doughnut",
                             data: {
-                                labels: [
-                                    "Karyawan Gudang",
-                                    "Karyawan Live",
-                                    "Karyawan Packing",
-                                    "Karyawan Admin",
-                                ],
+                                labels: labels,
                                 datasets: [{
-                                    data: [17, 19, 20, 5],
-                                    backgroundColor: ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15"],
+                                    data: values,
+                                    backgroundColor: colors.slice(0, labels.length),
                                     hoverOffset: 5,
-                                }, ],
+                                }],
                             },
                             options: {
                                 responsive: true,
@@ -223,36 +230,36 @@
                             },
                         });
                     }
-
+            
                     function createAbsensiChart() {
                         const canvasAbsensi = document.getElementById("absensiChart");
                         if (!canvasAbsensi) {
                             console.error("Elemen absensiChart tidak ditemukan!");
                             return;
                         }
-
+            
                         const ctxAbsensi = canvasAbsensi.getContext("2d");
-
+            
                         if (window.absensiChart instanceof Chart) {
                             window.absensiChart.destroy();
                         }
-
+            
+                        // Ambil data absensi dari Laravel (Menggunakan absenkaryawan)
+                        const absenKaryawan = @json($absenkaryawan);
+                        const labels = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+                        const values = labels.map(day => absenKaryawan[day] || 0);
+                        const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981"];
+            
                         window.absensiChart = new Chart(ctxAbsensi, {
                             type: "bar",
                             data: {
-                                labels: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"],
+                                labels: labels,
                                 datasets: [{
-                                    label: "Absensi",
-                                    data: [10, 20, 15, 25, 18],
-                                    backgroundColor: [
-                                        "blue",
-                                        "red",
-                                        "yellow",
-                                        "purple",
-                                        "orange",
-                                    ],
+                                    label: "Jumlah Absensi",
+                                    data: values,
+                                    backgroundColor: colors,
                                     borderRadius: 5,
-                                }, ],
+                                }],
                             },
                             options: {
                                 responsive: true,
@@ -271,15 +278,18 @@
                                 scales: {
                                     y: {
                                         beginAtZero: true,
+                                        ticks: {
+                                            stepSize: 1,
+                                        },
                                     },
                                 },
                             },
                         });
                     }
-
+            
                     createKaryawanChart();
                     createAbsensiChart();
-
+            
                     window.addEventListener("resize", function() {
                         if (window.karyawanChart) {
                             window.karyawanChart.resize();
@@ -290,27 +300,31 @@
                     });
                 });
             </script>
+            
+            
 
 
             <div class="bg-white dark:bg-gray-900 p-4 shadow-lg rounded-2xl w-full max-w-6xl mt-8">
                 <h2 class="text-xl font-bold text-center text-gray-900 dark:text-white mb-2">Maps</h2>
                 <div class="border rounded-lg overflow-hidden">
                     <iframe class="w-full h-60"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.501004328541!2d110.409064!3d-7.197603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b8e9d7e5c2b%3A0xf7b8a1b68206e0a!2sKebon%20Kacang!5e0!3m2!1sen!2sid!4v1644846140124!5m2!1sen!2sid"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.3048621459625!2d106.7626191737859!3d-6.608989364603464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5001b7efe39%3A0x911c1a77e2752ac4!2sNavisa%20Basic%20Collection!5e0!3m2!1sid!2sid!4v1740666686244!5m2!1sid!2sid"
                         allowfullscreen="" loading="lazy">
                     </iframe>
                 </div>
                 <div class="flex justify-center mt-3">
-                    <button
-                        class="flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-80">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 6-9 13-9 13s-9-7-9-13a9 9 0 0 1 18 0z" />
-                            <circle cx="12" cy="10" r="3" />
-                        </svg>
-                        Lihat Selengkapnya
-                    </button>
+                    <a href="https://maps.app.goo.gl/h6qyQiHKDmRCuopP7" target="_blank" rel="noopener noreferrer">
+                        <button class="flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-80">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 6-9 13-9 13s-9-7-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            Lihat Selengkapnya
+                        </button>
+                    </a>
                 </div>
+                
             </div>
         </div>
     @endsection

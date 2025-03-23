@@ -36,8 +36,12 @@
 
                     <div>
                         <label for="size" class="block text-gray-700 font-medium">Size</label>
-                        <input type="text" class="w-full p-2 border rounded-md @error('size') border-red-500 @enderror"
-                            id="size" name="size" value="{{ old('size') }}" required>
+                        <select class="w-full p-2 border rounded-md @error('size') border-red-500 @enderror" id="size" name="size" required>
+                            <option value="" disabled selected>Pilih Size</option>
+                            @for ($i = 37; $i <= 41; $i++)
+                                <option value="{{ $i }}" {{ old('size') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                        </select>
                         @error('size')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -69,4 +73,17 @@
             </form>
         </div>
     </div>
+    @if (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "{{ session('error') }}",
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script>
+@endif
+
 @endsection

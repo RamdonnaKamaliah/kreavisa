@@ -1,15 +1,6 @@
 @extends('layout.main')
 @section('content')
     <div id="layoutSidenav_content">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
         <main class="flex justify-center py-6 p-6">
             <div class="w-full max-w-4xl"> <!-- Perluas lebar form agar muat 3 kolom -->
@@ -77,11 +68,15 @@
                                 <label for="position" class="block text-gray-700 font-medium">Jabatan</label>
                                 <select name="jabatan_id" id="position"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+                                    <option value="" disabled selected>Pilih Jabatan</option>
                                     @foreach ($jabatanKaryawan as $row)
-                                        <option value="{{ $row->id }}">{{ $row->nama_jabatan }}</option>
+                                        <option value="{{ $row->id }}" {{ old('jabatan_id', $stokBarang->jabatan_id ?? '') == $row->id ? 'selected' : '' }}>
+                                            {{ $row->nama_jabatan }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
+                            
 
                             <div class="md:col-span-3 space-y-4">
                                 <label for="dob" class="block text-gray-700 font-medium">Tanggal Lahir</label>
@@ -127,7 +122,24 @@
                 age--;
             }
 
-            document.getElementById('age').value = age;
+            document.getElementById('age').value = age < 0 ? 0 : age; // Pastikan usia minimal 0
         });
     </script>
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let errorMessages = "";
+            @foreach ($errors->all() as $error)
+                errorMessages += "{{ $error }}\n";
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMessages,
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script>
+@endif
 @endsection

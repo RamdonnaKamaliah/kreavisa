@@ -34,4 +34,22 @@
             </div>
         </div>
     </div>
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let errorMessages = "";
+            @foreach ($errors->all() as $error)
+                errorMessages += "{{ $error }}\n";
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMessages,
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script>
+@endif
+
 @endsection

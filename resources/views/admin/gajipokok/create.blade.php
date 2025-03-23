@@ -5,7 +5,7 @@
         <main class="flex justify-center items-center min-h-[-85px] py-10">
             <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg">
                 <div class="mb-4">
-                    <a href="{{ route('gajikaryawan.index') }}"
+                    <a href="{{ route('gajipokok.index') }}"
                         class="text-blue-600 hover:text-blue-800 font-medium transition flex items-center">
                         <i class="fas fa-arrow-left mr-2"></i>
                     </a>
@@ -45,4 +45,21 @@
             </div>
         </main>
     </div>
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let errorMessages = "";
+            @foreach ($errors->all() as $error)
+                errorMessages += "{{ $error }}\n";
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMessages,
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script>
+@endif
 @endsection

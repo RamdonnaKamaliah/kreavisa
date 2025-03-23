@@ -42,7 +42,7 @@
             <h2 class="text-center text-xl font-bold mb-4">Laporan List Stok Barang</h2>
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('stokbarang.create') }}"
-                    class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md">
+                    class="px-4 py-2 bg-blue-500 hover:bg-green-600 text-white rounded-md">
                     + Tambah Data
                 </a>
                 <div class="flex items-center space-x-2 mb-4">
@@ -83,8 +83,8 @@
                 
                     function exportExcel() {
                         let date = document.getElementById("filterDate").value;
-                        let url = "{{ route('stokbarang.export') }}";
-                        if (date) url += "?date=" + encodeURIComponent(date);
+                        let url = "{{ route('stokbarang.export') }}?type=stok_barang"; // Pastikan type=stok_barang
+                        if (date) url += "&date=" + encodeURIComponent(date);
                         window.location.href = url;
                     }
                 
@@ -96,7 +96,7 @@
                         }
                     });
                 </script>
-
+            
             </div>
 
             <div class="overflow-x-auto mt-4">
@@ -112,14 +112,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($stokBarangs->isEmpty())
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-gray-500">Tabel kosong</td>
+                        </tr>
+                        @else
                         @foreach ($stokBarangs as $barang)
                             <tr>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->kode_barang }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->warna }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->size }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->total_stok }}</td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
-                                    {{ $barang->keterangan ?? '-' }}</td>
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $barang->keterangan ?? '-' }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 text-center">
                                     <div class="flex justify-center space-x-1 md:space-x-2">
                                         <a href="{{ route('stokbarang.edit', $barang->id) }}"
@@ -130,20 +134,21 @@
                                             class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
                                             <i class="fas fa-eye"></i> <span class="hidden sm:inline">View</span>
                                         </a>
-                                        <form action="{{ route('stokbarang.destroy', $barang->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button" onclick="deleted(this)"
-                                                class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
-                                                <i class="fas fa-trash-alt"></i> <span
-                                                    class="hidden sm:inline">Delete</span>
-                                            </button>
-                                        </form>
+                                         <form action="{{ route('stokbarang.destroy', $barang->id) }}" method="POST"
+                                        class="inline w-full md:w-auto">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="deleted(this)"
+                                            class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm md:inline-flex w-full md:w-auto justify-center">
+                                            <i class="fas fa-trash-alt"></i> <span class="ml-2">Delete</span>
+                                        </button>
+                                    </form>
+                                    
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

@@ -26,14 +26,13 @@
                         <div class="border-r border-gray-300 pr-8">
                             <div class="flex flex-col items-center">
                                 <!-- Foto Karyawan -->
-<div class="w-32 h-32 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">
-    @if ($karyawan->foto && file_exists(public_path('storage/datakkaryawan/' . $karyawan->foto)))
-        <img accept="image/*" onchange="previewImage(event)" alt="Foto Karyawan" class="w-full h-full object-cover">
-    @else
-    <img src="{{ $karyawan->foto ? asset($karyawan->foto) : asset('asset-landing-admin/img/profile.png') }}" alt="Default Profile" class="w-full h-full object-cover">
-    @endif
-</div>
-
+                                <div class="w-32 h-32 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">
+                                    @if ($karyawan->foto && file_exists(public_path('storage/datakkaryawan/' . $karyawan->foto)))
+                                        <img accept="image/*" onchange="previewImage(event)" alt="Foto Karyawan" class="w-full h-full object-cover">
+                                    @else
+                                    <img src="{{ $karyawan->foto ? asset($karyawan->foto) : asset('asset-landing-page/img/profile.png') }}" alt="Default Profile" class="w-full h-full object-cover">
+                                    @endif
+                                </div>
 
                                 <label class="block text-lg font-medium text-gray-600 mt-4">Nama Lengkap</label>
                                 <input type="text"
