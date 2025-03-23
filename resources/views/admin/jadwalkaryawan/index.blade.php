@@ -1,18 +1,190 @@
 @extends('layout.main')
-@section('content')
-    @push('page-title')
-        Data Jadwal Karyawan
-    @endpush
 
-    <div class="flex justify-center items-center min-h-screen px-4 pt-20">
-        <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-4xl">
-            <h2 class="mb-4 text-2xl font-semibold text-center text-gray-800">Jadwal Karyawan</h2>
-            <div class="overflow-hidden rounded-lg border border-gray-300">
-                <iframe
-                    src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FJakarta&hl=id&src=OTU2ZDQ2N2Y5MjljNGQwMzYyOTdkOTM4NmE4OGFmNDRlMGEyOGQzNGE2YzhjNTlhZmQyYTdhNDg5ODQ4MGFkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%233F51B5"
-                    class="w-full h-[600px]">
-                </iframe>
+@section('content')
+    <div class="p-4 md:p-6 overflow-x-hidden">
+        <!-- Dropdown Pilihan Tabel & Tombol Tambah Data -->
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-4">
+                <label for="tableSelect" class="text-gray-800 text-lg">Pilih Laporan:</label>
+                <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-64">
+                    <option value="jadwalKaryawan">Laporan Jadwal Karyawan</option>
+                    <option value="shiftKaryawan">Laporan Shift Karyawan</option>
+                </select>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let currentURL = window.location.href;
+                let selectElement = document.getElementById("tableSelect");
+
+                if (currentURL.includes("jadwalkaryawan")) {
+                    selectElement.value = "jadwalKaryawan";
+                } else if (currentURL.includes("shiftkaryawan")) {
+                    selectElement.value = "shiftKaryawan";
+                }
+
+                selectElement.addEventListener("change", function() {
+                    let selectedValue = this.value;
+                    if (selectedValue === "jadwalKaryawan") {
+                        window.location.href = "{{ route('jadwalkaryawan.index') }}";
+                    } else if (selectedValue === "shiftKaryawan") {
+                        window.location.href = "{{ route('shiftkaryawan.index') }}";
+                    }
+                });
+            });
+        </script>
+
+        <!-- Laporan Jadwal Karyawan -->
+        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md border border-gray-300">
+            <h2 class="text-center text-xl font-bold mb-4">Laporan Jadwal Karyawan</h2>
+            <div class="flex justify-between items-center mb-4">
+                <form action="{{ route('jadwalkaryawan.index') }}" method="GET" class="flex items-center gap-4">
+                    <input type="text" id="yearSelect" name="tahun" class="p-2 border border-gray-400 rounded-md" placeholder="Tahun" maxlength="4" oninput="validateYearInput(this)" value="{{ $tahun ?? '' }}">
+                    <select id="monthSelect" name="bulan" class="p-2 border border-gray-400 rounded-md">
+                        @for ($i = 1; $i <= 12; $i++)
+                            <option value="{{ $i }}" {{ ($i == ($bulan ?? date('m'))) ? 'selected' : '' }}>{{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
+                        @endfor
+                    </select>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+                        Tampilkan
+                    </button>
+                </form>
+                <a href="{{ route('jadwalkaryawan.create') }}"
+                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+                    + Tambah Data
+                </a>
+            </div>
+            <!-- Tabel Jadwal Karyawan -->
+            <div class="overflow-x-auto w-full">
+                <table class="border border-gray-400 text-xs md:text-sm min-w-max">
+                    <thead class="bg-gray-200 text-gray-900">
+                        <tr>
+                            <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" rowspan="2">Nama</th>
+                            <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" rowspan="2">Jabatan</th>
+                            <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" id="dayHeader" colspan="31">Day</th>
+                            <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" rowspan="2">Aksi</th>
+                        </tr>
+                        <tr id="dateHeader">
+                            <!-- Tanggal akan diisi oleh JavaScript -->
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        @foreach ($karyawans as $karyawan)
+                            <tr>
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                    {{ $karyawan->nama_lengkap ?? '-' }}
+                                </td>
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                    {{ $karyawan->jabatan->nama_jabatan ?? '-' }}
+                                </td>
+                                @php
+    $jadwal = $jadwals[$karyawan->id] ?? null;
+@endphp
+@for ($i = 1; $i <= 31; $i++)
+    @php
+        $jamKerja = $jadwal ? $jadwal->{"day_$i"} : null;
+        $warna = $jamKerja ? 'style=background-color:#00F600;color:black;' : ''; // Warna hijau dengan teks hitam
+    @endphp
+    <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
+        {{ $jamKerja ?? '' }}  {{-- Kosong jika tidak ada data --}}
+    </td>
+@endfor
+
+
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">
+                                    <div class="flex justify-center space-x-1 md:space-x-2">
+                                        <a href="{{ route('jadwalkaryawan.edit', $jadwal->id ?? '#') }}"
+                                            class="px-2 py-1 text-yellow-600 border border-yellow-600 rounded-full hover:bg-yellow-100 flex items-center gap-1 text-xs md:text-sm">
+                                            <i class="fas fa-edit"></i> <span class="hidden sm:inline">Edit</span>
+                                        </a>
+                                        <a href="{{ route('jadwalkaryawan.show', $jadwal->id ?? '#') }}"
+                                            class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
+                                            <i class="fas fa-eye"></i> <span class="hidden sm:inline">View</span>
+                                        </a>
+                                        <form action="{{ route('jadwalkaryawan.destroy', $jadwal->id ?? '#') }}" method="POST"
+                                            class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')"
+                                                class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
+                                                <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        @if ($karyawans->isEmpty())
+                            <tr>
+                                <td colspan="34" class="text-center p-4 text-gray-600">Tidak ada data karyawan.</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
+    <script>
+        function getDaysInMonth(year, month) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function updateTable() {
+            const year = document.getElementById('yearSelect').value;
+            const month = document.getElementById('monthSelect').value;
+            const daysInMonth = getDaysInMonth(year, month);
+
+            // Update header tanggal
+            const dateHeader = document.getElementById('dateHeader');
+            dateHeader.innerHTML = '';
+            for (let i = 1; i <= daysInMonth; i++) {
+                const th = document.createElement('th');
+                th.className = 'border border-gray-400 px-2 py-1 md:px-4 md:py-2';
+                th.textContent = i;
+                dateHeader.appendChild(th);
+            }
+
+            // Update colspan untuk header Day
+            document.getElementById('dayHeader').colSpan = daysInMonth;
+
+            // Update body tabel
+            const tableBody = document.getElementById('tableBody');
+            const rows = tableBody.getElementsByTagName('tr');
+            for (let row of rows) {
+                const cells = row.getElementsByTagName('td');
+                for (let i = 2; i < cells.length - 1; i++) {
+                    if (i - 1 <= daysInMonth) {
+                        cells[i].style.display = '';
+                    } else {
+                        cells[i].style.display = 'none';
+                    }
+                }
+            }
+        }
+
+        function validateYearInput(input) {
+            // Hanya menerima angka dan maksimal 4 digit
+            input.value = input.value.replace(/[^0-9]/g, '').substring(0, 4);
+        }
+
+        function loadData() {
+            const yearInput = document.getElementById('yearSelect').value;
+            const month = document.getElementById('monthSelect').value;
+
+            // Validasi tahun harus 4 digit
+            if (yearInput.length !== 4) {
+                alert('Tahun harus berupa 4 digit angka.');
+                return;
+            }
+
+            const year = parseInt(yearInput, 10);
+            updateTable();
+            console.log(`Memuat data untuk bulan ${month} tahun ${year}`);
+        }
+
+        // Inisialisasi tabel saat pertama kali dimuat
+        updateTable();
+    </script>
 @endsection

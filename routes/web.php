@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdmindataController;
 use App\Http\Controllers\Admin\AdminabsenController;
 use App\Http\Controllers\Admin\AdminjabatanController;
 use App\Http\Controllers\Admin\AdminjadwalController;
+use App\Http\Controllers\Admin\AdminShiftController;
 use App\Http\Controllers\Admin\AdmingajiController;
 use App\Http\Controllers\Admin\AdminGajiPokokController;
 use App\Http\Controllers\Admin\AdminStokBarangController;
@@ -63,13 +64,12 @@ Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('/admin/datakaryawan', AdmindataController::class);
     Route::resource('/admin/jabatankaryawan', AdminjabatanController::class);
+    Route::resource('/admin/shiftkaryawan', AdminShiftController::class);
     Route::resource('/admin/absenkaryawan', AdminabsenController::class);
-    Route::resource('/admin/jadwalkaryawan', AdminjadwalController::class);
+    Route::resource('/admin/jadwalkaryawan', AdminJadwalController::class);
     Route::resource('/admin/gajikaryawan', AdmingajiController::class);
     Route::resource('/admin/gajipokok', AdminGajiPokokController::class);
     Route::get('/get-gaji-pokok/{user_id}', [AdminGajiController::class, 'getGajiPokok']);
-    Route::get('/jadwalkaryawan/events', [AdminjadwalController::class, 'getEvents'])->name('jadwalkaryawan.events');
-    // Route untuk melihat stok masuk dan keluar
     Route::resource('/admin/stokbarang', AdminStokBarangController::class);
     Route::get('/stokbarang/stokmasuk', [AdminStokBarangController::class, 'stokMasuk'])->name('stokbarang.stokmasuk');
     Route::get('/stokbarang/stokkeluar', [AdminStokBarangController::class, 'stokKeluar'])->name('stokbarang.stokkeluar');
