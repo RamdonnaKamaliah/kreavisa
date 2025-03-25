@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers\Gudang;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\JadwalKaryawan;
+use Illuminate\Support\Facades\Auth;
 
-class JadwalGudangController extends Controller
+class GudangJadwalController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('gudang.jadwal-gudang.index');
+        $userId = Auth::id(); // Ambil ID user yang sedang login
+    
+        // Ambil semua jadwal user yang sedang login
+        $jadwals = JadwalKaryawan::with('shift')
+            ->where('user_id', $userId)
+            ->get();
+    
+        return view('Gudang.jadwal.index', compact('jadwals'));
     }
 
     /**

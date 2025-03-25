@@ -53,7 +53,7 @@
             <!-- Ilustrasi -->
             <div
                 class="hidden md:flex md:w-1/2 bg-gradient-to-r from-white via-gray-300 to-[#1D232A] items-center justify-center p-8">
-                <img src="{{ asset('assets/img/foto-login-admin.png') }}" alt="Illustration" class="w-3/4">
+                <img src="{{ asset('assets/img/img-login-user.png') }}" alt="Illustration" class="w-3/4">
             </div>
         </div>
     </div>

@@ -79,6 +79,7 @@
     </div>
 </footer>
 <script src="{{ asset('asset-landing-page/js/app.js') }}"></script>
+<script src="{{ asset('asset-landing-page/js/darkmood.js') }}"></script>
 </body>
 
 </html>

@@ -6,15 +6,7 @@
 
     <div id="layoutSidenav_content pt-1">
         <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
-            @if ($errors->any())
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+            
             <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
 
                 <div class="mb-4">
@@ -102,4 +94,25 @@
             </div>
         </div>
     </div>
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let errorMessages = "";
+            @foreach ($errors->all() as $error)
+                errorMessages += "{{ $error }}\n";
+            @endforeach
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops... Terjadi Kesalahan',
+                text: errorMessages,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Refresh halaman setelah menampilkan SweetAlert
+                window.location.href = "{{ route('shiftkaryawan.create') }}";
+            });
+        });
+    </script>
+@endif
 @endsection

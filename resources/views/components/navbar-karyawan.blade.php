@@ -46,12 +46,12 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('jadwal-karyawan.index') }}"
+        <a href="{{ route('karyawan.jadwal.index') }}"
             class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                    {{ Request::routeIs('jadwal-karyawan.index') ? 'bg-gray-300 text-blue-600' : 'hover:bg-gray-300 hover:text-blue-600' }}">
+                    {{ Request::routeIs('karyawan.jadwal.index') ? 'bg-gray-300 text-blue-600' : 'hover:bg-gray-300 hover:text-blue-600' }}">
             <span
                 class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                    {{ Request::routeIs('jadwal-karyawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+                    {{ Request::routeIs('karyawan.jadwal.index') ? 'block' : 'hidden group-hover:block' }}"></span>
             <i class='bx bx-calendar text-gray-900'></i>
             <span class="text-gray-900">Jadwal Kerja</span>
         </a>

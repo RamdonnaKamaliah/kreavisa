@@ -3,8 +3,13 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Gudang\GudangController;
+use App\Http\Controllers\Gudang\AbsenGudangController;
+use App\Http\Controllers\Gudang\GajiGudangController;
+use App\Http\Controllers\Gudang\GudangJadwalController;
+use App\Http\Controllers\Gudang\StokController;
 use App\Http\Controllers\Karyawan\KaryawanController;
 use App\Http\Controllers\Karyawan\KaryawanAbsenController;
+use App\Http\Controllers\Karyawan\KaryawanJadwalController;
 use App\Http\Controllers\Admin\AdmindataController;
 use App\Http\Controllers\Admin\AdminabsenController;
 use App\Http\Controllers\Admin\AdminjabatanController;
@@ -17,10 +22,6 @@ use App\Http\Controllers\Admin\AdminprofileController;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\GajiController;
 use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\Gudang\AbsenGudangController;
-use App\Http\Controllers\Gudang\GajiGudangController;
-use App\Http\Controllers\Gudang\JadwalGudangController;
-use App\Http\Controllers\Gudang\StokController;
 use App\Http\Middleware\Gudang;
 use App\Http\Middleware\Karyawan;
 use App\Http\Middleware\Admin;
@@ -91,7 +92,7 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
         ->name('karyawan.absen.izin.store');
     Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
     Route::resource('gaji-karyawan', GajiController::class);
-    Route::resource('jadwal-karyawan', JadwalController::class);
+    Route::get('karyawan/jadwal', [KaryawanJadwalController::class, 'index'])->name('karyawan.jadwal.index');
 });
 
 
@@ -99,7 +100,7 @@ Route::middleware(['auth', Gudang::class])->group(function () {
     Route::get('/gudang/dashboard', [GudangController::class, 'index'])->name('gudang.dashboard');
     Route::resource('absen-gudang', AbsenGudangController::class);
     Route::get('/gudang/gaji', [GajiGudangController::class, 'index'])->name('gajiGudang.index');
-    Route::resource('jadwal-gudang', JadwalGudangController::class);
+    Route::get('gudang/jadwal', [GudangJadwalController::class, 'index'])->name('gudang.jadwal.index');
    // Halaman utama stok (List Stok Barang)
 Route::get('/gudang/stok', [StokController::class, 'index'])->name('gudang.stok.index');
 

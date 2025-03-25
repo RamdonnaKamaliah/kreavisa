@@ -15,18 +15,75 @@
             <form action="{{ route('jadwalkaryawan.store') }}" method="POST">
                 @csrf
 
-                <!-- Pilih User -->
+        <!-- Pilih User -->
 <div class="mb-4">
     <label for="user_id" class="block text-gray-700 font-semibold mb-2">Pilih Karyawan</label>
     <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
         <option value="">Pilih Karyawan</option>
-        @foreach ($users as $user)
+        @foreach ($usersWithShifts as $user)
             <option value="{{ $user->id }}" data-jabatan="{{ $user->jabatan_id }}">
                 {{ $user->nama_lengkap }}
             </option>
         @endforeach
-    </select>    
+    </select>
+    
+    @if($usersWithShifts->isEmpty())
+        <div class="mt-2 text-red-500 text-sm">
+            Tidak ada karyawan yang memiliki shift. Silakan buat shift terlebih dahulu.
+        </div>
+    @endif
 </div>
+
+<script>
+    document.getElementById("user_id").addEventListener("change", function() {
+        let userId = this.value;
+        let shiftSelect = document.getElementById("shift_id");
+
+        // Kosongkan dropdown shift sebelum mengisi ulang
+        shiftSelect.innerHTML = '<option value="">Pilih Shift</option>';
+
+        // Jika tidak ada user yang dipilih, keluar
+        if (!userId) return;
+
+        // Ambil daftar shift dari server
+        let shifts = @json($shifts);
+
+        let userShifts = shifts.filter(shift => shift.user_id == userId);
+        
+        if (userShifts.length === 0) {
+            let option = document.createElement("option");
+            option.value = "";
+            option.textContent = "Tidak ada shift tersedia";
+            option.disabled = true;
+            option.selected = true;
+            shiftSelect.appendChild(option);
+            return;
+        }
+
+        userShifts.forEach(shift => {
+            // Tambahkan shift 1 ke dropdown
+            let option1 = document.createElement("option");
+            option1.value = shift.id;
+            option1.textContent = "Shift 1: " + shift.shift_1;
+            option1.setAttribute("data-shift-type", "1");
+            shiftSelect.appendChild(option1);
+
+            // Tambahkan shift 2 ke dropdown
+            let option2 = document.createElement("option");
+            option2.value = shift.id;
+            option2.textContent = "Shift 2: " + shift.shift_2;
+            option2.setAttribute("data-shift-type", "2");
+            shiftSelect.appendChild(option2);
+        });
+
+        // Update input tersembunyi saat shift dipilih
+        shiftSelect.addEventListener("change", function() {
+            let selectedOption = this.options[this.selectedIndex];
+            let shiftType = selectedOption.getAttribute("data-shift-type");
+            document.getElementById("shift_type").value = shiftType || "";
+        });
+    });
+</script>
 
 <!-- Pilih Jabatan (Otomatis berdasarkan Karyawan) -->
 <div class="mb-4">
@@ -131,10 +188,28 @@
                     </div>
                 </div>
 
-                <!-- Pilih Tahun (Input Manual) -->
                 <div class="mb-4">
                     <label for="tahun" class="block text-gray-700 font-semibold mb-2">Tahun</label>
-                    <input type="text" id="tahun" name="tahun" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" placeholder="{{ date('Y') }}" maxlength="4" oninput="validateYearInput(this)" required>
+                    <div class="relative">
+                        <input type="number" 
+                               id="tahun" 
+                               name="tahun" 
+                               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition pr-12" 
+                               value="{{ date('Y') }}" 
+                               min="{{ date('Y') }}" 
+                               max="{{ date('Y') + 5}}"
+                               required>
+                        <div class="absolute right-0 top-0 h-full flex flex-col border-l border-gray-300 rounded-r-lg overflow-hidden">
+                            <button type="button" onclick="document.getElementById('tahun').stepUp()" 
+                                    class="flex-1 px-3 bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+                                <i class='bx bx-chevron-up'></i>
+                            </button>
+                            <button type="button" onclick="document.getElementById('tahun').stepDown()" 
+                                    class="flex-1 px-3 bg-gray-100 hover:bg-gray-200 flex items-center justify-center border-t border-gray-300">
+                                <i class='bx bx-chevron-down'></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <!-- Tombol Submit -->
                 <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
@@ -144,6 +219,36 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const tahunInput = document.getElementById('tahun');
+        
+        // Validasi saat input berubah
+        tahunInput.addEventListener('change', function() {
+            const currentYear = new Date().getFullYear();
+            const maxYear = currentYear + 5;
+            
+            if (this.value < currentYear) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tahun tidak valid',
+                    text: `Tahun minimal adalah ${currentYear}`,
+                    confirmButtonText: 'OK'
+                });
+                this.value = currentYear;
+            } else if (this.value > maxYear) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tahun tidak valid',
+                    text: `Tahun maksimal adalah ${maxYear}`,
+                    confirmButtonText: 'OK'
+                });
+                this.value = maxYear;
+            }
+        });
+    });
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -162,5 +267,25 @@
 
     
 </script>
+@if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let errorMessages = "";
+            @foreach ($errors->all() as $error)
+                errorMessages += "{{ $error }}\n";
+            @endforeach
 
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops... Terjadi Kesalahan',
+                text: errorMessages,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Refresh halaman setelah menampilkan SweetAlert
+                window.location.href = "{{ route('jadwalkaryawan.create') }}";
+            });
+        });
+    </script>
+@endif
 @endsection

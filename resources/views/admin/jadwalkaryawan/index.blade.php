@@ -40,13 +40,37 @@
             <h2 class="text-center text-xl font-bold mb-4">Laporan Jadwal Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
                 <form action="{{ route('jadwalkaryawan.index') }}" method="GET" class="flex items-center gap-4">
-                    <input type="text" id="yearSelect" name="tahun" class="p-2 border border-gray-400 rounded-md" placeholder="Tahun" maxlength="4" oninput="validateYearInput(this)" value="{{ $tahun ?? '' }}">
-                    <select id="monthSelect" name="bulan" class="p-2 border border-gray-400 rounded-md">
+                    <!-- Input Tahun dengan Spinner Custom -->
+                    <div class="flex items-center">
+                        <div class="relative flex items-center">
+                            <button type="button" 
+                                    onclick="changeYear(-1)" 
+                                    class="p-2 bg-gray-100 hover:bg-gray-200 rounded-l-lg border border-gray-400 flex items-center justify-center h-10">
+                                <i class="fas fa-minus text-gray-600"></i>
+                            </button>
+                            
+                            <div class="w-24 px-4 py-2 border-t border-b border-gray-400 bg-white text-center font-medium h-10 flex items-center justify-center">
+                                <span id="yearDisplay">{{ $tahun ?? date('Y') }}</span>
+                                <input type="hidden" id="yearSelect" name="tahun" value="{{ $tahun ?? date('Y') }}">
+                            </div>
+                            
+                            <button type="button" 
+                                    onclick="changeYear(1)" 
+                                    class="p-2 bg-gray-100 hover:bg-gray-200 rounded-r-lg border border-gray-400 flex items-center justify-center h-10">
+                                <i class="fas fa-plus text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+        
+                    <select id="monthSelect" name="bulan" class="p-2 border border-gray-400 rounded-md h-10">
                         @for ($i = 1; $i <= 12; $i++)
-                            <option value="{{ $i }}" {{ ($i == ($bulan ?? date('m'))) ? 'selected' : '' }}>{{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
+                            <option value="{{ $i }}" {{ ($i == ($bulan ?? date('m'))) ? 'selected' : '' }}>
+                                {{ DateTime::createFromFormat('!m', $i)->format('F') }}
+                            </option>
                         @endfor
                     </select>
-                    <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+                    
+                    <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md h-10">
                         Tampilkan
                     </button>
                 </form>
@@ -78,41 +102,47 @@
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
                                     {{ $karyawan->jabatan->nama_jabatan ?? '-' }}
                                 </td>
+
+
                                 @php
-    $jadwal = $jadwals[$karyawan->id] ?? null;
-@endphp
-@for ($i = 1; $i <= 31; $i++)
-    @php
-        $jamKerja = $jadwal ? $jadwal->{"day_$i"} : null;
-        $warna = $jamKerja ? 'style=background-color:#00F600;color:black;' : ''; // Warna hijau dengan teks hitam
-    @endphp
-    <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
-        {{ $jamKerja ?? '' }}  {{-- Kosong jika tidak ada data --}}
-    </td>
-@endfor
+                                $jadwal = $jadwals[$karyawan->id] ?? null;
+                            @endphp
+                            
+                            @for ($i = 1; $i <= 31; $i++)
+                                @php
+                                    $jamKerja = $jadwal ? $jadwal->getShiftForDay($i) : null;
+                                    $warna = $jamKerja ? 'style=background-color:#00F600;color:black;' : '';
+                                @endphp
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
+                                    {{ $jamKerja ?? '' }}
+                                </td>
+                            @endfor
 
 
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">
+                                @if($jadwal)
                                     <div class="flex justify-center space-x-1 md:space-x-2">
-                                        <a href="{{ route('jadwalkaryawan.edit', $jadwal->id ?? '#') }}"
-                                            class="px-2 py-1 text-yellow-600 border border-yellow-600 rounded-full hover:bg-yellow-100 flex items-center gap-1 text-xs md:text-sm">
+                                        <a href="{{ route('jadwalkaryawan.edit', $jadwal->id) }}" 
+                                           class="px-2 py-1 text-yellow-600 border border-yellow-600 rounded-full hover:bg-yellow-100 flex items-center gap-1 text-xs md:text-sm">
                                             <i class="fas fa-edit"></i> <span class="hidden sm:inline">Edit</span>
                                         </a>
-                                        <a href="{{ route('jadwalkaryawan.show', $jadwal->id ?? '#') }}"
-                                            class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
+                                        <a href="{{ route('jadwalkaryawan.show', $jadwal->id) }}"
+                                           class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
                                             <i class="fas fa-eye"></i> <span class="hidden sm:inline">View</span>
                                         </a>
-                                        <form action="{{ route('jadwalkaryawan.destroy', $jadwal->id ?? '#') }}" method="POST"
-                                            class="inline">
+                                        <form action="{{ route('jadwalkaryawan.destroy', $jadwal->id) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')"
-                                                class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
+                                            <button type="button" onclick="deleted(this)" 
+                                                    class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
                                                 <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
                                             </button>
                                         </form>
                                     </div>
-                                </td>
+                                @else
+                                    <div class="text-gray-400 text-center"></div>
+                                @endif
+                            </td>
                             </tr>
                         @endforeach
                         @if ($karyawans->isEmpty())
@@ -125,6 +155,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Fungsi untuk mengubah tahun
+        function changeYear(step) {
+            const yearDisplay = document.getElementById('yearDisplay');
+            const yearInput = document.getElementById('yearSelect');
+            let currentYear = parseInt(yearDisplay.textContent);
+            let newYear = currentYear + step;
+            
+            // Batasi tahun antara 2000-2100
+            if (newYear < 2000) newYear = 2000;
+            if (newYear > 2100) newYear = 2100;
+            
+            yearDisplay.textContent = newYear;
+            yearInput.value = newYear;
+            updateTable();
+        }
+
+        // ... (fungsi lainnya tetap sama) ...
+    </script>
 
     <script>
         function getDaysInMonth(year, month) {

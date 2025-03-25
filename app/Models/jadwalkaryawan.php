@@ -24,6 +24,46 @@ class JadwalKaryawan extends Model
         'day_25', 'day_26', 'day_27', 'day_28', 'day_29', 'day_30', 'day_31'
     ];
 
+    // App\Models\JadwalKaryawan.php
+
+    public function getShiftTime()
+{
+    if ($this->shift_type == 1) {
+        return $this->shift->shift_1;
+    }
+    return $this->shift->shift_2;
+}
+
+public function scopeForMonth($query, $month, $year)
+{
+    return $query->where('bulan', $month)
+                ->where('tahun', $year);
+}
+
+public function getDaysInMonth()
+{
+    return cal_days_in_month(CAL_GREGORIAN, $this->bulan, $this->tahun);
+}
+
+public function getShiftForDay($day)
+{
+    if ($day < 1 || $day > 31) return null;
+    return $this->{"day_$day"} ?? null;
+}
+
+public function updateShiftTimes()
+{
+    if (!$this->shift) return;
+
+    $shiftValue = ($this->shift_type == 1) ? $this->shift->shift_1 : $this->shift->shift_2;
+    
+    for ($i = 1; $i <= 31; $i++) {
+        $this->{"day_$i"} = $shiftValue;
+    }
+    
+    $this->save();
+}
+
     /**
      * Relasi ke tabel User.
      */

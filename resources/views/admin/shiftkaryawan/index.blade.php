@@ -80,15 +80,56 @@
                                             class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100 flex items-center gap-1 text-xs md:text-sm">
                                             <i class="fas fa-eye"></i> <span class="hidden sm:inline">View</span>
                                         </a>
-                                        <form action="{{ route('shiftkaryawan.destroy', $row->id) }}" method="POST"
-                                            class="inline">
+                                        <form action="{{ route('shiftkaryawan.destroy', $row->id) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')"
-                                                class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm">
-                                                <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
+                                            <!-- Di file index shift (bagian tombol delete) -->
+                                            <button type="button" onclick="deleteShift(this)"
+                                            class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm delete-shift">
+                                            <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
                                             </button>
                                         </form>
+                                        <script>
+                                        // Fungsi khusus untuk delete shift
+                                        function deleteShift(button) {
+                                            Swal.fire({
+                                                icon: "warning",
+                                                title: "Yakin ingin menghapus Shift ini?",
+                                                html: "<div style='text-align:center'>Jika shift dihapus:<br><ul><Semua>Data shift akan dihapus permanen, semua jadwal karyawan yang menggunakan shift ini akan otomatis terhapus</li></ul></div>",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Ya, Hapus!",
+                                                cancelButtonText: "Batal",
+                                                customClass: {
+                                                    popup: 'custom-swal-popup',
+                                                    htmlContainer: 'custom-swal-html'
+                                                }
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    button.parentElement.submit();
+                                                }
+                                            });
+                                        }
+
+                                        // Fungsi untuk delete biasa (untuk yang lain)
+                                        function deleted(button) {
+                                            Swal.fire({
+                                                icon: "warning",
+                                                title: "Yakin ingin menghapus?",
+                                                text: "Data akan dihapus permanen",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Ya, Hapus!",
+                                                cancelButtonText: "Batal"
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    button.parentElement.submit();
+                                                }
+                                            });
+                                        }
+                                        </script>
                                     </div>
                                 </td>
                             </tr>
