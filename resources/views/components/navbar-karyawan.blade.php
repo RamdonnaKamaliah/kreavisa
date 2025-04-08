@@ -1,70 +1,101 @@
-<a class="flex items-center justify-center" href="{{ route('karyawan.dashboard') }}">
-    <div>
-        <h1 class="font-protest text-4xl pb-5 text-gray-900">K</h1>
-    </div>
-    <div class="mx-4 text-2xl pb-5 text-gray-900">Karyawan</div>
-</a>
-<hr class="border-gray-300 mb-4">
+<aside
+    class="w-64 h-screen fixed left-0 top-0 bg-white dark:bg-[#1D232A] text-gray-900 shadow-md p-4 flex flex-col overflow-y-auto">
+    <style>
+        aside::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 
-<!-- Profile Section -->
-<a href="{{ route('profile.index') }}">
-    <div class="flex items-center space-x-3 p-3 bg-gray-200 rounded-lg mb-4 cursor-pointer">
-        <img src="{{ asset('asset-landing-page/img/profile.png') }}" class="w-12 h-12 rounded-full cursor-pointer"
-            alt="User Profile">
-        <div>
-            <span
-                class="text-sm font-semibold block text-gray-900">{{ auth()->check() ? auth()->user()->name : 'Guest' }}</span>
-            <span class="text-xs text-gray-600">Karyawan</span>
+    <!-- Logo / Header -->
+    <a href="{{ route('karyawan.dashboard') }}" class="flex justify-center pb-5">
+        <div class="flex items-end space-x-1">
+            <h1 class="font-protest text-4xl text-transparent bg-clip-text bg-blue-500 leading-none">
+                K
+            </h1>
+            <div class="text-2xl text-gray-800 dark:text-white font-semibold leading-tight">
+                Karyawan
+            </div>
         </div>
+    </a>
+    <hr class="border-gray-300 dark:border-white mb-4">
+
+    <!-- Profile Section -->
+    <a href="{{ route('profile.index') }}">
+        <div
+            class="flex items-center space-x-3 p-3 bg-gray-100 dark:bg-gray-500 rounded-lg mb-4 cursor-pointer hover:bg-gray-200 transition">
+            <img src="{{ asset('asset-landing-page/img/profile.png') }}" class="w-12 h-12 rounded-full"
+                alt="User Profile">
+            <div>
+                <span
+                    class="text-sm font-semibold block text-gray-900 dark:text-white">{{ auth()->check() ? auth()->user()->name : 'Guest' }}</span>
+                <span class="text-xs text-gray-600 dark:text-white">Karyawan</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- Menu -->
+    <ul class="space-y-2">
+        @php
+            $menus = [
+                [
+                    'route' => 'karyawan.dashboard',
+                    'icon' => 'layout-dashboard',
+                    'label' => 'Dashboard',
+                    'color' => 'text-blue-500',
+                ],
+                [
+                    'route' => 'karyawan.absen.index',
+                    'icon' => 'check-circle',
+                    'label' => 'Absensi',
+                    'color' => 'text-green-500',
+                ],
+                [
+                    'route' => 'karyawan.jadwal.index',
+                    'icon' => 'calendar-days',
+                    'label' => 'Jadwal Kerja',
+                    'color' => 'text-purple-500',
+                ],
+                [
+                    'route' => 'gajiKaryawan.index',
+                    'icon' => 'wallet',
+                    'label' => 'Rekap Gaji',
+                    'color' => 'text-amber-500',
+                ],
+            ];
+        @endphp
+
+        @foreach ($menus as $menu)
+            @php
+                $isActive = Request::routeIs($menu['route']);
+            @endphp
+            <li>
+                <a href="{{ route($menu['route']) }}"
+                    class="flex items-center space-x-3 p-3 rounded-lg relative group transition duration-200
+                    {{ $isActive ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
+
+                    <span
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r
+                        {{ $isActive ? 'block' : 'hidden group-hover:block' }}">
+                    </span>
+
+                    <i data-lucide="{{ $menu['icon'] }}" class="w-5 h-5 {{ $menu['color'] }}"></i>
+                    <span class="font-medium text-gray-800 dark:text-white">{{ $menu['label'] }}</span>
+                </a>
+            </li>
+        @endforeach
+    </ul>
+
+    <!-- Logout Button -->
+    <!-- Logout Button -->
+    <div class="pt-4 mt-2">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit"
+                class="w-full flex items-center space-x-3 p-3 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition border border-red-200">
+                <i data-lucide="log-out" class="w-5 h-5 text-red-500"></i>
+                <span class="font-medium">Logout</span>
+            </button>
+        </form>
     </div>
-</a>
 
-<!-- Menu -->
-
-<ul class="space-y-2">
-    <li>
-        <a href="{{ route('karyawan.dashboard') }}"
-            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                    {{ Request::routeIs('karyawan.dashboard') ? 'bg-gray-300 text-blue-600' : 'hover:bg-gray-300 hover:text-blue-600' }}">
-            <span
-                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                    {{ Request::routeIs('karyawan.dashboard') ? 'block' : 'hidden group-hover:block' }}"></span>
-            <i class='bx bx-home text-gray-900'></i>
-            <span class="font-popins text-gray-900">Dashboard</span>
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ route('karyawan.absen.index') }}"
-            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                    {{ Request::routeIs('karyawan.absen.index') ? 'bg-gray-300 text-blue-600' : 'hover:bg-gray-300 hover:text-blue-600' }}">
-            <span
-                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                    {{ Request::routeIs('karyawan.absen.index') ? 'block' : 'hidden group-hover:block' }}"></span>
-            <i class='bx bx-check-circle text-gray-900'></i>
-            <span class="text-gray-900">Absensi</span>
-        </a>
-    </li>
-    <li>
-        <a href="{{ route('karyawan.jadwal.index') }}"
-            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                    {{ Request::routeIs('karyawan.jadwal.index') ? 'bg-gray-300 text-blue-600' : 'hover:bg-gray-300 hover:text-blue-600' }}">
-            <span
-                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                    {{ Request::routeIs('karyawan.jadwal.index') ? 'block' : 'hidden group-hover:block' }}"></span>
-            <i class='bx bx-calendar text-gray-900'></i>
-            <span class="text-gray-900">Jadwal Kerja</span>
-        </a>
-    </li>
-    <li>
-        <a href="{{ route('gajiKaryawan.index') }}"
-            class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                        {{ Request::routeIs('gajiKaryawan.index') ? 'bg-gray-300 text-blue-600' : 'hover:bg-gray-300 hover:text-blue-600' }}">
-            <span
-                class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                        {{ Request::routeIs('gajiKaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
-            <i class='bx bx-money text-gray-900'></i>
-            <span class="text-gray-900">Rekap Gaji</span>
-        </a>
-    </li>
-</ul>
+</aside>

@@ -7,14 +7,33 @@
 <!-- Profile Section -->
 <a href="{{ route('profile.index') }}">
     <div class="flex items-center space-x-3 p-3 bg-gray-100 rounded-lg mb-4 cursor-pointer">
-        <img src="{{ asset('asset-landing-page/img/profile.png') }}" class="w-12 h-12 rounded-full cursor-pointer"
-            alt="User Profile">
+        @php
+            $foto = auth()->user()?->foto;
+            
+            if (strpos($foto, 'uploads/datakaryawan/') !== false) {
+                $photoUrl = asset($foto);
+            } 
+            elseif (!empty($foto)) {
+                $photoUrl = asset('uploads/datakaryawan/' . $foto);
+            } 
+            else {
+                $photoUrl = asset('asset-landing-page/img/profile.png');
+            }
+            
+            $photoUrl .= '?v=' . time();
+        @endphp
+
+        <img src="{{ $photoUrl }}" class="w-12 h-12 rounded-full object-cover cursor-pointer" alt="User Profile">
+
         <div>
-            <span class="text-sm font-semibold block">{{ auth()->check() ? auth()->user()->name : 'Guest' }}</span>
-            <span class="text-xs text-gray-400">Karyawan</span>
+            <span class="text-sm font-semibold block">{{ auth()->check() ? auth()->user()->nama_lengkap : 'Guest' }}</span>
+            <span class="text-xs text-gray-400">
+                Karyawan {{ auth()->user()?->jabatan?->nama_jabatan ?? '' }}
+            </span>
         </div>
     </div>
 </a>
+
 
 <!-- Menu -->
 <ul class="space-y-2">
@@ -31,12 +50,12 @@
     </li>
 
     <li>
-        <a href="{{ route('absen-gudang.index') }}"
+        <a href="{{ route('gudang.absen.index') }}"
             class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                    {{ Request::routeIs('absen-gudang.index') ? 'bg-gray-100 text-blue-600' : 'hover:bg-blue-300 hover:text-blue-600' }}">
+                    {{ Request::routeIs('gudang.absen.index') ? 'bg-gray-100 text-blue-600' : 'hover:bg-blue-300 hover:text-blue-600' }}">
             <span
                 class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                    {{ Request::routeIs('absen-gudang.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+                    {{ Request::routeIs('gudang.absen.index') ? 'block' : 'hidden group-hover:block' }}"></span>
             <i class='bx bx-check-circle'></i>
             <span>Absensi</span>
         </a>

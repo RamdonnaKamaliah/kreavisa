@@ -1,4 +1,4 @@
- <!--     Fonts and icons     -->
+<link href="{{ asset('logo.png') }}" rel="icon"><!--     Fonts and icons     -->
  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
  <!-- Google Fonts -->
  <link rel="preconnect" href="https://fonts.googleapis.com">

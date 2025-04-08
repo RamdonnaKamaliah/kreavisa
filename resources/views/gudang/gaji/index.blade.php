@@ -11,7 +11,7 @@
                 <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm bg-white text-gray-800">
                     <thead class="bg-gray-200 text-gray-900">
                         <tr>
-                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tipe Pembayaran</th>
@@ -41,7 +41,7 @@
                                 <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Rp
                                     {{ number_format($row->total_gaji, 0, ',', '.') }}</td>
                                 <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
-                                    <a href="{{ route('gajikaryawan.show', $row->id) }}"
+                                    <a href="{{ route('gajiGudang.show', $row->id) }}"
                                         class="px-2 py-1 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-100">
                                         <i class="fas fa-eye"></i> Lihat
                                     </a>

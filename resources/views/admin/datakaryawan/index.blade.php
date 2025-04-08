@@ -38,8 +38,30 @@
                         @foreach ($dataKaryawan as $row)
                         <tr>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
-                                <img src="{{ $row->foto ? asset($row->foto) : asset('asset-landing-page/img/profile.png') }}"
-                                    class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-gray-300">
+                                @php
+                                    // Cek jika foto adalah full path (hasil create) atau hanya nama file (hasil edit)
+                                    $fotoPath = $row->foto;
+                                    
+                                    // Jika mengandung 'uploads/datakaryawan/' berarti sudah format benar
+                                    if (strpos($fotoPath, 'uploads/datakaryawan/') !== false) {
+                                        $photoUrl = asset($fotoPath);
+                                    } 
+                                    // Jika hanya nama file (hasil edit)
+                                    elseif (!empty($fotoPath)) {
+                                        $photoUrl = asset('uploads/datakaryawan/' . $fotoPath);
+                                    } 
+                                    // Default jika tidak ada foto
+                                    else {
+                                        $photoUrl = asset('asset-landing-page/img/profile.png');
+                                    }
+                                    
+                                    // Tambahkan parameter cache busting
+                                    $photoUrl .= '?v=' . time();
+                                @endphp
+                                
+                                <img src="{{ $photoUrl }}"
+                                     class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-gray-300"
+                                     alt="Foto profil {{ $row->nama_lengkap }}">
                             </td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->nama_lengkap }}
                             </td>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\GajiKaryawan;
 
-class GajiGudangController extends Controller
+class GudangGajiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -43,9 +43,15 @@ class GajiGudangController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        return view('gudang.gaji.show');
-    }
+{
+    // Ambil data gaji berdasarkan ID dengan relasi user dan jabatan
+    $gaji = GajiKaryawan::with(['user', 'user.jabatan'])
+                ->where('id', $id)
+                ->where('user_id', auth('web')->id()) // Pastikan hanya pemilik gaji yang bisa melihat
+                ->firstOrFail();
+
+    return view('gudang.gaji.show', compact('gaji'));
+}
 
     /**
      * Show the form for editing the specified resource.

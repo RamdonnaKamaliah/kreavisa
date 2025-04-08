@@ -122,7 +122,7 @@ class AdminjadwalController extends Controller
         JadwalKaryawan::create($jadwalData);
     }
 
-    return redirect()->route('jadwalkaryawan.index')->with('success', 'Jadwal berhasil ditambahkan.');
+    return redirect()->route('jadwalkaryawan.index')->with('added', 'true');
 }
 
     /**
@@ -178,7 +178,7 @@ class AdminjadwalController extends Controller
     return redirect()->route('jadwalkaryawan.index', [
         'bulan' => $jadwal->bulan,
         'tahun' => $jadwal->tahun
-    ])->with('success', 'Jadwal untuk bulan ' . \DateTime::createFromFormat('!m', $jadwal->bulan)->format('F') . ' berhasil diperbarui.');
+    ])->with('edited', 'true' . \DateTime::createFromFormat('!m', $jadwal->bulan)->format('F') . ' berhasil diperbarui.');
 }
     /**
      * Menghapus jadwal dari database.

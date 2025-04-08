@@ -10,6 +10,7 @@ class AbsenKaryawan extends Model
     use HasFactory;
 
     protected $table = 'absen_karyawan';
+    
     protected $fillable = [
         'user_id',
         'jabatan_id',
@@ -21,18 +22,20 @@ class AbsenKaryawan extends Model
         'file_surat',
     ];
     
+    // Tambahkan ini untuk memberikan nilai default
+    protected $attributes = [
+        'foto' => 'default.png',
+    ];
 
-    /**
-     * Relasi ke model User
-     */
+    protected $casts = [
+        'tanggal_absensi' => 'datetime:Y-m-d H:i:s',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relasi ke model JabatanKaryawan
-     */
     public function jabatan()
     {
         return $this->belongsTo(JabatanKaryawan::class, 'jabatan_id');
