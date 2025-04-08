@@ -8,14 +8,12 @@
  <!-- Font Awesome Icons -->
  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
  <!-- Nucleo Icons -->
- <link rel="stylesheet" href="{{ asset('asset-landing-admin/css/nucleo-icons.css') }}">
- <link rel="stylesheet" href="{{ asset('asset-landing-admin/css/nucleo-svg.css') }}">
+
 
  <!-- Popper -->
  <script src="https://unpkg.com/@popperjs/core@2"></script>
  <!-- Main Styling -->
  <link href="{{ asset('assets/css/argon-dashboard-tailwind.css') }}" rel="stylesheet" />
- <link href="{{ asset('assets/css/argon-dashboard-tailwind.min.css') }}" rel="stylesheet" />
  <link href="{{ asset('assets/css/perfect-scrollbar.css') }}" rel="stylesheet" />
  <link href="{{ asset('assets/css/tooltips.css') }}" rel="stylesheet" />
  <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,6 +34,10 @@
 
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+ <script src="https://unpkg.com/lucide@latest"></script>
+ <script src="{{ asset('asset-landing-page/js/darkmood-karyawan.js') }}"></script>
+ 
 
 
  <!-- Tailwind -->

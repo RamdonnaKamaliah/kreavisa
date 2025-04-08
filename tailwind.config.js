@@ -25,6 +25,8 @@ export default {
         "shadow-lg",
         "bg-opacity-50",
         "dark:bg-opacity-80",
+        "rotate-animation",
+        "pattern: /bg-\[url\(.*\)\]/",
     ],
     darkMode: "class", // Mode gelap berbasis kelas
     theme: {

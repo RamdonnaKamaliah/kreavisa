@@ -1,18 +1,25 @@
-function toggleTheme() {
-    const html = document.documentElement;
-    const isDark = html.classList.toggle("dark"); // Toggle kelas "dark" di <html>
+const darkToggle = document.querySelector('#dark-toggle');
+const darkIcon = document.querySelector('#dark-icon');
+const html = document.querySelector('html');
 
-    // Simpan preferensi ke localStorage
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-}
-
-// Terapkan tema yang tersimpan saat halaman dimuat
-document.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-
-    if (savedTheme === "dark") {
-        document.documentElement.classList.add("dark");
+darkToggle.addEventListener("click", function() {
+    if (darkToggle.checked) {
+        html.classList.add('dark');
+        localStorage.theme = 'dark';
+        darkIcon.classList.replace('bx-sun', 'bx-moon');
     } else {
-        document.documentElement.classList.remove("dark");
+        html.classList.remove('dark');
+        localStorage.theme = 'light';
+        darkIcon.classList.replace('bx-moon', 'bx-sun');
     }
 });
+
+// Move Toggle Mode
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia(
+        '(prefers-color-scheme: dark)').matches)) {
+    darkToggle.checked = true;
+    darkIcon.classList.replace('bx-sun', 'bx-moon');
+} else {
+    darkToggle.checked = false;
+    darkIcon.classList.replace('bx-moon', 'bx-sun');
+}

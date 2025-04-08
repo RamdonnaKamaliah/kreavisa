@@ -1,5 +1,5 @@
 <header class="fixed top-0 right-0 left-0 md:py-1 transition-all duration-300 z-50">
-    <nav class="w-full mx-0 bg-gray-900 p-5 fixed top-0 z-50 ">
+    <nav class="w-full mx-0 bg-[#eef7ff] p-5 fixed top-0 z-50 dark:bg-gray-900">
         <div class="flex items-center justify-between max-w-7xl mx-auto">
             <!-- Logo -->
             <a href="/" class="flex items-center gap-3 text-white">
@@ -7,7 +7,7 @@
                 <img src="{{ asset('asset-landing-page/img/Kreavisa_Logo__3_-removebg-preview.png') }}"
                     alt="Kreavisa Logo" class="h-10 w-auto">
                 <!-- Logo Text -->
-                <span class="text-3xl font-montserrat">Kreavisa</span>
+                <span class="text-3xl font-popins">Kreavisa</span>
             </a>
             <div class="hidden md:flex md:items-center md:space-x-8">
                 @if (auth()->check())
@@ -43,9 +43,10 @@
                     </a>
                 @endif
                 <!-- Dark Mode Toggle -->
-                <button onclick="toggleTheme()" class="text-white text-2xl ml-4">
-                    <i class="bx bx-moon"></i>
-                </button>
+                <input type="checkbox" id="dark-toggle" class="hidden">
+                <label for="dark-toggle" class="cursor-pointer">
+                    <i id="dark-icon" class="bx bx-moon text-2xl text-black dark:text-white"></i>
+                </label>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -73,7 +74,7 @@
         </div>
     </nav>
 
-    <script>
+    {{-- <script>
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
 
@@ -84,7 +85,7 @@
         darkModeToggle.addEventListener('click', toggleDarkMode);
         darkModeToggleMobile.addEventListener('click', toggleDarkMode);
     </script>
-
+ --}}
 
 
     <!-- only for large device -->

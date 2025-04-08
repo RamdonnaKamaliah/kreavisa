@@ -1,4 +1,5 @@
 @extends('layout3.karyawan3')
+@section('page-title', 'Profile')
 @section('content')
     <div class="max-w-4xl mx-auto py-16 px-6 bg-white rounded-2xl shadow-lg md:mr-20 mt-10 border border-gray-200">
         <div class="flex flex-wrap items-center gap-6">

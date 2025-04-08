@@ -129,11 +129,13 @@
 
         /* Light Mode */
         #themeContainer {
-            background: #F3F4F6;
+            background: #eef7ff;
+            /* biru muda pastel */
         }
 
         #titleGradient {
-            background: linear-gradient(90deg, #FFD700, #FFA500);
+            background: linear-gradient(to right, #a855f7, #ec4899);
+            /* gradasi biru */
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -141,72 +143,53 @@
 
         #titleText,
         #subTitle {
-            color: black;
+            color: #1F2937;
+            /* biru gelap hampir hitam */
         }
 
         #description {
-            color: #4B5563;
+            color: #374151;
+            /* abu-abu kebiruan */
         }
 
         .light nav {
-            background-color: #FFD700 !important;
+            background-color: #A7C7E7 !important;
+            /* biru soft */
         }
 
         .light login {
-            background-color: #E5E7EB !important;
-            /* Abu-abu terang */
-            color: black !important;
+            background-color: #EAF4FB !important;
+            /* biru super terang untuk login */
+            color: #1F2937 !important;
         }
     </style>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const toggleButton = document.getElementById("toggleTheme");
-            const rootElement = document.documentElement;
+        const darkToggle = document.querySelector('#dark-toggle');
+        const darkIcon = document.querySelector('#dark-icon');
+        const html = document.querySelector('html');
 
-            // Tunggu sampai semua elemen selesai dimuat
-            window.onload = function() {
-                const navbar = document.querySelector("nav");
-                const loginButton = document.getElementById("loginButton");
-
-                // Fungsi untuk update style navbar & tombol login
-                function updateThemeElements() {
-                    if (rootElement.classList.contains("dark")) {
-                        navbar?.classList.remove("light-nav");
-                        navbar?.classList.add("dark-nav");
-
-                        loginButton?.classList.remove("light-login");
-                        loginButton?.classList.add("dark-login");
-                    } else {
-                        navbar?.classList.remove("dark-nav");
-                        navbar?.classList.add("light-nav");
-
-                        loginButton?.classList.remove("dark-login");
-                        loginButton?.classList.add("light-login");
-                    }
-                }
-
-                // Cek localStorage untuk tema sebelumnya
-                if (localStorage.getItem("theme") === "dark") {
-                    rootElement.classList.add("dark");
-                } else {
-                    rootElement.classList.add("light");
-                }
-                updateThemeElements(); // Panggil agar navbar langsung sesuai tema saat load
-
-                // Function untuk toggle theme
-                function toggleTheme() {
-                    rootElement.classList.toggle("dark");
-                    rootElement.classList.toggle("light");
-
-                    localStorage.setItem("theme", rootElement.classList.contains("dark") ? "dark" : "light");
-                    updateThemeElements(); // Update navbar & tombol login setiap kali toggle
-                }
-
-                // Event listener untuk tombol toggle
-                toggleButton.addEventListener("click", toggleTheme);
-            };
+        darkToggle.addEventListener("click", function() {
+            if (darkToggle.checked) {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                darkIcon.classList.replace('bx-sun', 'bx-moon');
+            } else {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                darkIcon.classList.replace('bx-moon', 'bx-sun');
+            }
         });
+
+        // Move Toggle Mode
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            darkToggle.checked = true;
+            darkIcon.classList.replace('bx-sun', 'bx-moon');
+        } else {
+            darkToggle.checked = false;
+            darkIcon.classList.replace('bx-moon', 'bx-sun');
+        }
     </script>
 
 </x-layout-landing>

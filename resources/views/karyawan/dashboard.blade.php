@@ -1,113 +1,420 @@
 @extends('layout3.karyawan3')
+@section('page-title', 'Dashboard')
 @section('content')
-    <div class="flex-1 p-6 text-gray-900">
+    <div class="flex-1 p-6 max-w-7xl mx-auto text-gray-900">
+        <div class="flex flex-wrap -mx-3">
 
-        <!-- Grid utama -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <!-- Kotak Waktu & Sapaan dengan Gambar -->
-            <div class="bg-gray-50 p-8 rounded-xl shadow-lg flex items-center justify-between w-full border border-gray-100">
-                <div class="text-left">
-                    <p class="text-2xl font-montserrat text-gray-600 mb-10">Selamat Malam, {{ auth()->user()->name }}</p>
-                    <p class="text-3xl font-bold text-gray-900 tracking-widest" id="currentTime">
-                        00:00 AM
-                    </p>
+            <!-- card1 -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+                <div
+                    class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4 min-h-[120px]">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p
+                                        class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                        Total Kehadiran
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">XX Karyawan</h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-emerald-500 to-blue-500
+">
+                                    <i class='bx bx-check-shield text-lg text-white'></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <img src="{{ asset('asset-landing-page/img/Desain_tanpa_judul__5_-removebg-preview.png') }}" alt="Waktu Malam"
-                    class="w-40 h-44">
             </div>
 
-            <!-- Kotak Cuaca -->
-            <div id="weatherBox"
-            class="bg-white p-6 rounded-xl shadow-lg flex items-center gap-4 w-full text-gray-900">
-            <!-- Gambar Cuaca di Kiri -->
-            <img id="weatherIcon" src="" alt="Cuaca" class="w-20 h-20">
-        
-            <!-- Informasi Cuaca di Kanan -->
-            <div class="text-left">
-                <p id="temperature" class="text-4xl font-bold">--°C</p>
-                <p id="weatherDescription" class="text-lg text-gray-600">Memuat...</p>
+            <!-- card2 -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+                <div
+                    class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4 min-h-[120px]">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p
+                                        class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                        Izin / Sakit
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">XX Karyawan</h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-rose-500 to-pink-400">
+                                    <i class='bx bx-first-aid text-lg text-white'></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- card3 -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+                <div
+                    class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4 min-h-[120px]">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p
+                                        class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                        Absen Hari ini
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">XX Karyawan</h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-orange-500 to-yellow-400">
+                                    <i class='bx bx-time-five text-lg text-white'></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- card4 -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+                <div
+                    class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4 min-h-[120px]">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p
+                                        class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                        Cuaca hari ini
+                                    </p>
+
+
+                                    <!-- Informasi Cuaca di Kanan -->
+                                    <div class="text-left">
+                                        <p id="temperature" class="text-2xl font-semibold text-black dark:text-white">--°C
+                                        </p>
+                                        <p id="weatherDescription" class="mb-2 font-bold text-gray-600 dark:text-white">
+                                            Memuat...</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div
+                                class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-sky-500 to-slate-400  ">
+                                <img id="weatherIcon" src="" alt="Cuaca" class="w-full h-full object-contain">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
 
-        </div>
-
-        <!-- Grid kedua: 3 kolom -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-
-            <!-- Kotak Kalender -->
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-                <h3 class="text-xl font-semibold mb-4 text-gray-900" id="calendarTitle"></h3>
-                <div class="grid grid-cols-7 gap-2 text-gray-700 text-lg" id="calendarDays"></div>
-            </div>
-
-            <!-- Kotak Absensi -->
-            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center">
-                <i data-feather="clock" class="text-blue-500 text-4xl mb-3"></i>
-                <p class="text-lg text-gray-600">Ayo Absen!</p>
-                <button class="px-6 py-3 bg-gray-900 text-white rounded-lg font-semibold mt-3">
-                    Klik Untuk Absen
-                </button>
-            </div>
-
-            <!-- Kotak Motivasi -->
-            <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center text-center">
-                <i data-feather="briefcase" class="text-gray-500 text-4xl mb-3"></i>
-                <p class="text-lg text-gray-600">Work Hard!</p>
-            </div>
-
-        </div>
-
-        <!-- Footer -->
-        <p class="mt-8 text-gray-500 text-center text-lg">CopyRight@Kreavisa</p>
 
     </div>
 
-    <script>
-        feather.replace();
+    {{-- kartu ucapan --}}
 
-        // Update waktu real-time
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('currentTime').textContent = now.toLocaleTimeString('id-ID', {
-                hour: '2-digit',
-                minute: '2-digit',
-            }).replace('.', ':'); // Ubah titik ke format jam Indonesia (ex: 10:30 AM)
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pl-6 pr-3 -mt-8">
 
-        // Fungsi untuk menampilkan kalender bulan saat ini
-        function updateCalendar() {
-            const now = new Date();
-            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-                "Oktober", "November", "Desember"
-            ];
-            const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+        <div
+            class="bg-gradient-to-r from-blue-100 via-white to-purple-100 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 p-8 rounded-xl shadow-lg dark:shadow-dark-xl flex items-center justify-between w-full backdrop-blur-md relative overflow-hidden">
 
-            document.getElementById('calendarTitle').textContent = monthNames[now.getMonth()] + " " + now.getFullYear();
+            <!-- Ornamen blur background -->
+            <div
+                class="absolute -top-10 -left-10 w-40 h-40 bg-purple-300 dark:bg-blue-600 opacity-30 rounded-full blur-3xl">
+            </div>
+            <div
+                class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-300 dark:bg-blue-600 opacity-30 rounded-full blur-3xl">
+            </div>
 
-            let calendarHTML =
-                "<span>Mo</span> <span>Tu</span> <span>We</span> <span>Th</span> <span>Fr</span> <span>Sa</span> <span>Su</span>";
+            <div class="text-left z-10">
+                <p class="text-md text-gray-500 dark:text-gray-400 font-medium">Selamat datang kembali
+                    {{ auth()->user()->name }}</p>
+                <p id="greetingText"
+                    class="text-2xl font-semibold font-montserrat text-gray-700 dark:text-white flex items-center gap-2">
+                    <i id="greetingIcon" data-lucide="sun" class="w-6 h-6 text-yellow-500"></i>
+                    <span id="greetingMessage">Selamat Pagi</span>
+                </p>
+                <p id="currentTime"
+                    class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-widest drop-shadow-sm glow-text">
+                    00:00 AM
+                </p>
+            </div>
 
-            for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-                calendarHTML += "<span></span>";
-            }
+            <img id="bouncingImage" src="{{ asset('asset-landing-page/img/Desain_tanpa_judul__5_-removebg-preview.png') }}"
+                alt="Waktu Malam" class="w-40 h-44 z-10">
 
-            for (let i = 1; i <= daysInMonth; i++) {
-                if (i === now.getDate()) {
-                    calendarHTML += `<span class="bg-gray-900 text-white px-3 py-1 rounded-md font-bold">${i}</span>`;
-                } else {
-                    calendarHTML += `<span class="text-gray-700">${i}</span>`;
+            <style>
+                @keyframes bounce {
+
+                    0%,
+                    100% {
+                        transform: translateY(0);
+                    }
+
+                    50% {
+                        transform: translateY(-15px);
+                    }
                 }
-            }
 
-            document.getElementById('calendarDays').innerHTML = calendarHTML;
+                #bouncingImage {
+                    animation: bounce 3.5s infinite ease-in-out;
+                }
+
+                .glow-text {
+                    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+                }
+            </style>
+
+            <script>
+                const updateTimeAndGreeting = () => {
+                    const currentTimeElement = document.getElementById("currentTime");
+                    const greetingMessageElement = document.getElementById("greetingMessage");
+                    const greetingIconElement = document.getElementById("greetingIcon");
+
+                    const now = new Date();
+                    const hours = now.getHours();
+                    const minutes = now.getMinutes();
+                    const isAM = hours < 12;
+                    const displayHour = hours % 12 || 12;
+                    const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                    const ampm = isAM ? "AM" : "PM";
+
+                    currentTimeElement.textContent = `${displayHour}:${displayMinutes} ${ampm}`;
+
+                    let greeting = "",
+                        icon = "",
+                        color = "";
+                    if (hours >= 5 && hours < 12) {
+                        greeting = "Selamat Pagi";
+                        icon = "sun";
+                        color = "text-yellow-500";
+                    } else if (hours >= 12 && hours < 17) {
+                        greeting = "Selamat Siang";
+                        icon = "sun-medium";
+                        color = "text-orange-400";
+                    } else if (hours >= 17 && hours < 20) {
+                        greeting = "Selamat Sore";
+                        icon = "sunset";
+                        color = "text-pink-500";
+                    } else {
+                        greeting = "Selamat Malam";
+                        icon = "moon-stars";
+                        color = "text-indigo-400";
+                    }
+
+                    greetingMessageElement.textContent = greeting;
+                    greetingIconElement.setAttribute("data-lucide", icon);
+                    greetingIconElement.className = `w-6 h-6 ${color}`;
+                    lucide.createIcons(); // refresh icon
+                };
+
+                setInterval(updateTimeAndGreeting, 1000);
+                updateTimeAndGreeting();
+            </script>
+        </div>
+
+
+
+        <!-- Kotak Calender -->
+        <div class="relative w-full max-w-3xl mx-auto">
+            <!-- Ornamen blur background -->
+            <div
+                class="absolute -top-10 -left-10 w-40 h-40 bg-purple-300 dark:bg-blue-600 opacity-30 rounded-full blur-3xl z-0">
+            </div>
+            <div
+                class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-300 dark:bg-blue-600 opacity-30 rounded-full blur-3xl z-0">
+            </div>
+
+            <!-- Kalender dengan background -->
+            <div
+                class="relative bg-gray-50 dark:bg-slate-850 dark:shadow-dark-xl p-8 rounded-2xl shadow-blue-400 w-full space-y-6 z-10">
+
+                <!-- Header Bulan -->
+                <div class="flex items-center justify-center gap-4">
+                    <button id="prevWeek"
+                        class="p-2 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition text-black dark:text-white">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+                    <h3 class="text-black dark:text-white font-bold text-lg tracking-widest" id="calendarTitle">April 2025
+                    </h3>
+                    <button id="nextWeek"
+                        class="p-2 rounded-full bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition text-black dark:text-white">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Weekly Calendar -->
+                <div id="weeklyCalendar" class="grid grid-cols-5 gap-4">
+                    <!-- JS render -->
+                </div>
+
+                <!-- Informasi tambahan -->
+                <div
+                    class="mt-6 rounded-xl p-4 bg-gradient-to-r from-blue-100 to-purple-200 dark:from-slate-700 dark:to-slate-800 text-center shadow-inner">
+                    <p class="text-gray-800 dark:text-white text-base mb-1 font-medium">
+                        Total Hari Kerja Minggu Ini: <span class="font-bold text-indigo-600 dark:text-indigo-400">5
+                            Hari</span>
+                    </p>
+                    <p class="text-sm text-gray-500 dark:text-gray-300 italic">
+                        “Tetap semangat dan jangan lupa istirahat yang cukup 💪”
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+    <!-- Grid kedua: 3 kolom -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pl-6 pr-3">
+
+        <!-- Kotak Kalender -->
+        <div class="bg-white dark:bg-slate-850 p-6 rounded-xl shadow-lg text-center">
+            {{-- <div class="flex items-center justify-between mb-4">
+                <button id="prevMonth" class="text-gray-400 hover:text-gray-600">&lt;</button>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" id="calendarTitle"></h3>
+                <button id="nextMonth" class="text-gray-400 hover:text-gray-600">&gt;</button>
+            </div>
+            <div class="grid grid-cols-7 gap-2 text-gray-700 dark:text-white text-sm font-semibold mb-2">
+                <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+            </div>
+            <div id="calendarDays" class="grid grid-cols-7 gap-2 text-center text-sm font-medium"></div> --}}
+        </div>
+
+
+        <!-- Kotak Absensi -->
+        <div
+            class="bg-white dark:bg-slate-850 dark:shadow-dark-xl p-6 rounded-xl shadow-lg flex flex-col items-center text-center">
+            <i data-feather="clock" class="text-blue-500 text-4xl mb-3"></i>
+            <p class=" text-gray-600 dark:text-white font-montserrat text-2xl">Ayo Absen!</p>
+            <img id="bouncingImage" src="{{ asset('asset-landing-page/img/ayo-absen.png') }}" alt="" srcset=""
+                class="w-40 h-42 mt-2">
+            <button class="px-6 py-3 bg-gray-900 text-white rounded-lg font-semibold mt-3">
+                Klik Untuk Absen
+            </button>
+            <style>
+                @keyframes bounce {
+
+                    0%,
+                    100% {
+                        transform: translateY(0);
+                    }
+
+                    50% {
+                        transform: translateY(-15px);
+                    }
+                }
+
+                #bouncingImage {
+                    animation: bounce 3.5s infinite ease-in-out;
+                }
+            </style>
+        </div>
+
+        <!-- Kotak Motivasi -->
+        <div
+            class="bg-white dark:bg-slate-850 dark:shadow-dark-xl p-6 rounded-xl shadow-lg flex flex-col items-center text-center">
+            <i data-feather="briefcase" class="text-gray-500 text-4xl mb-3"></i>
+            <p class=" text-gray-600 dark:text-white font-montserrat text-2xl">Work Hard!</p>
+            <img src="{{ asset('asset-landing-page/img/work-hard.gif') }}" alt="Work Hard GIF" class="w-full h-auto" />
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <p class="mt-8 text-gray-500 text-center text-lg">CopyRight@Kreavisa</p>
+
+    </div>
+
+
+    {{-- 
+    // Fungsi untuk menampilkan kalender bulan saat ini --}}
+    <script>
+        const weeklyCalendar = document.getElementById('weeklyCalendar');
+        const calendarTitle = document.getElementById('calendarTitle');
+        const prevWeekBtn = document.getElementById('prevWeek');
+        const nextWeekBtn = document.getElementById('nextWeek');
+
+        let currentDate = new Date();
+
+        function getStartOfWeek(date) {
+            const day = date.getDay();
+            const diff = date.getDate() - (day === 0 ? 6 : day - 1); // Mulai Senin
+            return new Date(date.setDate(diff));
         }
 
-        updateCalendar();
+        function renderWeek() {
+            weeklyCalendar.innerHTML = "";
+
+            const startOfWeek = getStartOfWeek(new Date(currentDate));
+            const today = new Date();
+
+            for (let i = 0; i < 5; i++) {
+                const day = new Date(startOfWeek);
+                day.setDate(startOfWeek.getDate() + i);
+
+                const isToday = day.toDateString() === today.toDateString();
+
+                const dayBox = document.createElement("div");
+                dayBox.className = `
+  flex flex-col items-center justify-center
+  p-4 rounded-xl border border-gray-200 dark:border-slate-700
+  bg-white/60 dark:bg-slate-800/60 backdrop-blur-md
+  text-gray-800 dark:text-white
+  shadow-sm hover:shadow-md transition
+  ${isToday ? 'ring-2 ring-blue-500 dark:ring-blue-400 shadow-lg' : ''}
+`;
+
+
+                const dayName = day.toLocaleDateString("id-ID", {
+                    weekday: 'short'
+                });
+                const dayNum = day.getDate();
+
+                dayBox.innerHTML = `
+                <span class="text-sm text-gray-500 dark:text-gray-300">${dayName}</span>
+                <span class="text-xl font-semibold">${dayNum}</span>
+            `;
+
+                weeklyCalendar.appendChild(dayBox);
+            }
+
+            calendarTitle.textContent = startOfWeek.toLocaleDateString('id-ID', {
+                month: 'long',
+                year: 'numeric'
+            });
+            lucide.createIcons();
+        }
+
+        prevWeekBtn.addEventListener("click", () => {
+            currentDate.setDate(currentDate.getDate() - 7);
+            renderWeek();
+        });
+
+        nextWeekBtn.addEventListener("click", () => {
+            currentDate.setDate(currentDate.getDate() + 7);
+            renderWeek();
+        });
+
+        renderWeek();
+
+
 
         async function getWeather() {
             const apiKey = 'a48b67fe40c192a0bcfb78d6c6ee4951'; // 🔹 GANTI dengan API Key OpenWeather
