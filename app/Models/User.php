@@ -77,4 +77,10 @@ class User extends Authenticatable
     {
         return $this->usertype === $usertype;
     }
+
+    // Di model User.php
+public function shifts()
+{
+    return $this->hasMany(ShiftKaryawan::class, 'user_id');
+}
 }

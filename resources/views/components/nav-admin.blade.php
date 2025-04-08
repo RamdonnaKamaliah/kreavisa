@@ -59,12 +59,12 @@
     <li>
         <a href="{{ route('jadwalkaryawan.index') }}"
             class="flex items-center space-x-2 p-2 rounded relative group transition duration-200 
-                    {{ Request::routeIs('jadwalkaryawan.index') ? 'bg-gray-100 text-blue-600' : 'hover:bg-blue-300 hover:text-blue-600' }}">
+                    {{ Request::routeIs('jadwalkaryawan.index') || Request::routeIs('shiftkaryawan.index') ? 'bg-gray-100 text-blue-600' : 'hover:bg-blue-300 hover:text-blue-600' }}">
             <span
                 class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 
-                        {{ Request::routeIs('jadwalkaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+                        {{ Request::routeIs('jadwalkaryawan.index') || Request::routeIs('shiftkaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
             <i class='bx bx-calendar'></i>
-            <span>Jadwal Kerja</span>
+            <span>Jadwal Karyawan</span>
         </a>
     </li>
 
