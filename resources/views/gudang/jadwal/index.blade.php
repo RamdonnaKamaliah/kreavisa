@@ -1,5 +1,4 @@
-@extends('layout3.karyawan3')
-
+@extends('layout2.karyawan')
 @section('content')
 <div class="p-4 md:p-6">
 

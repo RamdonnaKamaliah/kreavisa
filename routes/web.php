@@ -3,10 +3,11 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Gudang\GudangController;
-use App\Http\Controllers\Gudang\AbsenGudangController;
-use App\Http\Controllers\Gudang\GajiGudangController;
+use App\Http\Controllers\Gudang\GudangAbsenController;
+use App\Http\Controllers\Gudang\GudangGajiController;
 use App\Http\Controllers\Gudang\GudangJadwalController;
 use App\Http\Controllers\Gudang\StokController;
+use App\Http\Controllers\Karyawan\KaryawanGajiController;
 use App\Http\Controllers\Karyawan\KaryawanController;
 use App\Http\Controllers\Karyawan\KaryawanAbsenController;
 use App\Http\Controllers\Karyawan\KaryawanJadwalController;
@@ -36,25 +37,23 @@ Route::get('/test-email', function () {
     return "Email has been sent!";
 });
 
+    Route::get('/',[LandingController::class, 'index'])->name('dashboard');
 
-Route::get('/',[LandingController::class, 'index'])->name('dashboard');
+    Route::get('/defaultroot', function () {
+        return view('welcome');
+    });
 
-Route::get('/defaultroot', function () {
-    return view('welcome');
-});
+    Route::get('/register', function () {
+        return view('register');
+    });
 
-Route::get('/register', function () {
-    return view('register');
-});
-
-// routes/web.php
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-
-Route::get('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'createKaryawanGudang'])->name('login.karyawan-gudang');
-Route::post('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'storeKaryawanGudang'])->name('login.karyawan-gudang.process');
+    // routes/web.php
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::get('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'createKaryawanGudang'])->name('login.karyawan-gudang');
+    Route::post('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'storeKaryawanGudang'])->name('login.karyawan-gudang.process');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
@@ -91,28 +90,35 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::post('karyawan/absen/izin', [KaryawanAbsenController::class, 'storeIzin'])
         ->name('karyawan.absen.izin.store');
     Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
-    Route::resource('gaji-karyawan', GajiController::class);
+    Route::get('/karyawan/gaji', [KaryawanGajiController::class, 'index'])->name('gajiKaryawan.index');
+    Route::get('/karyawan/gaji/{id}', [KaryawanGajiController::class, 'show'])->name('gajiKaryawan.show');
     Route::get('karyawan/jadwal', [KaryawanJadwalController::class, 'index'])->name('karyawan.jadwal.index');
 });
 
 
 Route::middleware(['auth', Gudang::class])->group(function () {
     Route::get('/gudang/dashboard', [GudangController::class, 'index'])->name('gudang.dashboard');
-    Route::resource('absen-gudang', AbsenGudangController::class);
-    Route::get('/gudang/gaji', [GajiGudangController::class, 'index'])->name('gajiGudang.index');
+    Route::get('gudang/absen/sakit', [GudangAbsenController::class, 'createSakit'])
+    ->name('gudang.absen.sakit');
+    Route::post('gudang/absen/sakit', [GudangAbsenController::class, 'storeSakit'])
+        ->name('gudang.absen.sakit.store');
+    Route::get('gudang/absen/izin', [GudangAbsenController::class, 'createIzin'])
+        ->name('gudang.absen.izin');
+    Route::post('gudang/absen/izin', [GudangAbsenController::class, 'storeIzin'])
+        ->name('gudang.absen.izin.store');
+    Route::resource('gudang/absen', GudangAbsenController::class)->names('gudang.absen');
+    Route::get('/gudang/gaji', [GudangGajiController::class, 'index'])->name('gajiGudang.index');
+    Route::get('/gudang/gaji/{id}', [GudangGajiController::class, 'show'])->name('gajiGudang.show');
     Route::get('gudang/jadwal', [GudangJadwalController::class, 'index'])->name('gudang.jadwal.index');
-   // Halaman utama stok (List Stok Barang)
-Route::get('/gudang/stok', [StokController::class, 'index'])->name('gudang.stok.index');
-
-// Stok Masuk
-Route::get('/gudang/stok/masuk', [StokController::class, 'stokMasuk'])->name('gudang.stok.masuk');
-Route::get('/gudang/stok/create-masuk', [StokController::class, 'createMasuk'])->name('gudang.stok.create-masuk');
-Route::post('/gudang/stok/store-masuk', [StokController::class, 'storeMasuk'])->name('gudang.stok.store-masuk');
-
-// Stok Keluar
-Route::get('/gudang/stok/keluar', [StokController::class, 'stokKeluar'])->name('gudang.stok.keluar');
-Route::get('/gudang/stok/create-keluar', [StokController::class, 'createKeluar'])->name('gudang.stok.create-keluar');
-Route::post('/gudang/stok/store-keluar', [StokController::class, 'storeKeluar'])->name('gudang.stok.store-keluar');
+    Route::get('/gudang/stok', [StokController::class, 'index'])->name('gudang.stok.index');
+    // Stok Masuk
+    Route::get('/gudang/stok/masuk', [StokController::class, 'stokMasuk'])->name('gudang.stok.masuk');
+    Route::get('/gudang/stok/create-masuk', [StokController::class, 'createMasuk'])->name('gudang.stok.create-masuk');
+    Route::post('/gudang/stok/store-masuk', [StokController::class, 'storeMasuk'])->name('gudang.stok.store-masuk');
+    // Stok Keluar
+    Route::get('/gudang/stok/keluar', [StokController::class, 'stokKeluar'])->name('gudang.stok.keluar');
+    Route::get('/gudang/stok/create-keluar', [StokController::class, 'createKeluar'])->name('gudang.stok.create-keluar');
+    Route::post('/gudang/stok/store-keluar', [StokController::class, 'storeKeluar'])->name('gudang.stok.store-keluar');
 
 });
 

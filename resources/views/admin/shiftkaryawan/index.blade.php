@@ -84,13 +84,12 @@
                                             @csrf
                                             @method('DELETE')
                                             <!-- Di file index shift (bagian tombol delete) -->
-                                            <button type="button" onclick="deleteShift(this)"
+                                            <button type="button" onclick="console.log({{ $row->id }}); deleteShift(this)"
                                             class="px-2 py-1 text-red-600 border border-red-600 rounded-full hover:bg-red-100 flex items-center gap-1 text-xs md:text-sm delete-shift">
                                             <i class="fas fa-trash-alt"></i> <span class="hidden sm:inline">Delete</span>
                                             </button>
                                         </form>
                                         <script>
-                                        // Fungsi khusus untuk delete shift
                                         function deleteShift(button) {
                                             Swal.fire({
                                                 icon: "warning",
@@ -107,7 +106,12 @@
                                                 }
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    button.parentElement.submit();
+                                                    // Add error handling
+                                                    button.closest('form').submit()
+                                                        .catch(error => {
+                                                            Swal.fire('Error', 'Failed to delete shift', 'error');
+                                                            console.error(error);
+                                                        });
                                                 }
                                             });
                                         }

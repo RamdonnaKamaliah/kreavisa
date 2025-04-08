@@ -19,7 +19,7 @@
                 <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
                     <thead class="bg-gray-200 text-gray-800">
                         <tr>
-                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Status</th>
@@ -38,12 +38,33 @@
                         <tr>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->nama_lengkap ?? '-' }}</td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->jabatan->nama_jabatan ?? '-' }}</td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->tanggal_absensi }}</td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ ucfirst($item->status) }}</td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                <div class="flex items-center gap-1">
+                                    <span class="font-medium text-gray-900">
+                                        {{ \Carbon\Carbon::parse($item->tanggal_absensi)->isoFormat('D MMMM YYYY') }}
+                                    </span>
+                                    <span class="text-gray-400">•</span>
+                                    <span class="text-gray-500">
+                                        {{ \Carbon\Carbon::parse($item->tanggal_absensi)->isoFormat('HH:mm') }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
+                                <span class="
+                                    @if($item->status === 'hadir') bg-green-100 text-green-800 @endif
+                                    @if($item->status === 'izin') bg-yellow-100 text-yellow-800 @endif
+                                    @if($item->status === 'sakit') bg-red-100 text-red-800 @endif
+                                    px-3 py-1 rounded-full text-sm font-medium
+                                ">
+                                    {{ ucfirst($item->status) }}
+                                </span>
+                            </td>
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
                                 @if ($item->lokasi)
-                                    <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}" target="_blank" class="text-blue-600 underline">
-                                        Lihat di Maps
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}" 
+                                       target="_blank" 
+                                       class="text-blue-600 hover:text-blue-800 flex items-center justify-center space-x-2 no-underline">
+                                       <i class="fa-solid fa-location-dot"></i><span>Lihat Maps</span>
                                     </a>
                                 @else
                                     <span>-</span>
@@ -58,11 +79,27 @@
                                     <span>-</span>
                                 @endif
                             </td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
                                 @if ($item->file_surat)
-                                    <a href="{{ asset($item->file_surat) }}" target="_blank" class="text-blue-600 underline">
-                                        Lihat Surat
-                                    </a>
+                                    @if(in_array($item->status, ['izin', 'sakit']))
+                                        <a href="{{ asset($item->file_surat) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                            <i class="fas fa-file-alt mr-1"></i> Open File
+                                        </a>
+                                    @else
+                                        @php
+                                            $fileExtension = pathinfo($item->file_surat, PATHINFO_EXTENSION);
+                                        @endphp
+                                        
+                                        @if(in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+                                            <a href="{{ asset($item->file_surat) }}" target="_blank">
+                                                <img src="{{ asset($item->file_surat) }}" alt="File Surat" class="file-surat">
+                                            </a>
+                                        @else
+                                            <a href="{{ asset($item->file_surat) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                                <i class="fas fa-file-pdf mr-1"></i> Open File
+                                            </a>
+                                        @endif
+                                    @endif
                                 @else
                                     <span>-</span>
                                 @endif

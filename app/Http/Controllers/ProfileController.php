@@ -7,6 +7,8 @@ use App\Models\JabatanKaryawan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\PasswordChangedNotification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -22,7 +24,7 @@ class ProfileController extends Controller
         // Periksa usertype dan sesuaikan data yang ditampilkan
         $view = match ($user->usertype) {
             'admin' => 'admin.profile-index',
-            'gudang' => 'gudang.profile-index',
+            'gudang' => 'gudang.profile.index',
             'karyawan' => 'karyawan.profile-index',
             default => abort(403, 'Unauthorized'),
         };
@@ -31,48 +33,77 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the profile edit form.
-     */
-    public function edit(Request $request): View
-    {
-        $jabatanKaryawan = JabatanKaryawan::all();
+ * Show the profile edit form.
+ */
+public function edit(Request $request): View
+{
+    $user = $request->user();
+    $jabatanKaryawan = JabatanKaryawan::all();
     
-        return view('profile.edit', [
-            'user' => $request->user(),
-            'jabatanKaryawan' => $jabatanKaryawan,
-        ]);
-    }
-    
+    // Tentukan view berdasarkan usertype
+    $view = match ($user->usertype) {
+        'admin' => 'admin.profile.edit',
+        'gudang' => 'gudang.profile.edit',
+        'karyawan' => 'karyawan.profile.edit',
+        default => abort(403, 'Unauthorized'),
+    };
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $user = $request->user();
-        $validatedData = $request->validated();
+    return view($view, [
+        'user' => $user,
+        'jabatanKaryawan' => $jabatanKaryawan,
+    ]);
+}
 
+public function update(ProfileUpdateRequest $request): RedirectResponse
+{
+    $user = $request->user();
+    $validatedData = $request->validated();
+
+    try {
+        // Handle file upload
         if ($request->hasFile('foto')) {
-            if ($user->foto && file_exists(storage_path('app/public/' . $user->foto))) {
-                unlink(storage_path('app/public/' . $user->foto));
+            // Delete old photo if exists
+            if ($user->foto && file_exists(public_path('uploads/datakaryawan/' . $user->foto))) {
+                unlink(public_path('uploads/datakaryawan/' . $user->foto));
             }
-            $path = $request->file('foto')->store('profile-photos', 'public');
-            $validatedData['foto'] = $path;
+            
+            // Store new photo
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/datakaryawan'), $filename);
+            $validatedData['foto'] = $filename;
         }
-        
 
-        // Update data user
+        $passwordChanged = false;
+        
+        // Only update password if it's provided
+        if (!empty($validatedData['password'])) {
+            $user->password = bcrypt($validatedData['password']);
+            $passwordChanged = true;
+            unset($validatedData['password']);
+        }
+
+        // Update user data
         $user->fill($validatedData);
 
-        // Reset email verification jika email berubah
+        // Reset email verification if email changed
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'Profile berhasil diperbarui.');
+        // Kirim notifikasi jika password diubah
+        if ($passwordChanged) {
+            Mail::to($user->email)->send(new PasswordChangedNotification($user));
+        }
+
+        return Redirect::route('profile.index')->with('success', 'Profile berhasil diperbarui.');
+    } catch (\Exception $e) {
+        return Redirect::back()->with('error', 'Gagal memperbarui profile: ' . $e->getMessage());
     }
+}
+
 
     /**
      * Delete the user's account.

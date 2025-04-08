@@ -1,18 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Gudang;
+namespace App\Http\Controllers\Karyawan;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\GajiKaryawan;
 
-class AbsenGudangController extends Controller
+class KaryawanGajiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('gudang.absen-gudang.index');
+        $gajiKaryawan = GajiKaryawan::with(['user', 'user.jabatan'])
+    ->where('user_id', auth('web')->id()) // Gunakan 'web' atau guard yang sesuai
+    ->get();
+
+
+
+        // Kirim data ke view gudang.gaji.index
+        return view('karyawan.gaji.index', compact('gajiKaryawan'));
     }
 
     /**
@@ -20,7 +28,7 @@ class AbsenGudangController extends Controller
      */
     public function create()
     {
-        return view('gudang.absen-gudang.create');
+        //
     }
 
     /**
@@ -35,9 +43,15 @@ class AbsenGudangController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
-    }
+{
+    // Ambil data gaji berdasarkan ID dengan relasi user dan jabatan
+    $gaji = GajiKaryawan::with(['user', 'user.jabatan'])
+                ->where('id', $id)
+                ->where('user_id', auth('web')->id()) // Pastikan hanya pemilik gaji yang bisa melihat
+                ->firstOrFail();
+
+    return view('karyawan.gaji.show', compact('gaji'));
+}
 
     /**
      * Show the form for editing the specified resource.

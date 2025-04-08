@@ -53,7 +53,7 @@ class AdminShiftController extends Controller
         'shift_2' => $request->shift_2_masuk . ' - ' . $request->shift_2_pulang,
     ]);
 
-    return redirect()->route('shiftkaryawan.index')->with('success', 'Shift berhasil ditambahkan.');
+    return redirect()->route('shiftkaryawan.index')->with('added', 'true');
 }
 
 // App\Http\Controllers\Admin\AdminShiftController.php
@@ -80,7 +80,7 @@ public function update(Request $request, $id)
         $jadwal->updateShiftTimes();
     }
 
-    return redirect()->route('shiftkaryawan.index')->with('success', 'Shift berhasil diperbarui.');
+    return redirect()->route('shiftkaryawan.index')->with('edited', 'true');
 }
 
     public function edit($id)
@@ -97,14 +97,15 @@ public function show($id)
 
 public function destroy($id)
 {
-    $jadwal = JadwalKaryawan::findOrFail($id);
+    // First find the shift
+    $shift = ShiftKaryawan::findOrFail($id);
     
-    // Hapus jadwal spesifik
-    $jadwal->delete();
+    // Delete any related jadwal entries first
+    JadwalKaryawan::where('shift_id', $shift->id)->delete();
     
-    return redirect()->route('jadwalkaryawan.index', [
-        'bulan' => $jadwal->bulan,
-        'tahun' => $jadwal->tahun
-    ])->with('deleted', 'true');
+    // Then delete the shift itself
+    $shift->delete();
+    
+    return redirect()->route('shiftkaryawan.index')->with('deleted', 'true');
 }
 }

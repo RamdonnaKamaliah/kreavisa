@@ -1,382 +1,250 @@
 @extends('layout2.karyawan')
 @section('content')
-    @push('page-title')
-        Absen Karyawan
-    @endpush
-    <x-layout-gudang>
-        <section class="flex-grow flex items-center justify-center min-h-screen md:ml-16 md:mr-0 md:pl-40 pt-20">
-            <div class="p-6 rounded-xl shadow-lg text-center max-w-4xl w-full mx-auto md:ml-auto md:mr-auto bg-gray-800">
-                <!-- Heading dan Deskripsi -->
-                <h2 class="text-white text-2xl font-bold mb-1">Absensi Karyawan</h2>
-                <p class="text-gray-400 text-sm mb-8 pt-0">Pastikan Anda melakukan absensi setiap hari sesuai kondisi Anda.
-                </p>
-
-                <!-- Statistik Kehadiran (Disesuaikan agar lebih rapat) -->
-                <div class="flex justify-between items-center bg-gray-700 rounded-lg p-4 mb-6 text-white gap-4">
-                    <div>
-                        <p class="text-sm">Hadir Bulan Ini</p>
-                        <p class="text-lg font-bold">20</p>
-                    </div>
-                    <div>
-                        <p class="text-sm">Sakit</p>
-                        <p class="text-lg font-bold">3</p>
-                    </div>
-                    <div>
-                        <p class="text-sm">Izin</p>
-                        <p class="text-lg font-bold">2</p>
-                    </div>
-                </div>
-
-                <!-- Map Box -->
-                <div class="mb-6">
-                    <div id="map" class="w-full h-56 rounded-lg border-2 border-gray-600 overflow-hidden"></div>
-                </div>
-
-                <!-- Info Waktu -->
-                <p class="text-white text-left mb-6">Waktu saat ini: <span class="font-bold" id="currentTime">10:00</span>
-                </p>
-
-                <!-- Form Absensi -->
-                <form action="{{ route('absen-karyawan.store') }}" method="POST" enctype="multipart/form-data"
-                    id="absenForm">
-                    @csrf
-                    <input type="hidden" name="latitude" id="latitude">
-                    <input type="hidden" name="longitude" id="longitude">
-                    <input type="hidden" name="foto_base64" id="foto_base64">
-
-                    <!-- Tombol Pilihan Absen (Lebar tombol disesuaikan) -->
-                    <div class="flex justify-center gap-4 mt-4 mb-5">
-                        <button type="button" id="btn-hadir"
-                            class="btn-absen bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 w-24">Hadir</button>
-                        <button type="button" id="btn-sakit"
-                            class="btn-absen bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 w-24">Sakit</button>
-                        <button type="button" id="btn-izin"
-                            class="btn-absen bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 w-24">Izin</button>
-                    </div>
-
-                    <!-- Tombol Ambil Foto (Muncul saat Hadir) -->
-                    <div id="ambilFotoSection" class="hidden">
-                        <button type="button" id="btn-ambil-foto"
-                            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-32">Ambil Foto</button>
-                    </div>
-
-                    <!-- Preview Nama File (Muncul setelah foto disimpan) -->
-                    <div id="fileNameSection" class="hidden mt-4">
-                        <p class="text-white text-left mb-2">Nama File:</p>
-                        <p id="fileName" class="text-white text-left"></p>
-                    </div>
-
-                    <!-- File Surat Section (Muncul saat Sakit/Izin) -->
-                    <div id="fileSuratSection" class="hidden">
-                        <label for="file_surat" class="block text-white text-left mb-2">Surat Keterangan (jika
-                            Sakit/Izin):</label>
-                        <input type="file" name="file_surat" class="w-full text-white bg-gray-700 rounded-lg px-4 py-2">
-                    </div>
-
-                    <!-- Tombol Submit (Lebar tombol disesuaikan) -->
-                    <a href="{{ route('absen-gudang.create') }}"
-                        class="bg-blue-500 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-blue-600 mt-6 w-40 mx-auto text-sm">
-                        <i class="fas fa-camera"></i>
-                        <span>Submit Absen</span>
-                    </a>
-                </form>
-            </div>
-        </section>
-
-        <!-- Pop-up Kamera -->
-        <!-- Pop-up Kamera -->
-        <div id="cameraPopup" class="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center hidden">
-            <div class="bg-gray-800 p-6 rounded-lg w-11/12 max-w-lg relative">
-                <!-- Tombol Close di atas kanan -->
-                <button type="button" id="closeCamera"
-                    class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600">
-                    <i class="fas fa-times"></i>
-                </button>
-                <p class="text-white text-lg font-bold mb-4 text-center">Ambil Foto</p>
-                <video id="video" class="w-full h-56 rounded-lg border-2 border-gray-600 overflow-hidden"
-                    autoplay></video>
-
-                <!-- Canvas untuk preview foto -->
-                <canvas id="canvas"
-                    class="w-full h-56 rounded-lg border-2 border-gray-600 overflow-hidden mt-4 hidden"></canvas>
-
-                <div class="flex justify-between mt-4">
-                    <button type="button" id="capture"
-                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Ambil Foto</button>
-
-                    <button type="button" id="retakePhoto"
-                        class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 hidden">Ambil Ulang</button>
-
-                    <button type="button" id="savePhoto"
-                        class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 hidden">Simpan</button>
-                </div>
-            </div>
-        </div>
-
-        </div>
-
-        <!-- Leaflet.js CSS -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-        <!-- Leaflet.js Script -->
-        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-
-        <script>
-            // Menampilkan waktu real-time
-            function updateTime() {
-                const currentTime = new Date();
-                document.getElementById("currentTime").textContent = currentTime.toLocaleTimeString();
-            }
-            setInterval(updateTime, 1000);
-
-            // Menampilkan peta menggunakan Leaflet.js
-            const map = L.map('map').setView([-6.21462, 106.84513], 13); // Koordinat default (Jakarta)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-            const marker = L.marker([-6.21462, 106.84513]).addTo(map);
-            marker.bindPopup("<b>Lokasi Absen</b>").openPopup();
-
-            // Fungsi untuk mengatur tombol active
-            function setActiveButton(buttonId) {
-                const buttons = document.querySelectorAll(".btn-absen");
-                buttons.forEach(btn => btn.classList.remove("active")); // Hapus semua class active
-                document.getElementById(buttonId).classList.add("active"); // Tambahkan class active pada tombol yang diklik
-
-                const jenis = buttonId.replace('btn-', '');
-                const ambilFotoSection = document.getElementById('ambilFotoSection');
-                const fileSuratSection = document.getElementById('fileSuratSection');
-                const photoPreviewSection = document.getElementById('photoPreviewSection');
-
-                if (jenis === 'hadir') {
-                    ambilFotoSection.style.display = 'block';
-                    fileSuratSection.style.display = 'none';
-                    photoPreviewSection.style.display = 'none';
-                } else if (jenis === 'sakit' || jenis === 'izin') {
-                    ambilFotoSection.style.display = 'none';
-                    fileSuratSection.style.display = 'block';
-                    photoPreviewSection.style.display = 'none';
-                } else {
-                    ambilFotoSection.style.display = 'none';
-                    fileSuratSection.style.display = 'none';
-                    photoPreviewSection.style.display = 'none';
-                }
-            }
-
-            // Fungsi untuk menampilkan pop-up kamera
-            document.getElementById('btn-ambil-foto').addEventListener('click', function() {
-                const cameraPopup = document.getElementById('cameraPopup');
-                cameraPopup.style.display = 'flex';
-                startCamera();
-            });
-
-            // Fungsi untuk menutup pop-up kamera
-            document.getElementById('closeCamera').addEventListener('click', function() {
-                const cameraPopup = document.getElementById('cameraPopup');
-                cameraPopup.style.display = 'none';
-                stopCamera();
-            });
-
-            // Fungsi untuk memulai kamera
-            function startCamera() {
-                navigator.mediaDevices.getUserMedia({
-                        video: true
-                    })
-                    .then(function(stream) {
-                        const video = document.getElementById('video');
-                        video.srcObject = stream;
-                        window.cameraStream = stream;
-                    })
-                    .catch(function(err) {
-                        console.error("Error accessing camera: ", err);
-                        alert("Tidak bisa mengakses kamera. Pastikan izin kamera diberikan.");
+    <div class="p-4 md:p-6 overflow-x-hidden">
+        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md">
+            @if(session('success'))
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                window.onload = function() {
+                    const type = "{{ session('attendance_type') }}";
+                    let message = '';
+                    
+                    switch(type) {
+                        case 'hadir': message = 'Absen hadir berhasil dicatat!'; break;
+                        case 'sakit': message = 'Absen sakit berhasil dicatat!'; break;
+                        case 'izin': message = 'Absen izin berhasil dicatat!'; break;
+                        default: message = "{{ session('success') }}";
+                    }
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: message,
+                        showConfirmButton: false,
+                        timer: 2000
                     });
-            }
+                };
+            </script>
+            @endif
 
-            // Fungsi untuk menghentikan kamera
-            function stopCamera() {
-                if (window.cameraStream) {
-                    window.cameraStream.getTracks().forEach(track => track.stop());
-                    window.cameraStream = null;
+            <!-- Google Maps -->
+            <div class="mb-4">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.3048621459625!2d106.7626191737859!3d-6.608989364603464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5001b7efe39%3A0x911c1a77e2752ac4!2sNavisa%20Basic%20Collection!5e0!3m2!1sid!2sid!4v1740474347021!5m2!1sid!2sid"
+                    class="w-full h-64 md:h-80 rounded-lg shadow" style="border:0;" allowfullscreen loading="lazy"></iframe>
+            </div>
+
+            <div id="absen-section" class="flex flex-col items-center gap-2 justify-center mb-4">
+                @if(!$todayAbsen)
+                    @if($currentHour >= 5)
+                        <!-- Jam 05:00-23:59 dan belum absen -->
+                        <div class="flex gap-2">
+                            <a href="{{ route('gudang.absen.create') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow">Hadir</a>
+                            <a href="{{ route('gudang.absen.sakit') }}" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition-colors">Sakit</a>
+                            <a href="{{ route('gudang.absen.izin') }}" class="bg-yellow-300 text-white px-4 py-2 rounded-lg shadow">Izin</a>
+                        </div>
+                    @else
+                        <!-- Jam 00:00-04:59 dan belum absen -->
+                        <p class="text-red-600 text-center w-full">Absen hanya bisa dilakukan mulai jam 05:00 WIB</p>
+                    @endif
+                @else
+                    <!-- Sudah absen hari ini -->
+                    <p class="text-green-600 text-center w-full">Anda sudah absen hari ini</p>
+                    <p class="text-center">Absen berikutnya bisa dilakukan besok jam 05:00 WIB</p>
+                @endif
+            </div>
+            <script>
+                function getWIBTime() {
+                    const now = new Date();
+                    return new Date(now.getTime() + (7 * 60 * 60 * 1000)); // UTC+7
                 }
-            }
+            
+                const nowWIB = getWIBTime();
+                const currentHourWIB = nowWIB.getHours();
+                const isAfterMidnight = currentHourWIB >= 0 && currentHourWIB < 5;
+            
+                @if(!$todayAbsen)
+                    // Case 1: Belum absen hari ini
+                    if(isAfterMidnight) {
+                        // Hitung mundur sampai jam 05:00 hari ini
+                        const target = new Date(nowWIB);
+                        target.setHours(5, 0, 0, 0);
+                        
+                        const countdown = setInterval(() => {
+                            const now = getWIBTime();
+                            const distance = target - now;
+                            
+                            if(distance <= 0) {
+                                clearInterval(countdown);
+                                location.reload();
+                                return;
+                            }
+                            
+                            const hours = Math.floor(distance / (1000 * 60 * 60));
+                            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                            
+                            document.getElementById("countdown").textContent = 
+                                `Absen buka dalam: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        }, 1000);
+                    }
+                @else
+                    // Case 2: Sudah absen hari ini
+                    // Hitung mundur sampai jam 05:00 besok
+                    const target = new Date(nowWIB);
+                    target.setDate(target.getDate() + 1);
+                    target.setHours(5, 0, 0, 0);
+                    
+                    const countdown = setInterval(() => {
+                        const now = getWIBTime();
+                        const distance = target - now;
+                        
+                        if(distance <= 0) {
+                            clearInterval(countdown);
+                            location.reload();
+                            return;
+                        }
+                        
+                        const hours = Math.floor(distance / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        
+                        document.getElementById("countdown").textContent = 
+                            `Absen berikutnya buka dalam: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }, 1000);
+                @endif
+            </script>
 
-            // Fungsi untuk mengambil foto
-            // Fungsi untuk mengambil foto
-            document.getElementById('capture').addEventListener('click', function() {
-                const canvas = document.getElementById('canvas');
-                const video = document.getElementById('video');
-                const retakePhotoButton = document.getElementById('retakePhoto');
-                const savePhotoButton = document.getElementById('savePhoto');
-                const captureButton = document.getElementById('capture');
+            <!-- Tombol Riwayat Absen -->
+            <div class="flex justify-center mt-4">
+                <button id="toggleRiwayatAbsen" class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow w-full md:w-auto">
+                    Lihat Riwayat Absen
+                </button>
+            </div>
 
-                // Atur ukuran canvas sesuai dengan video
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            <!-- Tabel Riwayat Absen (Disembunyikan Awal) -->
+            <div id="riwayatAbsenTable" class="overflow-x-auto mt-4 hidden">
+                <h2 class="text-center text-xl font-bold mb-4">Riwayat Absen</h2>
+                <table class="w-full border border-gray-300 text-xs md:text-sm">
+                    <thead class="bg-gray-200 text-gray-900">
+                        <tr>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Tanggal</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Status</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Lokasi</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Foto</th>
+                            <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">File Surat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($absen as $item)
+                            <tr>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->nama_lengkap ?? '-' }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->user->jabatan->nama_jabatan ?? '-' }}</td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                    <div class="flex items-center gap-1">
+                                        <span class="font-medium text-gray-900">
+                                            {{ \Carbon\Carbon::parse($item->tanggal_absensi)->isoFormat('D MMMM YYYY') }}
+                                        </span>
+                                        <span class="text-gray-400">•</span>
+                                        <span class="text-gray-500">
+                                            {{ \Carbon\Carbon::parse($item->tanggal_absensi)->isoFormat('HH:mm') }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
+                                    <span class="
+                                        @if($item->status === 'hadir') bg-green-100 text-green-800 @endif
+                                        @if($item->status === 'izin') bg-yellow-100 text-yellow-800 @endif
+                                        @if($item->status === 'sakit') bg-red-100 text-red-800 @endif
+                                        px-3 py-1 rounded-full text-sm font-medium
+                                    ">
+                                        {{ ucfirst($item->status) }}
+                                    </span>
+                                </td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
+                                    @if ($item->lokasi)
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}" 
+                                           target="_blank" 
+                                           class="text-blue-600 hover:text-blue-800 flex items-center justify-center space-x-2 no-underline">
+                                           <i class="fa-solid fa-location-dot"></i><span>Lihat Maps</span>
+                                        </a>
+                                    @else
+                                        <span>-</span>
+                                    @endif
+                                </td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                    @if ($item->foto)
+                                        <a href="{{ asset($item->foto) }}" target="_blank">
+                                            <img src="{{ asset($item->foto) }}" alt="Foto Absen" class="foto-absen">
+                                        </a>
+                                    @else
+                                        <span>-</span>
+                                    @endif
+                                </td>
+                                <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
+                                    @if ($item->file_surat)
+                                        @if(in_array($item->status, ['izin', 'sakit']))
+                                            <a href="{{ asset($item->file_surat) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                                <i class="fas fa-file-alt mr-1"></i> Open File
+                                            </a>
+                                        @else
+                                            @php
+                                                $fileExtension = pathinfo($item->file_surat, PATHINFO_EXTENSION);
+                                            @endphp
+                                            
+                                            @if(in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+                                                <a href="{{ asset($item->file_surat) }}" target="_blank">
+                                                    <img src="{{ asset($item->file_surat) }}" alt="File Surat" class="file-surat">
+                                                </a>
+                                            @else
+                                                <a href="{{ asset($item->file_surat) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                                    <i class="fas fa-file-pdf mr-1"></i> Open File
+                                                </a>
+                                            @endif
+                                        @endif
+                                    @else
+                                        <span>-</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center border border-gray-300 px-2 py-1 md:px-4 md:py-2">
+                                    Tidak ada riwayat absen.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-                // Sembunyikan video dan tampilkan canvas
-                video.style.display = 'none';
-                canvas.style.display = 'block';
+    <style>
+        .foto-absen {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .file-surat {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
 
-                // Tampilkan tombol "Ambil Ulang" dan "Simpan"
-                retakePhotoButton.style.display = 'inline-block';
-                savePhotoButton.style.display = 'inline-block';
-                captureButton.style.display = 'none';
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let button = document.getElementById("toggleRiwayatAbsen");
+            let table = document.getElementById("riwayatAbsenTable");
+            button.addEventListener("click", function() {
+                table.classList.toggle("hidden");
             });
-
-            // Fungsi untuk mengambil ulang foto
-            document.getElementById('retakePhoto').addEventListener('click', function() {
-                const canvas = document.getElementById('canvas');
-                const video = document.getElementById('video');
-                const retakePhotoButton = document.getElementById('retakePhoto');
-                const savePhotoButton = document.getElementById('savePhoto');
-                const captureButton = document.getElementById('capture');
-
-                // Sembunyikan canvas dan tampilkan kembali video
-                canvas.style.display = 'none';
-                video.style.display = 'block';
-
-                // Sembunyikan tombol "Ambil Ulang" dan "Simpan", tampilkan tombol "Ambil Foto"
-                retakePhotoButton.style.display = 'none';
-                savePhotoButton.style.display = 'none';
-                captureButton.style.display = 'inline-block';
-            });
-
-            // Fungsi untuk menyimpan foto
-            document.getElementById('savePhoto').addEventListener('click', function() {
-                const canvas = document.getElementById('canvas');
-                const fotoBase64Input = document.getElementById('foto_base64');
-                const fileNameSection = document.getElementById('fileNameSection');
-                const fileNameElement = document.getElementById('fileName');
-                const cameraPopup = document.getElementById('cameraPopup');
-
-                // Simpan foto ke input hidden
-                const fotoBase64 = canvas.toDataURL('image/jpeg');
-                fotoBase64Input.value = fotoBase64;
-
-                // Tampilkan nama file (contoh: "foto_20231025.jpg")
-                const currentDate = new Date();
-                const fileName =
-                    `foto_${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}.jpg`;
-                fileNameElement.textContent = fileName;
-                fileNameSection.style.display = 'block';
-
-                // Tutup pop-up kamera dan hentikan kamera
-                cameraPopup.style.display = 'none';
-                stopCamera();
-            });
-            // Fungsi untuk menyimpan foto
-            document.getElementById('savePhoto').addEventListener('click', function() {
-                const canvas = document.getElementById('canvas');
-                const fotoBase64Input = document.getElementById('foto_base64');
-                const fileNameSection = document.getElementById('fileNameSection');
-                const fileNameElement = document.getElementById('fileName');
-                const cameraPopup = document.getElementById('cameraPopup');
-
-                // Simpan foto ke input hidden
-                const fotoBase64 = canvas.toDataURL('image/jpeg');
-                fotoBase64Input.value = fotoBase64;
-
-                // Tampilkan nama file (contoh: "foto_20231025.jpg")
-                const currentDate = new Date();
-                const fileName =
-                    `foto_${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}.jpg`;
-                fileNameElement.textContent = fileName;
-                fileNameSection.style.display = 'block';
-
-                // Tutup pop-up kamera dan hentikan kamera
-                cameraPopup.style.display = 'none';
-                stopCamera();
-            });
-            document.getElementById('btn-ambil-foto').addEventListener('click', function() {
-                const cameraPopup = document.getElementById('cameraPopup');
-                const video = document.getElementById('video');
-                const canvas = document.getElementById('canvas');
-                const fotoBase64Input = document.getElementById('foto_base64');
-                const fileNameSection = document.getElementById('fileNameSection');
-                const fileNameElement = document.getElementById('fileName');
-                const retakePhotoButton = document.getElementById('retakePhoto');
-                const savePhotoButton = document.getElementById('savePhoto');
-                const captureButton = document.getElementById('capture');
-
-                // Reset tampilan jika ada foto sebelumnya
-                fotoBase64Input.value = '';
-                fileNameElement.textContent = '';
-                fileNameSection.style.display = 'none';
-                canvas.style.display = 'none';
-                video.style.display = 'block';
-                retakePhotoButton.style.display = 'none';
-                savePhotoButton.style.display = 'none';
-                captureButton.style.display = 'inline-block';
-
-                // Tampilkan pop-up dan mulai kamera
-                cameraPopup.style.display = 'flex';
-                startCamera();
-            });
-
-
-            // Set kondisi awal
-            setActiveButton('btn-hadir');
-        </script>
-
-        <style>
-            /* Style untuk tombol yang aktif */
-            .btn-absen.active {
-                background-color: #2563eb;
-                border: 2px solid #1e40af;
-            }
-
-            /* Style untuk pop-up kamera */
-            /* Style untuk pop-up kamera */
-            #cameraPopup {
-                z-index: 1000;
-            }
-
-            #cameraPopup>div {
-                background-color: #2d3748;
-                border-radius: 12px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                width: 90%;
-                max-width: 500px;
-            }
-
-            #cameraPopup video,
-            #cameraPopup canvas {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 4/3;
-                /* Memastikan rasio aspek 4:3 untuk video dan canvas */
-                border-radius: 8px;
-                background-color: #1a202c;
-            }
-
-            #cameraPopup .flex {
-                margin-top: 16px;
-            }
-
-            #cameraPopup button {
-                padding: 8px 16px;
-                border-radius: 8px;
-                font-weight: 500;
-                transition: background-color 0.2s;
-            }
-
-            #cameraPopup button:hover {
-                opacity: 0.9;
-            }
-
-            #cameraPopup #closeCamera {
-                background-color: #e53e3e;
-            }
-
-            #cameraPopup #capture,
-            #cameraPopup #retakePhoto {
-                background-color: #4299e1;
-            }
-
-            #cameraPopup #savePhoto {
-                background-color: #48bb78;
-            }
-        </style>
-        </x-layout-karyawan>
-    @endsection
+        });
+    </script>
+@endsection
