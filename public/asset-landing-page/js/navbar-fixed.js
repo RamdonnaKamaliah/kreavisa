@@ -4,62 +4,55 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggleNavbarFixed = document.getElementById("toggleNavbarFixed");
     const navbar = document.querySelector("nav[navbar-main]");
 
-    // DEBUG cek elemen
-    console.log({ toggleNavbarFixed, navbar });
-
-    // Amanin kalau checkbox belum ada
     if (!toggleNavbarFixed || !navbar) return;
 
     // Toggle dropdown settings
-    settingsBtn?.addEventListener("click", () => {
-        settingsDropdown?.classList.toggle("hidden");
+    settingsBtn.addEventListener("click", () => {
+        settingsDropdown.classList.toggle("hidden");
     });
 
+    // Sembunyikan dropdown saat klik di luar area
     document.addEventListener("click", function (e) {
         if (
-            !settingsBtn?.contains(e.target) &&
-            !settingsDropdown?.contains(e.target)
+            !settingsBtn.contains(e.target) &&
+            !settingsDropdown.contains(e.target)
         ) {
-            settingsDropdown?.classList.add("hidden");
+            settingsDropdown.classList.add("hidden");
         }
     });
 
+    // Cek localStorage apakah fixed aktif sebelumnya
     const savedFixed = localStorage.getItem("navbarFixed");
     if (savedFixed === "true") {
         toggleNavbarFixed.checked = true;
-        applyNavbarFixed(true);
+        navbar.classList.add("navbar-bg");
+        handleScroll(); // Langsung aktifkan scroll handler
+        window.addEventListener("scroll", handleScroll);
     }
 
+    // Ketika toggle diubah
     toggleNavbarFixed.addEventListener("change", function (e) {
         const isChecked = e.target.checked;
         localStorage.setItem("navbarFixed", isChecked);
-        applyNavbarFixed(isChecked);
+        if (isChecked) {
+            navbar.classList.add("navbar-bg");
+            handleScroll();
+            window.addEventListener("scroll", handleScroll);
+        } else {
+            navbar.classList.remove("navbar-fixed-dashboard");
+            navbar.classList.remove("navbar-bg");
+            window.removeEventListener("scroll", handleScroll);
+        }
     });
 
-    function applyNavbarFixed(enable) {
-        console.log("applyNavbarFixed jalan:", enable);
-        if (enable) {
-            navbar.classList.add(
-                "fixed",
-                "top-0",
-                "left-0",
-                "right-0",
-                "z-50",
-                "bg-white/80",
-                "backdrop-blur-md",
-                "dark:bg-slate-800/80"
-            );
+    // Fungsi menangani scroll behavior
+    function handleScroll() {
+        if (!toggleNavbarFixed.checked) return;
+
+        if (window.scrollY > 10) {
+            navbar.classList.add("navbar-fixed-dashboard");
         } else {
-            navbar.classList.remove(
-                "fixed",
-                "top-0",
-                "left-0",
-                "right-0",
-                "z-50",
-                "bg-white/80",
-                "backdrop-blur-md",
-                "dark:bg-slate-800/80"
-            );
+            navbar.classList.remove("navbar-fixed-dashboard");
         }
     }
 });
