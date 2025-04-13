@@ -280,66 +280,247 @@
 
 
     </div>
-
-    <!-- Grid kedua: 3 kolom -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pl-6 pr-3">
-
-        <!-- Kotak Kalender -->
-        <div class="bg-white dark:bg-slate-850 p-6 rounded-xl shadow-lg text-center">
-            {{-- <div class="flex items-center justify-between mb-4">
-                <button id="prevMonth" class="text-gray-400 hover:text-gray-600">&lt;</button>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" id="calendarTitle"></h3>
-                <button id="nextMonth" class="text-gray-400 hover:text-gray-600">&gt;</button>
-            </div>
-            <div class="grid grid-cols-7 gap-2 text-gray-700 dark:text-white text-sm font-semibold mb-2">
-                <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
-            </div>
-            <div id="calendarDays" class="grid grid-cols-7 gap-2 text-center text-sm font-medium"></div> --}}
-        </div>
-
-
-        <!-- Kotak Absensi -->
-        <div
-            class="bg-white dark:bg-slate-850 dark:shadow-dark-xl p-6 rounded-xl shadow-lg flex flex-col items-center text-center">
-            <i data-feather="clock" class="text-blue-500 text-4xl mb-3"></i>
-            <p class=" text-gray-600 dark:text-white font-montserrat text-2xl">Ayo Absen!</p>
-            <img id="bouncingImage" src="{{ asset('asset-landing-page/img/ayo-absen.png') }}" alt="" srcset=""
-                class="w-40 h-42 mt-2">
-            <button class="px-6 py-3 bg-gray-900 text-white rounded-lg font-semibold mt-3">
-                Klik Untuk Absen
-            </button>
-            <style>
-                @keyframes bounce {
-
-                    0%,
-                    100% {
-                        transform: translateY(0);
-                    }
-
-                    50% {
-                        transform: translateY(-15px);
-                    }
-                }
-
-                #bouncingImage {
-                    animation: bounce 3.5s infinite ease-in-out;
-                }
-            </style>
-        </div>
-
-        <!-- Kotak Motivasi -->
-        <div
-            class="bg-white dark:bg-slate-850 dark:shadow-dark-xl p-6 rounded-xl shadow-lg flex flex-col items-center text-center">
-            <i data-feather="briefcase" class="text-gray-500 text-4xl mb-3"></i>
-            <p class=" text-gray-600 dark:text-white font-montserrat text-2xl">Work Hard!</p>
-            <img src="{{ asset('asset-landing-page/img/work-hard.gif') }}" alt="Work Hard GIF" class="w-full h-auto" />
-        </div>
-
+    <div id="riwayatAbsenTable"
+        class="max-w-[1020px] mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
+        <h2 class="text-center text-xl font-semibold mb-4">Riwayat Absen</h2>
+        <table class="w-full text-sm text-left">
+            <thead>
+                <tr
+                    class="text-gray-600 dark:text-gray-300 uppercase text-xs border-b border-gray-200 dark:border-gray-700">
+                    <th class="py-3">Nama Lengkap</th>
+                    <th class="py-3">Jabatan</th>
+                    <th class="py-3">Tanggal</th>
+                    <th class="py-3">Status</th>
+                    <th class="py-3">Lokasi</th>
+                    <th class="py-3">Foto</th>
+                    <th class="py-3">File Surat</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-800 dark:text-gray-200">
+                @forelse($absen as $item)
+                    <tr
+                        class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#2a2a2a] transition">
+                        <td class="py-3">{{ $item->user->nama_lengkap ?? '-' }}</td>
+                        <td class="py-3">{{ $item->user->jabatan->nama_jabatan ?? '-' }}</td>
+                        <td class="py-3">
+                            {{ \Carbon\Carbon::parse($item->tanggal_absensi)->isoFormat('D MMM YYYY • HH:mm') }}
+                        </td>
+                        <td class="py-3">
+                            @php
+                                $badgeColor = match ($item->status) {
+                                    'hadir' => 'bg-green-100 text-green-700',
+                                    'izin' => 'bg-yellow-100 text-yellow-700',
+                                    'sakit' => 'bg-red-100 text-red-700',
+                                    default => 'bg-gray-200 text-gray-600',
+                                };
+                            @endphp
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full {{ $badgeColor }}">
+                                {{ ucfirst($item->status) }}
+                            </span>
+                        </td>
+                        <td class="py-3 text-blue-600">
+                            @if ($item->lokasi)
+                                <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}"
+                                    target="_blank" class="hover:underline">Lihat Maps</a>
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td class="py-3">
+                            @if ($item->foto)
+                                <a href="{{ asset($item->foto) }}" target="_blank">
+                                    <img src="{{ asset($item->foto) }}" alt="Foto Absen"
+                                        class="w-10 h-10 object-cover rounded-lg">
+                                </a>
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td class="py-3">
+                            @if ($item->file_surat)
+                                @php
+                                    $ext = pathinfo($item->file_surat, PATHINFO_EXTENSION);
+                                @endphp
+                                @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif']))
+                                    <a href="{{ asset($item->file_surat) }}" target="_blank">
+                                        <img src="{{ asset($item->file_surat) }}"
+                                            class="w-10 h-10 object-cover rounded-lg" alt="File Surat">
+                                    </a>
+                                @else
+                                    <a href="{{ asset($item->file_surat) }}" target="_blank"
+                                        class="text-blue-600 hover:underline">
+                                        Open File
+                                    </a>
+                                @endif
+                            @else
+                                -
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="py-4 text-center text-gray-500">Tidak ada riwayat absen.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 
-    <!-- Footer -->
-    <p class="mt-8 text-gray-500 text-center text-lg">CopyRight@Kreavisa</p>
 
+    <style>
+        #riwayatAbsenTable {
+            background-color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            /* Shadow-xl */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            padding: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        h2 {
+            color: #000
+        }
+
+        /* Dark mode */
+        .dark #riwayatAbsenTable {
+            background-color: #1e293b;
+            /* slate-850 ≈ #1e293b */
+            box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            font-size: 12px;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px 10px !important;
+        }
+
+        .dark h2 {
+            color: #f0f0f0
+        }
+
+        thead th {
+            color: #4b5563;
+        }
+
+        .dark thead th {
+            color: #d1d5db;
+            border-bottom: 1px solid #374151;
+        }
+
+        tbody td {
+            color: #1f2937;
+        }
+
+        .dark tbody td {
+            color: #e5e7eb;
+            border-color: #2a2a2a;
+        }
+
+        tr td:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        tr td:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        /* Background badge */
+        .bg-green {
+            background-color: #e6f4ea;
+            color: #2e7d32;
+        }
+
+        .dark .bg-green {
+            background-color: #264d3b;
+            color: #a6e9c1;
+        }
+
+        .bg-yellow {
+            background-color: #fff9e6;
+            color: #f9a825;
+        }
+
+        .dark .bg-yellow {
+            background-color: #4b3c1c;
+            color: #ffe082;
+        }
+
+        .bg-red {
+            background-color: #fdecea;
+            color: #c62828;
+        }
+
+        .dark .bg-red {
+            background-color: #4a1d1d;
+            color: #ef9a9a;
+        }
+
+        .bg-gray {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+
+        .dark .bg-gray {
+            background-color: #2d2d2d;
+            color: #a1a1a1;
+        }
+
+        .foto-absen,
+        .file-surat {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .dark a {
+            color: #60a5fa;
+        }
+    </style>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let button = document.getElementById("toggleRiwayatAbsen");
+            let table = document.getElementById("riwayatAbsenTable");
+            button.addEventListener("click", function() {
+                table.classList.toggle("hidden");
+            });
+        });
+    </script>
+
+
+    <!-- Footer -->
+    
     </div>
 
 

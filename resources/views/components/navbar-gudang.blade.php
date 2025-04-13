@@ -9,24 +9,23 @@
     <div class="flex items-center space-x-3 p-3 bg-gray-100 rounded-lg mb-4 cursor-pointer">
         @php
             $foto = auth()->user()?->foto;
-            
+
             if (strpos($foto, 'uploads/datakaryawan/') !== false) {
                 $photoUrl = asset($foto);
-            } 
-            elseif (!empty($foto)) {
+            } elseif (!empty($foto)) {
                 $photoUrl = asset('uploads/datakaryawan/' . $foto);
-            } 
-            else {
+            } else {
                 $photoUrl = asset('asset-landing-page/img/profile.png');
             }
-            
+
             $photoUrl .= '?v=' . time();
         @endphp
 
         <img src="{{ $photoUrl }}" class="w-12 h-12 rounded-full object-cover cursor-pointer" alt="User Profile">
 
         <div>
-            <span class="text-sm font-semibold block">{{ auth()->check() ? auth()->user()->nama_lengkap : 'Guest' }}</span>
+            <span
+                class="text-sm font-semibold block">{{ auth()->check() ? auth()->user()->nama_lengkap : 'Guest' }}</span>
             <span class="text-xs text-gray-400">
                 Karyawan {{ auth()->user()?->jabatan?->nama_jabatan ?? '' }}
             </span>

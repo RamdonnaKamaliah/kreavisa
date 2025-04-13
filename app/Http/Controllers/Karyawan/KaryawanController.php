@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Karyawan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\absenkaryawan;
 
 class KaryawanController extends Controller
 {
@@ -14,13 +15,17 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        // Data untuk dashboard karyawan
+        // Ambil semua data absensi beserta relasi user dan jabatan
+        $absen = absenkaryawan::with(['user', 'user.jabatan'])->latest()->get();
+
+        // Data tambahan untuk dashboard
         $data = [
             'title' => 'Karyawan Dashboard',
             'message' => 'Selamat datang di halaman karyawan.',
+            'absen' => $absen, 
         ];
 
-        // Return ke view karyawan dashboard
+        // Return ke view karyawan.dashboard
         return view('karyawan.dashboard', $data);
     }
 }

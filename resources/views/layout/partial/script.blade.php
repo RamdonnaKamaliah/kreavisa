@@ -47,9 +47,9 @@
          });
      @endif
  </script>
- 
+
  <!-- plugin for scrollbar  -->
- <script src="{{ asset('assets/js/perfect-scrollbar.js') }}"></script>
+ {{-- <script src="{{ asset('assets/js/perfect-scrollbar.js') }}"></script>
  <!-- main script file  -->
  <script src="{{ asset('assets/js/argon-dashboard-tailwind.js') }}"></script>
  <script src="{{ asset('assets/js/argon-dashboard-tailwind.min.js') }}"></script>
@@ -66,5 +66,10 @@
  <!-- plugins js -->
  <script src="{{ asset('assets/js/plugins/Chart.extension.js') }}"></script>
  <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
- <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+ <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script> --}}
+ <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+ <script src="https://unpkg.com/lucide@latest"></script>
+ <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
+ <script src="{{ asset('asset-landing-page/js/navbar-fixed.js') }}"></script>
+ <script src="{{ asset('asset-landing-page/js/darkmood-karyawan.js') }}"></script>
  

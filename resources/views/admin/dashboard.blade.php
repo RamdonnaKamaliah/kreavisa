@@ -18,7 +18,7 @@
                                     <h5 class="mb-2 font-bold dark:text-white mt-4">
                                         {{ count($datakaryawan) }} Karyawan
                                     </h5>
-                                    
+
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">
@@ -136,13 +136,15 @@
             <!-- Card -->
             <div class="flex flex-col md:flex-row justify-center gap-8 ml-4">
                 <!-- Chart Karyawan -->
-                <div class="bg-white shadow-lg rounded-xl p-6 w-full md:w-[55%] flex flex-col mt-6">
+                <div
+                    class="bg-white dark:bg-slate-850 dark:shadow-dark-xl shadow-lg rounded-xl p-6 w-full md:w-[55%] flex flex-col mt-6">
                     <h2 class="text-lg font-bold mb-4 text-center">Jumlah Karyawan</h2>
                     <div class="flex flex-row justify-center items-center gap-8">
                         <!-- Chart Donut -->
                         <div class="relative w-52 h-52 flex justify-center items-center mt-8">
                             <canvas id="karyawanChart"></canvas>
-                            <p class="absolute text-center text-base font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <p
+                                class="absolute text-center text-base font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                                 Total: <br /> {{ $datakaryawan->count() }} Karyawan
                             </p>
                         </div>
@@ -151,28 +153,30 @@
                             <h3 class="text-base font-semibold mb-3">Jumlah Karyawan Berdasarkan Jabatan</h3>
                             <ul class="text-sm">
                                 @foreach ($datakaryawan->groupBy('jabatan.nama_jabatan') as $jabatan => $karyawan)
-                                <li>
-                                    <span class="font-bold" style="color: {{ ['#3B82F6', '#F472B6', '#F59E0B', '#FACC15'][$loop->index % 4] }};">●</span>
-                                    {{ $jabatan }} = {{ $karyawan->count() }} Orang
-                                </li>
+                                    <li>
+                                        <span class="font-bold"
+                                            style="color: {{ ['#3B82F6', '#F472B6', '#F59E0B', '#FACC15'][$loop->index % 4] }};">●</span>
+                                        {{ $jabatan }} = {{ $karyawan->count() }} Orang
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
-            
+
                 <!-- Chart Absensi -->
-                <div class="bg-white shadow-lg rounded-xl p-6 w-full md:w-[45%] flex flex-col items-center mt-6">
+                <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl  shadow-lg rounded-xl p-6 w-full md:w-[45%] flex flex-col items-center mt-6">
                     <h2 class="text-lg font-bold mb-4">Total Absensi Minggu Ini</h2>
                     <div class="w-full flex justify-center">
                         <canvas id="absensiChart" class="h-56"></canvas>
                     </div>
-                    <a href="{{ route('absenkaryawan.index') }}" class="mt-6 w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-800 flex items-center justify-center gap-1 text-sm">
+                    <a href="{{ route('absenkaryawan.index') }}"
+                        class="mt-6 w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-800 flex items-center justify-center gap-1 text-sm">
                         Selengkapnya <i class='bx bx-right-arrow-alt text-lg'></i>
                     </a>
                 </div>
             </div>
-            
+
 
 
             <script>
@@ -180,26 +184,26 @@
                     if (typeof ChartDataLabels !== "undefined") {
                         Chart.register(ChartDataLabels);
                     }
-            
+
                     function createKaryawanChart() {
                         const canvasKaryawan = document.getElementById("karyawanChart");
                         if (!canvasKaryawan) {
                             console.error("Elemen karyawanChart tidak ditemukan!");
                             return;
                         }
-            
+
                         const ctxKaryawan = canvasKaryawan.getContext("2d");
-            
+
                         if (window.karyawanChart instanceof Chart) {
                             window.karyawanChart.destroy();
                         }
-            
+
                         // Ambil data karyawan dari Laravel
                         const dataJabatan = @json($datakaryawan->groupBy('jabatan.nama_jabatan')->map->count());
                         const labels = Object.keys(dataJabatan);
                         const values = Object.values(dataJabatan);
                         const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981", "#EF4444", "#8B5CF6"];
-            
+
                         window.karyawanChart = new Chart(ctxKaryawan, {
                             type: "doughnut",
                             data: {
@@ -230,26 +234,26 @@
                             },
                         });
                     }
-            
+
                     function createAbsensiChart() {
                         const canvasAbsensi = document.getElementById("absensiChart");
                         if (!canvasAbsensi) {
                             console.error("Elemen absensiChart tidak ditemukan!");
                             return;
                         }
-            
+
                         const ctxAbsensi = canvasAbsensi.getContext("2d");
-            
+
                         if (window.absensiChart instanceof Chart) {
                             window.absensiChart.destroy();
                         }
-            
+
                         // Ambil data absensi dari Laravel (Menggunakan absenkaryawan)
                         const absenKaryawan = @json($absenkaryawan);
                         const labels = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
                         const values = labels.map(day => absenKaryawan[day] || 0);
                         const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981"];
-            
+
                         window.absensiChart = new Chart(ctxAbsensi, {
                             type: "bar",
                             data: {
@@ -286,10 +290,10 @@
                             },
                         });
                     }
-            
+
                     createKaryawanChart();
                     createAbsensiChart();
-            
+
                     window.addEventListener("resize", function() {
                         if (window.karyawanChart) {
                             window.karyawanChart.resize();
@@ -300,8 +304,8 @@
                     });
                 });
             </script>
-            
-            
+
+
 
 
             <div class="bg-white dark:bg-gray-900 p-4 shadow-lg rounded-2xl w-full max-w-6xl mt-8">
@@ -314,7 +318,8 @@
                 </div>
                 <div class="flex justify-center mt-3">
                     <a href="https://maps.app.goo.gl/h6qyQiHKDmRCuopP7" target="_blank" rel="noopener noreferrer">
-                        <button class="flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-80">
+                        <button
+                            class="flex items-center gap-2 px-4 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-80">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 10c0 6-9 13-9 13s-9-7-9-13a9 9 0 0 1 18 0z" />
@@ -324,7 +329,7 @@
                         </button>
                     </a>
                 </div>
-                
+
             </div>
         </div>
     @endsection

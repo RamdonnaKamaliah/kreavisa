@@ -13,7 +13,7 @@
                 K
             </h1>
             <div class="text-2xl text-gray-800 dark:text-white font-semibold leading-tight">
-                Karyawan
+                reavisa
             </div>
         </div>
     </a>
@@ -87,7 +87,7 @@
 
     <!-- Logout Button -->
     <!-- Logout Button -->
-    <div class="pt-4 mt-2">
+    <div class="pt-4 mt-2 ">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit"
