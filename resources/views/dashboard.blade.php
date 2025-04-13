@@ -27,7 +27,6 @@
                 <img id="landingImage" src="{{ asset('asset-landing-page/img/gambar-landing3_.png') }}"
                     alt="Landing Image" class="w-5/6 rounded-lg opacity-90 bounce" />
             </div>
-
             <!-- Konten -->
             <div class="w-1/2 pl-8">
                 <h1 id="subTitle" class="text-3xl font-bold">

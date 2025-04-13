@@ -124,12 +124,12 @@
             const form = document.querySelector("form");
             const lokasiInput = document.getElementById('lokasi');
             const absenBtn = document.querySelector("button[type='submit']");
-            
+             
             const titikAbsen = {
-                lat: -6.6048439603911815,
-                lng: 106.7282283957573
+                lat: -6.585738438187921,
+                lng: 106.75881167724805
             };
-            const radiusMaksimum = 10000; // 10 km
+            const radiusMaksimum = 100000; // 10 km
 
             form.addEventListener('submit', function(e) {
                 if (!lokasiInput.value) {

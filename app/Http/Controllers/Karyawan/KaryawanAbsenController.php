@@ -77,9 +77,9 @@ if ($todayAbsen) {
     $userLat = floatval(trim($userLat));
     $userLng = floatval(trim($userLng));
 
-    // Koordinat titik absen
-    $titikAbsen = ['lat' => -6.6048439603911815, 'lng' => 106.7282283957573];
-    $radiusMaksimum = 10000; // 10 meter
+    // Koordinat titik absen 
+    $titikAbsen = ['lat' => -6.585738438187921, 'lng' => 106.75881167724805];
+    $radiusMaksimum = 100000; // 10 meter
 
     // Fungsi hitung jarak (Haversine formula)
     function hitungJarak($lat1, $lon1, $lat2, $lon2) {
