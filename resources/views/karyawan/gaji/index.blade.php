@@ -26,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($gajiKaryawan as $row)
+                        @forelse ($gajiKaryawan as $row)
                             <tr class="hover:bg-gray-100 dark:hover:bg-slate-800 transition">
                                 <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">
                                     {{ $row->user->nama_lengkap }}</td>
@@ -52,7 +52,13 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="9" class="py-4 text-center text-gray-500">
+                                    Tidak ada rekap gaji.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

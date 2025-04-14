@@ -82,15 +82,6 @@
             </a>
         </li>
 
-        <li>
-            <a href="{{ route('stokbarang.index') }}"
-                class="flex items-center space-x-3 p-3 rounded-lg relative group transition duration-200
-                    {{ Request::routeIs('stokbarang.index') || Request::routeIs('stokbarang.stokmasuk') || Request::routeIs('stokbarang.stokkeluar') || Request::routeIs('stokbarang.create') ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
-                <span class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r 
-                    {{ Request::routeIs('stokbarang.index') || Request::routeIs('stokbarang.stokmasuk') || Request::routeIs('stokbarang.stokkeluar') || Request::routeIs('stokbarang.create') ? 'block' : 'hidden group-hover:block' }}"></span>
-                <i class='bx bx-package text-pink-500'></i>
-                <span class="font-medium text-gray-800 dark:text-white">Stok Barang</span>
-            </a>
-        </li>
+
     </ul>
 </aside>

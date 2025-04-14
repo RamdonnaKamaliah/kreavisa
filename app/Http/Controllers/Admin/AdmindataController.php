@@ -70,7 +70,8 @@ class AdmindataController extends Controller
      
          // Tentukan usertype berdasarkan jabatan
          $jabatan = JabatanKaryawan::find($request->jabatan_id);
-         $data['usertype'] = ($jabatan && strtolower($jabatan->nama_jabatan) === 'gudang') ? 'gudang' : 'karyawan';
+         // Pada method store
+        $data['usertype'] = 'karyawan'; // Selalu set sebagai karyawan
      
          // Simpan foto jika ada
          if ($request->hasFile('foto')) {
@@ -124,8 +125,7 @@ class AdmindataController extends Controller
     // Ambil data jabatan berdasarkan ID
     $jabatan = JabatanKaryawan::findOrFail($request->jabatan_id);
     
-    // Tentukan usertype berdasarkan jabatan
-    $usertype = (strtolower($jabatan->nama_jabatan) === 'gudang') ? 'gudang' : 'karyawan';
+    $usertype = 'karyawan'; // Selalu set sebagai karyawan
 
     // Update jabatan dan usertype di database
     $karyawan->update([
