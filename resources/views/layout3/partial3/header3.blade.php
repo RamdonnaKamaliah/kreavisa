@@ -1,20 +1,24 @@
 <!-- Light mode -->
-<div class="absolute w-full min-h-75 bg-cover bg-no-repeat bg-center dark:hidden"
+<div class="fixed top-0 w-full min-h-75 bg-cover bg-no-repeat bg-center dark:hidden z-0 pointer-events-none"
     style="background-image: url('{{ asset('asset-landing-page/img/Animated Shape-1.svg') }}')">
 </div>
 
 <!-- Dark mode -->
-<div class="absolute w-full min-h-75 bg-cover bg-no-repeat bg-center hidden dark:block"
+<div class="fixed top-0 w-full min-h-75 bg-cover bg-no-repeat bg-center hidden dark:block z-0 pointer-events-auto"
     style="background-image: url('{{ asset('asset-landing-page/img/Animated Shape-2.svg') }}')">
 </div>
 
 <!-- sidenav  -->
-<aside
-    class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
-    aria-expanded="false"><div fixed-plugin>
-        <a fixed-plugin-button class="fixed px-4 py-2 text-xl bg-white shadow-lg cursor-pointer bottom-8 right-8 z-990 rounded-circle text-slate-700">
-          <i class="py-2 pointer-events-none fa fa-cog"> </i>
-        </a>
+<aside id="mobile-sidenav"
+    class="fixed top-0 bottom-0 left-0 w-64 transform -translate-x-full xl:translate-x-0
+        bg-white dark:bg-[#1D232A] shadow-xl p-4 flex flex-col overflow-y-auto
+        transition-transform duration-200 ease-in-out z-50
+
+        xl:m-6 xl:rounded-2xl">
+    {{-- <a fixed-plugin-button
+            class="fixed px-4 py-2 text-xl bg-white shadow-lg cursor-pointer bottom-8 right-8 z-990 rounded-circle text-slate-700">
+            <i class="py-2 pointer-events-none fa fa-cog"> </i>
+        </a> --}}
     <x-navbar-karyawan></x-navbar-karyawan>
 </aside>
 
@@ -22,7 +26,7 @@
 
 <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
     <!-- Navbar -->
-    <nav class="relative flex flex-wrap items-center justify-between top-4 px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start"
+    <nav class="relative flex flex-wrap items-center justify-between top-4 px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start z-40"
         navbar-main navbar-scroll="false" id="navbar-main">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
@@ -38,7 +42,8 @@
                 </h3>
             </nav>
 
-            <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
+            <div id="navbar-placeholder"
+                class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto h-0">
 
             </div>
             <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
@@ -48,15 +53,18 @@
           </li> -->
 
                 <li class="flex items-center pl-4 xl:hidden">
-                    <a href="javascript:;" class="block p-0 text-sm text-white transition-all ease-nav-brand"
-                        sidenav-trigger>
-                        <div class="w-4.5 overflow-hidden">
-                            <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
-                            <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
-                            <i class="ease relative block h-0.5 rounded-sm bg-white transition-all"></i>
-                        </div>
-                    </a>
+                    <button id="hamburger" aria-label="Toggle menu"
+                        class="flex flex-col justify-between w-3 h-3 focus:outline-none text-white">
+                        <span
+                            class="bar block h-0.5 bg-current transform transition-all duration-200 ease-in-out"></span>
+                        <span
+                            class="bar block h-0.5 bg-current transform transition-all duration-200 ease-in-out"></span>
+                        <span
+                            class="bar block h-0.5 bg-current transform transition-all duration-200 ease-in-out"></span>
+                    </button>
                 </li>
+
+
                 <li class="flex items-center px-4">
                     <button id="toggleDark"
                         class="group p-3 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-yellow-300 transition-all duration-500 shadow-md hover:shadow-lg hover:scale-110 hover:bg-yellow-100 dark:hover:bg-gray-600">
@@ -71,17 +79,50 @@
 
                     <!-- Dropdown Settings -->
                     <div id="settingsDropdown"
-                        class="hidden absolute top-12 right-0 mt-2 w-48 bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg shadow-lg p-4 z-50">
+                        class="hidden absolute top-12 right-0 mt-2 w-48 bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg shadow-lg p-4 z-[9999] space-y-4">
+
+                        <!-- Navbar Fixed Toggle -->
                         <label class="flex items-center justify-between">
                             <span>Navbar Fixed</span>
                             <input type="checkbox" id="toggleNavbarFixed" class="form-checkbox h-5 w-5 text-blue-600">
                         </label>
+
+                        <!-- Menu Bantuan -->
+                        <a href="#"
+                            class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
+                            <i class="fas fa-question-circle mr-2"></i>Bantuan
+                        </a>
                     </div>
+
                 </li>
             </ul>
 
         </div>
         </div>
     </nav>
+
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('mobile-sidenav');
+
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // toggle icon active (optional)
+            hamburger.classList.toggle('hamburger-active');
+            // slide sidebar in/out
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // Klik di luar untuk menutup
+        window.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+                hamburger.classList.remove('hamburger-active');
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+        });
+    </script>
 
     <!-- end Navbar -->

@@ -23,6 +23,7 @@ use App\Http\Middleware\Admin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\KinerjaController;
 
 Route::get('/test-email', function () {
     Mail::raw('Test email from Laravel', function ($message) {
@@ -89,6 +90,7 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::post('karyawan/absen/izin', [KaryawanAbsenController::class, 'storeIzin'])
         ->name('karyawan.absen.izin.store');
     Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
+    Route::get('karyawan/kinerja', [KinerjaController::class, 'index'])->name('kinerja.index');
     
     // Gaji
     Route::get('/karyawan/gaji', [KaryawanGajiController::class, 'index'])->name('gajiKaryawan.index');

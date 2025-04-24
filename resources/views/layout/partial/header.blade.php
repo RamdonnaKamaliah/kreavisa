@@ -16,7 +16,7 @@
 
 <!-- end sidenav -->
 
-<main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+<main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-[17rem] rounded-xl">
     <!-- Navbar -->
     <nav class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start"
         navbar-main navbar-scroll="false">

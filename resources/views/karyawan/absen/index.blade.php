@@ -2,6 +2,7 @@
 @section('page-title', 'Absensi')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden mt-6">
+        
         <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl text-gray-900 p-4 rounded-lg shadow-md">
             @if (session('success'))
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -9,7 +10,7 @@
                     window.onload = function() {
                         const type = "{{ session('attendance_type') }}";
                         let message = '';
-
+s
                         switch (type) {
                             case 'hadir':
                                 message = 'Absen hadir berhasil dicatat!';
@@ -46,6 +47,9 @@
                 @if (!$todayAbsen)
                     @if ($currentHour >= 5)
                         <!-- Jam 05:00-23:59 dan belum absen -->
+                        <p class="font-popins text-black dark:text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos enim iusto voluptatem? 
+                            <br> Quam
+                            et ratione sint consequuntur dignissimos officiis porro!</p>
                         <div class="flex gap-2">
                             <a href="{{ route('karyawan.absen.create') }}"
                                 class="bg-green-500 text-white px-4 py-2 rounded-lg shadow">Hadir</a>
