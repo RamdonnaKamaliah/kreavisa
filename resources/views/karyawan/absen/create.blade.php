@@ -1,7 +1,7 @@
 @extends('layout3.karyawan3')
 @section('content')
 <div class="p-4 md:p-6 overflow-x-hidden">
-    <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md">
+    <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl text-gray-900 p-4 rounded-lg shadow-md">
                 <!-- Back Button -->
                 <div class="mb-4">
                     <a href="{{ route('karyawan.absen.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
@@ -9,17 +9,17 @@
                     </a>
                 </div>
             <!-- Judul Absen Hadir di tengah -->
-            <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Absen Hadir</h1>
+            <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center dark:text-white">Absen Hadir</h1>
 
             @if ($errors->any())
-                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
-                    <ul class="list-disc pl-5 space-y-1">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded">
+        <ul class="list-disc pl-5 space-y-1">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
             <form action="{{ route('karyawan.absen.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -28,7 +28,7 @@
                 <!-- Kamera Section -->
                 <div class="mb-8">
                     <!-- Label Ambil Foto di tengah -->
-                    <label class="block text-gray-700 text-sm font-medium mb-4 text-center">Ambil Foto</label>
+                    <label class="block text-gray-700 text-sm font-medium mb-4 text-center dark:text-gray-300">Ambil Foto</label>
                     
                     <div class="flex flex-col items-center space-y-4">
                         <!-- Container untuk video dan canvas dengan shadow -->
@@ -119,86 +119,132 @@
             retakeBtn.classList.add('hidden');
         });
 
-        // Geolocation
-        document.addEventListener("DOMContentLoaded", function() {
-            const form = document.querySelector("form");
-            const lokasiInput = document.getElementById('lokasi');
-            const absenBtn = document.querySelector("button[type='submit']");
-             
-            const titikAbsen = {
-                lat: -6.585738438187921,
-                lng: 106.75881167724805
-            };
-            const radiusMaksimum = 100000; // 10 km
+        // Di file absen-hadir.blade.php, perbaiki bagian geolocation:
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form");
+    const lokasiInput = document.getElementById('lokasi');
+    const absenBtn = document.querySelector("button[type='submit']");
 
-            form.addEventListener('submit', function(e) {
-                if (!lokasiInput.value) {
-                    e.preventDefault();
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Sedang mendapatkan lokasi Anda, tunggu sebentar...",
-                        confirmButtonColor: "#3b82f6"
-                    });
+    // Dapatkan lokasi saat halaman dimuat
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
+                lokasiInput.value = `${userLat},${userLng}`;
+                
+                // Tampilkan koordinat di console untuk debugging
+                console.log("Koordinat Anda:", userLat, userLng);
+                
+                // Aktifkan tombol submit
+                absenBtn.disabled = false;
+            },
+            function(error) {
+                console.error("Error mendapatkan lokasi:", error);
+                let errorMessage = "Gagal mendapatkan lokasi: ";
+                
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        errorMessage += "Izin lokasi ditolak. Mohon aktifkan izin lokasi.";
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        errorMessage += "Informasi lokasi tidak tersedia.";
+                        break;
+                    case error.TIMEOUT:
+                        errorMessage += "Permintaan lokasi timeout.";
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        errorMessage += "Error tidak diketahui.";
+                        break;
                 }
-            });
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const userLat = position.coords.latitude;
-                        const userLng = position.coords.longitude;
-                        lokasiInput.value = `${userLat}, ${userLng}`;
-
-                        const jarak = hitungJarak(userLat, userLng, titikAbsen.lat, titikAbsen.lng);
-                        console.log("Jarak dari titik absen:", jarak, "meter");
-
-                        if (jarak > radiusMaksimum) {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Anda berada di luar lokasi absensi!",
-                                confirmButtonColor: "#3b82f6",
-                                allowOutsideClick: false
-                            }).then(() => {
-                                window.location.href = "{{ route('karyawan.absen.index') }}";
-                            });
-                            absenBtn.disabled = true;
-                        }
-                    },
-                    function(error) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Gagal mendapatkan lokasi. Aktifkan GPS dan coba lagi!",
-                            confirmButtonColor: "#3b82f6"
-                        });
-                        absenBtn.disabled = true;
-                    },
-                    { enableHighAccuracy: true, timeout: 10000 }
-                );
-            } else {
+                
                 Swal.fire({
                     icon: "error",
-                    title: "Oops...",
-                    text: "Perangkat Anda tidak mendukung geolokasi!",
+                    title: "Error Lokasi",
+                    text: errorMessage,
                     confirmButtonColor: "#3b82f6"
                 });
-                absenBtn.disabled = true;
-            }
+                
+                // Tetap aktifkan tombol submit untuk kasus tertentu
+                absenBtn.disabled = false;
+            },
+            {
+  enableHighAccuracy: true,
+  timeout: 15000,      // tambahkan waktu sedikit agar sempat dapat lokasi GPS
+  maximumAge: 0
+}
 
-            function hitungJarak(lat1, lon1, lat2, lon2) {
-                const R = 6371e3;
-                const rad = (deg) => deg * (Math.PI / 180);
-                const dLat = rad(lat2 - lat1);
-                const dLon = rad(lon2 - lon1);
-                const a =
-                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(rad(lat1)) * Math.cos(rad(lat2)) *
-                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                return R * c;
-            }
+        );
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Browser Tidak Mendukung",
+            text: "Browser Anda tidak mendukung geolokasi.",
+            confirmButtonColor: "#3b82f6"
         });
+    }
+
+    form.addEventListener('submit', function(e) {
+        if (!lokasiInput.value) {
+            e.preventDefault();
+            Swal.fire({
+                icon: "error",
+                title: "Lokasi Tidak Tersedia",
+                text: "Mohon tunggu sistem mendapatkan lokasi Anda...",
+                confirmButtonColor: "#3b82f6"
+            });
+        }
+    });
+});
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const lokasiInput = document.getElementById('lokasi');
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    lokasiInput.value = `${userLat},${userLng}`;
+                    console.log("Koordinat Anda:", userLat, userLng);
+                },
+                function(error) {
+                    let message = '';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            message = "Akses lokasi ditolak. Aktifkan izin lokasi di browser.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            message = "Informasi lokasi tidak tersedia.";
+                            break;
+                        case error.TIMEOUT:
+                            message = "Waktu permintaan lokasi habis.";
+                            break;
+                        default:
+                            message = "Terjadi kesalahan saat mengambil lokasi.";
+                            break;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Mengambil Lokasi',
+                        text: message,
+                        confirmButtonColor: '#3b82f6'
+                    });
+                }
+            );
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Browser Tidak Mendukung',
+                text: 'Browser Anda tidak mendukung geolocation.',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
+</script>
+
+
 @endsection

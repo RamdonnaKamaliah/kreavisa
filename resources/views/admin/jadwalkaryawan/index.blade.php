@@ -5,7 +5,7 @@
         <!-- Dropdown Pilihan Tabel & Tombol Tambah Data -->
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-4">
-                <label for="tableSelect" class="text-gray-800 text-lg">Pilih Laporan:</label>
+                <label for="tableSelect" class="text-white text-lg">Pilih Laporan:</label>
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-64">
                     <option value="jadwalKaryawan">Laporan Jadwal Karyawan</option>
                     <option value="shiftKaryawan">Laporan Shift Karyawan</option>
@@ -36,8 +36,8 @@
         </script>
 
         <!-- Laporan Jadwal Karyawan -->
-        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md border border-gray-300">
-            <h2 class="text-center text-xl font-bold mb-4">Laporan Jadwal Karyawan</h2>
+        <div class="bg-white dark:bg-slate-800 text-gray-900 p-4 rounded-lg shadow-md border border-gray-300 dark:border-slate-800">
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Jadwal Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
                 <form action="{{ route('jadwalkaryawan.index') }}" method="GET" class="flex items-center gap-4">
                     <!-- Input Tahun dengan Spinner Custom -->
@@ -82,7 +82,7 @@
             <!-- Tabel Jadwal Karyawan -->
             <div class="overflow-x-auto w-full">
                 <table class="border border-gray-400 text-xs md:text-sm min-w-max">
-                    <thead class="bg-gray-200 text-gray-900">
+                    <thead class="bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" rowspan="2">Nama</th>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" rowspan="2">Jabatan</th>
@@ -96,10 +96,10 @@
                     <tbody id="tableBody">
                         @foreach ($karyawans as $karyawan)
                             <tr>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $karyawan->nama_lengkap ?? '-' }}
                                 </td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $karyawan->jabatan->nama_jabatan ?? '-' }}
                                 </td>
 

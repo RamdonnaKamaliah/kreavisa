@@ -20,18 +20,45 @@
     <hr class="border-gray-300 dark:border-white mb-4">
 
     <!-- Profile Section -->
-    <a href="{{ route('profile.index') }}">
-        <div
-            class="flex items-center space-x-3 p-3 bg-gray-100 dark:bg-gray-500 rounded-lg mb-4 cursor-pointer hover:bg-gray-200 transition">
-            <img src="{{ asset('asset-landing-page/img/profile.png') }}" class="w-12 h-12 rounded-full"
-                alt="User Profile">
-            <div>
-                <span
-                    class="text-sm font-semibold block text-gray-900 dark:text-white">{{ auth()->check() ? auth()->user()->name : 'Guest' }}</span>
-                <span class="text-xs text-gray-600 dark:text-white">Karyawan</span>
-            </div>
+<a href="{{ route('profile.index') }}">
+    <div class="flex items-center space-x-3 p-3 bg-gray-100 dark:bg-gray-500 rounded-lg mb-4 cursor-pointer hover:bg-gray-200 transition">
+        @php
+            $defaultPhoto = asset('asset-landing-page/img/profile.png');
+            $userPhoto = auth()->user()?->foto;
+            $photoUrl = $defaultPhoto;
+            
+            // Check if user has a photo
+            if (!empty($userPhoto)) {
+                // Determine the correct path
+                $photoPath = strpos($userPhoto, 'uploads/datakaryawan/') !== false 
+                    ? $userPhoto 
+                    : 'uploads/datakaryawan/' . $userPhoto;
+                
+                // Check if file exists
+                if (file_exists(public_path($photoPath))) {
+                    $photoUrl = asset($photoPath);
+                }
+            }
+            
+            // Add cache busting
+            $photoUrl .= '?v=' . time();
+        @endphp
+        
+        <img src="{{ $photoUrl }}" 
+             class="w-12 h-12 rounded-full object-cover"
+             alt="User Profile"
+             onerror="this.onerror=null;this.src='{{ $defaultPhoto }}'">
+        
+        <div>
+            <span class="text-sm font-semibold block dark:text-white">
+                {{ auth()->check() ? auth()->user()->nama_lengkap : 'Guest' }}
+            </span>
+            <span class="text-xs text-gray-400 dark:text-gray-300">
+                Karyawan {{ auth()->user()?->jabatan?->nama_jabatan ?? '' }}
+            </span>
         </div>
-    </a>
+    </div>
+</a>
 
     <!-- Menu -->
     <ul class="space-y-2">
@@ -88,14 +115,14 @@
     <!-- Logout Button -->
     <!-- Logout Button -->
     <div class="pt-4 mt-2 ">
-        <form action="{{ route('logout') }}" method="POST">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
             @csrf
-            <button type="submit"
+            <button type="button" id="logout-button"
                 class="w-full flex items-center space-x-3 p-3 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition border border-red-200">
                 <i data-lucide="log-out" class="w-5 h-5 text-red-500"></i>
                 <span class="font-medium">Logout</span>
             </button>
-        </form>
+        </form>        
     </div>
 
 </aside>

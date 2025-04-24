@@ -4,7 +4,7 @@
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel -->
         <div class="mb-4">
-            <label for="tableSelect" class="block text-gray-800 text-lg mb-2">Pilih Laporan:</label>
+            <label for="tableSelect" class="block text-lg mb-2 text-white">Pilih Laporan:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-full">
                     <option value="jadwalKaryawan">Laporan Jadwal Karyawan</option>
@@ -36,8 +36,8 @@
         </script>
 
         <!-- Laporan Shift Karyawan -->
-        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md border border-gray-300">
-            <h2 class="text-center text-xl font-bold mb-4">Laporan Shift Karyawan</h2>
+        <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Shift Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('shiftkaryawan.create') }}"
                     class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
@@ -45,8 +45,8 @@
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
-                <table class="w-full border border-gray-400 text-xs md:text-sm">
-                    <thead class="bg-gray-200 text-gray-900">
+                <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
+                    <thead class="bg-gray-200 text-gray-800 dark:bg-slate-700 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Nama</th>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
@@ -58,16 +58,16 @@
                     <tbody>
                         @foreach ($shifts as $row)
                             <tr>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $row->user->nama_lengkap ?? '-' }}
                                 </td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $row->user->jabatan->nama_jabatan ?? '-' }}
                                 </td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $row->shift_1 ?? '-' }}
                                 </td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $row->shift_2 ?? '-' }}
                                 </td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 text-center">
@@ -92,28 +92,25 @@
                                         <script>
                                         function deleteShift(button) {
                                             Swal.fire({
-                                                icon: "warning",
-                                                title: "Yakin ingin menghapus Shift ini?",
-                                                html: "<div style='text-align:center'>Jika shift dihapus:<br><ul><Semua>Data shift akan dihapus permanen, semua jadwal karyawan yang menggunakan shift ini akan otomatis terhapus</li></ul></div>",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#3085d6",
-                                                cancelButtonColor: "#d33",
-                                                confirmButtonText: "Ya, Hapus!",
-                                                cancelButtonText: "Batal",
-                                                customClass: {
-                                                    popup: 'custom-swal-popup',
-                                                    htmlContainer: 'custom-swal-html'
-                                                }
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    // Add error handling
-                                                    button.closest('form').submit()
-                                                        .catch(error => {
-                                                            Swal.fire('Error', 'Failed to delete shift', 'error');
-                                                            console.error(error);
-                                                        });
-                                                }
-                                            });
+    icon: "warning",
+    title: "Yakin ingin menghapus Shift ini?",
+    html: "<div style='text-align:center'>Jika shift dihapus:<br>Data shift akan dihapus permanen, semua jadwal karyawan yang menggunakan shift ini akan otomatis terhapus</div>",
+    showCancelButton: true,
+    confirmButtonText: "Ya, Hapus!",
+    cancelButtonText: "Batal",
+    customClass: {
+        popup: 'custom-swal-popup',
+        htmlContainer: 'custom-swal-html',
+        confirmButton: 'bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded mr-2',
+        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded'
+    },
+    buttonsStyling: false
+}).then((result) => {
+    if (result.isConfirmed) {
+        button.closest('form').submit();
+    }
+});
+
                                         }
 
                                         // Fungsi untuk delete biasa (untuk yang lain)
@@ -148,4 +145,6 @@
             </div>
         </div>
     </div>
+
+    
 @endsection

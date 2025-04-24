@@ -56,7 +56,7 @@
                 <span class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r 
                     {{ Request::routeIs('absenkaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
                 <i class='bx bx-bell text-green-500'></i>
-                <span class="font-medium text-gray-800 dark:text-white">Absensi</span>
+                <span class="font-medium text-gray-800 dark:text-white">Abseni Karyawan</span>
             </a>
         </li>
 
@@ -79,6 +79,17 @@
                     {{ Request::routeIs('gajikaryawan.index') || Request::routeIs('gajipokok.index') ? 'block' : 'hidden group-hover:block' }}"></span>
                 <i class='bx bx-dollar text-amber-500'></i>
                 <span class="font-medium text-gray-800 dark:text-white">Gaji Karyawan</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('kinerjakaryawan.index') }}"
+                class="flex items-center space-x-3 p-3 rounded-lg relative group transition duration-200
+                    {{ Request::routeIs('kinerjakaryawan.index') ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
+                <span class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r 
+                    {{ Request::routeIs('kinerjakaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+                <i class='bx bx-vector text-purple-500'></i>
+                <span class="font-medium text-gray-800 dark:text-white">Kinerja Karyawan</span>
             </a>
         </li>
 

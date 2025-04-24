@@ -5,21 +5,17 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AbsenKaryawan;
+use App\Models\LokasiAbsen;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class KaryawanAbsenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
 {
     // Set timezone ke Asia/Jakarta
     date_default_timezone_set('Asia/Jakarta');
     
     $now = now();
-    $currentHour = $now->hour;
     $currentDate = $now->toDateString();
     
     // Cek absen hari ini
@@ -27,44 +23,55 @@ class KaryawanAbsenController extends Controller
                     ->whereDate('tanggal_absensi', $currentDate)
                     ->first();
     
+    // Tentukan apakah tombol absen harus ditampilkan
+    $showAbsenButton = !$todayAbsen;
+    
     return view('karyawan.absen.index', [
         'absen' => AbsenKaryawan::where('user_id', Auth::id())->orderBy('tanggal_absensi', 'desc')->get(),
         'todayAbsen' => $todayAbsen,
-        'currentHour' => $currentHour
+        'currentHour' => $now->hour,
+        'showAbsenButton' => $showAbsenButton
     ]);
 }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        // Menampilkan form untuk absen hadir
-        return view('karyawan.absen.create');
+        // Ambil data lokasi absen dari database
+        $lokasiAbsen = LokasiAbsen::first();
+        
+        if (!$lokasiAbsen) {
+            return redirect()->route('karyawan.absen.index')
+                ->with('error', 'Lokasi absen belum ditentukan oleh admin');
+        }
+
+        return view('karyawan.absen.create', [
+            'lokasiAbsen' => $lokasiAbsen
+        ]);
     }
 
-    
-    
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
 {
+    // Set timezone ke Asia/Jakarta
+    date_default_timezone_set('Asia/Jakarta');
+    
+    // Validasi jam absen (05:00 - 23:59 WIB)
+    $currentHour = now()->hour;
+    if ($currentHour < 5) {
+        return back()->withErrors(['error' => 'Absen hanya bisa dilakukan mulai jam 05:00 WIB']);
+    }
 
-    // Validasi jam absen
-$currentHour = now('Asia/Jakarta')->hour;
-if ($currentHour < 5) {
-    return back()->withErrors(['error' => 'Absen hanya bisa dilakukan mulai jam 05:00 WIB']);
-}
-
-// Validasi sudah absen hari ini
-$todayAbsen = AbsenKaryawan::where('user_id', Auth::id())
-                ->whereDate('tanggal_absensi', now('Asia/Jakarta')->toDateString())
-                ->first();
-                
-if ($todayAbsen) {
-    return back()->withErrors(['error' => 'Anda sudah absen hari ini']);
-}
+    // Validasi sudah absen hari ini
+    $todayAbsen = AbsenKaryawan::where('user_id', Auth::id())
+                    ->whereDate('tanggal_absensi', now()->toDateString())
+                    ->first();
+                    
+    if ($todayAbsen) {
+        return back()->withErrors(['error' => 'Anda sudah absen hari ini']);
+    }
 
     // Validasi input
     $request->validate([
@@ -77,30 +84,30 @@ if ($todayAbsen) {
     $userLat = floatval(trim($userLat));
     $userLng = floatval(trim($userLng));
 
-    // Koordinat titik absen 
-    $titikAbsen = ['lat' => -6.585738438187921, 'lng' => 106.75881167724805];
-    $radiusMaksimum = 100000; // 10 meter
-
-    // Fungsi hitung jarak (Haversine formula)
-    function hitungJarak($lat1, $lon1, $lat2, $lon2) {
-        $R = 6371e3; // Radius bumi dalam meter
-        $lat1 = deg2rad($lat1);
-        $lat2 = deg2rad($lat2);
-        $dLat = deg2rad($lat2 - $lat1);
-        $dLon = deg2rad($lon2 - $lon1);
-
-        $a = sin($dLat / 2) * sin($dLat / 2) +
-             cos($lat1) * cos($lat2) *
-             sin($dLon / 2) * sin($dLon / 2);
-        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-        return $R * $c;
+    // Ambil lokasi absen dari database
+    $lokasiAbsen = \App\Models\LokasiAbsen::first();
+    
+    if (!$lokasiAbsen) {
+        return redirect()->back()
+            ->withErrors(['error' => 'Lokasi absen belum ditentukan oleh admin']);
     }
 
-    $jarak = hitungJarak($userLat, $userLng, $titikAbsen['lat'], $titikAbsen['lng']);
+    // Hitung jarak dari lokasi absen
+    $jarak = $this->hitungJarak(
+        $userLat, 
+        $userLng, 
+        $lokasiAbsen->latitude, 
+        $lokasiAbsen->longitude
+    );
 
     // Validasi apakah berada dalam radius yang diizinkan
-    if ($jarak > $radiusMaksimum) {
-        return redirect()->back()->withErrors(["Anda berada di luar area absen. Jarak Anda: " . round($jarak, 2) . " meter."]);
+    if ($jarak > $lokasiAbsen->radius) {
+        return redirect()->back()
+            ->withErrors([
+                'error' => "Anda berada di luar area absen. Jarak Anda: " . 
+                round($jarak, 2) . " meter dari titik absen (maksimal " . 
+                $lokasiAbsen->radius . " meter)"
+            ]);
     }
 
     // Decode Base64 menjadi file gambar
@@ -110,55 +117,72 @@ if ($todayAbsen) {
     $imageName = 'absen_' . Auth::id() . '_' . time() . '.png';
     $imagePath = 'uploads/absenfoto/' . $imageName;
 
+    // Buat folder jika belum ada
     if (!file_exists(public_path('uploads/absenfoto'))) {
         mkdir(public_path('uploads/absenfoto'), 0775, true);
     }
 
+    // Simpan gambar
     file_put_contents(public_path($imagePath), base64_decode($image));
 
     // Simpan ke database
-    AbsenKaryawan::create([
-        'user_id' => Auth::id(),
-        'jabatan_id' => Auth::user()->jabatan_id,
-        'lokasi' => $request->lokasi,
-        'foto' => $imagePath,
-        'status' => 'hadir',
-        'tanggal_absensi' => now(),
-        'jam_absensi' => now(),
-    ]);
+    try {
+        AbsenKaryawan::create([
+            'user_id' => Auth::id(),
+            'jabatan_id' => Auth::user()->jabatan_id,
+            'lokasi' => $request->lokasi,
+            'foto' => $imagePath,
+            'status' => 'hadir',
+            'tanggal_absensi' => now(),
+            'jam_absensi' => now(),
+            'jarak_dari_titik' => round($jarak, 2), // Simpan jarak untuk laporan
+        ]);
 
-    return redirect()->route('karyawan.absen.index')
-    ->with('success', 'Absen Hadir berhasil dicatat.')
-    ->with('attendance_type', 'hadir');
-}
+        return redirect()->route('karyawan.absen.index')
+            ->with('success', 'Absen Hadir berhasil dicatat.')
+            ->with('attendance_type', 'hadir');
 
-
-    
-    /**
-     * Store a newly created resource in storage for sakit/izin.
-     */
-    public function createSakit()
-    {
-        return view('karyawan.absen.create-sakit');
+    } catch (\Exception $e) {
+        // Hapus file gambar jika gagal menyimpan ke database
+        if (file_exists(public_path($imagePath))) {
+            unlink(public_path($imagePath));
+        }
+        
+        return back()->withErrors(['error' => 'Gagal menyimpan absen: '.$e->getMessage()]);
     }
-    
-    public function storeSakit(Request $request)
+}
+
+/**
+ * Fungsi untuk menghitung jarak antara dua titik koordinat (Haversine formula)
+ */
+private function hitungJarak($lat1, $lon1, $lat2, $lon2)
 {
+    $R = 6371e3; // Radius bumi dalam meter
+    $lat1 = deg2rad($lat1);
+    $lat2 = deg2rad($lat2);
+    $dLat = deg2rad($lat2 - $lat1);
+    $dLon = deg2rad($lon2 - $lon1);
 
-    // Validasi jam absen
-$currentHour = now('Asia/Jakarta')->hour;
-if ($currentHour < 5) {
-    return back()->withErrors(['error' => 'Absen hanya bisa dilakukan mulai jam 05:00 WIB']);
+    $a = sin($dLat / 2) * sin($dLat / 2) +
+         cos($lat1) * cos($lat2) *
+         sin($dLon / 2) * sin($dLon / 2);
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+    
+    return $R * $c;
 }
 
-// Validasi sudah absen hari ini
-$todayAbsen = AbsenKaryawan::where('user_id', Auth::id())
-                ->whereDate('tanggal_absensi', now('Asia/Jakarta')->toDateString())
-                ->first();
-                
-if ($todayAbsen) {
-    return back()->withErrors(['error' => 'Anda sudah absen hari ini']);
-}
+
+// Untuk absen sakit dan izin, hapus validasi jam 5 pagi
+public function storeSakit(Request $request)
+{
+    // Validasi sudah absen hari ini
+    $todayAbsen = AbsenKaryawan::where('user_id', Auth::id())
+                    ->whereDate('tanggal_absensi', now('Asia/Jakarta')->toDateString())
+                    ->first();
+                    
+    if ($todayAbsen) {
+        return back()->withErrors(['error' => 'Anda sudah absen hari ini']);
+    }
 
     $request->validate([
         'file' => 'required|mimes:jpg,jpeg,png,pdf|max:5120', // 5MB
@@ -184,18 +208,16 @@ if ($todayAbsen) {
             'user_id' => Auth::id(),
             'jabatan_id' => Auth::user()->jabatan_id,
             'file_surat' => $filePath,
-            'foto' => 'default.png', // atau null jika kolom sudah nullable
+            'foto' => 'default.png',
             'status' => 'sakit',
             'tanggal_absensi' => now(),
             'jam_absensi' => now(),
             'lokasi' => $request->lokasi,
         ]);
 
-        // In storeSakit() method
-return redirect()->route('karyawan.absen.index')
-->with('success', 'Absen sakit berhasil dicatat.')
-->with('attendance_type', 'sakit');
-
+        return redirect()->route('karyawan.absen.index')
+            ->with('success', 'Absen sakit berhasil dicatat.')
+            ->with('attendance_type', 'sakit');
             
     } catch (\Exception $e) {
         // Hapus file jika gagal menyimpan ke database
@@ -207,55 +229,60 @@ return redirect()->route('karyawan.absen.index')
     }
 }
 
+public function storeIzin(Request $request)
+{
+ // Validasi sudah absen hari ini
+    $todayAbsen = AbsenKaryawan::where('user_id', Auth::id())
+                    ->whereDate('tanggal_absensi', now('Asia/Jakarta')->toDateString())
+                    ->first();
+                    
+    if ($todayAbsen) {
+        return back()->withErrors(['error' => 'Anda sudah absen hari ini']);
+    }
+
+    $request->validate([
+        'file' => 'required|mimes:jpg,png,pdf|max:5120',
+        'lokasi' => 'required|string',
+    ]);
+
+    // Pindahkan file ke public/uploads/absensakit
+    $fileName = time() . '_' . $request->file('file')->getClientOriginalName();
+    $filePath = 'uploads/absenizin/' . $fileName;
+    $request->file('file')->move(public_path('uploads/absenizin'), $fileName);
+
+    AbsenKaryawan::create([
+        'user_id' => Auth::id(),
+        'jabatan_id' => Auth::user()->jabatan_id,
+        'file_surat' => $filePath,
+        'status' => 'izin',
+        'tanggal_absensi' => now(),
+        'jam_absensi' => now(),
+        'lokasi' => $request->lokasi,
+    ]);
+
+    return redirect()->route('karyawan.absen.index')
+        ->with('success', 'Absen izin berhasil dicatat.')
+        ->with('attendance_type', 'izin');
+}
+
+
+    
+    /**
+     * Store a newly created resource in storage for sakit/izin.
+     */
+    public function createSakit()
+    {
+        return view('karyawan.absen.create-sakit');
+    }
+    
+    
     
     public function createIzin()
     {
         return view('karyawan.absen.create-izin');
     }
     
-    public function storeIzin(Request $request)
-    {
-
-        // Validasi jam absen
-$currentHour = now('Asia/Jakarta')->hour;
-if ($currentHour < 5) {
-    return back()->withErrors(['error' => 'Absen hanya bisa dilakukan mulai jam 05:00 WIB']);
-}
-
-// Validasi sudah absen hari ini
-$todayAbsen = AbsenKaryawan::where('user_id', Auth::id())
-                ->whereDate('tanggal_absensi', now('Asia/Jakarta')->toDateString())
-                ->first();
-                
-if ($todayAbsen) {
-    return back()->withErrors(['error' => 'Anda sudah absen hari ini']);
-}
-
-        $request->validate([
-            'file' => 'required|mimes:jpg,png,pdf|max:5120',
-            'lokasi' => 'required|string',
-        ]);
     
-         // Pindahkan file ke public/uploads/absensakit
-    $fileName = time() . '_' . $request->file('file')->getClientOriginalName();
-    $filePath = 'uploads/absenizin/' . $fileName;
-    $request->file('file')->move(public_path('uploads/absenizin'), $fileName);
-
-        AbsenKaryawan::create([
-            'user_id' => Auth::id(),
-            'jabatan_id' => Auth::user()->jabatan_id,
-            'file_surat' => $filePath,
-            'status' => 'izin',
-            'tanggal_absensi' => now(),
-            'jam_absensi' => now(),
-            'lokasi' => $request->lokasi,
-        ]);
-    
-       // In storeIzin() method
-return redirect()->route('karyawan.absen.index')
-->with('success', 'Absen izin berhasil dicatat.')
-->with('attendance_type', 'izin');
-    }
     
 
     /**

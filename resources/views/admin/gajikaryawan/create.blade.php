@@ -3,7 +3,7 @@
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Form Create Gaji Karyawan -->
         <div class="flex justify-center items-center min-h-screen py-10">
-            <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg">
+            <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-8 rounded-lg shadow-lg">
 
                 <!-- Tombol Back dengan Ikon Panah -->
                 <div class="mb-4">
@@ -13,7 +13,7 @@
                     </a>
                 </div>
 
-                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">
+                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">
                     Create Gaji Karyawan
                 </h1>
 
@@ -22,7 +22,7 @@
 
                     <!-- Pilih Karyawan -->
                     <div>
-                        <label for="user_id" class="block text-gray-700 font-medium">Nama Karyawan</label>
+                        <label for="user_id" class="block text-gray-700 font-medium dark:text-gray-200">Nama Karyawan</label>
                         <select id="user_id" name="user_id"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
                             onchange="getGajiPokok()">
@@ -35,21 +35,21 @@
 
                     <!-- Gaji Pokok -->
                     <div>
-                        <label for="gaji_pokok" class="block text-gray-700 font-medium">Gaji Pokok</label>
+                        <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok</label>
                         <input type="number" id="gaji_pokok" name="gaji_pokok"
                             class="w-full p-3 border rounded-lg bg-gray-100" required readonly>
                     </div>
 
                     <!-- Tanggal -->
                     <div>
-                        <label for="tanggal" class="block text-gray-700 font-medium">Tanggal</label>
+                        <label for="tanggal" class="block text-gray-700 font-medium dark:text-gray-200">Tanggal</label>
                         <input type="date" id="tanggal" name="tanggal"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                     </div>
 
                     <!-- Tipe Pembayaran -->
                     <div>
-                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium">Tipe Pembayaran</label>
+                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium dark:text-gray-200">Tipe Pembayaran</label>
                         <select id="tipe_pembayaran" name="tipe_pembayaran"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
                             onchange="handleTipePembayaran()">
@@ -60,21 +60,21 @@
 
                     <!-- Nomor Rekening -->
                     <div>
-                        <label for="nomor_rekening" class="block text-gray-700 font-medium">Nomor Rekening</label>
+                        <label for="nomor_rekening" class="block text-gray-700 font-medium dark:text-gray-200">Nomor Rekening</label>
                         <input type="text" id="nomor_rekening" name="nomor_rekening"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                     </div>
 
                     <!-- Bonus -->
                     <div>
-                        <label for="bonus" class="block text-gray-700 font-medium">Bonus (Rp)</label>
+                        <label for="bonus" class="block text-gray-700 font-medium dark:text-gray-200">Bonus (Rp)</label>
                         <input type="number" id="bonus" name="bonus"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                     </div>
 
                     <!-- Potongan -->
                     <div class="md:col-span-2">
-                        <label for="potongan" class="block text-gray-700 font-medium">Potongan (Rp)</label>
+                        <label for="potongan" class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
                         <input type="number" id="potongan" name="potongan"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                     </div>

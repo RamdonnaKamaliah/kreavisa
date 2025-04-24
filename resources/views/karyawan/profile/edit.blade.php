@@ -1,9 +1,9 @@
-@extends('layout2.karyawan')
+@extends('layout3.karyawan3')
 @section('content')
     @push('page-title')
         Edit Profile
     @endpush
-    <div class="max-w-4xl mx-auto py-8 px-6 bg-white rounded-2xl shadow-2xl md:mr-20 mt-10 border border-gray-300">
+    <div class="max-w-4xl mx-auto py-8 px-6 bg-white rounded-2xl shadow-2xl md:mr-20 mt-10 border border-gray-300 dark:border-slate-700 dark:bg-slate-850 text-gray-900 p-4 shadow-md shadow-lg">
         <!-- Back Button -->
         <div class="mb-4">
             <a href="{{ route('profile.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
@@ -40,26 +40,34 @@
             <div class="flex flex-wrap items-center gap-6 mb-8">
                 <div class="w-32 h-32 rounded-full flex items-center justify-center shadow-lg overflow-hidden relative">
                     @php
-                        $fotoPath = $user->foto;
+                        $defaultPhoto = asset('asset-landing-page/img/profile.png');
                         
-                        if (strpos($fotoPath, 'uploads/datakaryawan/') !== false) {
-                            $photoUrl = asset($fotoPath);
-                        } 
-                        elseif (!empty($fotoPath)) {
-                            $photoUrl = asset('uploads/datakaryawan/' . $fotoPath);
-                        } 
-                        else {
-                            $photoUrl = asset('asset-landing-page/img/profile.png');
+                        // Check if photo exists in database
+                        if (!empty($user->foto)) {
+                            // Check if photo exists in storage
+                            $photoPath = strpos($user->foto, 'uploads/datakaryawan/') !== false 
+                                ? $user->foto 
+                                : 'uploads/datakaryawan/' . $user->foto;
+                            
+                            $photoUrl = file_exists(public_path($photoPath)) 
+                                ? asset($photoPath) 
+                                : $defaultPhoto;
+                        } else {
+                            $photoUrl = $defaultPhoto;
                         }
                         
+                        // Add cache busting
                         $photoUrl .= '?v=' . time();
                     @endphp
                     
-                    <img id="profileImage" src="{{ $photoUrl }}" alt="Foto Karyawan" class="w-full h-full object-cover">
+                    <img id="profileImage" src="{{ $photoUrl }}" 
+                         alt="Foto Karyawan" 
+                         class="w-full h-full object-cover"
+                         onerror="this.onerror=null;this.src='{{ $defaultPhoto }}'">
                 </div>
                 <div class="flex-1 min-w-[200px]">
                     <div class="mb-4">
-                        <label for="foto" class="block text-gray-600 font-medium mb-2">Foto Profil</label>
+                        <label for="foto" class="block text-gray-600 font-medium mb-2 dark:text-white">Foto Profil</label>
                         <div class="flex items-center gap-3 flex-wrap">
                             <label class="cursor-pointer">
                                 <span class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-lg inline-flex items-center">
@@ -87,7 +95,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                    <label for="nama_lengkap" class="block text-gray-600 font-medium">Nama Lengkap</label>
+                    <label for="nama_lengkap" class="block text-gray-600 font-medium dark:text-gray-300">Nama Lengkap</label>
                     <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap', $user->nama_lengkap) }}"
                         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @error('nama_lengkap')
@@ -95,7 +103,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="name" class="block text-gray-600 font-medium">Username</label>
+                    <label for="name" class="block text-gray-600 font-medium dark:text-gray-300">Username</label>
                     <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}"
                         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @error('name')
@@ -103,7 +111,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="email" class="block text-gray-600 font-medium">Email</label>
+                    <label for="email" class="block text-gray-600 font-medium dark:text-gray-300">Email</label>
                     <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}"
                         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @error('email')
@@ -111,7 +119,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="no_telepon" class="block text-gray-600 font-medium">No Telepon</label>
+                    <label for="no_telepon" class="block text-gray-600 font-medium dark:text-gray-300">No Telepon</label>
                     <input type="text" id="no_telepon" name="no_telepon" value="{{ old('no_telepon', $user->no_telepon) }}"
                         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @error('no_telepon')
@@ -119,7 +127,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="gender" class="block text-gray-600 font-medium">Gender</label>
+                    <label for="gender" class="block text-gray-600 font-medium dark:text-gray-300">Gender</label>
                     <select id="gender" name="gender" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                         <option value="Laki-laki" {{ old('gender', $user->gender) == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                         <option value="Perempuan" {{ old('gender', $user->gender) == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
@@ -129,7 +137,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="tanggal_lahir" class="block text-gray-600 font-medium">Tanggal Lahir</label>
+                    <label for="tanggal_lahir" class="block text-gray-600 font-medium dark:text-gray-300">Tanggal Lahir</label>
                     <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir', $user->tanggal_lahir) }}"
                         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @error('tanggal_lahir')
@@ -137,7 +145,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="usia" class="block text-gray-600 font-medium">Usia</label>
+                    <label for="usia" class="block text-gray-600 font-medium dark:text-gray-300">Usia</label>
                     <input type="number" id="usia" name="usia" value="{{ old('usia', $user->usia) }}"
                         class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
                     @error('usia')
@@ -148,10 +156,10 @@
 
             <!-- Password Reset Section -->
             <div class="mt-8 border-t pt-6">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Reset Password</h3>
+                <h3 class="text-xl font-semibold text-gray-800 mb-4 dark:text-white">Reset Password</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                        <label for="current_password" class="block text-gray-600 font-medium">Password Saat Ini</label>
+                        <label for="current_password" class="block text-gray-600 font-medium dark:text-gray-300">Password Saat Ini</label>
                         <input type="password" id="current_password" name="current_password"
                             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         @error('current_password')
@@ -159,7 +167,7 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="password" class="block text-gray-600 font-medium">Password Baru</label>
+                        <label for="password" class="block text-gray-600 font-medium dark:text-gray-300">Password Baru</label>
                         <input type="password" id="password" name="password"
                             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         @error('password')
@@ -167,7 +175,7 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="password_confirmation" class="block text-gray-600 font-medium">Konfirmasi Password Baru</label>
+                        <label for="password_confirmation" class="block text-gray-600 font-medium dark:text-gray-300">Konfirmasi Password Baru</label>
                         <input type="password" id="password_confirmation" name="password_confirmation"
                             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
@@ -232,3 +240,4 @@
         });
     </script>
 @endsection
+

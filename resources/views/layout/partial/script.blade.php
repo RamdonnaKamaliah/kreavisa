@@ -1,3 +1,4 @@
+<script> let table = new DataTable('#myTable');</script>
  <!-- SweetAlert2 -->
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script>
@@ -22,20 +23,25 @@
      @endif
 
      function deleted(button) {
-         Swal.fire({
-             icon: "warning",
-             title: "Yakin ingin menghapus?",
-             text: "You won't be able to revert this!",
-             showCancelButton: true,
-             confirmButtonColor: "#3085d6",
-             cancelButtonColor: "#d33",
-             confirmButtonText: "Yes, delete it!"
-         }).then((result) => {
-             if (result.isConfirmed) {
-                 button.parentElement.submit();
-             }
-         });
-     }
+    Swal.fire({
+        icon: "warning",
+        title: "Yakin ingin menghapus?",
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Cancel",
+        customClass: {
+            confirmButton: 'bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded mr-2',
+            cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black font-medium py-2 px-4 rounded'
+        },
+        buttonsStyling: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            button.parentElement.submit();
+        }
+    });
+}
+
 
      @if (session('deleted'))
          Swal.fire({
@@ -47,7 +53,13 @@
          });
      @endif
  </script>
+ 
+<!-- Sebelum penutup body -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
  <!-- plugin for scrollbar  -->
  {{-- <script src="{{ asset('assets/js/perfect-scrollbar.js') }}"></script>
  <!-- main script file  -->

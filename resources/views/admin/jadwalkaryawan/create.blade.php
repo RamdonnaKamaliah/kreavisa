@@ -3,7 +3,7 @@
 
 <div id="layoutSidenav_content pt-1">
     <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
-        <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
+        <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
 
             <div class="mb-4">
                 <a href="{{ route('jadwalkaryawan.index') }}" class="text-blue-600 hover:text-blue-800">
@@ -11,13 +11,13 @@
                 </a>
             </div>
 
-            <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">Create Jadwal Karyawan</h1>
+            <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">Create Jadwal Karyawan</h1>
             <form action="{{ route('jadwalkaryawan.store') }}" method="POST">
                 @csrf
 
         <!-- Pilih User -->
 <div class="mb-4">
-    <label for="user_id" class="block text-gray-700 font-semibold mb-2">Pilih Karyawan</label>
+    <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Karyawan</label>
     <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
         <option value="">Pilih Karyawan</option>
         @foreach ($usersWithShifts as $user)
@@ -87,7 +87,7 @@
 
 <!-- Pilih Jabatan (Otomatis berdasarkan Karyawan) -->
 <div class="mb-4">
-    <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2">Jabatan</label>
+    <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Jabatan</label>
     <input type="text" id="jabatan_text" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed" disabled>
     <input type="hidden" name="jabatan_id" id="hidden_jabatan_id">
 </div>
@@ -119,7 +119,7 @@
 
                <!-- Pilih Shift -->
 <div class="mb-4">
-    <label for="shift_id" class="block text-gray-700 font-semibold mb-2">Pilih Shift</label>
+    <label for="shift_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Shift</label>
     <select id="shift_id" name="shift_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
         <option value="">Pilih Shift</option>
     </select>
@@ -170,7 +170,7 @@
 
                 <!-- Pilih Bulan (Checkbox) -->
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">Pilih Bulan</label>
+                    <label class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Bulan</label>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                         @php
                             $months = [
@@ -181,7 +181,7 @@
                         @endphp
                         @foreach ($months as $key => $month)
                             <label class="flex items-center space-x-2">
-                                <input type="checkbox" name="bulan[]" value="{{ $key }}" class="form-checkbox h-5 w-5 text-blue-600">
+                                <input type="checkbox" name="bulan[]" value="{{ $key }}" class="form-checkbox h-5 w-5 text-blue-600 dark:text-green-500">
                                 <span>{{ $month }}</span>
                             </label>
                         @endforeach
@@ -189,7 +189,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="tahun" class="block text-gray-700 font-semibold mb-2">Tahun</label>
+                    <label for="tahun" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Tahun</label>
                     <div class="relative">
                         <input type="number" 
                                id="tahun" 
@@ -279,13 +279,16 @@
                 icon: 'error',
                 title: 'Oops... Terjadi Kesalahan',
                 text: errorMessages,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400'
+                },
+                buttonsStyling: false // supaya customClass bisa diterapkan sepenuhnya
             }).then(() => {
-                // Refresh halaman setelah menampilkan SweetAlert
                 window.location.href = "{{ route('jadwalkaryawan.create') }}";
             });
         });
     </script>
 @endif
+
 @endsection

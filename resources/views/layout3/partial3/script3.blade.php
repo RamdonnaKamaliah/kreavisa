@@ -22,3 +22,33 @@
  <script src="https://unpkg.com/lucide@latest"></script>
  <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
  <script src="{{ asset('asset-landing-page/js/navbar-fixed.js') }}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+    document.getElementById("logout-button").addEventListener("click", function () {
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        Swal.fire({
+            title: "Yakin ingin Logout?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Logout!",
+            customClass: {
+                popup: isDarkMode ? 'text-black' : '',
+                confirmButton: 'bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded mr-2',
+                cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black font-medium py-2 px-4 rounded',
+                title: 'text-black' // pastikan teks judul tampil
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById("logout-form").submit();
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+ 

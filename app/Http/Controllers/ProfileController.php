@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $view = match ($user->usertype) {
             'admin' => 'admin.profile-index',
             'gudang' => 'gudang.profile.index',
-            'karyawan' => 'karyawan.profile-index',
+            'karyawan' => 'karyawan.profile.index',
             default => abort(403, 'Unauthorized'),
         };
 

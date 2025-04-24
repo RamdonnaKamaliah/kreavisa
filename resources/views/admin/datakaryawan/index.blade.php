@@ -8,8 +8,8 @@
 
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Laporan Stok Masuk -->
-        <div class="bg-white text-black p-4 rounded-lg shadow-md border border-gray-300">
-            <h2 class="text-center text-xl font-bold mb-4 text-gray-800">Laporan Data Karyawan</h2>
+        <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
+            <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Laporan Data Karyawan</h2>
             <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                 <a href="{{ route('datakaryawan.create') }}">
                     <button
@@ -19,8 +19,8 @@
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
-                <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
-                    <thead class="bg-gray-200 text-gray-800">
+                <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm">
+                    <thead class="bg-gray-200 text-gray-800 dark:bg-slate-700 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Foto</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
@@ -39,29 +39,31 @@
                         <tr>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
                                 @php
-                                    // Cek jika foto adalah full path (hasil create) atau hanya nama file (hasil edit)
-                                    $fotoPath = $row->foto;
+                                    $defaultPhoto = asset('asset-landing-page/img/profile.png');
                                     
-                                    // Jika mengandung 'uploads/datakaryawan/' berarti sudah format benar
-                                    if (strpos($fotoPath, 'uploads/datakaryawan/') !== false) {
-                                        $photoUrl = asset($fotoPath);
-                                    } 
-                                    // Jika hanya nama file (hasil edit)
-                                    elseif (!empty($fotoPath)) {
-                                        $photoUrl = asset('uploads/datakaryawan/' . $fotoPath);
-                                    } 
-                                    // Default jika tidak ada foto
-                                    else {
-                                        $photoUrl = asset('asset-landing-page/img/profile.png');
+                                    // Check if photo exists and is not empty
+                                    if (!empty($row->foto)) {
+                                        // Check if the photo path is already a full path
+                                        if (strpos($row->foto, 'uploads/datakaryawan/') !== false) {
+                                            $photoPath = $row->foto;
+                                        } else {
+                                            $photoPath = 'uploads/datakaryawan/' . $row->foto;
+                                        }
+                                        
+                                        // Check if the file actually exists
+                                        $photoUrl = file_exists(public_path($photoPath)) ? asset($photoPath) : $defaultPhoto;
+                                    } else {
+                                        $photoUrl = $defaultPhoto;
                                     }
                                     
-                                    // Tambahkan parameter cache busting
+                                    // Add cache busting
                                     $photoUrl .= '?v=' . time();
                                 @endphp
                                 
                                 <img src="{{ $photoUrl }}"
                                      class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border border-gray-300"
-                                     alt="Foto profil {{ $row->nama_lengkap }}">
+                                     alt="Foto profil {{ $row->nama_lengkap }}"
+                                     onerror="this.onerror=null;this.src='{{ $defaultPhoto }}'">
                             </td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $row->nama_lengkap }}
                             </td>

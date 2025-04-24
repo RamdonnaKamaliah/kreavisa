@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\GajiKaryawan;
 use App\Models\User;
 use App\Models\JabatanKaryawan;
+use App\Exports\GajiKaryawanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminGajiController extends Controller
 {
+
+    public function export(Request $request) 
+{
+    $date = $request->date ? date('Y-m-d', strtotime($request->date)) : null;
+    return Excel::download(new GajiKaryawanExport($date), 'laporan_gaji_karyawan.xlsx');
+}
+
     /**
      * Menampilkan daftar gaji karyawan.
      */

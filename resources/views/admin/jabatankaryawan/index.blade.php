@@ -2,8 +2,8 @@
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Laporan Stok Masuk -->
-        <div class="bg-white text-black p-4 rounded-lg shadow-md border border-gray-300">
-            <h2 class="text-center text-xl font-bold mb-4 text-gray-800">Laporan Jabatan Karyawan</h2>
+        <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
+            <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Laporan Jabatan Karyawan</h2>
             <div class="flex flex-wrap gap-2 justify-center md:justify-start">
                 <a href="{{ route('jabatankaryawan.create') }}">
                     <button
@@ -13,8 +13,8 @@
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
-                <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
-                    <thead class="bg-gray-200 text-gray-800">
+                <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
+                    <thead class="bg-gray-200 text-gray-800 dark:bg-slate-700 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Jabatan</th>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Aksi</th>
@@ -53,4 +53,6 @@
             </div>
         </div>
     </div>
+
+    
 @endsection

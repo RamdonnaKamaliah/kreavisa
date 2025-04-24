@@ -3,7 +3,7 @@
     <div id="layoutSidenav_content">
         <!-- Container utama -->
         <main class="flex justify-center items-center min-h-[-85px] py-10">
-            <div class="w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg">
+            <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-8 rounded-lg shadow-lg">
                 <div class="mb-4">
                     <a href="{{ route('gajipokok.index') }}"
                         class="text-blue-600 hover:text-blue-800 font-medium transition flex items-center">
@@ -11,7 +11,7 @@
                     </a>
                 </div>
                 <!-- Judul -->
-                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">Create Gaji Pokok</h1>
+                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">Create Gaji Pokok</h1>
 
                 <!-- Form -->
                 <form action="{{ route('gajipokok.store') }}" method="POST" class="space-y-4">
@@ -19,7 +19,7 @@
 
                     <!-- Pilihan Jabatan -->
                     <div>
-                        <label for="jabatan_id" class="block text-gray-700 font-medium">Jabatan</label>
+                        <label for="jabatan_id" class="block text-gray-700 font-medium dark:text-gray-200">Jabatan</label>
                         <select id="jabatan_id" name="jabatan_id"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                             @foreach ($jabatan as $jabatan)
@@ -30,7 +30,7 @@
 
                     <!-- Input Gaji Pokok -->
                     <div>
-                        <label for="gaji_pokok" class="block text-gray-700 font-medium">Gaji Pokok</label>
+                        <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok</label>
                         <input type="number" id="gaji_pokok" name="gaji_pokok"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" step="0.1" required
                             placeholder="Masukkan dalam juta (contoh: 5 untuk 5 juta)">
@@ -45,7 +45,7 @@
             </div>
         </main>
     </div>
-    @if ($errors->any())
+    @if ($errors->any()) 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let errorMessages = "";
@@ -55,11 +55,16 @@
 
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
+                title: 'Oops... Terjadi Kesalahan',
                 text: errorMessages,
-                confirmButtonColor: '#d33'
+                confirmButtonText: 'Tutup',
+                customClass: {
+                    confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400'
+                },
+                buttonsStyling: false
             });
         });
     </script>
 @endif
+
 @endsection

@@ -28,43 +28,19 @@
  <script src="https://unpkg.com/feather-icons"></script>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+ <!-- Di head -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
  <!-- DataTables CSS -->
- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+ <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
  <!-- jQuery dan DataTables JS -->
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
+ <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
 
  <!-- Tailwind -->
  @vite(['resources/css/app.css', 'resources/js/app.js'])
 
- <style>
-     /* Style dropdown entries per page agar sesuai dengan tema dark */
-     .dataTables_length select {
-         background-color: #1e1e1e;
-         color: #ffffff;
-         border: 1px solid #444;
-         padding: 5px;
-         border-radius: 5px;
-         max-height: 200px;
-         /* Atur tinggi maksimum */
-         overflow-y: auto;
-         /* Tambahkan scroll jika opsi banyak */
-     }
 
-     /* Pastikan dropdown muncul di atas elemen lain */
-     .dataTables_length {
-         position: relative;
-         z-index: 1000;
-     }
-
-     /* Hover dan focus effect */
-     .dataTables_length select:focus,
-     .dataTables_length select:hover {
-         background-color: #292929;
-         color: #ffffff;
-     }
- </style>
 
  {{-- <body class="bg-[#191E24]">
     <main class="flex min-h-screen">
@@ -107,29 +83,7 @@
          });
      });
  </script>
- <!-- Script DataTables -->
- <script>
-     // $(document).ready(function() {
-     //     $('#stokMasukTable').DataTable({
-     //         "paging": true,
-     //         "lengthMenu": [
-     //             [10, 25, 50, -1],
-     //             [10, 25, 50, "All"]
-     //         ],
-     //         "lengthChange": true,
-     //         "searching": true,
-     //         "ordering": true,
-     //         "info": true,
-     //         "autoWidth": false,
-     //         "responsive": true,
-     //         "language": {
-     //             "lengthMenu": " _MENU_ entries per page"
-     //         }
-     //     });
-     //     $('.dataTables_wrapper').addClass('mt-4');
-     // });
-     let table = new DataTable('#stokMasukTable');
- </script>
+
 
  <!-- SweetAlert2 -->
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

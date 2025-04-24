@@ -3,7 +3,7 @@
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel -->
         <div class="mb-4">
-            <label for="tableSelect" class="block text-gray-800 text-lg mb-2">Pilih Laporan:</label>
+            <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-full">
                     <option value="gajiKaryawan">Laporan Gaji Karyawan</option> 
@@ -35,17 +35,24 @@
         </script>
 
         <!-- Laporan Gaji Karyawan -->
-        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md border border-gray-300">
-            <h2 class="text-center text-xl font-bold mb-4">Laporan Gaji Karyawan</h2>
+        <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Gaji Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('gajikaryawan.create') }}"
                     class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
                     + Tambah Data
                 </a>
+                
+                <form action="{{ route('gajikaryawan.export') }}" method="GET" class="flex items-center gap-2">
+                    <input type="date" name="date" class="p-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-gray-600 dark:text-white">
+                    <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md flex items-center gap-2">
+                        <i class="fas fa-file-excel"></i> Export Excel
+                    </button>
+                </form>
             </div>
             <div class="overflow-x-auto mt-4">
-                <table id="stokMasukTable" class="w-full border border-gray-400 text-xs md:text-sm">
-                    <thead class="bg-gray-200 text-gray-900">
+                <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
+                    <thead class="bg-gray-200 text-gray-800 dark:bg-slate-700 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Nama</th>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
@@ -61,14 +68,14 @@
                     <tbody>
                         @foreach($gajiKaryawan as $row)
                         <tr>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->user->nama_lengkap }}</td>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->user->jabatan->nama_jabatan }}</td>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Rp {{ number_format($row->gaji_pokok, 0, ',', '.') }}</td>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->tipe_pembayaran }}</td>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Rp {{ number_format($row->bonus, 0, ',', '.') }}</td>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Rp {{ number_format($row->potongan, 0, ',', '.') }}</td>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Rp {{ number_format($row->total_gaji, 0, ',', '.') }}</td>
-                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">{{ $row->tanggal }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">{{ $row->user->nama_lengkap }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">{{ $row->user->jabatan->nama_jabatan }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">Rp {{ number_format($row->gaji_pokok, 0, ',', '.') }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">{{ $row->tipe_pembayaran }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">Rp {{ number_format($row->bonus, 0, ',', '.') }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">Rp {{ number_format($row->potongan, 0, ',', '.') }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">Rp {{ number_format($row->total_gaji, 0, ',', '.') }}</td>
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">{{ $row->tanggal }}</td>
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 text-center">
                                 <div class="flex justify-center space-x-1 md:space-x-2">
                                     <a href="{{ route('gajikaryawan.edit', $row->id) }}" class="px-2 py-1 text-yellow-600 border border-yellow-600 rounded-full hover:bg-yellow-100 flex items-center gap-1 text-xs md:text-sm">

@@ -12,14 +12,14 @@
         @endif
         <main>
             <div class="container mx-auto">
-                <div class="bg-white shadow-lg rounded-2xl p-8 max-w-4xl mx-auto text-gray-900 relative">
+                <div class="bg-white dark:bg-slate-800 shadow-lg rounded-2xl p-8 max-w-4xl mx-auto text-gray-900 relative">
                     <!-- Tombol Kembali -->
                     <div class="absolute top-4 left-4">
                         <a href="{{ route('datakaryawan.index') }}" class="p-2 rounded-full text-blue-500">
                             <i class="fas fa-arrow-left"></i>
                         </a>
                     </div>
-                    <h1 class="text-2xl font-bold text-center mb-6">Edit Data Karyawan</h1>
+                    <h1 class="text-2xl font-bold text-center mb-6 dark:text-white">Edit Data Karyawan</h1>
 
                     <div class="grid grid-cols-2 gap-8 items-center">
                         <!-- Nama Karyawan (Tidak Bisa Diedit) -->
@@ -34,7 +34,7 @@
                                     @endif
                                 </div>
 
-                                <label class="block text-lg font-medium text-gray-600 mt-4">Nama Lengkap</label>
+                                <label class="block text-lg font-medium text-gray-600 mt-4 dark:text-gray-300">Nama Lengkap</label>
                                 <input type="text"
                                     class="w-full px-3 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-center text-lg"
                                     value="{{ $karyawan->nama_lengkap }}" disabled>
@@ -47,7 +47,7 @@
                             @csrf
                             @method('PUT')
                             <div>
-                                <label for="jabatan_id" class="block text-lg font-medium text-gray-600">Nama Jabatan</label>
+                                <label for="jabatan_id" class="block text-lg font-medium text-gray-600 dark:text-gray-300">Nama Jabatan</label>
                                 <select name="jabatan_id" id="jabatan_id"
                                     class="w-full px-3 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-lg"
                                     required>

@@ -4,14 +4,14 @@
 
         <main class="flex justify-center py-6 p-6">
             <div class="w-full max-w-4xl"> <!-- Perluas lebar form agar muat 3 kolom -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
                     <div class="mb-4">
                         <a href="{{ route('datakaryawan.index') }}" class="text-blue-600 hover:text-blue-800">
                             <i class='bx bx-arrow-back text-2xl'></i>
                         </a>
                     </div>
 
-                    <h1 class="text-center text-2xl font-bold text-gray-700 mb-6">Create Data Karyawan</h1>
+                    <h1 class="text-center text-2xl font-bold text-gray-700 mb-6 dark:text-white">Create Data Karyawan</h1>
                     <form action="{{ route('datakaryawan.store') }}" method="POST" enctype="multipart/form-data"
                         class="space-y-4">
                         @csrf
@@ -23,7 +23,7 @@
                             </label>
                             <input type="file" id="foto" name="foto" accept="image/*" class="hidden"
                                 onchange="previewImage(event)">
-                            <p class="text-sm text-gray-600 mt-2">Upload Foto</p>
+                            <p class="text-sm text-gray-600 mt-2 dark:text-gray-300">Upload Foto</p>
                             @error('foto')
                                 <span class="text-red-600 text-sm">{{ $message }}</span>
                             @enderror
@@ -31,19 +31,19 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4"> <!-- Ubah grid jadi 3 kolom -->
                             <div class="space-y-4">
-                                <label for="nama_lengkap" class="block text-gray-700 font-medium">Nama Lengkap</label>
+                                <label for="nama_lengkap" class="block text-gray-700 font-medium dark:text-gray-300">Nama Lengkap</label>
                                 <input type="text" id="nama_lengkap" name="nama_lengkap" placeholder="Input Nama Lengkap"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                             </div>
 
                             <div class="space-y-4">
-                                <label for="name" class="block text-gray-700 font-medium">Username</label>
+                                <label for="name" class="block text-gray-700 font-medium dark:text-gray-300">Username</label>
                                 <input type="text" id="name" name="name" placeholder="Input Username"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                             </div>
 
                             <div class="space-y-4">
-                                <label for="gender" class="block text-gray-700 font-medium">Gender</label>
+                                <label for="gender" class="block text-gray-700 font-medium dark:text-gray-300">Gender</label>
                                 <select id="gender" name="gender"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                                     <option value="" disabled selected>Pilih Gender</option>
@@ -53,19 +53,19 @@
                             </div>
 
                             <div class="space-y-4">
-                                <label for="email" class="block text-gray-700 font-medium">Email</label>
+                                <label for="email" class="block text-gray-700 font-medium dark:text-gray-300">Email</label>
                                 <input name="email" type="email" id="email" placeholder="Input Email"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                             </div>
 
                             <div class="space-y-4">
-                                <label for="phone" class="block text-gray-700 font-medium">No Telpon</label>
+                                <label for="phone" class="block text-gray-700 font-medium dark:text-gray-300">No Telpon</label>
                                 <input name="no_telepon" type="tel" id="phone" placeholder="Input No Telpon"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                             </div>
 
                             <div class="space-y-4">
-                                <label for="position" class="block text-gray-700 font-medium">Jabatan</label>
+                                <label for="position" class="block text-gray-700 font-medium dark:text-gray-300">Jabatan</label>
                                 <select name="jabatan_id" id="position"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                                     <option value="" disabled selected>Pilih Jabatan</option>
@@ -79,13 +79,13 @@
                             
 
                             <div class="md:col-span-3 space-y-4">
-                                <label for="dob" class="block text-gray-700 font-medium">Tanggal Lahir</label>
+                                <label for="dob" class="block text-gray-700 font-medium dark:text-gray-300">Tanggal Lahir</label>
                                 <input name="tanggal_lahir" type="date" id="dob"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                             </div>
 
                             <div class="md:col-span-3 space-y-4"> <!-- Usia diberi lebar penuh -->
-                                <label for="age" class="block text-gray-700 font-medium">Umur</label>
+                                <label for="age" class="block text-gray-700 font-medium dark:text-gray-300">Umur</label>
                                 <input name="usia" type="number" id="age"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" readonly>
                             </div>
@@ -93,7 +93,7 @@
 
                         <div class="text-center mt-6">
                             <button type="submit"
-                                class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Create</button>
+                                class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -125,21 +125,35 @@
             document.getElementById('age').value = age < 0 ? 0 : age; // Pastikan usia minimal 0
         });
     </script>
-    @if ($errors->any())
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let errorMessages = "";
-            @foreach ($errors->all() as $error)
-                errorMessages += "{{ $error }}\n";
-            @endforeach
+@if ($errors->any())
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let errorMessages = "";
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: errorMessages,
-                confirmButtonColor: '#d33'
-            });
+        @foreach ($errors->all() as $error)
+            @php
+                $translated = match($error) {
+                    'The name has already been taken.' => 'Nama sudah digunakan.',
+                    'The email has already been taken.' => 'Email sudah digunakan.',
+                    default => $error
+                };
+            @endphp
+            errorMessages += `{{ $translated }}\n`;
+        @endforeach
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops... Terjadi Kesalahan',
+            text: errorMessages.trim(),
+            confirmButtonText: 'Tutup',
+            customClass: {
+                confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400'
+            },
+            buttonsStyling: false
         });
-    </script>
+    });
+</script>
 @endif
+
+
 @endsection
