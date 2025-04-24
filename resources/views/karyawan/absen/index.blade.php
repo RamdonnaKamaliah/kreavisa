@@ -1,8 +1,8 @@
 @extends('layout3.karyawan3')
 @section('page-title', 'Absensi')
 @section('content')
-    <div class="p-4 md:p-6 overflow-x-hidden mt-6">
-        
+    <div class="px-4 py-6 md:px-6 max-w-full overflow-x-hidden mt-6">
+
         <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl text-gray-900 p-4 rounded-lg shadow-md">
             @if (session('success'))
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -10,7 +10,7 @@
                     window.onload = function() {
                         const type = "{{ session('attendance_type') }}";
                         let message = '';
-s
+                        s
                         switch (type) {
                             case 'hadir':
                                 message = 'Absen hadir berhasil dicatat!';
@@ -40,16 +40,19 @@ s
             <div class="mb-4">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.3048621459625!2d106.7626191737859!3d-6.608989364603464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5001b7efe39%3A0x911c1a77e2752ac4!2sNavisa%20Basic%20Collection!5e0!3m2!1sid!2sid!4v1740474347021!5m2!1sid!2sid"
-                    class="w-full h-64 md:h-80 rounded-lg shadow" style="border:0;" allowfullscreen loading="lazy"></iframe>
+                    class="w-full max-w-full h-64 md:h-80 rounded-lg shadow"></iframe>
             </div>
 
-            <div id="absen-section" class="flex flex-col items-center gap-2 justify-center mb-4">
+            <div id="absen-section" class="flex flex-col gap-2 mb-4">
                 @if (!$todayAbsen)
                     @if ($currentHour >= 5)
                         <!-- Jam 05:00-23:59 dan belum absen -->
-                        <p class="font-popins text-black dark:text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos enim iusto voluptatem? 
-                            <br> Quam
-                            et ratione sint consequuntur dignissimos officiis porro!</p>
+                        <h3 class="text-left text-black dark:text-white ml-2 text-xl font-popins font-bold">Lokasi :</h3>
+                        <p class="text-left font-popins text-black dark:text-white italic ml-2 text-xl">Navisa Basic
+                            Collection <br>
+                            RT02/RW08, Jl. Pintu Ledeng kp saluyu No.2, Ciomas, <br>
+                            Kec. Ciomas, Kabupaten Bogor, Jawa Barat
+                            16610</p>
                         <div class="flex gap-2">
                             <a href="{{ route('karyawan.absen.create') }}"
                                 class="bg-green-500 text-white px-4 py-2 rounded-lg shadow">Hadir</a>
