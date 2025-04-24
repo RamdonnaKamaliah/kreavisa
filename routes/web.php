@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\KinerjaController;
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -94,7 +95,7 @@ Route::middleware(['auth', Admin::class])->group(function () {
 
 Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
-    
+    Route::get('karyawan/kinerja', [KinerjaController::class, 'index'])->name('kinerja.index');
     // Absen
     Route::get('karyawan/absen/sakit', [KaryawanAbsenController::class, 'createSakit'])
         ->name('karyawan.absen.sakit');

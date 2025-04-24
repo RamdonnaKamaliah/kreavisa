@@ -47,12 +47,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Fungsi menangani scroll behavior
     function handleScroll() {
+        const placeholder = document.getElementById("navbar-placeholder");
+
         if (!toggleNavbarFixed.checked) return;
 
         if (window.scrollY > 10) {
             navbar.classList.add("navbar-fixed-dashboard");
+            placeholder.classList.add("h-[80px]"); // Ganti sesuai tinggi navbar
         } else {
             navbar.classList.remove("navbar-fixed-dashboard");
+            placeholder.classList.remove("h-[80px]");
         }
     }
 });

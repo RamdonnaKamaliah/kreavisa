@@ -1,4 +1,4 @@
-<aside
+<aside id="nav-menu"
     class="w-64 h-screen fixed left-0 top-0 bg-white dark:bg-[#1D232A] text-gray-900 shadow-md p-4 flex flex-col overflow-y-auto">
     <style>
         aside::-webkit-scrollbar {
@@ -88,6 +88,12 @@
                     'label' => 'Rekap Gaji',
                     'color' => 'text-amber-500',
                 ],
+                [
+                    'route' => 'kinerja.index',
+                    'icon' => 'vector',
+                    'label' => 'Kinerja',
+                    'color' => 'text-amber-500',
+                ],
             ];
         @endphp
 
@@ -112,7 +118,7 @@
         @endforeach
     </ul>
 
-    <!-- Logout Button -->
+
     <!-- Logout Button -->
     <div class="pt-4 mt-2 ">
         <form id="logout-form" action="{{ route('logout') }}" method="POST">

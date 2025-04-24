@@ -37,6 +37,7 @@
                 <div class="mt-4">
                     <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
                         <i class="fas fa-save mr-2"></i>Simpan
+                    </button>
                     
                     @if($lokasiAbsen)
                     <div class="mt-3 text-sm text-gray-600 dark:text-gray-300">
