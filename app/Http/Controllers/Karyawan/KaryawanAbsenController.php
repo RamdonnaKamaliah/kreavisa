@@ -139,8 +139,9 @@ class KaryawanAbsenController extends Controller
         ]);
 
         return redirect()->route('karyawan.absen.index')
-            ->with('success', 'Absen Hadir berhasil dicatat.')
-            ->with('attendance_type', 'hadir');
+    ->with('success', 'Absen Hadir berhasil dicatat.')
+    ->with('attendance_type', 'hadir')
+    ->with('user_name', Auth::user()->name); // Add this line
 
     } catch (\Exception $e) {
         // Hapus file gambar jika gagal menyimpan ke database
@@ -215,9 +216,11 @@ public function storeSakit(Request $request)
             'lokasi' => $request->lokasi,
         ]);
 
-        return redirect()->route('karyawan.absen.index')
-            ->with('success', 'Absen sakit berhasil dicatat.')
-            ->with('attendance_type', 'sakit');
+        // In storeSakit() method
+return redirect()->route('karyawan.absen.index')
+->with('success', 'Absen sakit berhasil dicatat.')
+->with('attendance_type', 'sakit')
+->with('user_name', Auth::user()->name); // Add this line
             
     } catch (\Exception $e) {
         // Hapus file jika gagal menyimpan ke database
@@ -261,8 +264,9 @@ public function storeIzin(Request $request)
     ]);
 
     return redirect()->route('karyawan.absen.index')
-        ->with('success', 'Absen izin berhasil dicatat.')
-        ->with('attendance_type', 'izin');
+    ->with('success', 'Absen izin berhasil dicatat.')
+    ->with('attendance_type', 'izin')
+    ->with('user_name', Auth::user()->name); // Add this line
 }
 
 

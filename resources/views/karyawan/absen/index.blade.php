@@ -3,35 +3,42 @@
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden mt-6">
         <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl text-gray-900 p-4 rounded-lg shadow-md">
+            <!-- Notifikasi akan muncul di sini -->
             @if (session('success'))
-                <script>
-                    window.onload = function() {
-                        const type = "{{ session('attendance_type') }}";
-                        let message = '';
-
-                        switch (type) {
-                            case 'hadir':
-                                message = 'Absen hadir berhasil dicatat!';
-                                break;
-                            case 'sakit':
-                                message = 'Absen sakit berhasil dicatat!';
-                                break;
-                            case 'izin':
-                                message = 'Absen izin berhasil dicatat!';
-                                break;
-                            default:
-                                message = "{{ session('message') }}";
-                        }
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: message,
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    };
-                </script>
+                <div id="success-notification" class="mb-4">
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 dark:bg-green-800 dark:border-green-600 dark:text-green-100" role="alert">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                @php
+                                    $type = session('attendance_type');
+                                    $userName = session('user_name');
+                                    $message = '';
+                                    
+                                    switch ($type) {
+                                        case 'hadir':
+                                            $message = "$userName, absen hadir berhasil dicatat!";
+                                            break;
+                                        case 'sakit':
+                                            $message = "$userName, absen sakit berhasil dicatat!";
+                                            break;
+                                        case 'izin':
+                                            $message = "$userName, absen izin berhasil dicatat!";
+                                            break;
+                                        default:
+                                            $message = session('message');
+                                    }
+                                @endphp
+                                <p class="font-bold">Berhasil</p>
+                                <p>{{ $message }}</p>
+                            </div>
+                            <button onclick="document.getElementById('success-notification').remove()" class="text-green-700 dark:text-green-200 hover:text-green-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             @endif
 
             <!-- Dropdown Pilihan -->
@@ -174,7 +181,7 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const tableSelect = document.getElementById('tableSelect');
@@ -201,3 +208,4 @@
         });
     </script>
 @endsection
+
