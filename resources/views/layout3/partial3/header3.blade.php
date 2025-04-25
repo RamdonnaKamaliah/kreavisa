@@ -24,9 +24,9 @@
 
 <!-- end sidenav -->
 
-<main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+<main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl pt-[5px]">
     <!-- Navbar -->
-    <nav class="relative flex flex-wrap items-center justify-between top-4 px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start z-40"
+    <nav class="relative flex flex-wrap items-center justify-between top-4 px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start"
         navbar-main navbar-scroll="false" id="navbar-main">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
@@ -42,10 +42,10 @@
                 </h3>
             </nav>
 
-            <div id="navbar-placeholder"
+            {{-- <div id="navbar-placeholder"
                 class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto h-0">
 
-            </div>
+            </div> --}}
             <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
                 <!-- online builder btn  -->
                 <!-- <li class="flex items-center">
@@ -75,7 +75,7 @@
                     <button id="settingsToggle"
                         class="flex items-center justify-center text-gray-800 dark:text-slate-50 transition duration-300">
                         <i class="fas fa-cog text-lg"></i>
-                     </button>
+                    </button>
 
                     <!-- Dropdown Settings -->
                     <div id="settingsDropdown"
@@ -96,6 +96,8 @@
         </div>
         </div>
     </nav>
+
+    <div id="navbarSpacer" class="h-52 lg:h-[100px] hidden"></div>
 
 
     <script>

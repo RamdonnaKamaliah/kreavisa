@@ -17,13 +17,17 @@
     }
 }
 
-.navbar-bg {
-    @apply bg-white/80 backdrop-blur-md dark:bg-slate-800/80;
+/* Tetap seperti aslinya untuk desktop (lg ke atas) */
+.navbar-fixed-dashboard {
+    @apply fixed top-4 left-[17rem] right-0 z-[999] rounded-2xl 
+           bg-white/80 dark:bg-slate-800/80 backdrop-blur-md shadow-md;
 }
 
-.navbar-fixed-dashboard {
-    @apply fixed top-4 left-[17rem] right-0 z-[1000] rounded-2xl 
-         bg-white/80 dark:bg-slate-800/80 shadow-md;
+/* Tambahkan untuk tampilan mobile dan tablet */
+@media (max-width: 1023px) {
+    .navbar-fixed-dashboard {
+        @apply left-4 right-4 top-4 rounded-xl ;
+    }
 }
 
 .hamburger-line {
