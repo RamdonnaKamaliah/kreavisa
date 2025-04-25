@@ -1,28 +1,29 @@
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const icon = document.getElementById('darkIcon');
+document.addEventListener("DOMContentLoaded", function () {
+    const icon = document.getElementById("darkIcon");
     const root = document.documentElement;
-    const toggle = document.getElementById('toggleDark');
+    const toggle = document.getElementById("toggleDark");
 
-    function updateIcon() {
-      const current = root.classList.contains('dark') ? 'sun' : 'moon';
-      icon.setAttribute('data-lucide', current);
-      lucide.createIcons(); // re-render iconnya
-    }
-
-    // Cek localStorage
-    if (localStorage.getItem('theme') === 'dark') {
-      root.classList.add('dark');
+    // Set tema awal dari localStorage
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        root.classList.add("dark");
+        icon.classList.replace("bx-sun", "bx-moon"); // Ganti ke sun untuk dark mode
     } else {
-      root.classList.remove('dark');
+        root.classList.remove("dark");
+        icon.classList.replace("bx-moon", "bx-sun"); // Ganti ke moon untuk light mode
     }
-    updateIcon();
 
-    toggle.addEventListener('click', () => {
-      root.classList.toggle('dark');
-      const themeNow = root.classList.contains('dark') ? 'dark' : 'light';
-      localStorage.setItem('theme', themeNow);
-      updateIcon();
+    toggle.addEventListener("click", () => {
+        root.classList.toggle("dark");
+        const isDark = root.classList.contains("dark");
+
+        // Ganti ikon sesuai tema
+        if (isDark) {
+            icon.classList.replace("bx-sun", "bx-moon"); // Set sun untuk dark mode
+            localStorage.setItem("theme", "dark");
+        } else {
+            icon.classList.replace("bx-moon", "bx-sun"); // Set moon untuk light mode
+            localStorage.setItem("theme", "light");
+        }
     });
-  });
-
+});

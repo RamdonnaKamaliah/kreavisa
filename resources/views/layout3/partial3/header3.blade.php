@@ -52,49 +52,45 @@
             <a class="inline-block px-8 py-2 mb-0 mr-4 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer leading-pro hover:-translate-y-px active:shadow-xs hover:border-blue-500 active:bg-blue-500 active:hover:text-blue-500 hover:text-blue-500 tracking-tight-rem hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
           </li> -->
 
-                <li class="flex items-center pl-4 xl:hidden">
+                <!-- Hamburger Menu (Mobile Only) -->
+                <li class="flex items-center pl-2 xl:hidden">
                     <button id="hamburger" aria-label="Toggle menu"
-                        class="flex flex-col justify-between w-3 h-3 focus:outline-none text-white">
-                        <span
-                            class="bar block h-0.5 bg-current transform transition-all duration-200 ease-in-out"></span>
-                        <span
-                            class="bar block h-0.5 bg-current transform transition-all duration-200 ease-in-out"></span>
-                        <span
-                            class="bar block h-0.5 bg-current transform transition-all duration-200 ease-in-out"></span>
+                        class="flex flex-col justify-center items-center w-8 h-8 text-gray-800 dark:text-slate-50 focus:outline-none">
+                        <span class="bar block h-0.5 w-5 bg-current rounded-sm mb-1 transition-all duration-300"></span>
+                        <span class="bar block h-0.5 w-5 bg-current rounded-sm mb-1 transition-all duration-300"></span>
+                        <span class="bar block h-0.5 w-5 bg-current rounded-sm transition-all duration-300"></span>
                     </button>
                 </li>
 
-
-                <li class="flex items-center px-4">
+                <!-- Dark Mode Toggle -->
+                <li class="flex items-center px-2">
                     <button id="toggleDark"
-                        class="group p-3 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-yellow-300 transition-all duration-500 shadow-md hover:shadow-lg hover:scale-110 hover:bg-yellow-100 dark:hover:bg-gray-600">
-                        <i id="darkIcon" data-lucide="moon" class="w-5 h-5 transition-transform duration-500"></i>
+                        class="flex items-center justify-center text-yellow-300 dark:text-slate-50 hover:scale-110 transition-transform duration-300">
+                        <i id="darkIcon" class='bx bx-moon text-2xl'></i>
                     </button>
                 </li>
 
-                <li class="relative flex items-center px-4">
-                    <button id="settingsToggle" class="text-white hover:text-yellow-300 focus:outline-none">
-                        <i class="fas fa-cog text-xl"></i>
-                    </button>
+                <!-- Settings Icon -->
+                <li class="flex items-center px-2">
+                    <button id="settingsToggle"
+                        class="flex items-center justify-center text-gray-800 dark:text-slate-50 transition duration-300">
+                        <i class="fas fa-cog text-lg"></i>
+                     </button>
 
                     <!-- Dropdown Settings -->
                     <div id="settingsDropdown"
                         class="hidden absolute top-12 right-0 mt-2 w-48 bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg shadow-lg p-4 z-[9999] space-y-4">
-
-                        <!-- Navbar Fixed Toggle -->
                         <label class="flex items-center justify-between">
                             <span>Navbar Fixed</span>
                             <input type="checkbox" id="toggleNavbarFixed" class="form-checkbox h-5 w-5 text-blue-600">
                         </label>
-
-                        <!-- Menu Bantuan -->
                         <a href="#"
                             class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
                             <i class="fas fa-question-circle mr-2"></i>Bantuan
                         </a>
                     </div>
-
                 </li>
+
             </ul>
 
         </div>
