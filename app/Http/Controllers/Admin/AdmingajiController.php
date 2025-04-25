@@ -61,47 +61,49 @@ class AdminGajiController extends Controller
     }
 
 
-    /**
-     * Menyimpan gaji karyawan baru ke database.
-     */
     public function store(Request $request)
-    {
-        $request->validate([
-            'user_id' => 'required',
-            'tanggal' => 'required|date',
-            'nomor_rekening' => 'required',
-            'tipe_pembayaran' => 'required',
-            'bonus' => 'nullable|numeric',
-            'potongan' => 'nullable|numeric',
-        ]);
-    
-        $user = User::with('jabatan', 'gajiPokok')->find($request->user_id);
-    
-        if (!$user || !$user->gajiPokok) {
-            return back()->with('error', 'Gaji pokok tidak ditemukan untuk karyawan ini.');
-        }
-    
-        $gaji_pokok = $user->gajiPokok->gaji_pokok ?? 0;
-    
-        // Ambil nilai bonus dan potongan langsung dalam rupiah
-        $bonus = $request->bonus ?? 0;
-        $potongan = $request->potongan ?? 0;
-    
-        $total_gaji = $gaji_pokok + $bonus - $potongan;
-    
-        GajiKaryawan::create([
-            'user_id' => $request->user_id,
-            'tanggal' => $request->tanggal,
-            'nomor_rekening' => $request->nomor_rekening,
-            'tipe_pembayaran' => $request->tipe_pembayaran,
-            'gaji_pokok' => $gaji_pokok,
-            'bonus' => $bonus,
-            'potongan' => $potongan,
-            'total_gaji' => $total_gaji,
-        ]);
-    
-        return redirect()->route('gajikaryawan.index')->with('added', 'true');
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'tanggal' => 'required|date',
+        'nomor_rekening' => 'required|string',
+        'tipe_pembayaran' => 'required|string',
+        'gaji_pokok_raw' => 'required|numeric',
+        'bonus' => 'nullable',
+        'potongan' => 'nullable',
+    ]);
+
+    // Cek apakah sudah ada data dengan user_id dan tanggal yang sama
+    $existingGaji = GajiKaryawan::where('user_id', $request->user_id)
+                        ->whereDate('tanggal', $request->tanggal)
+                        ->first();
+
+    if ($existingGaji) {
+        return redirect()->back()
+            ->withInput()
+            ->withErrors(['tanggal' => 'Data gaji untuk karyawan ini pada tanggal tersebut sudah ada.']);
     }
+
+    // Format angka sebelum disimpan
+    $bonus = $request->bonus ? (int)str_replace('.', '', $request->bonus) : 0;
+    $potongan = $request->potongan ? (int)str_replace('.', '', $request->potongan) : 0;
+    $gaji_pokok = (int)$request->gaji_pokok_raw;
+
+    $total_gaji = $gaji_pokok + $bonus - $potongan;
+
+    GajiKaryawan::create([
+        'user_id' => $request->user_id,
+        'tanggal' => $request->tanggal,
+        'nomor_rekening' => $request->nomor_rekening,
+        'tipe_pembayaran' => $request->tipe_pembayaran,
+        'gaji_pokok' => $gaji_pokok,
+        'bonus' => $bonus,
+        'potongan' => $potongan,
+        'total_gaji' => $total_gaji,
+    ]);
+
+    return redirect()->route('gajikaryawan.index')->with('added', 'true');
+}
     
     /**
      * Menampilkan form untuk mengedit gaji karyawan.
@@ -115,41 +117,53 @@ class AdminGajiController extends Controller
         return view('admin.gajikaryawan.edit', compact('gajiKaryawan', 'users', 'jabatan'));
     }
 
-    /**
-     * Mengupdate data gaji karyawan di database.
-     */
+   
+    
     public function update(Request $request, $id)
-    {
-        // Validasi input
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'tanggal' => 'required|date',
-            'nomor_rekening' => 'required|string',
-            'tipe_pembayaran' => 'required|string',
-            'gaji_pokok' => 'required|numeric',
-            'bonus' => 'nullable|numeric',
-            'potongan' => 'nullable|numeric',
-        ]);
-    
-        // Hitung total gaji
-        $totalGaji = $request->gaji_pokok + ($request->bonus ?? 0) - ($request->potongan ?? 0);
-    
-        // Update data gaji karyawan
-        $gajiKaryawan = GajiKaryawan::findOrFail($id);
-        $gajiKaryawan->update([
-            'user_id' => $request->user_id,
-            'tanggal' => $request->tanggal,
-            'nomor_rekening' => $request->nomor_rekening,
-            'tipe_pembayaran' => $request->tipe_pembayaran,
-            'gaji_pokok' => $request->gaji_pokok,
-            'bonus' => $request->bonus ?? 0,
-            'potongan' => $request->potongan ?? 0,
-            'total_gaji' => $totalGaji,
-        ]);
-    
-        // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('gajikaryawan.index')->with('edited', 'true');
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'tanggal' => 'required|date',
+        'nomor_rekening' => 'required|string',
+        'tipe_pembayaran' => 'required|string',
+        'gaji_pokok' => 'required',
+        'bonus' => 'nullable',
+        'potongan' => 'nullable',
+    ]);
+
+    // Cek apakah sudah ada data dengan user_id dan tanggal yang sama (kecuali data yang sedang diupdate)
+    $existingGaji = GajiKaryawan::where('user_id', $request->user_id)
+                        ->whereDate('tanggal', $request->tanggal)
+                        ->where('id', '!=', $id)
+                        ->first();
+
+    if ($existingGaji) {
+        return redirect()->back()
+            ->withInput()
+            ->withErrors(['tanggal' => 'Data gaji untuk karyawan ini pada tanggal tersebut sudah ada.']);
     }
+
+    // Format angka sebelum disimpan
+    $bonus = $request->bonus ? (int)str_replace('.', '', $request->bonus) : 0;
+    $potongan = $request->potongan ? (int)str_replace('.', '', $request->potongan) : 0;
+    $gaji_pokok = (int)str_replace('.', '', $request->gaji_pokok);
+
+    $total_gaji = $gaji_pokok + $bonus - $potongan;
+
+    $gajiKaryawan = GajiKaryawan::findOrFail($id);
+    $gajiKaryawan->update([
+        'user_id' => $request->user_id,
+        'tanggal' => $request->tanggal,
+        'nomor_rekening' => $request->nomor_rekening,
+        'tipe_pembayaran' => $request->tipe_pembayaran,
+        'gaji_pokok' => $gaji_pokok,
+        'bonus' => $bonus,
+        'potongan' => $potongan,
+        'total_gaji' => $total_gaji,
+    ]);
+
+    return redirect()->route('gajikaryawan.index')->with('edited', 'true');
+}
 
     /**
      * Menghapus data gaji karyawan dari database.

@@ -38,17 +38,17 @@
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
             <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Gaji Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
-                <a href="{{ route('gajikaryawan.create') }}"
-                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
-                    + Tambah Data
-                </a>
-                
                 <form action="{{ route('gajikaryawan.export') }}" method="GET" class="flex items-center gap-2">
                     <input type="date" name="date" class="p-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-gray-600 dark:text-white">
                     <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md flex items-center gap-2">
                         <i class="fas fa-file-excel"></i> Export Excel
                     </button>
                 </form>
+                
+                <a href="{{ route('gajikaryawan.create') }}"
+                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+                    Tambah Data
+                </a>
             </div>
             <div class="overflow-x-auto mt-4">
                 <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">

@@ -11,19 +11,27 @@ use Illuminate\Http\Request;
 
 class AdminShiftController extends Controller
 {
-    public function index()
-    {
-        $shifts = ShiftKaryawan::with('user', 'jabatan')->get();
-        return view('admin.shiftkaryawan.index', compact('shifts'));
-    }
+    // Di method index()
+public function index()
+{
+    // Hanya tampilkan shift yang memiliki relasi user yang aktif
+    $shifts = ShiftKaryawan::whereHas('user', function($query) {
+        $query->whereIn('usertype', ['karyawan', 'gudang']);
+    })->with(['user', 'jabatan'])->get();
+    
+    return view('admin.shiftkaryawan.index', compact('shifts'));
+}
 
-    public function create()
-    {
-        $users = User::whereIn('usertype', ['karyawan', 'gudang'])->get();
-        $jabatans = JabatanKaryawan::all();
-        return view('admin.shiftkaryawan.create', compact('users', 'jabatans'));
-    }
-
+public function create()
+{
+    // Ambil hanya user yang belum memiliki shift dan aktif
+    $users = User::whereIn('usertype', ['karyawan', 'gudang'])
+        ->whereDoesntHave('shift')
+        ->get();
+        
+    $jabatans = JabatanKaryawan::all();
+    return view('admin.shiftkaryawan.create', compact('users', 'jabatans'));
+}
     public function store(Request $request)
 {
     $request->validate([

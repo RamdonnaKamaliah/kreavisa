@@ -16,14 +16,24 @@
                 <!-- Judul -->
                 <h1 class="text-center text-xl font-bold text-gray-800 mb-4 dark:text-white">View Gaji Pokok Karyawan</h1>
 
-                <!-- Informasi Jabatan -->
-                <div class="bg-gray-200 p-6 rounded-lg shadow-inner text-center">
-                    <p class="text-md font-bold text-gray-700">Nama Jabatan :
-                        <span class="text-gray-600">{{ $gajipokok->jabatan->nama_jabatan }}</span>
-                    </p>
-                    <p class="text-md font-bold text-gray-700">Gaji Pokok :
-                        <span class="text-gray-600">{{ $gajipokok->gaji_pokok }}</span>
-                    </p>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <!-- Nama Jabatan -->
+                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex-1">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-briefcase text-blue-500 mr-2"></i>
+                            <label class="text-gray-600 dark:text-gray-300">Nama Jabatan :</label>
+                        </div>
+                        <p class="font-bold text-lg text-gray-800 dark:text-white pl-6">{{ $gajipokok->jabatan->nama_jabatan }}</p>
+                    </div>
+
+                    <!-- Gaji Pokok -->
+                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm flex-1">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-money-bill-wave text-blue-500 mr-2"></i>
+                            <label class="text-gray-600 dark:text-gray-300">Gaji Pokok :</label>
+                        </div>
+                        <p class="font-bold text-lg text-gray-800 dark:text-white pl-6">{{ number_format($gajipokok->gaji_pokok, 2, ',', '.') }}</p>
+                    </div>
                 </div>
             </div>
         </main>

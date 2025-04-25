@@ -24,7 +24,6 @@
                 </div>
             </div>
 
-
             <!-- Informasi Periode -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div class="border border-gray-300 rounded-lg p-4 dark:">
@@ -59,26 +58,34 @@
                             
                             @for($day = 1; $day <= $daysInMonth; $day++)
                                 @php
+                                    $date = DateTime::createFromFormat('Y-m-d', $jadwal->tahun.'-'.$jadwal->bulan.'-'.$day);
+                                    $isSunday = $date->format('w') == 0; // 0 = Sunday
                                     $shiftValue = $jadwal->{"day_$day"};
                                     $isDefault = $shiftValue === ($jadwal->shift_type == 1 ? $jadwal->shift->shift_1 : $jadwal->shift->shift_2);
                                 @endphp
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200 {{ $isSunday ? 'bg-red-50 dark:bg-red-900/20' : '' }}">
                                     <td class="p-3">
                                         <span class="font-medium">
-                                            {{ DateTime::createFromFormat('!d', $day)->format('D, d') }}
+                                            {{ $date->format('D, d') }}
                                         </span>
                                     </td>
                                     <td class="p-3">
-                                        {{ $shiftValue ?? '-' }}
+                                        {{ $isSunday ? '-' : ($shiftValue ?? '-') }}
                                     </td>
                                     <td class="p-3">
-                                        @if($shiftValue)
+                                        @if($isSunday)
+                                            <span class="px-2 py-1 text-xs rounded-full bg-red-500 text-white font-bold">
+                                                LIBUR MINGGU
+                                            </span>
+                                        @elseif($shiftValue)
                                             <span class="px-2 py-1 text-xs rounded-full 
                                                 {{ $isDefault ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' }}">
-                                                {{ $isDefault ? 'Default' : 'Custom' }}
+                                                {{ $isDefault ? 'Default' : 'Edited' }}
                                             </span>
                                         @else
-                                            <span class="text-gray-500">-</span>
+                                            <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">
+                                                -
+                                            </span>
                                         @endif
                                     </td>
                                 </tr>

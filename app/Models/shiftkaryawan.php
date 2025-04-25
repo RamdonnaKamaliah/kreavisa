@@ -27,4 +27,6 @@ class ShiftKaryawan extends Model
     {
         return $this->belongsTo(JabatanKaryawan::class, 'jabatan_id');
     }
+
+    
 }

@@ -20,8 +20,11 @@
                     </div>
 
                     <div>
-                        <label class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok</label>
-                        <input type="number" name="gaji_pokok" value="{{ $gajiKaryawan->gaji_pokok }}" class="w-full p-3 border rounded-lg bg-gray-100" required readonly>
+                        <label class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok (Rp)</label>
+                        <input type="text" id="gaji_pokok" name="gaji_pokok" 
+                               value="{{ number_format($gajiKaryawan->gaji_pokok, 0, ',', '.') }}" 
+                               class="w-full p-3 border rounded-lg bg-gray-100" readonly>
+                        <input type="hidden" name="gaji_pokok_raw" value="{{ $gajiKaryawan->gaji_pokok }}">
                     </div>
 
                     <div>
@@ -42,30 +45,89 @@
                         <input type="text" id="nomor_rekening" name="nomor_rekening" value="{{ $gajiKaryawan->tipe_pembayaran == 'tunai' ? '-' : $gajiKaryawan->nomor_rekening }}" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required {{ $gajiKaryawan->tipe_pembayaran == 'tunai' ? 'readonly' : '' }}>
                     </div>
 
-                    <div>
-                        <label class="block text-gray-700 font-medium dark:text-gray-200">Bonus (Rp)</label>
-                        <input type="number" name="bonus" value="{{ $gajiKaryawan->bonus }}" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
-                    </div>
+                        <!-- Bonus -->
+                        <div>
+                            <label class="block text-gray-700 font-medium dark:text-gray-200">Bonus (Rp)</label>
+                            <input type="text" id="bonus" name="bonus" 
+                                value="{{ number_format($gajiKaryawan->bonus, 0, ',', '.') }}" 
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                                oninput="formatRupiah(this)">
+                            <input type="hidden" name="bonus_raw" id="bonus_raw" value="{{ $gajiKaryawan->bonus }}">
+                        </div>
 
-                    <div>
-                        <label class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
-                        <input type="number" name="potongan" value="{{ $gajiKaryawan->potongan }}" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
-                    </div>
+                        <!-- Potongan -->
+                        <div>
+                            <label class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
+                            <input type="text" id="potongan" name="potongan" 
+                                value="{{ number_format($gajiKaryawan->potongan, 0, ',', '.') }}" 
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                                oninput="formatRupiah(this)">
+                            <input type="hidden" name="potongan_raw" id="potongan_raw" value="{{ $gajiKaryawan->potongan }}">
+                        </div>
+
+
 
                     <div class="col-span-1 md:col-span-2">
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-200">
-                            Update
+                            Simpan
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
     <script>
+        function formatRupiah(input) {
+            // Hapus semua karakter non-digit
+            let value = input.value.replace(/[^\d]/g, '');
+            
+            // Format dengan titik sebagai pemisah ribuan
+            if (value.length > 3) {
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+            
+            // Update nilai input
+            input.value = value;
+            
+            // Update nilai raw (tanpa format) ke hidden input
+            const rawId = input.id + '_raw';
+            document.getElementById(rawId).value = value.replace(/\./g, '');
+        }
+    
         document.addEventListener("DOMContentLoaded", function() {
+            // Inisialisasi nilai raw saat pertama kali load
+            document.getElementById('bonus_raw').value = "{{ $gajiKaryawan->bonus }}";
+            document.getElementById('potongan_raw').value = "{{ $gajiKaryawan->potongan }}";
+            
             handleMetodePembayaran(true);
         });
+    
+       // Format nilai saat halaman dimuat
+       document.addEventListener("DOMContentLoaded", function() {
+            // Format gaji pokok
+            const gajiPokokInput = document.getElementById('gaji_pokok');
+            if (gajiPokokInput) {
+                gajiPokokInput.value = formatNumber(gajiPokokInput.value);
+            }
+            
+            // Format bonus dan potongan
+            const bonusInput = document.getElementById('bonus');
+            const potonganInput = document.getElementById('potongan');
+            
+            if (bonusInput) {
+                bonusInput.value = formatNumber(bonusInput.value);
+            }
+            if (potonganInput) {
+                potonganInput.value = formatNumber(potonganInput.value);
+            }
+            
+            handleMetodePembayaran(true);
+        });
+
+        // Fungsi untuk memformat angka yang sudah ada
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        }
 
         function handleMetodePembayaran(onLoad = false) {
             var metode = document.getElementById('tipe_pembayaran').value;
@@ -76,10 +138,11 @@
                 nomorRekening.readOnly = true;
             } else {
                 if (!onLoad) { 
-                    nomorRekening.value = ''; 
+                    nomorRekening.value = '{{ $gajiKaryawan->nomor_rekening }}'; 
                 }
                 nomorRekening.readOnly = false;
             }
         }
     </script>
+
 @endsection

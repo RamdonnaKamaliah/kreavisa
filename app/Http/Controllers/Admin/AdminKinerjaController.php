@@ -9,6 +9,7 @@ use App\Models\JabatanKaryawan;
 use Illuminate\Http\Request;
 use App\Exports\KinerjaKaryawanExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon; // Add this line
 
 class AdminKinerjaController extends Controller
 {
@@ -30,11 +31,24 @@ class AdminKinerjaController extends Controller
     return Excel::download(new KinerjaKaryawanExport($month, $year), $filename);
 }
 
-    public function index()
-    {
-        $kinerja = KinerjaKaryawan::with(['user', 'jabatan'])->get();
-        return view('admin.kinerjakaryawan.index', compact('kinerja'));
+public function index(Request $request)
+{
+    $query = KinerjaKaryawan::with(['user', 'jabatan']);
+    
+    if ($request->has('periode')) {
+        $query->where('periode', 'like', '%' . $request->periode . '%');
     }
+    
+    if ($request->has('date')) {
+        $date = Carbon::parse($request->date);
+        $query->whereYear('tanggal_penilaian', $date->year)
+              ->whereMonth('tanggal_penilaian', $date->month);
+    }
+    
+    $kinerja = $query->get();
+    
+    return view('admin.kinerjakaryawan.index', compact('kinerja'));
+}
 
     public function create()
     {

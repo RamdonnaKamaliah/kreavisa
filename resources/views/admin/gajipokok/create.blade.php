@@ -29,16 +29,39 @@
                     </div>
 
                     <!-- Input Gaji Pokok -->
-                    <div>
-                        <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok</label>
-                        <input type="number" id="gaji_pokok" name="gaji_pokok"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" step="0.1" required
-                            placeholder="Masukkan dalam juta (contoh: 5 untuk 5 juta)">
-                    </div>
+<div>
+    <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok (Rp)</label>
+    <input type="text" id="gaji_pokok" name="gaji_pokok"
+        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
+        oninput="formatRupiah(this)"
+        placeholder="Masukkan gaji pokok">
+</div>
+
+<script>
+    function formatRupiah(input) {
+        // Hapus semua karakter non-digit
+        let value = input.value.replace(/[^\d]/g, '');
+        
+        // Format dengan titik sebagai pemisah ribuan
+        if (value.length > 3) {
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        
+        // Update nilai input
+        input.value = value;
+    }
+
+    // Tambahkan event listener untuk form submission
+    document.querySelector('form').addEventListener('submit', function(e) {
+        // Hilangkan titik sebelum submit
+        const gajiInput = document.getElementById('gaji_pokok');
+        gajiInput.value = gajiInput.value.replace(/\./g, '');
+    });
+</script>
 
                     <!-- Tombol Submit -->
                     <button type="submit"
-                        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Create</button>
+                        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Simpan</button>
                 </form>
 
 

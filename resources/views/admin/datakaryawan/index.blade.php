@@ -10,7 +10,7 @@
         <!-- Laporan Stok Masuk -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
             <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Laporan Data Karyawan</h2>
-            <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+            <div class="flex flex-wrap justify-end gap-2">
                 <a href="{{ route('datakaryawan.create') }}">
                     <button
                         class="bg-blue-500 text-white px-3 py-1.5 text-sm md:px-4 md:py-2 md:text-base rounded-md hover:bg-blue-600">

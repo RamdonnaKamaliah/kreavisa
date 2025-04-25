@@ -31,7 +31,7 @@
     <script>
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
-        let jadwals = @json($jadwals); // Kirim semua data shift ke JavaScript
+        let jadwals = @json($jadwals);
 
         function updateCalendar() {
             const monthNames = [
@@ -58,27 +58,38 @@
             // Tambahkan tanggal
             const today = new Date();
             for (let i = 1; i <= daysInMonth; i++) {
+                const currentDate = new Date(currentYear, currentMonth, i);
+                const isSunday = currentDate.getDay() === 0;
+                
                 let shiftText = '';
+                let dayClass = 'py-2 border border-gray-300 rounded min-h-[80px] flex flex-col';
+                let highlightClass = '';
+
+                // Highlight hari ini
+                if (i === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                    highlightClass = "bg-blue-600 text-white font-bold px-2 rounded";
+                }
+
+                // Cek apakah hari Minggu
+                if (isSunday) {
+                    shiftText = '<div class="mt-auto bg-red-500 text-white text-xs font-bold px-1 py-0.5 rounded self-center">Libur</div>';
+                }
 
                 // Cek apakah ada shift untuk hari ini
                 shiftData.forEach(jadwal => {
-                    if (jadwal[`day_${i}`]) {
+                    if (jadwal[`day_${i}`] && !isSunday) {
                         shiftText +=
-                            `<div class="bg-green-500 text-white text-xs font-bold px-2 py-1 mt-1 rounded">${jadwal[`day_${i}`]}</div>`;
+                            `<div class="mt-1 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">${jadwal[`day_${i}`]}</div>`;
                     }
                 });
 
-                // Highlight hari ini
-                let highlightClass = (i === today.getDate() && currentMonth === today.getMonth() && currentYear === today
-                        .getFullYear()) ?
-                    "bg-blue-600 text-white font-bold px-2 rounded" :
-                    "";
-
                 calendarHTML += `
-            <div class="py-2 border border-gray-300 rounded">
-                <span class="${highlightClass}">${i}</span>
-                ${shiftText}
-            </div>`;
+                    <div class="${dayClass}">
+                        <span class="${highlightClass}">${i}</span>
+                        <div class="flex flex-col mt-1">
+                            ${shiftText}
+                        </div>
+                    </div>`;
             }
 
             document.getElementById('calendarDays').innerHTML = calendarHTML;
@@ -98,5 +109,4 @@
 
         updateCalendar();
     </script>
-
 @endsection

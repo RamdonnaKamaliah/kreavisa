@@ -14,23 +14,51 @@
                 <!-- Foto Karyawan -->
                 <div class="flex justify-center mb-8 relative">
                     <div class="rounded-full p-2 border-4 border-blue-600 bg-gray-900 cursor-pointer" id="profilePic">
-                        @if ($datakaryawan->foto)
-                            <img src="{{ asset($datakaryawan->foto) }}"
-                                class="w-48 h-48 rounded-full shadow-md object-cover border border-gray-600">
-                        @else
-                            <img src="{{ asset('asset-landing-page/img/profile.png') }}"
-                                class="w-32 h-32 rounded-full shadow-md object-cover border border-gray-600">
-                        @endif
+                        @php
+                            $defaultPhoto = asset('asset-landing-page/img/profile.png');
+                            
+                            // Check if photo exists and is not empty
+                            if (!empty($datakaryawan->foto)) {
+                                // Check if the photo path is already a full path
+                                if (strpos($datakaryawan->foto, 'uploads/datakaryawan/') !== false) {
+                                    $photoPath = $datakaryawan->foto;
+                                } else {
+                                    $photoPath = 'uploads/datakaryawan/' . $datakaryawan->foto;
+                                }
+                                
+                                // Check if the file actually exists
+                                $photoUrl = file_exists(public_path($photoPath)) ? asset($photoPath) : $defaultPhoto;
+                            } else {
+                                $photoUrl = $defaultPhoto;
+                            }
+                            
+                            // Add cache busting
+                            $photoUrl .= '?v=' . time();
+                        @endphp
+                        
+                        <img src="{{ $photoUrl }}"
+                             class="w-48 h-48 rounded-full shadow-md object-cover border border-gray-600"
+                             alt="Foto profil {{ $datakaryawan->nama_lengkap }}"
+                             onerror="this.onerror=null;this.src='{{ $defaultPhoto }}'">
                     </div>
                 </div>
 
                 <!-- Data Form -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left dark:text-gray-300">
-                    @foreach ([['label' => 'Username', 'icon' => 'user-circle', 'value' => $datakaryawan->name], ['label' => 'Nama Lengkap', 'icon' => 'user', 'value' =>
-                    $datakaryawan->nama_lengkap],  ['label' => 'Gender', 'icon' => 'venus-mars', 'value' => $datakaryawan->gender], ['label' => 'Email', 'icon' => 'envelope', 'value' => $datakaryawan->email], ['label' => 'No. Telp', 'icon' => 'phone', 'value' => $datakaryawan->no_telepon], ['label' => 'Jabatan', 'icon' => 'briefcase', 'value' => $datakaryawan->jabatan->nama_jabatan ?? '-'], ['label' => 'Tanggal Lahir', 'icon' => 'calendar', 'value' => $datakaryawan->tanggal_lahir], ['label' => 'Usia', 'icon' => 'birthday-cake', 'value' => $datakaryawan->usia . ' th']] as $item)
+                    @foreach ([
+                        ['label' => 'Username', 'icon' => 'user-circle', 'value' => $datakaryawan->name], 
+                        ['label' => 'Nama Lengkap', 'icon' => 'user', 'value' => $datakaryawan->nama_lengkap],  
+                        ['label' => 'Gender', 'icon' => 'venus-mars', 'value' => $datakaryawan->gender], 
+                        ['label' => 'Email', 'icon' => 'envelope', 'value' => $datakaryawan->email], 
+                        ['label' => 'No. Telp', 'icon' => 'phone', 'value' => $datakaryawan->no_telepon], 
+                        ['label' => 'Jabatan', 'icon' => 'briefcase', 'value' => $datakaryawan->jabatan->nama_jabatan ?? '-'], 
+                        ['label' => 'Tanggal Lahir', 'icon' => 'calendar', 'value' => $datakaryawan->tanggal_lahir], 
+                        ['label' => 'Usia', 'icon' => 'birthday-cake', 'value' => $datakaryawan->usia . ' th']
+                    ] as $item)
                         <div class="pb-3 border-b border-gray-600">
-                            <label class="block text-gray-400 text-sm mb-1"><i
-                                    class="fas fa-{{ $item['icon'] }} mr-2"></i>{{ $item['label'] }}</label>
+                            <label class="block text-gray-400 text-sm mb-1">
+                                <i class="fas fa-{{ $item['icon'] }} mr-2"></i>{{ $item['label'] }}
+                            </label>
                             <p class="font-bold text-lg">{{ $item['value'] }}</p>
                         </div>
                     @endforeach

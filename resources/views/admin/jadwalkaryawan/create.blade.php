@@ -213,7 +213,7 @@
                 </div>
                 <!-- Tombol Submit -->
                 <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
-                    Create
+                    Simpan
                 </button>
             </form>
         </div>
@@ -234,7 +234,10 @@
                     icon: 'error',
                     title: 'Tahun tidak valid',
                     text: `Tahun minimal adalah ${currentYear}`,
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'bg-red-600 dark:bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded mr-2'
+                    },
                 });
                 this.value = currentYear;
             } else if (this.value > maxYear) {
@@ -242,7 +245,10 @@
                     icon: 'error',
                     title: 'Tahun tidak valid',
                     text: `Tahun maksimal adalah ${maxYear}`,
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'bg-red-600 dark:bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded mr-2'
+                    },
                 });
                 this.value = maxYear;
             }
