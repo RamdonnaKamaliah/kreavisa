@@ -38,10 +38,11 @@ class AdminGajiPokokController extends Controller
     // Konversi dari format ribuan ke angka biasa
     $gaji_pokok = str_replace('.', '', $request->gaji_pokok);
 
-    GajiPokok::create([
-        'jabatan_id' => $request->jabatan_id,
-        'gaji_pokok' => $gaji_pokok * 1_000_000, // Konversi ke rupiah
-    ]);
+    // Change this in your store method:
+GajiPokok::create([
+    'jabatan_id' => $request->jabatan_id,
+    'gaji_pokok' => $gaji_pokok, // Remove the * 1_000_000
+]);
 
     return redirect()->route('gajipokok.index')->with('added', 'true');
 }

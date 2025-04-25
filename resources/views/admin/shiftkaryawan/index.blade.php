@@ -55,6 +55,7 @@
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Aksi</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                         @foreach ($shifts as $row)
                             <tr>
@@ -92,28 +93,27 @@
                                         <script>
                                         function deleteShift(button) {
                                             Swal.fire({
-    icon: "warning",
-    title: "Yakin ingin menghapus Shift ini?",
-    html: "<div style='text-align:center'>Jika shift dihapus:<br>Data shift akan dihapus permanen, semua jadwal karyawan yang menggunakan shift ini akan otomatis terhapus</div>",
-    showCancelButton: true,
-    confirmButtonText: "Ya, Hapus!",
-    cancelButtonText: "Batal",
-    customClass: {
-        popup: 'custom-swal-popup',
-        htmlContainer: 'custom-swal-html',
-        confirmButton: 'bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded mr-2',
-        cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded'
-    },
-    buttonsStyling: false
-}).then((result) => {
-    if (result.isConfirmed) {
-        button.closest('form').submit();
-    }
-});
+                                            icon: "warning",
+                                            title: "Yakin ingin menghapus Shift ini?",
+                                            html: "<div style='text-align:center'>Jika shift dihapus:<br>Data shift akan dihapus permanen, semua jadwal karyawan yang menggunakan shift ini akan otomatis terhapus</div>",
+                                            showCancelButton: true,
+                                            confirmButtonText: "Ya, Hapus!",
+                                            cancelButtonText: "Batal",
+                                            customClass: {
+                                                popup: 'custom-swal-popup',
+                                                htmlContainer: 'custom-swal-html',
+                                                confirmButton: 'bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded mr-2',
+                                                cancelButton: 'bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded'
+                                            },
+                                            buttonsStyling: false
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                button.closest('form').submit();
+                                            }
+                                        });
 
-                                        }
+                                         }
 
-                                        // Fungsi untuk delete biasa (untuk yang lain)
                                         function deleted(button) {
                                             Swal.fire({
                                                 icon: "warning",
@@ -135,11 +135,6 @@
                                 </td>
                             </tr>
                         @endforeach
-                        @if ($shifts->isEmpty())
-                            <tr>
-                                <td colspan="5" class="text-center p-4 text-gray-600">Tidak ada data shift karyawan.</td>
-                            </tr>
-                        @endif
                     </tbody>
                 </table>
             </div>
