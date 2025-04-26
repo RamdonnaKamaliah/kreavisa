@@ -84,8 +84,8 @@
                 </div>
 
 
-               <!-- card4 -->
-                              <div class="hidden sm:block max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4 order-6 md:order-6">
+                <!-- card4 -->
+                <div class="hidden sm:block max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4 order-6 md:order-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                         <div class="flex-auto p-4 min-h-[120px]">
@@ -175,6 +175,14 @@
 
                     .glow-text {
                         text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+                    }
+
+                    #weatherDescription {
+                        white-space: nowrap;
+                        /* Jangan melipat */
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 120px;
                     }
                 </style>
 

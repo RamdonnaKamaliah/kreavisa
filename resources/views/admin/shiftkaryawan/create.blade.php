@@ -7,7 +7,7 @@
     <div id="layoutSidenav_content pt-1">
         <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
             
-            <div class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
+            <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
 
                 <div class="mb-4">
                     <a href="{{ route('shiftkaryawan.index') }}" class="text-blue-600 hover:text-blue-800">
@@ -15,12 +15,12 @@
                     </a>
                 </div>
 
-                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6">Create Shift Karyawan</h1>
+                <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">Create Shift Karyawan</h1>
                 <form action="{{ route('shiftkaryawan.store') }}" method="POST">
                     @csrf
 
                     <div class="mb-4">
-                        <label for="user_id" class="block text-gray-700 font-semibold mb-2">Karyawan</label>
+                        <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Karyawan</label>
                         <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
                             <option value="">Pilih Karyawan</option>
                             @foreach ($users as $user)
@@ -88,7 +88,7 @@
                     </script>
 
                     <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
-                        Create
+                        Simpan
                     </button>
                 </form>
             </div>
@@ -103,15 +103,18 @@
             @endforeach
 
             Swal.fire({
-                icon: 'error',
-                title: 'Oops... Terjadi Kesalahan',
-                text: errorMessages,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'OK'
-            }).then(() => {
-                // Refresh halaman setelah menampilkan SweetAlert
-                window.location.href = "{{ route('shiftkaryawan.create') }}";
-            });
+    icon: 'error',
+    title: 'Oops... Terjadi Kesalahan',
+    text: errorMessages,
+    confirmButtonText: 'OK',
+    confirmButtonColor: '#d33',
+    customClass: {
+        confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700'
+    }
+}).then(() => {
+    window.location.href = "{{ route('shiftkaryawan.create') }}";
+});
+
         });
     </script>
 @endif

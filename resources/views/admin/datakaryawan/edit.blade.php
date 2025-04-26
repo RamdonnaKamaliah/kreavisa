@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Edit Data Karyawan')
 @section('content')
     <div class="p-6 min-h-[-87px] flex items-center justify-center">
         @if ($errors->any())
@@ -12,29 +13,48 @@
         @endif
         <main>
             <div class="container mx-auto">
-                <div class="bg-white shadow-lg rounded-2xl p-8 max-w-4xl mx-auto text-gray-900 relative">
+                <div class="bg-white dark:bg-slate-800 shadow-lg rounded-2xl p-8 max-w-4xl mx-auto text-gray-900 relative">
                     <!-- Tombol Kembali -->
                     <div class="absolute top-4 left-4">
                         <a href="{{ route('datakaryawan.index') }}" class="p-2 rounded-full text-blue-500">
                             <i class="fas fa-arrow-left"></i>
                         </a>
                     </div>
-                    <h1 class="text-2xl font-bold text-center mb-6">Edit Data Karyawan</h1>
+                    <h1 class="text-2xl font-bold text-center mb-6 dark:text-white">Edit Data Karyawan</h1>
 
                     <div class="grid grid-cols-2 gap-8 items-center">
                         <!-- Nama Karyawan (Tidak Bisa Diedit) -->
                         <div class="border-r border-gray-300 pr-8">
                             <div class="flex flex-col items-center">
                                 <!-- Foto Karyawan -->
-                                <div class="w-32 h-32 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">
-                                    @if ($karyawan->foto && file_exists(public_path('storage/datakkaryawan/' . $karyawan->foto)))
-                                        <img accept="image/*" onchange="previewImage(event)" alt="Foto Karyawan" class="w-full h-full object-cover">
-                                    @else
-                                    <img src="{{ $karyawan->foto ? asset($karyawan->foto) : asset('asset-landing-page/img/profile.png') }}" alt="Default Profile" class="w-full h-full object-cover">
-                                    @endif
-                                </div>
+                                @php
+                                    $defaultPhoto = asset('asset-landing-page/img/profile.png');
+                                    
+                                    // Check if photo exists and is not empty
+                                    if (!empty($karyawan->foto)) {
+                                        // Check if the photo path is already a full path
+                                        if (strpos($karyawan->foto, 'uploads/datakaryawan/') !== false) {
+                                            $photoPath = $karyawan->foto;
+                                        } else {
+                                            $photoPath = 'uploads/datakaryawan/' . $karyawan->foto;
+                                        }
+                                        
+                                        // Check if the file actually exists
+                                        $photoUrl = file_exists(public_path($photoPath)) ? asset($photoPath) : $defaultPhoto;
+                                    } else {
+                                        $photoUrl = $defaultPhoto;
+                                    }
+                                    
+                                    // Add cache busting
+                                    $photoUrl .= '?v=' . time();
+                                @endphp
+                                
+                                <img src="{{ $photoUrl }}"
+                                     class="w-32 h-32 rounded-full object-cover border border-gray-300"
+                                     alt="Foto profil {{ $karyawan->nama_lengkap }}"
+                                     onerror="this.onerror=null;this.src='{{ $defaultPhoto }}'">
 
-                                <label class="block text-lg font-medium text-gray-600 mt-4">Nama Lengkap</label>
+                                <label class="block text-lg font-medium text-gray-600 mt-4 dark:text-gray-300">Nama Lengkap</label>
                                 <input type="text"
                                     class="w-full px-3 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-center text-lg"
                                     value="{{ $karyawan->nama_lengkap }}" disabled>
@@ -47,7 +67,7 @@
                             @csrf
                             @method('PUT')
                             <div>
-                                <label for="jabatan_id" class="block text-lg font-medium text-gray-600">Nama Jabatan</label>
+                                <label for="jabatan_id" class="block text-lg font-medium text-gray-600 dark:text-gray-300">Nama Jabatan</label>
                                 <select name="jabatan_id" id="jabatan_id"
                                     class="w-full px-3 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-lg"
                                     required>
@@ -64,7 +84,7 @@
                             </div>
                             <div class="mt-6 flex justify-end">
                                 <button type="submit" class="bg-yellow-300 text-gray-900 py-2 px-6 rounded-md text-lg">
-                                    Edit
+                                    Simpan
                                 </button>
                             </div>
                         </form>

@@ -12,7 +12,6 @@
                         <tr>
                             <th class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">Nama Lengkap
                             </th>
-                            <th class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
                             <th class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">Tanggal</th>
                             <th class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">Tipe
                                 Pembayaran</th>
@@ -30,8 +29,6 @@
                             <tr class="hover:bg-gray-100 dark:hover:bg-slate-800 transition">
                                 <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">
                                     {{ $row->user->nama_lengkap }}</td>
-                                <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">
-                                    {{ $row->user->jabatan->nama_jabatan }}</td>
                                 <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">
                                     {{ $row->tanggal }}</td>
                                 <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">

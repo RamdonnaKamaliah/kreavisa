@@ -1,9 +1,10 @@
 @extends('layout.main')
+@section('page-title', 'Gaji Pokok')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel -->
         <div class="mb-4">
-            <label for="tableSelect" class="block text-gray-800 text-lg mb-2">Pilih Laporan:</label>
+            <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-full">
                     <option value="gajiKaryawan">Laporan Gaji Karyawan</option>
@@ -35,17 +36,17 @@
         </script>
 
         <!-- Laporan Gaji Pokok -->
-        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md border border-gray-300">
-            <h2 class="text-center text-xl font-bold mb-4">Laporan Gaji Pokok</h2>
-            <div class="flex justify-between items-center mb-4">
+        <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Gaji Pokok</h2>
+            <div class="flex items-center mb-4">
                 <a href="{{ route('gajipokok.create') }}"
-                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
-                    + Tambah Data
+                    class="ml-auto px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+                    Tambah Data
                 </a>
             </div>
             <div class="overflow-x-auto mt-4">
-                <table id="stokMasukTable" class="w-full border border-gray-400 text-xs md:text-sm">
-                    <thead class="bg-gray-200 text-gray-900">
+                <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
+                    <thead class="bg-gray-200 text-gray-800 dark:bg-slate-700 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Jabatan</th>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Gaji Pokok</th>
@@ -55,9 +56,9 @@
                     <tbody>
                         @foreach ($gajiPokok as $row)
                             <tr>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">
                                     {{ $row->jabatan->nama_jabatan }}</td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">Rp
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-200">Rp
                                     {{ number_format($row->gaji_pokok, 0, ',', '.') }}</td>
                                 <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 text-center">
                                     <div class="flex justify-center space-x-1 md:space-x-2">

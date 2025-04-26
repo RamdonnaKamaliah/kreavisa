@@ -1,7 +1,7 @@
 @extends('layout3.karyawan3')
 @section('content')
 <div class="p-4 md:p-6 overflow-x-hidden">
-    <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md">
+    <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl text-gray-900 p-4 rounded-lg shadow-md">
             <!-- Back Button -->
             <div class="mb-4">
                 <a href="{{ route('karyawan.absen.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
@@ -10,7 +10,7 @@
             </div>
             
             <!-- Judul Absen Izin di tengah -->
-            <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Absen Izin</h1>
+            <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center dark:text-white">Absen Izin</h1>
 
             @if ($errors->has('file'))
                 <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded">
@@ -26,7 +26,7 @@
 
                 <!-- Upload Bukti Izin Section -->
                 <div class="mb-8">
-                    <label class="block text-gray-700 text-sm font-medium mb-4 text-center">Upload Bukti Izin</label>
+                    <label class="block text-gray-700 text-sm font-medium mb-4 text-center dark:text-gray-300">Upload Bukti Izin</label>
                     
                     <div class="flex flex-col items-center space-y-4">
                         <!-- File Upload Area -->
@@ -52,8 +52,8 @@
                                 <div class="flex items-center space-x-3">
                                     <i class="fas fa-file text-blue-500 text-xl"></i>
                                     <div>
-                                        <p id="fileName" class="text-sm font-medium text-gray-700 truncate"></p>
-                                        <p id="fileSize" class="text-xs text-gray-500"></p>
+                                        <p id="fileName" class="text-sm font-medium text-gray-700 truncate dark:text-white"></p>
+                                        <p id="fileSize" class="text-xs text-gray-500 dark:text-white"></p>
                                     </div>
                                 </div>
                                 <button type="button" id="removeFile" class="text-red-500 hover:text-red-700">
@@ -65,9 +65,13 @@
                 </div>
 
                 <!-- Tombol Submit -->
-                <button type="submit" class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium">
-                    Simpan Absen
-                </button>
+                <div class="flex justify-center pb-8">
+                    <button type="submit"
+                        class="w-full max-w-lg px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium flex items-center justify-center gap-2">
+                        <span class="iconify w-6 h-6" data-icon="majesticons:save-line" data-inline="false"></span>
+                        Simpan Absen
+                    </button>
+                </div>
             </form>
         </div>
     </div>

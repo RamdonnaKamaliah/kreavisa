@@ -83,4 +83,10 @@ public function shifts()
 {
     return $this->hasMany(ShiftKaryawan::class, 'user_id');
 }
+
+// Di model User (app/Models/User.php)
+public function shift()
+{
+    return $this->hasOne(ShiftKaryawan::class, 'user_id');
+}
 }

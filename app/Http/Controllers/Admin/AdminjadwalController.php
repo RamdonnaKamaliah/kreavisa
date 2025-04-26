@@ -14,33 +14,34 @@ class AdminjadwalController extends Controller
 {
 
 
-    public function index(Request $request)
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
-        }
-    
-        $user = Auth::user();
-    
-        if (!$user) {
-            abort(403, 'User tidak ditemukan');
-        }
-    
-        // Ambil nilai bulan dan tahun dari request
-        $bulan = $request->input('bulan', date('m')); // Default: bulan saat ini
-        $tahun = $request->input('tahun', date('Y')); // Default: tahun saat ini
-    
-        // Ambil semua karyawan
-        $karyawans = User::whereIn('usertype', ['Gudang', 'Karyawan'])->with('jabatan')->get();
-    
-        $jadwals = JadwalKaryawan::with(['shift', 'user', 'jabatan'])
-        ->where('bulan', $bulan)
-        ->where('tahun', $tahun)
-        ->get()
-        ->keyBy('user_id');
+   public function index(Request $request)
+{
+    if (!Auth::check()) {
+        return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+    }
+
+    $user = Auth::user();
+    if (!$user) {
+        abort(403, 'User tidak ditemukan');
+    }
+
+    $bulan = $request->input('bulan', date('m'));
+    $tahun = $request->input('tahun', date('Y'));
+
+    $karyawans = User::whereIn('usertype', ['Gudang', 'Karyawan'])
+                    ->with('jabatan')
+                    ->get();
+
+    $jadwals = JadwalKaryawan::with(['shift', 'user', 'jabatan'])
+                ->where('bulan', $bulan)
+                ->where('tahun', $tahun)
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [$item->user_id => $item];
+                });
 
     return view('admin.jadwalkaryawan.index', compact('karyawans', 'jadwals', 'bulan', 'tahun'));
-    }
+}
     
 
     /**
@@ -71,10 +72,10 @@ class AdminjadwalController extends Controller
         'user_id' => 'required|exists:users,id',
         'jabatan_id' => 'required|exists:jabatan_karyawans,id',
         'shift_id' => 'required|exists:shift_karyawans,id',
-        'shift_type' => 'required|in:1,2', // Validasi shift_type (1 atau 2)
-        'bulan' => 'required|array', // Bulan sekarang berupa array
-        'bulan.*' => 'integer|min:1|max:12', // Validasi setiap bulan
-        'tahun' => 'required|integer|digits:4|min:' . date('Y') . '|max:' . (date('Y') + 5), // Validasi tahun 4 digit
+        'shift_type' => 'required|in:1,2',
+        'bulan' => 'required|array',
+        'bulan.*' => 'integer|min:1|max:12',
+        'tahun' => 'required|integer|digits:4|min:' . date('Y') . '|max:' . (date('Y') + 5),
     ], [
         'tahun.min' => 'Tahun harus minimal :min.',
         'tahun.max' => 'Tahun harus maksimal :max.',
@@ -83,27 +84,23 @@ class AdminjadwalController extends Controller
         'bulan.*.max' => 'Bulan harus maksimal :max.',
     ]);
 
-    // Ambil shift yang dipilih
     $shift = ShiftKaryawan::find($request->shift_id);
     $shiftValue = ($request->shift_type == 1) ? $shift->shift_1 : $shift->shift_2;
 
-    // Simpan data jadwal untuk setiap bulan yang dipilih
     foreach ($request->bulan as $bulan) {
-        // Cek apakah sudah ada jadwal di bulan yang sama untuk user ini
         $existingJadwal = JadwalKaryawan::where('user_id', $request->user_id)
             ->where('bulan', $bulan)
             ->where('tahun', $request->tahun)
             ->first();
 
-            if ($existingJadwal) {
-                // Jika sudah ada jadwal, kembalikan dengan pesan error
-                $namaBulan = \DateTime::createFromFormat('!m', $bulan)->format('F'); // Ambil nama bulan
-                $namaTahun = $request->tahun; // Ambil tahun dari request
+        if ($existingJadwal) {
+            $namaBulan = \DateTime::createFromFormat('!m', $bulan)->format('F');
+            $namaTahun = $request->tahun;
             
-                return redirect()->back()
-                    ->withInput()
-                    ->withErrors(['bulan' => 'Jadwal untuk bulan ' . $namaBulan . ' di tahun ' . $namaTahun . ' sudah ada.']);
-            }
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['bulan' => 'Jadwal untuk bulan ' . $namaBulan . ' di tahun ' . $namaTahun . ' sudah ada.']);
+        }
 
         $jadwalData = [
             'user_id' => $request->user_id,
@@ -114,9 +111,22 @@ class AdminjadwalController extends Controller
             'tahun' => $request->tahun,
         ];
 
-        // Isi semua hari dengan shift yang dipilih
-        for ($i = 1; $i <= 31; $i++) {
-            $jadwalData["day_$i"] = $shiftValue;
+        // Hitung jumlah hari dalam bulan
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $bulan, $request->tahun);
+
+        for ($i = 1; $i <= $daysInMonth; $i++) {
+            // Cek apakah hari ini Minggu (0 = Minggu dalam format date('w'))
+            $date = \DateTime::createFromFormat('Y-m-d', $request->tahun . '-' . $bulan . '-' . $i);
+            if ($date->format('w') == 0) { // Hari Minggu
+                $jadwalData["day_$i"] = null; // Kosongkan shift untuk hari Minggu
+            } else {
+                $jadwalData["day_$i"] = $shiftValue;
+            }
+        }
+
+        // Set hari di luar jumlah hari bulan ini ke null
+        for ($i = $daysInMonth + 1; $i <= 31; $i++) {
+            $jadwalData["day_$i"] = null;
         }
 
         JadwalKaryawan::create($jadwalData);

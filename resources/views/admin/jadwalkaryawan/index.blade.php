@@ -5,7 +5,7 @@
         <!-- Dropdown Pilihan Tabel & Tombol Tambah Data -->
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-4">
-                <label for="tableSelect" class="text-gray-800 text-lg">Pilih Laporan:</label>
+                <label for="tableSelect" class="text-white text-lg">Pilih Laporan:</label>
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-64">
                     <option value="jadwalKaryawan">Laporan Jadwal Karyawan</option>
                     <option value="shiftKaryawan">Laporan Shift Karyawan</option>
@@ -36,20 +36,21 @@
         </script>
 
         <!-- Laporan Jadwal Karyawan -->
-        <div class="bg-white text-gray-900 p-4 rounded-lg shadow-md border border-gray-300">
-            <h2 class="text-center text-xl font-bold mb-4">Laporan Jadwal Karyawan</h2>
-            <div class="flex justify-between items-center mb-4">
-                <form action="{{ route('jadwalkaryawan.index') }}" method="GET" class="flex items-center gap-4">
+        <div class="bg-white dark:bg-slate-800 text-gray-900 p-4 rounded-lg shadow-md border border-gray-300 dark:border-slate-800">
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Jadwal Karyawan</h2>
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-4">
+                <!-- Form Filter -->
+                <form action="{{ route('jadwalkaryawan.index') }}" method="GET" class="flex flex-col sm:flex-row items-center gap-4">
                     <!-- Input Tahun dengan Spinner Custom -->
-                    <div class="flex items-center">
-                        <div class="relative flex items-center">
+                    <div class="flex items-center w-full sm:w-auto">
+                        <div class="relative flex items-center w-full">
                             <button type="button" 
                                     onclick="changeYear(-1)" 
                                     class="p-2 bg-gray-100 hover:bg-gray-200 rounded-l-lg border border-gray-400 flex items-center justify-center h-10">
                                 <i class="fas fa-minus text-gray-600"></i>
                             </button>
                             
-                            <div class="w-24 px-4 py-2 border-t border-b border-gray-400 bg-white text-center font-medium h-10 flex items-center justify-center">
+                            <div class="w-full px-4 py-2 border-t border-b border-gray-400 bg-white text-center font-medium h-10 flex items-center justify-center">
                                 <span id="yearDisplay">{{ $tahun ?? date('Y') }}</span>
                                 <input type="hidden" id="yearSelect" name="tahun" value="{{ $tahun ?? date('Y') }}">
                             </div>
@@ -61,8 +62,8 @@
                             </button>
                         </div>
                     </div>
-        
-                    <select id="monthSelect" name="bulan" class="p-2 border border-gray-400 rounded-md h-10">
+            
+                    <select id="monthSelect" name="bulan" class="p-2 border border-gray-400 rounded-md h-10 w-full sm:w-auto">
                         @for ($i = 1; $i <= 12; $i++)
                             <option value="{{ $i }}" {{ ($i == ($bulan ?? date('m'))) ? 'selected' : '' }}>
                                 {{ DateTime::createFromFormat('!m', $i)->format('F') }}
@@ -70,19 +71,21 @@
                         @endfor
                     </select>
                     
-                    <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md h-10">
+                    <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md h-10 w-full sm:w-auto">
                         Tampilkan
                     </button>
                 </form>
+                
+                <!-- Button Tambah Data -->
                 <a href="{{ route('jadwalkaryawan.create') }}"
-                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
-                    + Tambah Data
+                    class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-center w-full md:w-auto">
+                    Tambah Data
                 </a>
             </div>
             <!-- Tabel Jadwal Karyawan -->
             <div class="overflow-x-auto w-full">
                 <table class="border border-gray-400 text-xs md:text-sm min-w-max">
-                    <thead class="bg-gray-200 text-gray-900">
+                    <thead class="bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" rowspan="2">Nama</th>
                             <th class="border border-gray-400 px-2 py-1 md:px-4 md:py-2" rowspan="2">Jabatan</th>
@@ -96,10 +99,10 @@
                     <tbody id="tableBody">
                         @foreach ($karyawans as $karyawan)
                             <tr>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $karyawan->nama_lengkap ?? '-' }}
                                 </td>
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2">
+                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 dark:text-gray-300">
                                     {{ $karyawan->jabatan->nama_jabatan ?? '-' }}
                                 </td>
 
@@ -109,15 +112,19 @@
                             @endphp
                             
                             @for ($i = 1; $i <= 31; $i++)
-                                @php
-                                    $jamKerja = $jadwal ? $jadwal->getShiftForDay($i) : null;
-                                    $warna = $jamKerja ? 'style=background-color:#00F600;color:black;' : '';
-                                @endphp
-                                <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
-                                    {{ $jamKerja ?? '' }}
-                                </td>
-                            @endfor
-
+    @php
+        $jamKerja = $jadwal ? $jadwal->getShiftForDay($i) : null;
+        $date = \DateTime::createFromFormat('Y-m-d', $tahun . '-' . $bulan . '-' . $i);
+        $isSunday = $date->format('w') == 0;
+        
+        $warna = $isSunday ? 'style=background-color:#C5172E;color:white;' : 
+                ($jamKerja ? 'style=background-color:#3b82f6;color:black;' : '');
+    @endphp
+    <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
+        {{ $isSunday ? 'Libur' : ($jamKerja ?? '') }}
+    </td>
+@endfor
+                                                    
 
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">
                                 @if($jadwal)

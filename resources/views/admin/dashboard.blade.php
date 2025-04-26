@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Dashboard')
 @section('content')
     <div class="w-full px-6 py-6 mx-auto">
         <!-- row 1 -->
@@ -79,7 +80,7 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        Jumlah Stok MASUK
+                                        Jumlah Jabatan Karyawan
                                     </p>
                                     <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($stokmasuk) }} Stok</h5>
                                 </div>
@@ -92,7 +93,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href="{{ route('stokbarang.stokmasuk') }}"
+                            <a href=""
                                 class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
@@ -110,7 +111,7 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        Jumlah Stok KELUAR
+                                        Jumlah Kinerja Baik
                                     </p>
                                     <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($stokkeluar) }} Stok</h5>
                                 </div>
@@ -123,7 +124,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href="{{ route('stokbarang.stokkeluar') }}"
+                            <a href=""
                                 class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
@@ -138,19 +139,20 @@
                 <!-- Chart Karyawan -->
                 <div
                     class="bg-white dark:bg-slate-850 dark:shadow-dark-xl shadow-lg rounded-xl p-6 w-full md:w-[55%] flex flex-col mt-6">
-                    <h2 class="text-lg font-bold mb-4 text-center">Jumlah Karyawan</h2>
+                    <h2 class="text-lg font-bold mb-4 text-center dark:text-white dark:opacity-60">Jumlah Karyawan</h2>
                     <div class="flex flex-row justify-center items-center gap-8">
                         <!-- Chart Donut -->
                         <div class="relative w-52 h-52 flex justify-center items-center mt-8">
                             <canvas id="karyawanChart"></canvas>
                             <p
-                                class="absolute text-center text-base font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                class="absolute text-center text-base font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 dark:text-white dark:opacity-60">
                                 Total: <br /> {{ $datakaryawan->count() }} Karyawan
                             </p>
                         </div>
                         <!-- Box Keterangan -->
-                        <div class="p-5 bg-gray-100 rounded-lg shadow text-left w-60">
-                            <h3 class="text-base font-semibold mb-3">Jumlah Karyawan Berdasarkan Jabatan</h3>
+                        <div class="p-5 bg-gray-100 dark:bg-gray-700 rounded-lg shadow text-left w-60">
+                            <h3 class="text-base font-semibold mb-3 dark:text-white dark:opacity-60">Jumlah Karyawan
+                                Berdasarkan Jabatan</h3>
                             <ul class="text-sm">
                                 @foreach ($datakaryawan->groupBy('jabatan.nama_jabatan') as $jabatan => $karyawan)
                                     <li>
@@ -165,8 +167,9 @@
                 </div>
 
                 <!-- Chart Absensi -->
-                <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl  shadow-lg rounded-xl p-6 w-full md:w-[45%] flex flex-col items-center mt-6">
-                    <h2 class="text-lg font-bold mb-4">Total Absensi Minggu Ini</h2>
+                <div
+                    class="bg-white dark:bg-slate-850 dark:shadow-dark-xl  shadow-lg rounded-xl p-6 w-full md:w-[45%] flex flex-col items-center mt-6">
+                    <h2 class="text-lg font-bold mb-4 dark:text-white dark:opacity-60">Total Absensi Minggu Ini</h2>
                     <div class="w-full flex justify-center">
                         <canvas id="absensiChart" class="h-56"></canvas>
                     </div>
@@ -212,6 +215,9 @@
                                     data: values,
                                     backgroundColor: colors.slice(0, labels.length),
                                     hoverOffset: 5,
+                                    borderColor: document.documentElement.classList.contains('dark') ?
+                                        '#1e293b' : '#fff', // Border color for dark mode
+                                    borderWidth: 2,
                                 }],
                             },
                             options: {
@@ -222,7 +228,8 @@
                                         display: false,
                                     },
                                     datalabels: {
-                                        color: "#fff",
+                                        color: document.documentElement.classList.contains('dark') ? '#fff' :
+                                            '#333',
                                         font: {
                                             weight: "bold",
                                             size: 14,
@@ -263,6 +270,9 @@
                                     data: values,
                                     backgroundColor: colors,
                                     borderRadius: 5,
+                                    borderColor: document.documentElement.classList.contains('dark') ?
+                                        '#1e293b' : '#fff',
+                                    borderWidth: 1,
                                 }],
                             },
                             options: {
@@ -284,6 +294,22 @@
                                         beginAtZero: true,
                                         ticks: {
                                             stepSize: 1,
+                                            color: document.documentElement.classList.contains('dark') ? '#e2e8f0' :
+                                                '#64748b',
+                                        },
+                                        grid: {
+                                            color: document.documentElement.classList.contains('dark') ? '#334155' :
+                                                '#e2e8f0',
+                                        },
+                                    },
+                                    x: {
+                                        ticks: {
+                                            color: document.documentElement.classList.contains('dark') ? '#e2e8f0' :
+                                                '#64748b',
+                                        },
+                                        grid: {
+                                            color: document.documentElement.classList.contains('dark') ? '#334155' :
+                                                '#e2e8f0',
                                         },
                                     },
                                 },
@@ -293,6 +319,21 @@
 
                     createKaryawanChart();
                     createAbsensiChart();
+
+                    // Listen for dark mode changes and update charts
+                    const observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            if (mutation.attributeName === 'class') {
+                                createKaryawanChart();
+                                createAbsensiChart();
+                            }
+                        });
+                    });
+
+                    observer.observe(document.documentElement, {
+                        attributes: true,
+                        attributeFilter: ['class']
+                    });
 
                     window.addEventListener("resize", function() {
                         if (window.karyawanChart) {

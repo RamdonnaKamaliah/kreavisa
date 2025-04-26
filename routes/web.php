@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminShiftController;
 use App\Http\Controllers\Admin\AdmingajiController;
 use App\Http\Controllers\Admin\AdminGajiPokokController;
 use App\Http\Controllers\Admin\AdminStokBarangController;
+use App\Http\Controllers\Admin\AdminKinerjaController;
 use App\Http\Controllers\Admin\AdminprofileController;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\GajiController;
@@ -23,7 +24,16 @@ use App\Http\Middleware\Admin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\KinerjaController;
+
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 
 Route::get('/test-email', function () {
     Mail::raw('Test email from Laravel', function ($message) {
@@ -47,30 +57,36 @@ Route::get('/test-email', function () {
     Route::get('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'createKaryawanGudang'])->name('login.karyawan-gudang');
     Route::post('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'storeKaryawanGudang'])->name('login.karyawan-gudang.process');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
-});
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
+    });
 
+    Route::get('/lokasi-absen', function() {
+        $lokasi = \App\Models\LokasiAbsen::first();
+        return response()->json($lokasi);
+    });
 
 Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('/admin/datakaryawan', AdmindataController::class);
     Route::resource('/admin/jabatankaryawan', AdminjabatanController::class);
     Route::resource('/admin/shiftkaryawan', AdminShiftController::class);
+    Route::resource('/admin/kinerjakaryawan', AdminKinerjaController::class);
+    Route::get('/kinerjakaryawan/export', [AdminKinerjaController::class, 'export'])->name('kinerjakaryawan.export');
     Route::resource('/admin/absenkaryawan', AdminabsenController::class);
+    Route::get('/absenkaryawan/export', [AdminabsenController::class, 'export'])->name('absenkaryawan.export');
+    // Route untuk update lokasi absen
+    Route::post('/absen/update-lokasi', [\App\Http\Controllers\Admin\AdminabsenController::class, 'updateLokasi'])
+        ->name('admin.absen.update-lokasi');
     Route::resource('/admin/jadwalkaryawan', AdminJadwalController::class);
     Route::resource('/admin/gajikaryawan', AdmingajiController::class);
+    Route::get('/gajikaryawan/export', [AdminGajiController::class, 'export'])->name('gajikaryawan.export');
     Route::resource('/admin/gajipokok', AdminGajiPokokController::class);
     Route::get('/get-gaji-pokok/{user_id}', [AdminGajiController::class, 'getGajiPokok']);
-    Route::resource('/admin/stokbarang', AdminStokBarangController::class);
-    Route::get('/stokbarang/stokmasuk', [AdminStokBarangController::class, 'stokMasuk'])->name('stokbarang.stokmasuk');
-    Route::get('/stokbarang/stokkeluar', [AdminStokBarangController::class, 'stokKeluar'])->name('stokbarang.stokkeluar');
-    Route::get('stokbarang-export', [AdminStokBarangController::class, 'export'])->name('stokbarang.export');
-    Route::get('stokmasuk-export', [AdminStokBarangController::class, 'export'])->name('stokmasuk.export');
-    Route::get('stokkeluar-export', [AdminStokBarangController::class, 'export'])->name('stokkeluar.export');
+
 
 });
 
@@ -79,7 +95,7 @@ Route::middleware(['auth', Admin::class])->group(function () {
 
 Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
-    
+    Route::get('karyawan/kinerja', [KinerjaController::class, 'index'])->name('kinerja.index');
     // Absen
     Route::get('karyawan/absen/sakit', [KaryawanAbsenController::class, 'createSakit'])
         ->name('karyawan.absen.sakit');
@@ -90,7 +106,6 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::post('karyawan/absen/izin', [KaryawanAbsenController::class, 'storeIzin'])
         ->name('karyawan.absen.izin.store');
     Route::resource('karyawan/absen', KaryawanAbsenController::class)->names('karyawan.absen');
-    Route::get('karyawan/kinerja', [KinerjaController::class, 'index'])->name('kinerja.index');
     
     // Gaji
     Route::get('/karyawan/gaji', [KaryawanGajiController::class, 'index'])->name('gajiKaryawan.index');

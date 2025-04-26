@@ -12,6 +12,7 @@
 <script src="{{ asset('assets/js/plugins/Chart.extension.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
 
+
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
 <script src="{{ asset('asset-landing-page/js/navbar-fixed.js') }}"></script>

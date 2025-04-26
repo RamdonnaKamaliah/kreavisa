@@ -65,18 +65,18 @@ class AdminJabatanController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nama_jabatan' => 'required|string|max:50',
-        ]);
-    
-        $jabatan = JabatanKaryawan::findOrFail($id);
-        $jabatan->update([
-            'nama_jabatan' => $request->nama_jabatan,
-        ]);
-    
-        return redirect()->route('jabatankaryawan.index')->with('edited', 'true');
-    }
+{
+    $request->validate([
+        'nama_jabatan' => 'required|string|max:50|unique:jabatan_karyawans,nama_jabatan,'.$id,
+    ]);
+
+    $jabatan = JabatanKaryawan::findOrFail($id);
+    $jabatan->update([
+        'nama_jabatan' => $request->nama_jabatan,
+    ]);
+
+    return redirect()->route('jabatankaryawan.index')->with('edited', 'true');
+}
 
     /**
      * Remove the specified resource from storage.
