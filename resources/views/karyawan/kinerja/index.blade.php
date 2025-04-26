@@ -170,7 +170,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">Belum ada data penilaian.</td>
+                                        <td colspan="4" class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">Belum ada data penilaian</td>
                                     </tr>
                                 @endforelse
                             </tbody>
