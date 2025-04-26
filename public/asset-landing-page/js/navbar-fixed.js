@@ -26,7 +26,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (savedFixed === "true") {
         toggleNavbarFixed.checked = true;
         navbar.classList.add("navbar-bg");
-        handleScroll(); // Langsung aktifkan scroll handler
+        navbar.classList.add("navbar-fixed-dashboard");
+
+        const spacer = document.getElementById("navbarSpacer");
+        if (spacer) spacer.classList.remove("hidden");
+
         window.addEventListener("scroll", handleScroll);
     }
 
@@ -34,29 +38,32 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleNavbarFixed.addEventListener("change", function (e) {
         const isChecked = e.target.checked;
         localStorage.setItem("navbarFixed", isChecked);
+        const spacer = document.getElementById("navbarSpacer");
+
         if (isChecked) {
             navbar.classList.add("navbar-bg");
-            handleScroll();
+            navbar.classList.add("navbar-fixed-dashboard");
+
+            const spacer = document.getElementById("navbarSpacer");
+            if (spacer) spacer.classList.remove("hidden");
+
             window.addEventListener("scroll", handleScroll);
         } else {
             navbar.classList.remove("navbar-fixed-dashboard");
             navbar.classList.remove("navbar-bg");
             window.removeEventListener("scroll", handleScroll);
+
+            // Sembunyikan spacer
+            if (spacer) spacer.classList.add("hidden");
         }
     });
 
-    // Fungsi menangani scroll behavior
+    // Pastikan fixed langsung aktif saat diaktifkan
     function handleScroll() {
-        const placeholder = document.getElementById("navbar-placeholder");
-
         if (!toggleNavbarFixed.checked) return;
+        navbar.classList.add("navbar-fixed-dashboard");
 
-        if (window.scrollY > 10) {
-            navbar.classList.add("navbar-fixed-dashboard");
-            placeholder.classList.add("h-[80px]"); // Ganti sesuai tinggi navbar
-        } else {
-            navbar.classList.remove("navbar-fixed-dashboard");
-            placeholder.classList.remove("h-[80px]");
-        }
+        const spacer = document.getElementById("navbarSpacer");
+        if (spacer) spacer.classList.remove("hidden");
     }
 });
