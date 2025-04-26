@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Data Karyawan')
 @section('content')
 @if (session('email_error'))
     <div class="alert alert-warning">

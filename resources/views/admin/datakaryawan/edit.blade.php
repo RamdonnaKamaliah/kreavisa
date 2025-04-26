@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Edit Data Karyawan')
 @section('content')
     <div class="p-6 min-h-[-87px] flex items-center justify-center">
         @if ($errors->any())
