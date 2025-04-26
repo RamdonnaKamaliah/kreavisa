@@ -1,4 +1,3 @@
-
 <div class="fixed top-0 w-full min-h-75 bg-cover bg-no-repeat bg-center dark:hidden z-0 pointer-events-none"
     style="background-image: url('{{ asset('asset-landing-page/img/Animated Shape-1.svg') }}')">
 </div>
@@ -24,7 +23,7 @@
             <nav>
                 <h2 class="text-black dark:text-white text-lg font-semibold mb-2">
                     @yield('page-title')
-                </h2> 
+                </h2>
                 <h3 class="mb-0 font-bold text-black dark:text-white capitalize">Yo, {{ auth()->user()->name }}!
                     Waktunya nge-admin, mari kita buat semuanya lebih lancar! 😎</h3>
             </nav>

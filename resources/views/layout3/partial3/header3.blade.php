@@ -30,7 +30,7 @@
         navbar-main navbar-scroll="false" id="navbar-main">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
-                <h2 class="text-white text-lg font-semibold mb-2">
+                <h2 class="text-black dark:text-white text-lg font-semibold mb-2">
                     @yield('page-title')
                 </h2>
 
