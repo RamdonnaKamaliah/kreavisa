@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view for all karyawan (including ex-gudang).
      */
-    public function createKaryawanGudang(): View
+    public function createKaryawan(): View
     {
         return view('auth.login-karyawan');
     }
@@ -50,7 +50,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle login for all karyawan (including ex-gudang).
      */
-    public function storeKaryawanGudang(LoginRequest $request): RedirectResponse
+    public function storeKaryawan(LoginRequest $request): RedirectResponse
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return back()->withErrors(['email' => 'Email atau password salah']);
@@ -65,7 +65,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         Auth::logout();
-        return redirect('/login-karyawan-gudang')->withErrors(['email' => 'Hanya karyawan yang bisa login di sini']);
+        return redirect('/login-karyawan')->withErrors(['email' => 'Hanya karyawan yang bisa login di sini']);
     }
 
     /**

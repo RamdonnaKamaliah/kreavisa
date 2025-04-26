@@ -13,7 +13,6 @@ use App\Http\Controllers\Admin\AdminjadwalController;
 use App\Http\Controllers\Admin\AdminShiftController;
 use App\Http\Controllers\Admin\AdmingajiController;
 use App\Http\Controllers\Admin\AdminGajiPokokController;
-use App\Http\Controllers\Admin\AdminStokBarangController;
 use App\Http\Controllers\Admin\AdminKinerjaController;
 use App\Http\Controllers\Admin\AdminprofileController;
 use App\Http\Controllers\AbsenController;
@@ -52,10 +51,12 @@ Route::get('/test-email', function () {
         return view('register');
     });
 
+    // Ubah route name dari login.karyawan-gudang menjadi login.karyawan
+Route::get('/login-karyawan', [AuthenticatedSessionController::class, 'createKaryawan'])->name('login.karyawan');
+Route::post('/login-karyawan', [AuthenticatedSessionController::class, 'storeKaryawan'])->name('login.karyawan.process');
+
     // routes/web.php
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::get('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'createKaryawanGudang'])->name('login.karyawan-gudang');
-    Route::post('/login-karyawan-gudang', [AuthenticatedSessionController::class, 'storeKaryawanGudang'])->name('login.karyawan-gudang.process');
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

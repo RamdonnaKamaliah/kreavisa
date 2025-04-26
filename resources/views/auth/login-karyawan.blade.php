@@ -9,7 +9,7 @@
 
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
-                <form method="POST" action="{{ route('login.karyawan-gudang.process') }}" class="space-y-4">
+                <form method="POST" action="{{ route('login.karyawan.process') }}" class="space-y-4">
                     @csrf
 
                     <!-- Email Address -->
@@ -69,7 +69,7 @@
                     <!-- Remember Me -->
                     <div class="flex items-center">
                         <input type="checkbox" id="remember_me" name="remember" class="mr-2">
-                        <label for="remember_me" class="text-gray-600">Remember Me</label>
+                        <label for="remember_me" class="text-gray-600">Ingat saya</label>
                     </div>
 
                     <!-- Login Button -->
