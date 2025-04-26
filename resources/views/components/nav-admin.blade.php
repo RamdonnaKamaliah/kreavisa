@@ -72,7 +72,7 @@
                     class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r 
                     {{ Request::routeIs('absenkaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
                 <i class='bx bx-bell text-green-500'></i>
-                <span class="font-medium text-gray-800 dark:text-white">Abseni Karyawan</span>
+                <span class="font-medium text-gray-800 dark:text-white">Absensi Karyawan</span>
             </a>
         </li>
 
