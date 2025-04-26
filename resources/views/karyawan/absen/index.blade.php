@@ -2,23 +2,19 @@
 @section('page-title', 'Absensi')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden mt-6">
-=========
-    <div class="px-4 py-6 md:px-6 max-w-full overflow-x-hidden mt-6">
-
->>>>>>>>> Temporary merge branch 2
         <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl text-gray-900 p-4 rounded-lg shadow-md">
             <!-- Notifikasi akan muncul di sini -->
             @if (session('success'))
-<<<<<<<<< Temporary merge branch 1
                 <div id="success-notification" class="mb-4">
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 dark:bg-green-800 dark:border-green-600 dark:text-green-100" role="alert">
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 dark:bg-green-800 dark:border-green-600 dark:text-green-100"
+                        role="alert">
                         <div class="flex justify-between items-center">
                             <div>
                                 @php
                                     $type = session('attendance_type');
                                     $userName = session('user_name');
                                     $message = '';
-                                    
+
                                     switch ($type) {
                                         case 'hadir':
                                             $message = "$userName, absen hadir berhasil dicatat!";
@@ -36,9 +32,12 @@
                                 <p class="font-bold">Berhasil</p>
                                 <p>{{ $message }}</p>
                             </div>
-                            <button onclick="document.getElementById('success-notification').remove()" class="text-green-700 dark:text-green-200 hover:text-green-900">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            <button onclick="document.getElementById('success-notification').remove()"
+                                class="text-green-700 dark:text-green-200 hover:text-green-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
@@ -50,7 +49,8 @@
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-4">
                     <label for="tableSelect" class="text-gray-700 dark:text-gray-300 text-lg">Pilih:</label>
-                    <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-64 dark:bg-gray-700 dark:text-white">
+                    <select id="tableSelect"
+                        class="p-2 border border-gray-400 rounded-md w-64 dark:bg-gray-700 dark:text-white">
                         <option value="absenForm">Melakukan Absen</option>
                         <option value="riwayatAbsen">Riwayat Absen</option>
                     </select>
@@ -63,63 +63,13 @@
                 <div class="mb-4">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.3048621459625!2d106.7626191737859!3d-6.608989364603464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5001b7efe39%3A0x911c1a77e2752ac4!2sNavisa%20Basic%20Collection!5e0!3m2!1sid!2sid!4v1740474347021!5m2!1sid!2sid"
-                        class="w-full h-64 md:h-80 rounded-lg shadow" style="border:0;" allowfullscreen loading="lazy"></iframe>
+                        class="w-full h-64 md:h-80 rounded-lg shadow" style="border:0;" allowfullscreen
+                        loading="lazy"></iframe>
                 </div>
 
-                <div id="absen-section" class="flex flex-col items-center gap-2 justify-center mb-4">
+                <div id="absen-section" class="flex flex-col items-center gap-6 justify-center mb-8">
                     @if ($showAbsenButton)
-                        <!-- Jam 00:00-23:59 dan belum absen -->
-=========
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script>
-                    window.onload = function() {
-                        const type = "{{ session('attendance_type') }}";
-                        let message = '';
-                        s
-                        switch (type) {
-                            case 'hadir':
-                                message = 'Absen hadir berhasil dicatat!';
-                                break;
-                            case 'sakit':
-                                message = 'Absen sakit berhasil dicatat!';
-                                break;
-                            case 'izin':
-                                message = 'Absen izin berhasil dicatat!';
-                                break;
-                            default:
-                                message = "{{ session('success') }}";
-                        }
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: message,
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    };
-                </script>
-            @endif
-
-            <!-- Google Maps -->
-            <div class="mb-4">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.3048621459625!2d106.7626191737859!3d-6.608989364603464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5001b7efe39%3A0x911c1a77e2752ac4!2sNavisa%20Basic%20Collection!5e0!3m2!1sid!2sid!4v1740474347021!5m2!1sid!2sid"
-                    class="w-full max-w-full h-64 md:h-80 rounded-lg shadow"></iframe>
-            </div>
-
-            <div id="absen-section" class="flex flex-col gap-2 mb-4">
-                @if (!$todayAbsen)
-                    @if ($currentHour >= 5)
-                        <!-- Jam 05:00-23:59 dan belum absen -->
-                        <h3 class="text-left text-black dark:text-white ml-2 text-xl font-popins font-bold">Lokasi :</h3>
-                        <p class="text-left font-popins text-black dark:text-white italic ml-2 text-xl">Navisa Basic
-                            Collection <br>
-                            RT02/RW08, Jl. Pintu Ledeng kp saluyu No.2, Ciomas, <br>
-                            Kec. Ciomas, Kabupaten Bogor, Jawa Barat
-                            16610</p>
->>>>>>>>> Temporary merge branch 2
-                        <div class="flex gap-2">
+                        <div class="flex flex-wrap justify-center gap-4">
                             <a href="{{ route('karyawan.absen.create') }}"
                                 class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-full shadow-md transform transition-all hover:scale-105">
                                 <span class="iconify w-6 h-6" data-icon="majesticons:camera-line" data-inline="false"></span>

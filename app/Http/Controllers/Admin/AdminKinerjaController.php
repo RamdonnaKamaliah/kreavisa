@@ -93,10 +93,12 @@ public function index(Request $request)
         return redirect()->route('kinerjakaryawan.index')->with('added', 'true');
     }
 
-    public function show(KinerjaKaryawan $kinerjaKaryawan)
-    {
-        return view('admin.kinerjakaryawan.show', compact('kinerjaKaryawan'));
-    }
+
+    public function show($id)
+{
+    $kinerjaKaryawan = KinerjaKaryawan::with(['user', 'user.jabatan'])->findOrFail($id);
+    return view('admin.kinerjakaryawan.show', compact('kinerjaKaryawan'));
+}
 
     public function edit($id)
 {

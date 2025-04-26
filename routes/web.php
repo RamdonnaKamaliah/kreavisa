@@ -6,6 +6,7 @@ use App\Http\Controllers\Karyawan\KaryawanGajiController;
 use App\Http\Controllers\Karyawan\KaryawanController;
 use App\Http\Controllers\Karyawan\KaryawanAbsenController;
 use App\Http\Controllers\Karyawan\KaryawanJadwalController;
+use App\Http\Controllers\Karyawan\KaryawanKinerjaController;
 use App\Http\Controllers\Admin\AdmindataController;
 use App\Http\Controllers\Admin\AdminabsenController;
 use App\Http\Controllers\Admin\AdminjabatanController;
@@ -14,10 +15,6 @@ use App\Http\Controllers\Admin\AdminShiftController;
 use App\Http\Controllers\Admin\AdmingajiController;
 use App\Http\Controllers\Admin\AdminGajiPokokController;
 use App\Http\Controllers\Admin\AdminKinerjaController;
-use App\Http\Controllers\Admin\AdminprofileController;
-use App\Http\Controllers\AbsenController;
-use App\Http\Controllers\GajiController;
-use App\Http\Controllers\JadwalController;
 use App\Http\Middleware\Karyawan;
 use App\Http\Middleware\Admin;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -25,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\KinerjaController;
+
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -96,7 +93,7 @@ Route::middleware(['auth', Admin::class])->group(function () {
 
 Route::middleware(['auth', Karyawan::class])->group(function () {
     Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
-    Route::get('karyawan/kinerja', [KinerjaController::class, 'index'])->name('kinerja.index');
+    Route::get('karyawan/kinerja', [KaryawanKinerjaController::class, 'index'])->name('kinerja.index');
     // Absen
     Route::get('karyawan/absen/sakit', [KaryawanAbsenController::class, 'createSakit'])
         ->name('karyawan.absen.sakit');

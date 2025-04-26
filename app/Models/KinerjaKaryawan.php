@@ -22,15 +22,6 @@ class KinerjaKaryawan extends Model
         'total_skor'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function jabatan()
-    {
-        return $this->belongsTo(JabatanKaryawan::class);
-    }
 
     public function calculateTotalScore()
     {
@@ -39,5 +30,19 @@ class KinerjaKaryawan extends Model
         $this->total_skor = $total * 4; // Each point is worth 4 (5 aspects * 5 max score * 4 = 100)
         $this->save();
         return $this->total_skor;
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Relasi ke tabel JabatanKaryawan.
+     */
+    public function jabatan()
+    {
+        return $this->belongsTo(JabatanKaryawan::class, 'jabatan_id');
     }
 }
