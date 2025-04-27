@@ -92,8 +92,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href=""
-                                class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
+                            <a href="" class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
                     </div>
@@ -110,7 +109,7 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        Jumlah Kinerja Baik 
+                                        Jumlah Kinerja Baik
                                     </p>
                                     <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($stokkeluar) }} Stok</h5>
                                 </div>
@@ -123,8 +122,7 @@
                             </div>
                         </div>
                         <div class="mt-4 text-left">
-                            <a href=""
-                                class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
+                            <a href="" class="text-sm font-semibold text-blue-500 dark:text-blue-400 hover:underline">Lihat
                                 Selengkapnya</a>
                         </div>
                     </div>
@@ -150,7 +148,8 @@
                         </div>
                         <!-- Box Keterangan -->
                         <div class="p-5 bg-gray-100 dark:bg-gray-700 rounded-lg shadow text-left w-60">
-                            <h3 class="text-base font-semibold mb-3 dark:text-white dark:opacity-60">Jumlah Karyawan Berdasarkan Jabatan</h3>
+                            <h3 class="text-base font-semibold mb-3 dark:text-white dark:opacity-60">Jumlah Karyawan
+                                Berdasarkan Jabatan</h3>
                             <ul class="text-sm">
                                 @foreach ($datakaryawan->groupBy('jabatan.nama_jabatan') as $jabatan => $karyawan)
                                     <li>
@@ -165,7 +164,8 @@
                 </div>
 
                 <!-- Chart Absensi -->
-                <div class="bg-white dark:bg-slate-850 dark:shadow-dark-xl  shadow-lg rounded-xl p-6 w-full md:w-[45%] flex flex-col items-center mt-6">
+                <div
+                    class="bg-white dark:bg-slate-850 dark:shadow-dark-xl  shadow-lg rounded-xl p-6 w-full md:w-[45%] flex flex-col items-center mt-6">
                     <h2 class="text-lg font-bold mb-4 dark:text-white dark:opacity-60">Total Absensi Minggu Ini</h2>
                     <div class="w-full flex justify-center">
                         <canvas id="absensiChart" class="h-56"></canvas>
@@ -180,30 +180,30 @@
 
 
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
+                document.addEventListener("DOMContentLoaded", function () {
                     if (typeof ChartDataLabels !== "undefined") {
                         Chart.register(ChartDataLabels);
                     }
-            
+
                     function createKaryawanChart() {
                         const canvasKaryawan = document.getElementById("karyawanChart");
                         if (!canvasKaryawan) {
                             console.error("Elemen karyawanChart tidak ditemukan!");
                             return;
                         }
-            
+
                         const ctxKaryawan = canvasKaryawan.getContext("2d");
-            
+
                         if (window.karyawanChart instanceof Chart) {
                             window.karyawanChart.destroy();
                         }
-            
+
                         // Ambil data karyawan dari Laravel
                         const dataJabatan = @json($datakaryawan->groupBy('jabatan.nama_jabatan')->map->count());
                         const labels = Object.keys(dataJabatan);
                         const values = Object.values(dataJabatan);
                         const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981", "#EF4444", "#8B5CF6"];
-            
+
                         window.karyawanChart = new Chart(ctxKaryawan, {
                             type: "doughnut",
                             data: {
@@ -236,26 +236,26 @@
                             },
                         });
                     }
-            
+
                     function createAbsensiChart() {
                         const canvasAbsensi = document.getElementById("absensiChart");
                         if (!canvasAbsensi) {
                             console.error("Elemen absensiChart tidak ditemukan!");
                             return;
                         }
-            
+
                         const ctxAbsensi = canvasAbsensi.getContext("2d");
-            
+
                         if (window.absensiChart instanceof Chart) {
                             window.absensiChart.destroy();
                         }
-            
+
                         // Ambil data absensi dari Laravel (Menggunakan absenkaryawan)
                         const absenKaryawan = @json($absenkaryawan);
                         const labels = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
                         const values = labels.map(day => absenKaryawan[day] || 0);
                         const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981"];
-            
+
                         window.absensiChart = new Chart(ctxAbsensi, {
                             type: "bar",
                             data: {
@@ -306,26 +306,26 @@
                             },
                         });
                     }
-            
+
                     createKaryawanChart();
                     createAbsensiChart();
-            
+
                     // Listen for dark mode changes and update charts
-                    const observer = new MutationObserver(function(mutations) {
-                        mutations.forEach(function(mutation) {
+                    const observer = new MutationObserver(function (mutations) {
+                        mutations.forEach(function (mutation) {
                             if (mutation.attributeName === 'class') {
                                 createKaryawanChart();
                                 createAbsensiChart();
                             }
                         });
                     });
-            
+
                     observer.observe(document.documentElement, {
                         attributes: true,
                         attributeFilter: ['class']
                     });
-            
-                    window.addEventListener("resize", function() {
+
+                    window.addEventListener("resize", function () {
                         if (window.karyawanChart) {
                             window.karyawanChart.resize();
                         }
@@ -339,7 +339,7 @@
 
 
 
-            <div class="bg-white dark:bg-gray-900 p-4 shadow-lg rounded-2xl w-full max-w-6xl mt-8">
+            <div class="bg-white dark:bg-slate-850 p-4 shadow-lg rounded-2xl w-full max-w-6xl mt-8">
                 <h2 class="text-xl font-bold text-center text-gray-900 dark:text-white mb-2">Maps</h2>
                 <div class="border rounded-lg overflow-hidden">
                     <iframe class="w-full h-60"
@@ -363,4 +363,4 @@
 
             </div>
         </div>
-    @endsection
+@endsection
