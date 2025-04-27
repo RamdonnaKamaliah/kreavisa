@@ -93,8 +93,6 @@
             showConfirmButton: false
         });
     });
-
-    
 </script>
 
 @stack('scripts')
