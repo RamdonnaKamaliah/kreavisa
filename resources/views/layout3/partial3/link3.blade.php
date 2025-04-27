@@ -41,6 +41,7 @@
 {{-- <script src="{{ asset('asset-user/js/sidenav-burger.js') }}"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<script src="{{ asset('asset-landing-page/js/navbar-fixed.js') }}"></script>
 
 
 

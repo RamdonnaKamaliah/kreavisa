@@ -1,5 +1,5 @@
 <aside id="nav-menu"
-    class="w-64 h-screen fixed left-0 top-0 bg-white dark:bg-[#1D232A] text-gray-900 shadow-md p-4 flex flex-col overflow-y-auto md:z-[1000]">
+    class="w-64 h-screen fixed left-0 top-0 bg-white dark:bg-[#1D232A] text-gray-900 shadow-md p-4 flex flex-col overflow-y-auto md:z-[10000]">
     <style>
         aside::-webkit-scrollbar {
             display: none;
