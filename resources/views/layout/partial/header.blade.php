@@ -7,9 +7,12 @@
     style="background-image: url('{{ asset('asset-landing-page/img/Animated Shape-2.svg') }}')">
 </div>
 <!-- sidenav  -->
-<aside
-    class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
-    aria-expanded="false">
+<aside id="mobile-sidenav-admin"
+    class="fixed top-0 bottom-0 left-0 w-64 transform -translate-x-full xl:translate-x-0
+        bg-white dark:bg-[#1D232A] shadow-xl p-4 flex flex-col overflow-y-auto
+        transition-transform duration-200 ease-in-out z-50
+
+        xl:m-6 xl:rounded-2xl">
     <x-nav-admin></x-nav-admin>
 </aside>
 
@@ -17,7 +20,7 @@
 
 <main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-[17rem] rounded-xl">
     <!-- Navbar -->
-    <nav class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start"
+    <nav class="relative flex flex-wrap items-center justify-between top-4 px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start"
         navbar-main navbar-scroll="false">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
@@ -33,9 +36,9 @@
             </div>
             <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
 
-                <li class="flex items-center pl-2 xl:hidden">
+                <li class="flex items-center pl-4 xl:hidden">
                     <button id="hamburger" aria-label="Toggle menu"
-                        class="flex flex-col justify-center items-center w-8 h-8 text-gray-800 dark:text-slate-50 focus:outline-none">
+                        class="flex flex-col justify-center items-center w-8 h-8 text-white dark:text-slate-50 focus:outline-none">
                         <span class="bar block h-0.5 w-5 bg-current rounded-sm mb-1 transition-all duration-300"></span>
                         <span class="bar block h-0.5 w-5 bg-current rounded-sm mb-1 transition-all duration-300"></span>
                         <span class="bar block h-0.5 w-5 bg-current rounded-sm transition-all duration-300"></span>
@@ -78,4 +81,18 @@
 
     <div id="navbarSpacer" class="h-40 lg:h-[110px] hidden"></div>
 
+    <script>
+        const sideNavAdmin = document.getElementById('mobile-sidenav-admin');
+        const hamburgerAdmin = document.getElementById('hamburger');
+
+        hamburgerAdmin.addEventListener('click', function() {
+            sideNavAdmin.classList.toggle('-translate-x-full');
+        });
+
+        window.addEventListener('click', function(event) {
+            if (!sideNavAdmin.contains(event.target) && !hamburgerAdmin.contains(event.target)) {
+                sideNavAdmin.classList.add('-translate-x-full');
+            }
+        });
+    </script>
     <!-- end Navbar -->

@@ -2,6 +2,7 @@
 @section('content') 
     <div class="p-4 md:p-6 overflow-x-hidden">
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
+            
             <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Kinerja Karyawan</h2>
             
             <!-- Search and Export Section -->
@@ -68,7 +69,7 @@
                                 <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->total_skor }}</td>
                                 <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
                                     <div class="flex justify-center space-x-1 md:space-x-2">
-                                        <a href="{{ route('kinerjakaryawan.edit', $item->id) }}"
+                                        <a href="{{ route('kinerjakaryawan.edit', $item->id) }}""
                                             class="px-2 py-1 text-yellow-600 border border-yellow-600 rounded-full hover:bg-yellow-100 flex items-center gap-1 text-xs md:text-sm">
                                             <i class="fas fa-edit"></i> <span class="hidden sm:inline">Edit</span>
                                         </a>

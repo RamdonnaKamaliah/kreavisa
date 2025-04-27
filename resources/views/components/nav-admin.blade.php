@@ -1,4 +1,4 @@
-<aside
+<aside 
     class="w-64 h-screen fixed left-0 top-0 bg-white dark:bg-[#1D232A] text-gray-900 shadow-md p-4 flex flex-col overflow-y-auto">
     <style>
         aside::-webkit-scrollbar {

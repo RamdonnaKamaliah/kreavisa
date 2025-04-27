@@ -131,7 +131,7 @@
                  title: 'Berhasil',
                  text: 'Berhasil Mengedit Data!',
                  showConfirmButton: false,
-                 timer: 1500
+                 timer: 4500
              });
          @endif
  

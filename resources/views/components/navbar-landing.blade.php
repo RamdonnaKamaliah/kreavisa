@@ -37,7 +37,7 @@
                         </button>
                     </a>
                 @else
-                    <a href="/login-karyawan-gudang">
+                    <a href="/login-karyawan">
                         <button
                             class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-[#343045] px-5 py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] font-popins hover:shadow-lg transition-all duration-300">
                             Login
