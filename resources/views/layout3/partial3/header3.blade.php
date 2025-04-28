@@ -35,7 +35,7 @@
                 </h2>
 
                 <h3 class="mb-0 text-black dark:text-white capitalize">Yo, {{ auth()->user()->name }}!
-                    Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang terbaik
+                    Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang terbaik 🚀
                 </h3>
             </nav>
 
@@ -81,10 +81,13 @@
                             <span>Navbar Fixed</span>
                             <input type="checkbox" id="toggleNavbarFixed" class="form-checkbox h-5 w-5 text-blue-600">
                         </label>
-                        <a href="#"
-                            class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
-                            <i class="fas fa-question-circle mr-2"></i>Bantuan
-                        </a>
+                        <a href="{{ asset('asset-landing-page/img/Manual Book Kreavisa.pdf') }}"
+                        target="_blank"
+                        class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
+                         <i class="fas fa-question-circle mr-2"></i> Bantuan
+                     </a>
+                     
+                    
                     </div>
                 </li>
 
