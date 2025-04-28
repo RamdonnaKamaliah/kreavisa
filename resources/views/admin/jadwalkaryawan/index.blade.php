@@ -1,5 +1,5 @@
 @extends('layout.main')
-
+@section('page-title', 'Jadwal Karyawan')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel & Tombol Tambah Data -->

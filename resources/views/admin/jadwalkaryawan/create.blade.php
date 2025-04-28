@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Tambah Jadwal Karyawan')
 @section('content')
 
 <div id="layoutSidenav_content pt-1">
