@@ -62,16 +62,19 @@
 
                     <!-- Dropdown Settings -->
                     <div id="settingsDropdown"
-                        class="hidden absolute top-12 right-0 mt-2 w-48 bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg shadow-lg p-4 z-[9999] space-y-4">
-                        <label class="flex items-center justify-between">
-                            <span>Navbar Fixed</span>
-                            <input type="checkbox" id="toggleNavbarFixed" class="form-checkbox h-5 w-5 text-blue-600">
-                        </label>
-                        <a href="#"
-                            class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
-                            <i class="fas fa-question-circle mr-2"></i>Bantuan
-                        </a>
-                    </div>
+                    class="hidden absolute top-12 right-0 mt-2 w-48 bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg shadow-lg p-4 z-[9999] space-y-4">
+                    <label class="flex items-center justify-between">
+                        <span>Navbar Fixed</span>
+                        <input type="checkbox" id="toggleNavbarFixed" class="form-checkbox h-5 w-5 text-blue-600">
+                    </label>
+                    <a href="{{ asset('asset-landing-page/img/Manual Book Kreavisa.pdf') }}"
+                    target="_blank"
+                    class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
+                     <i class="fas fa-question-circle mr-2"></i> Bantuan
+                 </a>
+                 
+                
+                </div>
                 </li>
             </ul>
 

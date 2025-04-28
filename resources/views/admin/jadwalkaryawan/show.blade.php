@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Tambah Jadwal Karyawan')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-300 dark:border-slate-800 p-6">

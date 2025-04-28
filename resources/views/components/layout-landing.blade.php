@@ -19,7 +19,7 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
-
+    <link href="{{ asset('kreavisa.png') }}" rel="icon">
 
 </head>
 <main>

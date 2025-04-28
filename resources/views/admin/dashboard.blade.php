@@ -82,7 +82,7 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase text-black dark:text-white">
                                         Jumlah Jabatan Karyawan
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($stokmasuk) }} Stok</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($jabatankaryawan) }} Jabatan</h5>
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">

@@ -1,5 +1,5 @@
 @extends('layout.main')
-
+@section('page-title', 'Lihat Shift Karyawan')
 @section('content')
     <div class="p-4 md:p-6">
         <div class="bg-white dark:bg-slate-800 text-gray-900 p-4 rounded-lg shadow-md border border-gray-300 dark:border-slate-800 max-w-2xl mx-auto">

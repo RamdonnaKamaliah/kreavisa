@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Edit Jabatan Karyawan')
 @section('content')
     <div id="layoutSidenav_content">
         <div class="flex justify-center items-center min-h-[80vh] background-color: #f8f9fa; py-6 px-4">

@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Buat Gaji Karyawan')
+@section('page-title', 'Tambah Gaji Karyawan')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Form Create Gaji Karyawan -->

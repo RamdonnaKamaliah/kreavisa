@@ -23,7 +23,7 @@ class ProfileController extends Controller
 
         // Periksa usertype dan sesuaikan data yang ditampilkan
         $view = match ($user->usertype) {
-            'admin' => 'admin.profile-index',
+            'admin' => 'admin.profile.index',
             'gudang' => 'gudang.profile.index',
             'karyawan' => 'karyawan.profile.index',
             default => abort(403, 'Unauthorized'),
