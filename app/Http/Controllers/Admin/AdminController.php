@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\absenkaryawan;
-use App\Models\StokMasuk;
-use App\Models\StokKeluar;
+use App\Models\jabatankaryawan;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -31,12 +30,10 @@ class AdminController extends Controller
             ->map->count();
 
         // Ambil data stok masuk
-        $stokmasuk = StokMasuk::all();
+        $jabatankaryawan = jabatankaryawan::all();
 
-        // Ambil data stok keluar
-        $stokkeluar = StokKeluar::all();
 
         // Return ke view admin dashboard
-        return view('admin.dashboard', compact('datakaryawan', 'absenkaryawan', 'stokmasuk', 'stokkeluar'));
+        return view('admin.dashboard', compact('datakaryawan', 'absenkaryawan', 'jabatankaryawan'));
     }
 }
