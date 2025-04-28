@@ -5,7 +5,7 @@
         <!-- row 1 -->
         <div class="flex flex-wrap -mx-3">
             <!-- card1 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4">
@@ -39,7 +39,7 @@
             </div>
 
             <!-- card2 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4">
@@ -71,7 +71,7 @@
             </div>
 
             <!-- card3 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4">
@@ -102,7 +102,7 @@
             </div>
 
             <!-- card4 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4 min-h-[150px]">

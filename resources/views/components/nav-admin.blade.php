@@ -18,16 +18,20 @@
     <!-- Menu -->
     <ul class="space-y-2">
         <a href="{{ route('profile.index') }}"
-            class="flex items-center bg-white dark:bg-[#2C2F36] shadow-md rounded-lg p-3 gap-3 mb-6 hover:shadow-lg transition">
-            <img src="{{ asset('assets/img/carousel-1.jpg') }}"
-                class="w-10 h-10 rounded-full border-2 border-white shadow" alt="User">
-            <div x-show="expanded" class="text-sm">
-                <div class="font-semibold text-black dark:text-white">
-                    {{ auth()->check() ? auth()->user()->name : 'Guest' }}
-                </div>
-                <div class="text-xs text-gray-600 dark:text-gray-300">Admin@gmail.com</div>
-            </div>
-        </a>
+    class="flex items-center rounded-lg p-3 gap-3 mb-6 transition 
+        {{ Request::routeIs('profile.*') ? 'bg-blue-100 dark:bg-blue-800 shadow-lg' : 'bg-white dark:bg-[#2C2F36] shadow-md hover:shadow-lg' }}">
+    <img src="{{ asset('assets/img/carousel-1.jpg') }}"
+        class="w-10 h-10 rounded-full border-2 border-white shadow" alt="User">
+    <div x-show="expanded" class="text-sm">
+        <div class="font-semibold {{ Request::routeIs('profile.*') ? 'text-blue-600 dark:text-blue-300' : 'text-black dark:text-white' }}">
+            {{ auth()->check() ? auth()->user()->name : 'Guest' }}
+        </div>
+        <div class="text-xs {{ Request::routeIs('profile.*') ? 'text-blue-500 dark:text-blue-300' : 'text-gray-600 dark:text-gray-300' }}">
+            {{ auth()->check() ? auth()->user()->email : 'admin@gmail.com' }}
+        </div>
+    </div>
+</a>
+
         <li>
             <a href="{{ route('admin.dashboard') }}"
                 class="flex items-center space-x-3 p-3 rounded-lg relative group transition duration-200
@@ -43,14 +47,15 @@
         <li>
             <a href="{{ route('datakaryawan.index') }}"
                 class="flex items-center space-x-3 p-3 rounded-lg relative group transition duration-200
-                    {{ Request::routeIs('datakaryawan.index') ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
+                    {{ Request::routeIs('datakaryawan.*') ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
                 <span
                     class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r 
-                    {{ Request::routeIs('datakaryawan.index') ? 'block' : 'hidden group-hover:block' }}"></span>
+                    {{ Request::routeIs('datakaryawan.*') ? 'block' : 'hidden group-hover:block' }}"></span>
                 <i class='bx bx-archive text-indigo-500'></i>
-                <span class="font-medium text-gray-800 dark:text-white">Data Karyawan</span>
+                <span class="font-medium {{ Request::routeIs('datakaryawan.*') ? 'text-blue-600 dark:text-blue-300' : 'text-gray-800 dark:text-white' }}">Data Karyawan</span>
             </a>
         </li>
+        
 
         <li>
             <a href="{{ route('jabatankaryawan.index') }}"

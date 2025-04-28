@@ -35,10 +35,7 @@
                 </h2>
 
                 <h3 class="mb-0 text-black dark:text-white capitalize">Yo, {{ auth()->user()->name }}!
-                    Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang <br> terbaik dan menjaga
-                    keseimbangan
-                    antara kerja dan istirahat. 🚀"
-
+                    Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang terbaik
                 </h3>
             </nav>
 
