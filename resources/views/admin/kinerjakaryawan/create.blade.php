@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Tambah Kinerja Karyawan')
 @section('content')
 
 <div class="p-4 md:p-6 overflow-x-hidden">

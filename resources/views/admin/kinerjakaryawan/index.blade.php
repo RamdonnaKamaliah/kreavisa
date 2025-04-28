@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Kinerja Karyawan')
 @section('content') 
     <div class="p-4 md:p-6 overflow-x-hidden">
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
