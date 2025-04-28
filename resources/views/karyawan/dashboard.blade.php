@@ -328,7 +328,7 @@
 ">
                             @if ($item->lokasi)
                                 <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}"
-                                    target="_blank" class="hover:underline">Lihat Maps</a>
+                                    target="_blank" class="hover:underline"><i class="fa-solid fa-location-dot"></i> Lihat Maps</a>
                             @else
                                 -
                             @endif
@@ -359,7 +359,7 @@
                                     @else
                                         <a href="{{ asset($item->file_surat) }}" target="_blank"
                                             class="text-blue-600 hover:underline">
-                                            Open File
+                                            <i class="fas fa-file-alt mr-1"></i> Open File
                                         </a>
                                     @endif
                                 @else
