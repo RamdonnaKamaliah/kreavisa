@@ -18,7 +18,7 @@
 
         <!-- Pilih User -->
 <div class="mb-4">
-    <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Karyawan</label>
+    <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Karyawan<span class="text-red-500">*</label>
     <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
         <option value="">Pilih Karyawan</option>
         @foreach ($usersWithShifts as $user)
@@ -120,7 +120,7 @@
 
                <!-- Pilih Shift -->
 <div class="mb-4">
-    <label for="shift_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Shift</label>
+    <label for="shift_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Shift<span class="text-red-500">*</label>
     <select id="shift_id" name="shift_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
         <option value="">Pilih Shift</option>
     </select>
@@ -171,7 +171,7 @@
 
                 <!-- Pilih Bulan (Checkbox) -->
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Bulan</label>
+                    <label class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Bulan<span class="text-red-500">*</label>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                         @php
                             $months = [
@@ -190,7 +190,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="tahun" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Tahun</label>
+                    <label for="tahun" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Tahun<span class="text-red-500">*</label>
                     <div class="relative">
                         <input type="number" 
                                id="tahun" 

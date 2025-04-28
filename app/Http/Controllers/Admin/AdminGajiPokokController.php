@@ -16,12 +16,16 @@ class AdminGajiPokokController extends Controller
         return view('admin.gajipokok.index', compact('gajiPokok'));
     }
 
-    // Create untuk Gaji Pokok
     public function create()
-    {
-        $jabatan = JabatanKaryawan::all();
-        return view('admin.gajipokok.create', compact('jabatan'));
-    }
+{
+    // Ambil semua ID jabatan yang sudah memiliki gaji pokok
+    $jabatanWithGaji = GajiPokok::pluck('jabatan_id')->toArray();
+    
+    // Ambil jabatan yang belum memiliki gaji pokok
+    $jabatan = JabatanKaryawan::whereNotIn('id', $jabatanWithGaji)->get();
+    
+    return view('admin.gajipokok.create', compact('jabatan'));
+}
 
     public function store(Request $request)
 {

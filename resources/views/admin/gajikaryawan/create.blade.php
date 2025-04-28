@@ -33,7 +33,7 @@
 
                     <!-- Pilih Karyawan -->
                     <div>
-                        <label for="user_id" class="block text-gray-700 font-medium dark:text-gray-200">Nama Karyawan</label>
+                        <label for="user_id" class="block text-gray-700 font-medium dark:text-gray-200">Nama Karyawan<span class="text-red-500">*</label>
                         <select id="user_id" name="user_id"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
                             onchange="getGajiPokok()">
@@ -55,14 +55,14 @@
 
                     <!-- Tanggal -->
                     <div>
-                        <label for="tanggal" class="block text-gray-700 font-medium dark:text-gray-200">Tanggal</label>
+                        <label for="tanggal" class="block text-gray-700 font-medium dark:text-gray-200">Tanggal<span class="text-red-500">*</label>
                         <input type="date" id="tanggal" name="tanggal"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                     </div>
 
                     <!-- Tipe Pembayaran -->
                     <div>
-                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium dark:text-gray-200">Tipe Pembayaran</label>
+                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium dark:text-gray-200">Tipe Pembayaran<span class="text-red-500">*</label>
                         <select id="tipe_pembayaran" name="tipe_pembayaran"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
                             onchange="handleTipePembayaran()">
@@ -79,20 +79,20 @@
                     </div>
 
                     <!-- Bonus -->
-<div>
-    <label for="bonus" class="block text-gray-700 font-medium dark:text-gray-200">Bonus (Rp)</label>
-    <input type="text" id="bonus" name="bonus"
-           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
-           oninput="formatRupiah(this)">
-</div>
+                    <div>
+                        <label for="bonus" class="block text-gray-700 font-medium dark:text-gray-200">Bonus (Rp)</label>
+                        <input type="text" id="bonus" name="bonus"
+                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                            oninput="formatRupiah(this)">
+                    </div>
 
-<!-- Potongan -->
-<div class="md:col-span-2">
-    <label for="potongan" class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
-    <input type="text" id="potongan" name="potongan"
-           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
-           oninput="formatRupiah(this)">
-</div>
+                    <!-- Potongan -->
+                    <div class="md:col-span-2">
+                        <label for="potongan" class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
+                        <input type="text" id="potongan" name="potongan"
+                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                            oninput="formatRupiah(this)">
+                    </div>
 
                     <!-- Tombol Submit -->
                     <div class="col-span-1 md:col-span-2">

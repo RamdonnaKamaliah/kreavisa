@@ -16,11 +16,12 @@
                 </div>
 
                 <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">Create Shift Karyawan</h1>
+                @if($users->count() > 0)
                 <form action="{{ route('shiftkaryawan.store') }}" method="POST">
                     @csrf
 
                     <div class="mb-4">
-                        <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Karyawan</label>
+                        <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Karyawan<span class="text-red-500">*</label>
                         <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
                             <option value="">Pilih Karyawan</option>
                             @foreach ($users as $user)
@@ -32,7 +33,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2">Jabatan</label>
+                        <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Jabatan</label>
                         <select id="jabatan_id" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed" disabled>
                             <option value="">Pilih Jabatan</option>
                             @foreach ($jabatans as $jabatan)
@@ -59,20 +60,20 @@
                     </script>
 
                     <div class="mb-4">
-                        <h2 class="text-lg font-semibold text-gray-700">Shift 1</h2>
-                        <label for="shift_1_masuk" class="block text-gray-700 font-semibold mt-2">Jam Masuk</label>
+                        <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Shift 1<span class="text-red-500">*</h2>
+                        <label for="shift_1_masuk" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Masuk</label>
                         <input type="text" id="shift_1_masuk" name="shift_1_masuk" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
 
-                        <label for="shift_1_pulang" class="block text-gray-700 font-semibold mt-2">Jam Pulang</label>
+                        <label for="shift_1_pulang" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Pulang</label>
                         <input type="text" id="shift_1_pulang" name="shift_1_pulang" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
                     </div>
 
                     <div class="mb-4">
-                        <h2 class="text-lg font-semibold text-gray-700">Shift 2</h2>
-                        <label for="shift_2_masuk" class="block text-gray-700 font-semibold mt-2">Jam Masuk</label>
+                        <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Shift 2<span class="text-red-500">*</h2>
+                        <label for="shift_2_masuk" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Masuk</label>
                         <input type="text" id="shift_2_masuk" name="shift_2_masuk" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
 
-                        <label for="shift_2_pulang" class="block text-gray-700 font-semibold mt-2">Jam Pulang</label>
+                        <label for="shift_2_pulang" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Pulang</label>
                         <input type="text" id="shift_2_pulang" name="shift_2_pulang" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
                     </div>
 
@@ -91,6 +92,12 @@
                         Simpan
                     </button>
                 </form>
+                @else
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+                    <p>Tidak ada karyawan yang tersedia untuk ditambahkan shift. Semua karyawan sudah memiliki shift.</p>
+                </div>
+                <a href="{{ route('shiftkaryawan.index') }}" class="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">Kembali ke Daftar Shift</a>
+            @endif
             </div>
         </div>
     </div>

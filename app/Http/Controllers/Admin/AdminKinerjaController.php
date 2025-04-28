@@ -59,39 +59,63 @@ public function index(Request $request)
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'user_ids' => 'required|array',
-            'user_ids.*' => 'exists:users,id',
-            'tanggal_penilaian' => 'required|date',
-            'periode' => 'required|string',
-            'tanggung_jawab' => 'required|integer|min:0|max:5',
-            'kehadiran_ketepatan_waktu' => 'required|integer|min:0|max:5',
-            'produktivitas' => 'required|integer|min:0|max:5',
-            'kerja_sama_tim' => 'required|integer|min:0|max:5',
-            'kemampuan_komunikasi' => 'required|integer|min:0|max:5'
-        ]);
+{
+    $validated = $request->validate([
+        'user_ids' => 'required|array',
+        'user_ids.*' => 'exists:users,id',
+        'tanggal_penilaian' => 'required|date',
+        'periode' => 'required|string',
+        'tanggung_jawab' => 'required|integer|min:0|max:5',
+        'kehadiran_ketepatan_waktu' => 'required|integer|min:0|max:5',
+        'produktivitas' => 'required|integer|min:0|max:5',
+        'kerja_sama_tim' => 'required|integer|min:0|max:5',
+        'kemampuan_komunikasi' => 'required|integer|min:0|max:5'
+    ]);
 
-        foreach ($validated['user_ids'] as $user_id) {
+    $date = Carbon::parse($validated['tanggal_penilaian']);
+    $month = $date->month;
+    $year = $date->year;
+
+    $errors = [];
+    
+    foreach ($validated['user_ids'] as $user_id) {
+        // Cek apakah karyawan sudah memiliki penilaian di bulan dan tahun yang sama
+        $existingKinerja = KinerjaKaryawan::where('user_id', $user_id)
+            ->whereYear('tanggal_penilaian', $year)
+            ->whereMonth('tanggal_penilaian', $month)
+            ->first();
+
+        if ($existingKinerja) {
             $user = User::find($user_id);
-            
-            $kinerja = KinerjaKaryawan::create([
-                'user_id' => $user_id,
-                'jabatan_id' => $user->jabatan_id,
-                'tanggal_penilaian' => $validated['tanggal_penilaian'],
-                'periode' => $validated['periode'],
-                'tanggung_jawab' => $validated['tanggung_jawab'],
-                'kehadiran_ketepatan_waktu' => $validated['kehadiran_ketepatan_waktu'],
-                'produktivitas' => $validated['produktivitas'],
-                'kerja_sama_tim' => $validated['kerja_sama_tim'],
-                'kemampuan_komunikasi' => $validated['kemampuan_komunikasi']
-            ]);
-
-            $kinerja->calculateTotalScore();
+            $errors[] = "Kinerja {$user->nama_lengkap} sudah dibuat di bulan {$validated['periode']}, silahkan buat di bulan depan";
+            continue;
         }
 
-        return redirect()->route('kinerjakaryawan.index')->with('added', 'true');
+        $user = User::find($user_id);
+        
+        $kinerja = KinerjaKaryawan::create([
+            'user_id' => $user_id,
+            'jabatan_id' => $user->jabatan_id,
+            'tanggal_penilaian' => $validated['tanggal_penilaian'],
+            'periode' => $validated['periode'],
+            'tanggung_jawab' => $validated['tanggung_jawab'],
+            'kehadiran_ketepatan_waktu' => $validated['kehadiran_ketepatan_waktu'],
+            'produktivitas' => $validated['produktivitas'],
+            'kerja_sama_tim' => $validated['kerja_sama_tim'],
+            'kemampuan_komunikasi' => $validated['kemampuan_komunikasi']
+        ]);
+
+        $kinerja->calculateTotalScore();
     }
+
+    if (!empty($errors)) {
+        return redirect()->back()
+            ->withInput()
+            ->withErrors(['user_ids' => $errors]);
+    }
+
+    return redirect()->route('kinerjakaryawan.index')->with('added', 'true');
+}
 
 
     public function show($id)

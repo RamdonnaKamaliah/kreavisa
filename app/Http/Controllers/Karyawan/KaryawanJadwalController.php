@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JadwalKaryawan;
+use App\Models\ShiftKaryawan;
 use Illuminate\Support\Facades\Auth;
 
 class KaryawanJadwalController extends Controller
@@ -15,7 +16,7 @@ class KaryawanJadwalController extends Controller
     public function index()
 {
     $userId = Auth::id();
-    
+    $shifts = ShiftKaryawan::all();
     $jadwals = JadwalKaryawan::with('shift')
         ->where('user_id', $userId)
         ->get()
@@ -30,7 +31,7 @@ class KaryawanJadwalController extends Controller
             return $jadwal;
         });
     
-    return view('karyawan.jadwal.index', compact('jadwals'));
+    return view('karyawan.jadwal.index', compact('jadwals', 'shifts'));
 }
 
     /**

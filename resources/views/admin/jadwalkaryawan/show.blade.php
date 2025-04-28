@@ -10,7 +10,7 @@
                 </a>
             </div>
 
-            <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">Detail Jadwal Karyawan</h1>
+            <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">View Jadwal Karyawan</h1>
             
             <!-- Informasi Karyawan dan Jabatan -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

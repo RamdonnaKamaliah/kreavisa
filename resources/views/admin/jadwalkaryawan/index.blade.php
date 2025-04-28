@@ -112,18 +112,28 @@
                             @endphp
                             
                             @for ($i = 1; $i <= 31; $i++)
-    @php
-        $jamKerja = $jadwal ? $jadwal->getShiftForDay($i) : null;
-        $date = \DateTime::createFromFormat('Y-m-d', $tahun . '-' . $bulan . '-' . $i);
-        $isSunday = $date->format('w') == 0;
-        
-        $warna = $isSunday ? 'style=background-color:#C5172E;color:white;' : 
-                ($jamKerja ? 'style=background-color:#3b82f6;color:black;' : '');
-    @endphp
-    <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
-        {{ $isSunday ? 'Libur' : ($jamKerja ?? '') }}
-    </td>
-@endfor
+                            @php
+                                $jamKerja = $jadwal ? $jadwal->getShiftForDay($i) : null;
+                                $date = \DateTime::createFromFormat('Y-m-d', $tahun . '-' . $bulan . '-' . $i);
+                                $isSunday = $date->format('w') == 0;
+                                
+                                // Tentukan warna berdasarkan perbandingan dengan shift_1 dan shift_2
+                                $warna = '';
+                                if ($isSunday) {
+                                    $warna = 'style=background-color:#C5172E;color:white;';
+                                } elseif ($jamKerja && $jadwal && $jadwal->shift) {
+                                    // Bandingkan jam kerja dengan shift_1 dan shift_2
+                                    if ($jamKerja == $jadwal->shift->shift_1) {
+                                        $warna = 'style=background-color:#0118D8;color:white;'; // Biru untuk shift 1
+                                    } elseif ($jamKerja == $jadwal->shift->shift_2) {
+                                        $warna = 'style=background-color:#27548A;color:white;'; // Hijau untuk shift 2
+                                    }
+                                }
+                            @endphp
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
+                                {{ $isSunday ? 'Libur' : ($jamKerja ?? '') }}
+                            </td>
+                        @endfor
                                                     
 
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">

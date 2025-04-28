@@ -2,7 +2,7 @@
 @section('page-title', 'Edit Gaji Pokok')
 @section('content')
     <div id="layoutSidenav_content">
-        <main class="flex justify-center items-center min-h-screen py-10">
+        <main class="flex justify-center items-center min-h-screen py-6 px-4 text-gray-900 -mt-20">
             <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-8 rounded-lg shadow-lg">
                 <div class="mb-4">
                     <a href="{{ route('gajipokok.index') }}" class="text-blue-600 hover:text-blue-800 font-medium transition flex items-center">

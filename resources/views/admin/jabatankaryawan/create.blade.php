@@ -19,7 +19,7 @@
 
                     <!-- Input Nama Jabatan -->
                     <div class="mb-4">
-                        <label for="nama_jabatan" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Nama Jabatan</label>
+                        <label for="nama_jabatan" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Nama Jabatan<span class="text-red-500">*</label>
                         <input type="text" id="nama_jabatan" name="nama_jabatan" placeholder="Input Nama Jabatan"
                             value="{{ old('nama_jabatan') }}"
                             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition"

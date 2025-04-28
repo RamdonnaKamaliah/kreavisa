@@ -30,8 +30,11 @@ public function create()
         ->get();
         
     $jabatans = JabatanKaryawan::all();
+    
     return view('admin.shiftkaryawan.create', compact('users', 'jabatans'));
 }
+
+
     public function store(Request $request)
 {
     $request->validate([
@@ -77,15 +80,37 @@ public function update(Request $request, $id)
 
     $shift = ShiftKaryawan::findOrFail($id);
     
+    // Simpan nilai shift lama untuk perbandingan
+    $oldShift1 = $shift->shift_1;
+    $oldShift2 = $shift->shift_2;
+    
+    // Update shift baru
+    $newShift1 = $request->shift_1_masuk . ' - ' . $request->shift_1_pulang;
+    $newShift2 = $request->shift_2_masuk . ' - ' . $request->shift_2_pulang;
+    
     $shift->update([
-        'shift_1' => $request->shift_1_masuk . ' - ' . $request->shift_1_pulang,
-        'shift_2' => $request->shift_2_masuk . ' - ' . $request->shift_2_pulang,
+        'shift_1' => $newShift1,
+        'shift_2' => $newShift2,
     ]);
 
     // Update semua jadwal yang menggunakan shift ini
     $jadwals = JadwalKaryawan::where('shift_id', $shift->id)->get();
     foreach ($jadwals as $jadwal) {
-        $jadwal->updateShiftTimes();
+        for ($i = 1; $i <= 31; $i++) {
+            $currentShift = $jadwal->{"day_$i"};
+            
+            // Jika shift ini adalah shift 1 (sesuai dengan format lama)
+            if ($currentShift === $oldShift1) {
+                $jadwal->{"day_$i"} = $newShift1;
+            } 
+            // Jika shift ini adalah shift 2 (sesuai dengan format lama)
+            elseif ($currentShift === $oldShift2) {
+                $jadwal->{"day_$i"} = $newShift2;
+            }
+            // Jika tidak sama dengan keduanya (sudah diedit manual), biarkan apa adanya
+        }
+        
+        $jadwal->save();
     }
 
     return redirect()->route('shiftkaryawan.index')->with('edited', 'true');
