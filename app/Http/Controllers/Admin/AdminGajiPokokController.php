@@ -17,56 +17,58 @@ class AdminGajiPokokController extends Controller
     }
 
     public function create()
-{
-    // Ambil semua ID jabatan yang sudah memiliki gaji pokok
-    $jabatanWithGaji = GajiPokok::pluck('jabatan_id')->toArray();
-    
-    // Ambil jabatan yang belum memiliki gaji pokok
-    $jabatan = JabatanKaryawan::whereNotIn('id', $jabatanWithGaji)->get();
-    
-    return view('admin.gajipokok.create', compact('jabatan'));
-}
-
-    public function store(Request $request)
-{
-    $request->validate([
-        'jabatan_id' => 'required|exists:jabatan_karyawans,id',
-        'gaji_pokok' => 'required',
-    ]);
-
-    // Cek apakah jabatan sudah memiliki gaji pokok
-    if (GajiPokok::where('jabatan_id', $request->jabatan_id)->exists()) {
-        return redirect()->back()->withErrors(['Gaji pokok untuk jabatan ini sudah ada.']);
+    {
+        // Ambil semua ID jabatan yang sudah memiliki gaji pokok
+        $jabatanWithGaji = GajiPokok::pluck('jabatan_id')->toArray();
+        
+        // Ambil jabatan yang belum memiliki gaji pokok
+        $jabatan = JabatanKaryawan::whereNotIn('id', $jabatanWithGaji)->get();
+        
+        return view('admin.gajipokok.create', compact('jabatan'));
     }
 
-    // Konversi dari format ribuan ke angka biasa
-    $gaji_pokok = str_replace('.', '', $request->gaji_pokok);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'jabatan_id' => 'required|exists:jabatan_karyawans,id',
+            'gaji_pokok' => 'required',
+        ]);
 
-    // Change this in your store method:
-GajiPokok::create([
-    'jabatan_id' => $request->jabatan_id,
-    'gaji_pokok' => $gaji_pokok, // Remove the * 1_000_000
-]);
+        // Cek apakah jabatan sudah memiliki gaji pokok
+        if (GajiPokok::where('jabatan_id', $request->jabatan_id)->exists()) {
+            return redirect()->back()->withErrors(['Gaji pokok untuk jabatan ini sudah ada.']);
+        }
 
-    return redirect()->route('gajipokok.index')->with('added', 'true');
-}
+        // Konversi dari format ribuan ke angka biasa
+        $gaji_pokok = str_replace('.', '', $request->gaji_pokok);
 
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'gaji_pokok' => 'required',
+        // Change this in your store method:
+    GajiPokok::create([
+        'jabatan_id' => $request->jabatan_id,
+        'gaji_pokok' => $gaji_pokok, // Remove the * 1_000_000
     ]);
 
-    // Konversi dari format ribuan ke angka biasa
-    $gaji_pokok = (int)str_replace('.', '', $request->gaji_pokok);
+        return redirect()->route('gajipokok.index')->with('added', 'true');
+    }
 
-    $gajiPokok = GajiPokok::findOrFail($id);
-    $gajiPokok->update([
-        'gaji_pokok' => $gaji_pokok,
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'gaji_pokok' => 'required',
+        ]);
 
-    return redirect()->route('gajipokok.index')->with('edited', 'true');
-}
+        // Konversi dari format ribuan ke angka biasa
+        $gaji_pokok = (int)str_replace('.', '', $request->gaji_pokok);
+
+        $gajiPokok = GajiPokok::findOrFail($id);
+        $gajiPokok->update([
+            'gaji_pokok' => $gaji_pokok,
+        ]);
+
+        return redirect()->route('gajipokok.index')->with('edited', 'true');
+    }
+
+
         public function show($id)
     {
         $gajipokok = GajiPokok::with('jabatan')->findOrFail($id);
@@ -81,9 +83,6 @@ public function update(Request $request, $id)
         $jabatan = JabatanKaryawan::all();
         return view('admin.gajipokok.edit', compact('gajiPokok', 'jabatan'));
     }
-
-
-
 
     // Hapus Gaji Pokok
     public function destroy($id)

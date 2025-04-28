@@ -23,7 +23,6 @@ class LokasiAbsenController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_lokasi' => 'required|string|max:255',
             'google_maps_link' => 'required|url',
             'radius' => 'required|integer|min:1',
         ]);
@@ -44,11 +43,9 @@ class LokasiAbsenController extends Controller
         }
 
         LokasiAbsen::create([
-            'nama_lokasi' => $request->nama_lokasi,
             'latitude' => $coords['lat'],
             'longitude' => $coords['lng'],
             'radius' => $request->radius,
-            'alamat' => $request->alamat,
         ]);
 
         return redirect()->route('admin.lokasi-absen.index')
@@ -64,7 +61,6 @@ class LokasiAbsenController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'nama_lokasi' => 'required|string|max:255',
             'google_maps_link' => 'required|url',
             'radius' => 'required|integer|min:1',
         ]);
@@ -85,11 +81,9 @@ class LokasiAbsenController extends Controller
         }
 
         $lokasi->update([
-            'nama_lokasi' => $request->nama_lokasi,
             'latitude' => $coords['lat'],
             'longitude' => $coords['lng'],
             'radius' => $request->radius,
-            'alamat' => $request->alamat,
         ]);
 
         return redirect()->route('admin.lokasi-absen.index')

@@ -1,8 +1,8 @@
 @extends('layout.main')
-@section('page-title', 'Tambah Gaji Pokok')
+@section('page-title', 'Create Gaji Pokok')
 @section('content')
+
     <div id="layoutSidenav_content">
-        
         <!-- Container utama -->
         <main class="flex justify-center items-center min-h-screen py-6 px-4 text-gray-900 -mt-20">
             <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-8 rounded-lg shadow-lg">
@@ -75,11 +75,10 @@
                     <p>Tidak ada jabatan yang tersedia untuk ditambahkan gaji pokok. Semua jabatan sudah memiliki gaji pokok.</p>
                 </div>
                 @endif
-
-
             </div>
         </main>
     </div>
+
     @if ($errors->any()) 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -101,5 +100,4 @@
         });
     </script>
 @endif
-
 @endsection

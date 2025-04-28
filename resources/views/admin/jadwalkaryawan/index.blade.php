@@ -7,8 +7,8 @@
             <div class="flex items-center gap-4">
                 <label for="tableSelect" class="text-white text-lg">Pilih Laporan:</label>
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-64">
-                    <option value="jadwalKaryawan">Laporan Jadwal Karyawan</option>
-                    <option value="shiftKaryawan">Laporan Shift Karyawan</option>
+                    <option value="jadwalKaryawan">Jadwal Karyawan</option>
+                    <option value="shiftKaryawan">Shift Karyawan</option>
                 </select>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
         <!-- Laporan Jadwal Karyawan -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 p-4 rounded-lg shadow-md border border-gray-300 dark:border-slate-800">
-            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Jadwal Karyawan</h2>
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Jadwal Karyawan</h2>
             <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-4">
                 <!-- Form Filter -->
                 <form action="{{ route('jadwalkaryawan.index') }}" method="GET" class="flex flex-col sm:flex-row items-center gap-4">

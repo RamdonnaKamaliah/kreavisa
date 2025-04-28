@@ -2,9 +2,8 @@
 <title class="text-black dark:text-white">@section('page-title', 'Edit Profile')</title>
 @section('content')
 
-<div
-class="max-w-5xl mx-auto py-16 px-8 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl pt-4 border border-gray-200 dark:border-slate-700 text-white dark:text-gray-900">
-<h1 class="text-center justify-center mx-auto text-xl text-black dark:text-white font-bold font-poppins">Edit Profile</h1>
+<div class="max-w-5xl mx-auto py-16 px-8 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl pt-4 border border-gray-200 dark:border-slate-700 text-white dark:text-gray-900">
+    <h1 class="text-center justify-center mx-auto text-xl text-black dark:text-white font-bold font-poppins">Edit Profile</h1>
         <!-- Back Button -->
         <div class="mb-4">
             <a href="{{ route('profile.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">

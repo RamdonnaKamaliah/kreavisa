@@ -7,8 +7,8 @@
             <label for="tableSelect" class="block text-lg mb-2 text-white">Pilih Laporan:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-full">
-                    <option value="jadwalKaryawan">Laporan Jadwal Karyawan</option>
-                    <option value="shiftKaryawan">Laporan Shift Karyawan</option>
+                    <option value="jadwalKaryawan">Jadwal Karyawan</option>
+                    <option value="shiftKaryawan">Shift Karyawan</option>
                 </select>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
         <!-- Laporan Shift Karyawan -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
-            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Shift Karyawan</h2>
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Shift Karyawan</h2>
             <div class="flex justify-end mb-4">
                 <a href="{{ route('shiftkaryawan.create') }}"
                     class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
@@ -140,6 +140,4 @@
             </div>
         </div>
     </div>
-
-    
 @endsection

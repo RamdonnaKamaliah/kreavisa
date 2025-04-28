@@ -50,7 +50,8 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase text-black dark:text-white">
                                         Jumlah Absen Hari ini
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($absenkaryawan) }} Karyawan
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">
+                                        {{ app(\App\Models\AbsenKaryawan::class)->whereDate('tanggal_absensi', \Carbon\Carbon::today())->count() }} Karyawan
                                     </h5>
                                 </div>
                             </div>
@@ -272,9 +273,9 @@
 
                     // Ambil data absensi dari Laravel (Menggunakan absenkaryawan)
                     const absenKaryawan = @json($absenkaryawan);
-                    const labels = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+                    const labels = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
                     const values = labels.map(day => absenKaryawan[day] || 0);
-                    const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981"];
+                    const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981", "#EF4444"];
 
                     window.absensiChart = new Chart(ctxAbsensi, {
                         type: "bar",
@@ -414,7 +415,6 @@
                     </button>
                 </a>
             </div>
-
         </div>
     </div>
 @endsection

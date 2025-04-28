@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Tambah Data Karyawan')
+@section('page-title', 'Create Data Karyawan')
 @section('content')
     <div id="layoutSidenav_content">
 

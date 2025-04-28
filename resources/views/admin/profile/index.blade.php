@@ -2,9 +2,7 @@
 @section('page-title', 'Profile')
 @section('content')
 
-    <div
-        class="max-w-5xl w-full mx-auto px-4 sm:px-12 md:px-8 py-12 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl mt-10 border border-gray-200 dark:border-slate-700 text-gray-900 dark:text-white">
-
+    <div class="max-w-5xl w-full mx-auto px-4 sm:px-12 md:px-8 py-12 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl mt-10 border border-gray-200 dark:border-slate-700 text-gray-900 dark:text-white">
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div class="flex flex-col sm:flex-row items-center gap-6">
@@ -42,9 +40,9 @@
                     class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg transition shadow-md font-medium text-center">
                     Edit Profile
                 </a>
-                <form method="POST" action="{{ route('logout') }}">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit"
+                    <button type="button" id="logout-button"
                         class="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-lg transition shadow-md font-medium w-full sm:w-auto">
                         Logout
                     </button>
@@ -86,5 +84,4 @@
             </div>
         </div>
     </div>
-
 @endsection

@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Tambah Gaji Karyawan')
+@section('page-title', 'Create Gaji Karyawan')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Form Create Gaji Karyawan -->
@@ -15,7 +15,7 @@
                         </ul>
                     </div>
                 </div>
-            @endif
+                @endif
                 <!-- Tombol Back dengan Ikon Panah -->
                 <div class="mb-4">
                     <a href="{{ route('gajikaryawan.index') }}"
@@ -104,58 +104,56 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    
-<script>
-    function formatRupiah(input) {
-        // Hapus semua karakter non-digit
-        let value = input.value.replace(/[^\d]/g, '');
-        
-        // Format dengan titik sebagai pemisah ribuan
-        if (value.length > 3) {
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-        
-        // Update nilai input
-        input.value = value;
-        
-        // Update nilai raw untuk gaji pokok
-        if (input.id === 'gaji_pokok') {
-            document.getElementById('gaji_pokok_raw').value = value.replace(/\./g, '');
-        }
-    }
-
-    function getGajiPokok() {
-        var userId = document.getElementById('user_id').value;
-        if (userId) {
-            fetch(`/get-gaji-pokok/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const gajiPokok = data.gaji_pokok ?? 0;
-                    // Format nilai gaji pokok
-                    const formatted = gajiPokok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    document.getElementById('gaji_pokok').value = formatted;
-                    document.getElementById('gaji_pokok_raw').value = gajiPokok;
-                })
-                .catch(error => console.error('Error:', error));
-        } else {
-            document.getElementById('gaji_pokok').value = '';
-            document.getElementById('gaji_pokok_raw').value = '';
-        }
-    }
-
-    function handleTipePembayaran() {
-            var tipePembayaran = document.getElementById('tipe_pembayaran').value;
-            var nomorRekening = document.getElementById('nomor_rekening');
-
-            if (tipePembayaran === 'tunai') {
-                nomorRekening.value = '-';
-                nomorRekening.readOnly = true;
-            } else {
-                nomorRekening.value = '';
-                nomorRekening.readOnly = false;
+    </div>   
+    <script>
+        function formatRupiah(input) {
+            // Hapus semua karakter non-digit
+            let value = input.value.replace(/[^\d]/g, '');
+            
+            // Format dengan titik sebagai pemisah ribuan
+            if (value.length > 3) {
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+            
+            // Update nilai input
+            input.value = value;
+            
+            // Update nilai raw untuk gaji pokok
+            if (input.id === 'gaji_pokok') {
+                document.getElementById('gaji_pokok_raw').value = value.replace(/\./g, '');
             }
         }
-</script>
+
+        function getGajiPokok() {
+            var userId = document.getElementById('user_id').value;
+            if (userId) {
+                fetch(`/get-gaji-pokok/${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const gajiPokok = data.gaji_pokok ?? 0;
+                        // Format nilai gaji pokok
+                        const formatted = gajiPokok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        document.getElementById('gaji_pokok').value = formatted;
+                        document.getElementById('gaji_pokok_raw').value = gajiPokok;
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                document.getElementById('gaji_pokok').value = '';
+                document.getElementById('gaji_pokok_raw').value = '';
+            }
+        }
+
+        function handleTipePembayaran() {
+                var tipePembayaran = document.getElementById('tipe_pembayaran').value;
+                var nomorRekening = document.getElementById('nomor_rekening');
+
+                if (tipePembayaran === 'tunai') {
+                    nomorRekening.value = '-';
+                    nomorRekening.readOnly = true;
+                } else {
+                    nomorRekening.value = '';
+                    nomorRekening.readOnly = false;
+                }
+            }
+    </script>
 @endsection

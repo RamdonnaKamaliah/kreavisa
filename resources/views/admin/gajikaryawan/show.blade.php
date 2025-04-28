@@ -1,6 +1,7 @@
 @extends('layout.main')
-@section('page-title', 'Lihat Gaji Karyawan')
+@section('page-title', 'Show Gaji Karyawan')
 @section('content')
+
 <div class="relative flex justify-center items-center py-8 px-6 min-h-screen">
     <!-- Background dengan gradien -->
     <div class="absolute inset-0 from-blue-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 opacity-90"></div>

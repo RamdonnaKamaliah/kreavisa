@@ -6,7 +6,7 @@
             <!-- Dropdown Pilihan -->
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-4">
-                    <label for="viewSelect" class="text-gray-700 dark:text-gray-300 text-lg">Pilih Tampilan:</label>
+                    <label for="viewSelect" class="text-gray-700 dark:text-gray-300 text-lg">Pilih:</label>
                     <select id="viewSelect"
                         class="p-2 border border-gray-400 rounded-md w-64 dark:bg-gray-700 dark:text-white">
                         <option value="performanceView">Ringkasan Kinerja</option>

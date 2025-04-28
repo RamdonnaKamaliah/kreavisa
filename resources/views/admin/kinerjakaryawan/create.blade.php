@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Tambah Kinerja Karyawan')
+@section('page-title', 'Create Kinerja Karyawan')
 @section('content')
 
 <div class="p-4 md:p-6 overflow-x-hidden">
@@ -8,14 +8,14 @@
             <h1 class="text-xl font-bold text-center dark:text-white">Create Kinerja Karyawan</h1>
         </div>
         @if($errors->any())
-    <div class="px-4 mb-4">
-        <div class="bg-red-50 dark:bg-red-900/30 p-3 rounded-lg">
-            @foreach($errors->get('user_ids') as $error)
-                <p class="text-red-600 dark:text-red-400">{{ $error }}</p>
-            @endforeach
-        </div>
-    </div>
-@endif
+            <div class="px-4 mb-4">
+                <div class="bg-red-50 dark:bg-red-900/30 p-3 rounded-lg">
+                    @foreach($errors->get('user_ids') as $error)
+                        <p class="text-red-600 dark:text-red-400">{{ $error }}</p>
+                    @endforeach
+                </div>
+            </div>
+        @endif
         <div class="card-body px-0 pt-0 pb-2">
             <form action="{{ route('kinerjakaryawan.store') }}" method="POST">
                 @csrf
@@ -205,5 +205,4 @@
         </div>
     </div>
 </div>
-
 @endsection

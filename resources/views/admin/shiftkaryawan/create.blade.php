@@ -1,9 +1,8 @@
 @extends('layout.main')
-@section('page-title', 'Tambah Shift Karyawan')
+@section('page-title', 'Create Shift Karyawan')
 @section('content')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
     <div id="layoutSidenav_content pt-1">
         <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
             
@@ -110,18 +109,17 @@
             @endforeach
 
             Swal.fire({
-    icon: 'error',
-    title: 'Oops... Terjadi Kesalahan',
-    text: errorMessages,
-    confirmButtonText: 'OK',
-    confirmButtonColor: '#d33',
-    customClass: {
-        confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700'
-    }
-}).then(() => {
-    window.location.href = "{{ route('shiftkaryawan.create') }}";
-});
-
+            icon: 'error',
+            title: 'Oops... Terjadi Kesalahan',
+            text: errorMessages,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#d33',
+            customClass: {
+                confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700'
+            }
+            }).then(() => {
+                window.location.href = "{{ route('shiftkaryawan.create') }}";
+            });
         });
     </script>
 @endif
