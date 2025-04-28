@@ -1,3 +1,4 @@
+<script> let table = new DataTable('#myTable');</script>
 <!-- plugin for scrollbar  -->
 <script src="{{ asset('assets/js/perfect-scrollbar.js') }}"></script>
 <!-- main script file  -->

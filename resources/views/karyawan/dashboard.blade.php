@@ -286,8 +286,14 @@
 
     </div>
     <div id="riwayatAbsenTable"
-        class="max-w-[1020px] mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
-        <h2 class="text-center text-xl font-semibold mb-4">Riwayat Absen Saya</h2>
+    class="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
+    <div class="mb-4 text-center">
+    <h2 class="text-xl font-semibold mb-2">Riwayat Absen Saya</h2>
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+        Minggu: {{ \Carbon\Carbon::parse($startOfWeek)->isoFormat('D MMM') }} - {{ \Carbon\Carbon::parse($endOfWeek)->isoFormat('D MMM YYYY') }}
+    </div>
+</div>
+
         <table class="w-full text-sm text-left">
             <thead>
                 <tr

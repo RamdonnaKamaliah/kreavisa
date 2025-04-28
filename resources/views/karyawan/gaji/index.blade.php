@@ -6,7 +6,7 @@
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
             <h2 class="text-center text-xl font-bold mb-4 text-black dark:text-white">Rekap Gaji</h2>
             <div class="overflow-x-auto mt-4">
-                <table id="stokMasukTable"
+                <table id="myTable"
                     class="w-full border border-gray-300 dark:border-gray-700 text-xs md:text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100">
                     <thead class="bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-gray-100">
                         <tr>
@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($gajiKaryawan as $row)
+                    @foreach ($gajiKaryawan as $row)
                             <tr class="hover:bg-gray-100 dark:hover:bg-slate-800 transition">
                                 <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 md:px-4 md:py-2">
                                     {{ $row->user->nama_lengkap }}</td>
@@ -49,13 +49,8 @@
                                     </a>
                                 </td>
                             </tr>
-                            @empty
-                            <tr>
-                                <td colspan="9" class="py-4 text-center text-gray-500">
-                                    Tidak ada rekap gaji.
-                                </td>
-                            </tr>
-                        @endforelse
+                            
+                            @endforeach
                     </tbody>
                 </table>
             </div>

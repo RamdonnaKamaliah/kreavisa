@@ -19,20 +19,25 @@
             <div id="performanceViewContainer">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
                     <!-- Chart Total -->
-                    <div class="flex flex-col items-center gap-2 bg-slate-50 dark:bg-gray-800 rounded-xl py-4 px-6 min-w-[100px] shadow-lg">
-                        <h3 class="text-black dark:text-white font-bold font-popins">Total</h3>
-                        <canvas id="totalScoreChart" width="50" height="500"></canvas>
-                        <div class="flex items-center gap-1">
-                            @for($i = 1; $i <= 5; $i++)
-                                @if($i <= round($averages['total_skor'] / 20))
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Star Icon" class="w-5 h-5">
-                                @else
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Empty Star Icon" 
-                                         class="w-5 h-5 dark:filter dark:invert dark:brightness-0 dark:contrast-100">
-                                @endif
-                            @endfor
-                        </div>
-                    </div>
+<div class="flex flex-col items-center gap-2 bg-slate-50 dark:bg-gray-800 text-black rounded-xl py-4 px-6 min-w-[100px] shadow-lg">
+    <h3 class="text-black dark:text-white font-bold font-popins">Total</h3>
+    <div class="relative">
+        <canvas id="totalScoreChart" width="150" height="150"></canvas>
+        <div id="totalScoreCenterText" class="absolute inset-0 flex items-center justify-center text-black dark:text-white font-bold text-lg">
+            0/100
+        </div>
+    </div>
+    <div class="flex items-center gap-1 mt-2">
+        @for($i = 1; $i <= 5; $i++)
+            @if($i <= round($averages['total_skor'] / 20))
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Star Icon" class="w-5 h-5">
+            @else
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Empty Star Icon" 
+                     class="w-5 h-5 dark:filter dark:invert dark:brightness-0 dark:contrast-100">
+            @endif
+        @endfor
+    </div>
+</div>
 
                     <!-- Penilaian: Tanggung Jawab -->
                     <div class="bg-slate-50 dark:bg-gray-800 rounded-xl py-4 px-6 space-y-2 flex flex-col items-center text-center shadow-lg">
@@ -44,7 +49,7 @@
                                 {{ number_format($averages['tanggung_jawab'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-slate-50 dark:bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['tanggung_jawab'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -66,7 +71,7 @@
                                 {{ number_format($averages['produktivitas'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['produktivitas'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -88,7 +93,7 @@
                                 {{ number_format($averages['kehadiran_ketepatan_waktu'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['kehadiran_ketepatan_waktu'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -110,7 +115,7 @@
                                 {{ number_format($averages['kerja_sama_tim'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['kerja_sama_tim'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -132,7 +137,7 @@
                                 {{ number_format($averages['kemampuan_komunikasi'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['kemampuan_komunikasi'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -195,36 +200,25 @@
 </style>
 
 @push('scripts')
-    <script>
-        // Toggle antara tampilan kinerja dan riwayat
-        document.addEventListener("DOMContentLoaded", function() {
-            const viewSelect = document.getElementById('viewSelect');
-            const performanceView = document.getElementById('performanceViewContainer');
-            const historyView = document.getElementById('historyViewContainer');
-
-            viewSelect.addEventListener('change', function() {
-                if (this.value === 'performanceView') {
-                    performanceView.classList.remove('hidden');
-                    historyView.classList.add('hidden');
-                } else {
-                    performanceView.classList.add('hidden');
-                    historyView.classList.remove('hidden');
-                }
-            });
-
-            // Jika ada parameter hash di URL (misal: #history)
-            if (window.location.hash === '#history') {
-                viewSelect.value = 'historyView';
-                performanceView.classList.add('hidden');
-                historyView.classList.remove('hidden');
-            }
-        });
-
-        // Chart JS
+  
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
         const ctx = document.getElementById('totalScoreChart');
+        const scoreText = document.getElementById('totalScoreCenterText');
 
         const actualScore = {{ $averages['total_skor'] ?? 0 }};
         const maxScore = 100;
+
+        // Update angka di tengah
+        scoreText.innerText = `${Math.round(actualScore)}/${maxScore}`;
+
+        // Deteksi mode dark atau light
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches || document.documentElement.classList.contains('dark');
+
+        // Atur warna berdasarkan theme
+        const emptyColor = isDarkMode ? '#374151' : '#E2E8F0'; // dark: abu-abu gelap, light: abu-abu terang
+        const fillColor = actualScore > 0 ? '#3B82F6' : 'transparent'; // Kalau skor 0, transparan
 
         new Chart(ctx, {
             type: 'doughnut',
@@ -233,40 +227,22 @@
                 datasets: [{
                     label: 'Skor Kinerja',
                     data: [actualScore, maxScore - actualScore],
-                    backgroundColor: ['#3B82F6', '#1F2937'],
+                    backgroundColor: [fillColor, emptyColor],
                     borderWidth: 0
                 }]
             },
             options: {
                 cutout: '75%',
                 plugins: {
-                    tooltip: {
-                        enabled: false
-                    },
-                    legend: {
-                        display: false
-                    },
-                    responsive: true,
-                }
-            },
-            plugins: [{
-                id: 'centerText',
-                beforeDraw: function(chart) {
-                    const width = chart.width,
-                        height = chart.height,
-                        ctx = chart.ctx;
-                    ctx.restore();
-                    const fontSize = (height / 100).toFixed(2);
-                    ctx.font = fontSize + "em sans-serif";
-                    ctx.textBaseline = "middle";
-                    const text = `${Math.round(actualScore)}/${maxScore}`,
-                        textX = Math.round((width - ctx.measureText(text).width) / 2),
-                        textY = height / 2;
-                    ctx.fillStyle = '#fff';
-                    ctx.fillText(text, textX, textY);
-                    ctx.save();
-                }
-            }]
+                    tooltip: { enabled: false },
+                    legend: { display: false },
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
         });
-    </script>
+    });
+</script>
+
+
 @endpush

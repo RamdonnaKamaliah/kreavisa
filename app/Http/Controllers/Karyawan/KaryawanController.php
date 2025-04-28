@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AbsenKaryawan;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class KaryawanController extends Controller
 {
@@ -16,19 +17,26 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        // Ambil data absensi hanya untuk user yang login beserta relasi user dan jabatan
+        // Ambil tanggal awal dan akhir minggu ini
+        $startOfWeek = Carbon::now()->startOfWeek(); // Senin minggu ini
+        $endOfWeek = Carbon::now()->endOfWeek();     // Minggu minggu ini
+
+        // Ambil data absensi hanya untuk minggu ini
         $absen = AbsenKaryawan::with(['user', 'user.jabatan'])
                             ->where('user_id', Auth::id())
+                            ->whereBetween('tanggal_absensi', [$startOfWeek, $endOfWeek])
                             ->latest()
                             ->get();
 
-        // Hitung statistik absen
+        // Hitung statistik absen untuk minggu ini
         $totalHadir = AbsenKaryawan::where('user_id', Auth::id())
                                   ->where('status', 'hadir')
+                                  ->whereBetween('tanggal_absensi', [$startOfWeek, $endOfWeek])
                                   ->count();
         
         $totalIzinSakit = AbsenKaryawan::where('user_id', Auth::id())
                                      ->whereIn('status', ['izin', 'sakit'])
+                                     ->whereBetween('tanggal_absensi', [$startOfWeek, $endOfWeek])
                                      ->count();
         
         $absenHariIni = AbsenKaryawan::where('user_id', Auth::id())
@@ -41,7 +49,9 @@ class KaryawanController extends Controller
             'absen' => $absen,
             'totalHadir' => $totalHadir,
             'totalIzinSakit' => $totalIzinSakit,
-            'absenHariIni' => $absenHariIni ? $absenHariIni->status : 'Belum absen'
+            'absenHariIni' => $absenHariIni ? $absenHariIni->status : 'Belum absen',
+            'startOfWeek' => $startOfWeek->format('Y-m-d'),
+            'endOfWeek' => $endOfWeek->format('Y-m-d')
         ];
 
         return view('karyawan.dashboard', $data);

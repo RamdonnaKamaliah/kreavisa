@@ -102,9 +102,9 @@
             <!-- Container untuk Riwayat Absen (Awalnya Disembunyikan) -->
             <div id="riwayatAbsenContainer" class="hidden">
                 <div
-                    class="max-w-[1020px] mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
+                    class="dark:text-white max-w-[1020px] mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
                     <h2 class="text-center text-xl font-semibold mb-4 dark:text-white">Riwayat Absen Saya</h2>
-                    <table class="w-full text-sm text-left">
+                    <table id="myTable" class="w-full text-sm text-left">
                         <thead>
                             <tr
                                 class="text-gray-600 dark:text-gray-300 uppercase text-xs border-b border-gray-200 dark:border-gray-700">
