@@ -10,7 +10,7 @@
 <aside id="mobile-sidenav-admin"
     class="fixed top-0 bottom-0 left-0 w-64 transform -translate-x-full xl:translate-x-0
         bg-white dark:bg-[#1D232A] shadow-xl p-4 flex flex-col overflow-y-auto
-        transition-transform duration-200 ease-in-out z-50
+        transition-transform duration-200 ease-in-out z-[10000]
 
         xl:m-6 xl:rounded-2xl">
     <x-nav-admin></x-nav-admin>

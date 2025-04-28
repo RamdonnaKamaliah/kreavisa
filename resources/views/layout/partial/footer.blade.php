@@ -12,3 +12,41 @@
 </footer>
 
 
+<!-- Tombol Back to Top -->
+<button id="backToTop" class="hidden fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-200 z-50">
+    <i class="bx bx-chevron-up text-2xl"></i>
+</button>
+
+
+<style>
+/* Ini opsional kalau mau pastiin tombol hidden awalnya */
+#backToTop {
+    display: none;
+}
+
+</style>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTop");
+
+// Muncul setelah scroll 100px (2 kali scroll mouse kira-kira)
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+        backToTopBtn.style.display = "block";
+    } else {
+        backToTopBtn.style.display = "none";
+    }
+});
+
+// Scroll smooth ke atas saat tombol diklik
+backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+
+</script>
+
+
