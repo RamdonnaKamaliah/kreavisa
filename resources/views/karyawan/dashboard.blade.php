@@ -283,7 +283,6 @@
             </div>
         </div>
 
-
     </div>
     <div id="riwayatAbsenTable"
         class="max-w-[1020px] mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
