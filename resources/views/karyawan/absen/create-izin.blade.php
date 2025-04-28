@@ -65,9 +65,13 @@
                 </div>
 
                 <!-- Tombol Submit -->
-                <button type="submit" class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium">
-                    Simpan Absen
-                </button>
+                <div class="flex justify-center pb-8">
+                    <button type="submit"
+                        class="w-full max-w-lg px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium flex items-center justify-center gap-2">
+                        <span class="iconify w-6 h-6" data-icon="majesticons:save-line" data-inline="false"></span>
+                        Simpan Absen
+                    </button>
+                </div>
             </form>
         </div>
     </div>

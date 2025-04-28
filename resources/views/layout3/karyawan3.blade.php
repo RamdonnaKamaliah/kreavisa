@@ -95,5 +95,6 @@
     });
 </script>
 
+@stack('scripts')
 
 </html>

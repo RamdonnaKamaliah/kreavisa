@@ -37,7 +37,7 @@
                         </button>
                     </a>
                 @else
-                    <a href="/login-karyawan-gudang">
+                    <a href="/login-karyawan">
                         <button
                             class="bg-gradient-to-r from-[#8176AF] to-[#C0B7E8] text-[#343045] px-5 py-2 rounded-md shadow-md hover:from-[#C0B7E8] hover:to-[#8176AF] font-popins hover:shadow-lg transition-all duration-300">
                             Login
@@ -47,10 +47,23 @@
 
                 <!-- Dark Mode Toggle -->
                 <label for="dark-toggle" class="cursor-pointer">
-                    <input type="checkbox" id="dark-toggle" class="hidden">
-                    <img src="{{ asset('asset-landing-page/img/sun_moon_toggle.svg.phase') }}" alt="toggle icon"
-                        class="w-6 h-6 dark:invert" />
+                    <input type="checkbox" id="dark-toggle" class="hidden peer">
+
+                    <!-- Matahari (light mode) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-yellow-400 peer-checked:hidden"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m8.66-8.66l-.707.707M4.05 4.05l-.707.707M21 12h-1M4 12H3m16.95 7.95l-.707-.707M4.05 19.95l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                    </svg>
+
+                    <!-- Bulan (dark mode) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white hidden peer-checked:block"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                    </svg>
                 </label>
+
 
             </div>
 

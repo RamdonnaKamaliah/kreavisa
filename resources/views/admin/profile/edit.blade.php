@@ -1,4 +1,4 @@
-@extends('layout3.karyawan3')
+@extends('layout.main')
 <title class="text-black dark:text-white">@section('page-title', 'Edit Profile')</title>
 @section('content')
 

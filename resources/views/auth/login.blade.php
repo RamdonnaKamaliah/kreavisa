@@ -66,7 +66,7 @@
                     <!-- Remember Me -->
                     <div class="flex items-center">
                         <input type="checkbox" id="remember_me" name="remember" class="mr-2">
-                        <label for="remember_me" class="text-gray-600">Remember Me</label>
+                        <label for="remember_me" class="text-gray-600">Ingat Saya</label>
                     </div>
 
                     <!-- Login Button -->

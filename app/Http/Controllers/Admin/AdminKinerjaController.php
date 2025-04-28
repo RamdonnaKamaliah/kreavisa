@@ -90,43 +90,57 @@ public function index(Request $request)
             $kinerja->calculateTotalScore();
         }
 
-        return redirect()->route('kinerjakaryawan.index')->with('success', 'Penilaian kinerja berhasil disimpan');
+        return redirect()->route('kinerjakaryawan.index')->with('added', 'true');
     }
 
-    public function show(KinerjaKaryawan $kinerjaKaryawan)
+
+    public function show($id)
+{
+    $kinerjaKaryawan = KinerjaKaryawan::with(['user', 'user.jabatan'])->findOrFail($id);
+    return view('admin.kinerjakaryawan.show', compact('kinerjaKaryawan'));
+}
+
+    public function edit($id)
+{
+    $kinerjaKaryawan = KinerjaKaryawan::findOrFail($id);
+    return view('admin.kinerjakaryawan.edit', compact('kinerjaKaryawan'));
+}
+
+public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'tanggal_penilaian' => 'required|date',
+        'periode' => 'required|string',
+        'tanggung_jawab' => 'required|integer|min:1|max:5',
+        'kehadiran_ketepatan_waktu' => 'required|integer|min:1|max:5',
+        'produktivitas' => 'required|integer|min:1|max:5',
+        'kerja_sama_tim' => 'required|integer|min:1|max:5',
+        'kemampuan_komunikasi' => 'required|integer|min:1|max:5',
+    ]);
+
+    $kinerjaKaryawan = KinerjaKaryawan::findOrFail($id);
+    $kinerjaKaryawan->update($validated);
+    $kinerjaKaryawan->calculateTotalScore();
+
+    return redirect()->route('kinerjakaryawan.index')->with('edited', 'true');
+}
+
+    public function destroy($id)
     {
-        return view('admin.kinerjakaryawan.show', compact('kinerjaKaryawan'));
-    }
-
-    public function edit(KinerjaKaryawan $kinerjaKaryawan)
-    {
-        $users = User::where('usertype', 'karyawan')->get();
-        $jabatans = JabatanKaryawan::all();
-        return view('admin.kinerjakaryawan.edit', compact('kinerjaKaryawan', 'users', 'jabatans'));
-    }
-
-    public function update(Request $request, KinerjaKaryawan $kinerjaKaryawan)
-    {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'tanggal_penilaian' => 'required|date',
-            'periode' => 'required|string',
-            'disiplin' => 'required|integer|min:1|max:5',
-            'sikap_kerja' => 'required|integer|min:1|max:5',
-            'kualitas_kerja' => 'required|integer|min:1|max:5',
-            'kecepatan_kerja' => 'required|integer|min:1|max:5',
-            'pengetahuan' => 'required|integer|min:1|max:5',
-        ]);
-
-        $kinerjaKaryawan->update($validated);
-        $kinerjaKaryawan->calculateTotalScore();
-
-        return redirect()->route('admin.kinerjakaryawan.index')->with('success', 'Penilaian kinerja berhasil diperbarui');
-    }
-
-    public function destroy(KinerjaKaryawan $kinerjaKaryawan)
-    {
-        $kinerjaKaryawan->delete();
-        return redirect()->route('admin.kinerjakaryawan.index')->with('success', 'Penilaian kinerja berhasil dihapus');
+        try {
+            // Cari data penilaian berdasarkan ID
+            $kinerjaKaryawan = KinerjaKaryawan::findOrFail($id);
+            
+            // Hapus data
+            $kinerjaKaryawan->delete();
+            
+            return redirect()->route('kinerjakaryawan.index')
+            ->with('deleted', 'true');
+                
+        } catch (\Exception $e) {
+            return redirect()->route('kinerjakaryawan.index')
+                ->with('error', 'Gagal menghapus penilaian kinerja: '.$e->getMessage());
+        }
     }
 }

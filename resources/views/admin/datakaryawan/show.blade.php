@@ -1,7 +1,8 @@
 @extends('layout.main')
+@section('page-title', 'Lihat Data Karyawan')
 @section('content')
     <div id="layoutSidenav_content">
-        <div class="relative flex justify-center items-center py-8 px-6">
+        <div class="relative flex justify-center items-center py-8 px-6 bg-white dark:bg-slate-850 max-w-4xl mx-auto rounded-xl shadow-md">
 
             <div class="w-full max-w-5xl text-gray-700 relative z-10">
                 <div class="flex items-center mb-4">

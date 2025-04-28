@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Edit Gaji Karyawan')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <div class="flex justify-center items-center min-h-screen py-10">

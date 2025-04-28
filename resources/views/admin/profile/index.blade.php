@@ -1,4 +1,4 @@
-@extends('layout3.karyawan3')
+@extends('layout.main')
 @section('page-title', 'Profile')
 @section('content')
 
