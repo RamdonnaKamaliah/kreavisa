@@ -242,6 +242,7 @@
                                     display: false,
                                 },
                                 datalabels: {
+                                    display: false,
                                     color: document.documentElement.classList.contains('dark') ? '#fff' :
                                         '#333',
                                     font: {
@@ -302,6 +303,9 @@
                                         label: (tooltipItem) => ` ${tooltipItem.raw} Absensi`,
                                     },
                                 },
+                                datalabels: { // Tambahkan ini jika ada plugin datalabels
+                                    display: false
+                                }
                             },
                             scales: {
                                 y: {

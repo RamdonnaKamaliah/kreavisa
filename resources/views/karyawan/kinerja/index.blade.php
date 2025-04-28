@@ -19,25 +19,20 @@
             <div id="performanceViewContainer">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
                     <!-- Chart Total -->
-<div class="flex flex-col items-center gap-2 bg-slate-50 dark:bg-gray-800 text-black rounded-xl py-4 px-6 min-w-[100px] shadow-lg">
-    <h3 class="text-black dark:text-white font-bold font-popins">Total</h3>
-    <div class="relative">
-        <canvas id="totalScoreChart" width="150" height="150"></canvas>
-        <div id="totalScoreCenterText" class="absolute inset-0 flex items-center justify-center text-black dark:text-white font-bold text-lg">
-            0/100
-        </div>
-    </div>
-    <div class="flex items-center gap-1 mt-2">
-        @for($i = 1; $i <= 5; $i++)
-            @if($i <= round($averages['total_skor'] / 20))
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Star Icon" class="w-5 h-5">
-            @else
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Empty Star Icon" 
-                     class="w-5 h-5 dark:filter dark:invert dark:brightness-0 dark:contrast-100">
-            @endif
-        @endfor
-    </div>
-</div>
+                    <div class="flex flex-col items-center gap-2 bg-slate-50 dark:bg-gray-800 rounded-xl py-4 px-6 min-w-[100px] shadow-lg">
+                        <h3 class="text-black dark:text-white font-bold font-popins">Total</h3>
+                        <canvas id="totalScoreChart" width="50" height="500"></canvas>
+                        <div class="flex items-center gap-1">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= round($averages['total_skor'] / 20))
+                                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Star Icon" class="w-5 h-5">
+                                @else
+                                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png" alt="Empty Star Icon" 
+                                         class="w-5 h-5 dark:filter dark:invert dark:brightness-0 dark:contrast-100">
+                                @endif
+                            @endfor
+                        </div>
+                    </div>
 
                     <!-- Penilaian: Tanggung Jawab -->
                     <div class="bg-slate-50 dark:bg-gray-800 rounded-xl py-4 px-6 space-y-2 flex flex-col items-center text-center shadow-lg">
@@ -154,9 +149,9 @@
             <!-- Container untuk Riwayat Penilaian (Awalnya Disembunyikan) -->
             <div id="historyViewContainer" class="hidden">
                 <div class="bg-slate-50 dark:bg-gray-800 rounded-xl py-4 px-6 shadow-lg mt-4">
-                    <h3 class="text-lg font-semibold text-black dark:text-white mb-4">Riwayat Penilaian</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-black dark:text-white mb-4 text-center">Riwayat Penilaian</h3>
+                    <div class="overflow-x-auto dark:text-white">
+                        <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
                             <thead class="bg-gray-200 text-gray-800 dark:bg-slate-700 dark:text-gray-100">
                                 <tr>
                                     <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
@@ -174,9 +169,6 @@
                                         <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->total_skor }}</td>
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="4" class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">Belum ada data penilaian</td>
-                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -200,25 +192,36 @@
 </style>
 
 @push('scripts')
-  
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
+    <script>
+        // Toggle antara tampilan kinerja dan riwayat
+        document.addEventListener("DOMContentLoaded", function() {
+            const viewSelect = document.getElementById('viewSelect');
+            const performanceView = document.getElementById('performanceViewContainer');
+            const historyView = document.getElementById('historyViewContainer');
+
+            viewSelect.addEventListener('change', function() {
+                if (this.value === 'performanceView') {
+                    performanceView.classList.remove('hidden');
+                    historyView.classList.add('hidden');
+                } else {
+                    performanceView.classList.add('hidden');
+                    historyView.classList.remove('hidden');
+                }
+            });
+
+            // Jika ada parameter hash di URL (misal: #history)
+            if (window.location.hash === '#history') {
+                viewSelect.value = 'historyView';
+                performanceView.classList.add('hidden');
+                historyView.classList.remove('hidden');
+            }
+        });
+
+        // Chart JS
         const ctx = document.getElementById('totalScoreChart');
-        const scoreText = document.getElementById('totalScoreCenterText');
 
         const actualScore = {{ $averages['total_skor'] ?? 0 }};
         const maxScore = 100;
-
-        // Update angka di tengah
-        scoreText.innerText = `${Math.round(actualScore)}/${maxScore}`;
-
-        // Deteksi mode dark atau light
-        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches || document.documentElement.classList.contains('dark');
-
-        // Atur warna berdasarkan theme
-        const emptyColor = isDarkMode ? '#374151' : '#E2E8F0'; // dark: abu-abu gelap, light: abu-abu terang
-        const fillColor = actualScore > 0 ? '#3B82F6' : 'transparent'; // Kalau skor 0, transparan
 
         new Chart(ctx, {
             type: 'doughnut',
@@ -227,22 +230,40 @@
                 datasets: [{
                     label: 'Skor Kinerja',
                     data: [actualScore, maxScore - actualScore],
-                    backgroundColor: [fillColor, emptyColor],
+                    backgroundColor: ['#3B82F6', '#9ca3afa1'],
                     borderWidth: 0
                 }]
             },
             options: {
                 cutout: '75%',
                 plugins: {
-                    tooltip: { enabled: false },
-                    legend: { display: false },
-                },
-                responsive: true,
-                maintainAspectRatio: false
-            }
+                    tooltip: {
+                        enabled: false
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                }
+            },
+            plugins: [{
+                id: 'centerText',
+                beforeDraw: function(chart) {
+                    const width = chart.width,
+                        height = chart.height,
+                        ctx = chart.ctx;
+                    ctx.restore();
+                    const fontSize = (height / 100).toFixed(2);
+                    ctx.font = fontSize + "em sans-serif";
+                    ctx.textBaseline = "middle";
+                    const text = `${Math.round(actualScore)}/${maxScore}`,
+                        textX = Math.round((width - ctx.measureText(text).width) / 2),
+                        textY = height / 2;
+                    ctx.fillStyle = '#9ca3afa1';
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }]
         });
-    });
-</script>
-
-
+    </script>
 @endpush
