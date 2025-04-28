@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Buat Gaji Pokok')
+@section('page-title', 'Tambah Gaji Pokok')
 @section('content')
     <div id="layoutSidenav_content">
         <!-- Container utama -->
