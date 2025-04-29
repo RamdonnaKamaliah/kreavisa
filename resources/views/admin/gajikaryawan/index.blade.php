@@ -4,7 +4,7 @@
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel -->
         <div class="mb-4">
-            <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
+            <label for="tableSelect" class="block text-white text-lg mb-2">Pilih:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-full">
                     <option value="gajiKaryawan">Rekap Gaji Karyawan</option> 

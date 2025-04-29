@@ -86,8 +86,8 @@
                     window.location.href = url;
                 }
             </script>
-            <div class="overflow-x-auto mt-4">
-                <table id="stokMasukTable" class="w-full border border-gray-300 text-xs md:text-sm">
+            <div class="overflow-x-auto mt-4 dark:text-white">
+                <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm">
                     <thead class="bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-gray-100">
                         <tr>
                             <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
@@ -141,13 +141,13 @@
                                     <span>-</span>
                                 @endif
                             </td>
-                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 ">
-                                @if ($item->foto)
+                            <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">
+                                @if (!empty($item->foto) && file_exists(public_path($item->foto)))
                                     <a href="{{ asset($item->foto) }}" target="_blank">
                                         <img src="{{ asset($item->foto) }}" alt="Foto Absen" class="foto-absen">
                                     </a>
                                 @else
-                                    <span>-</span>
+                                    <span class="dark:text-white">-</span>
                                 @endif
                             </td>
                             <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">

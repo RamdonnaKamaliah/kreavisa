@@ -5,7 +5,7 @@
         <!-- Dropdown Pilihan Tabel & Tombol Tambah Data -->
         <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-4">
-                <label for="tableSelect" class="text-white text-lg">Pilih Laporan:</label>
+                <label for="tableSelect" class="text-white text-lg">Pilih:</label>
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-64">
                     <option value="jadwalKaryawan">Jadwal Karyawan</option>
                     <option value="shiftKaryawan">Shift Karyawan</option>
