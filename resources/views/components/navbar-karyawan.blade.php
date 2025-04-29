@@ -126,7 +126,7 @@
             @csrf
             <button type="button" id="logout-button"
                 class="w-full flex items-center space-x-3 p-3 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition border border-red-200">
-                <i class="fa fa-box w-5 h-5 text-red-500"></i> <!-- FontAwesome box icon -->
+                <i class="fa fa-sign-out-alt w-5 h-5 text-red-500"></i>
                 <span class="font-medium">Logout</span>
             </button>
         </form>

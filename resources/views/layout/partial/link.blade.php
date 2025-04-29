@@ -16,7 +16,7 @@
  <!-- Main Styling -->
  <link href="{{ asset('assets/css/argon-dashboard-tailwind.css') }}" rel="stylesheet" />
  <link href="{{ asset('assets/css/argon-dashboard-tailwind.min.css') }}" rel="stylesheet" />
- <link href="{{ asset('assets/css/perfect-scrollbar.css') }}" rel="stylesheet" />
+ {{-- <link href="{{ asset('assets/css/perfect-scrollbar.css') }}" rel="stylesheet" /> --}}
  <link href="{{ asset('assets/css/tooltips.css') }}" rel="stylesheet" />
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,31 +42,6 @@
  @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
-
- {{-- <body class="bg-[#191E24]">
-    <main class="flex min-h-screen">
-
-        <!-- Content Container -->
-        <div class="flex-1 flex flex-col">
-            <!-- Navbar -->
-            <nav
-                class="bg-gray-900 text-white p-4 px-6 flex justify-between items-center fixed top-0 left-0 w-full md:left-64 md:w-[calc(100%-16rem)] z-50 shadow-lg">
-
-                <!-- Tombol Toggle Sidebar -->
-                <button id="sidebarToggle" class="md:hidden p-2 rounded-full hover:bg-gray-700 transition">
-                    <i class='bx bx-menu text-2xl'></i>
-                </button>
-
-                <h1 class="text-xl font-bold">Dashboard</h1>
-
-                <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-700 transition">
-                    <i class="bx bx-moon text-2xl"></i>
-                </button>
-            </nav> --}}
-
- {{-- </div>
-    </main> --}}
-
  <script>
      document.addEventListener('DOMContentLoaded', function() {
          const sidebarToggle = document.getElementById('sidebarToggle');
@@ -87,8 +62,7 @@
 
 
  <!-- SweetAlert2 -->
- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- <script>
+ {{-- <script>
      @if (session('added'))
          Swal.fire({
              icon: 'success',
@@ -134,4 +108,4 @@
              timer: 1500
          });
      @endif
- </script>
+ </script> --}}

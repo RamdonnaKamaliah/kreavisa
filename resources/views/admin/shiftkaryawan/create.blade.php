@@ -4,9 +4,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <div id="layoutSidenav_content pt-1">
-        <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
+        <div class="flex justify-center items-center min-h-[80vh] py-6 px-12">
             
-            <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
+            <div class="w-full max-w-5xl bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg min-h-[300px]">
+
 
                 <div class="mb-4">
                     <a href="{{ route('shiftkaryawan.index') }}" class="text-blue-600 hover:text-blue-800">
@@ -95,7 +96,6 @@
                 <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
                     <p>Tidak ada karyawan yang tersedia untuk ditambahkan shift. Semua karyawan sudah memiliki shift.</p>
                 </div>
-                <a href="{{ route('shiftkaryawan.index') }}" class="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">Kembali ke Daftar Shift</a>
             @endif
             </div>
         </div>

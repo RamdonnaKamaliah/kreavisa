@@ -17,7 +17,7 @@
 
             <!-- Container untuk Ringkasan Kinerja -->
             <div id="performanceViewContainer">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-6">
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
                     <!-- Chart Total -->
                     <div class="flex flex-col items-center gap-2 bg-slate-50 dark:bg-gray-800 rounded-xl py-4 px-6 min-w-[100px] shadow-lg">
                         <h3 class="text-black dark:text-white font-bold font-popins">Total</h3>

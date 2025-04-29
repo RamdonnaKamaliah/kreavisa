@@ -2,7 +2,7 @@
 @section('page-title', 'Dashboard')
 @section('content')
     <div>
-        <div class="flex-1 p-6 max-w-7xl mx-auto text-gray-900">
+        <div class="flex-1 p-6 max-w-7xl mx-auto text-gray-900 overflow-x-hidden">
             <div class="flex flex-wrap -mx-3">
                 <!-- Card 1 - Total Kehadiran -->
                 <div class="w-1/2 xl:w-1/4 px-3 mb-6">
@@ -17,7 +17,8 @@
                                     <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalHadir }} Hari</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-emerald-500 to-blue-500">
+                                    <div
+                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-emerald-500 to-blue-500">
                                         <i class='bx bx-check-shield text-lg text-white'></i>
                                     </div>
                                 </div>
@@ -25,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-            
+
                 <!-- Card 2 - Izin/Sakit -->
                 <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
@@ -39,7 +40,8 @@
                                     <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalIzinSakit }} Hari</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-rose-500 to-pink-400">
+                                    <div
+                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-rose-500 to-pink-400">
                                         <i class='bx bx-first-aid text-lg text-white'></i>
                                     </div>
                                 </div>
@@ -47,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-            
+
                 <!-- Card 3 - Absen Hari Ini -->
                 <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
@@ -61,7 +63,8 @@
                                     <h5 class="mb-2 font-bold dark:text-white mt-8">{{ ucfirst($absenHariIni) }}</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-orange-500 to-yellow-400">
+                                    <div
+                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-orange-500 to-yellow-400">
                                         <i class='bx bx-time-five text-lg text-white'></i>
                                     </div>
                                 </div>
@@ -69,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-            
+
                 <!-- Card 4 - Cuaca Hari Ini -->
                 <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
@@ -81,15 +84,18 @@
                                         Cuaca Hari Ini
                                     </p>
                                     <div class="text-left">
-                                        <p id="temperature" class="text-2xl font-semibold text-black dark:text-white">--°C</p>
+                                        <p id="temperature" class="text-2xl font-semibold text-black dark:text-white">--°C
+                                        </p>
                                         <p id="weatherDescription" class="mb-2 font-bold text-gray-600 dark:text-white">
                                             Memuat...
                                         </p>
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-sky-500 to-slate-400">
-                                        <img id="weatherIcon" src="" alt="Cuaca" class="w-full h-full object-contain">
+                                    <div
+                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-sky-500 to-slate-400">
+                                        <img id="weatherIcon" src="" alt="Cuaca"
+                                            class="w-full h-full object-contain">
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +103,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
 
@@ -105,7 +111,8 @@
 
     {{-- kartu ucapan --}}
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pl-6 pr-3 -mt-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 sm:px-6
+ -mt-8">
 
         <div
             class="bg-gradient-to-r from-blue-100 via-white to-purple-100 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 p-8 rounded-xl shadow-lg dark:shadow-dark-xl flex items-center justify-between w-full backdrop-blur-md relative overflow-hidden order-1 md:order-1">
@@ -266,13 +273,14 @@
 
     </div>
     <div id="riwayatAbsenTable"
-    class="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
-    <div class="mb-4 text-center">
-    <h2 class="text-xl font-semibold mb-2">Riwayat Absen Saya</h2>
-    <div class="text-sm text-gray-500 dark:text-gray-400">
-        Minggu: {{ \Carbon\Carbon::parse($startOfWeek)->isoFormat('D MMM') }} - {{ \Carbon\Carbon::parse($endOfWeek)->isoFormat('D MMM YYYY') }}
-    </div>
-</div>
+        class="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
+        <div class="mb-4 text-center">
+            <h2 class="text-xl font-semibold mb-2">Riwayat Absen Saya</h2>
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                Minggu: {{ \Carbon\Carbon::parse($startOfWeek)->isoFormat('D MMM') }} -
+                {{ \Carbon\Carbon::parse($endOfWeek)->isoFormat('D MMM YYYY') }}
+            </div>
+        </div>
 
         <table class="w-full text-sm text-left">
             <thead>
@@ -309,7 +317,8 @@
 ">
                             @if ($item->lokasi)
                                 <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}"
-                                    target="_blank" class="hover:underline"><i class="fa-solid fa-location-dot"></i> Lihat Maps</a>
+                                    target="_blank" class="hover:underline"><i class="fa-solid fa-location-dot"></i>
+                                    Lihat Maps</a>
                             @else
                                 -
                             @endif
