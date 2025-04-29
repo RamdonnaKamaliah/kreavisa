@@ -38,7 +38,7 @@
 </body>
 @include('layout.partial.script')
 
-<script>
+{{-- <script>
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const slowTypes = ['slow-2g', '2g'];
 
@@ -85,6 +85,6 @@
             showConfirmButton: false
         });
     });
-</script>
+</script> --}}
 
 </html>
