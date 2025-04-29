@@ -2,7 +2,7 @@
 @section('page-title', 'Edit Shift Karyawan')
 @section('content')
     <div class="p-4 md:p-6">
-        <div class="bg-white dark:bg-slate-800 text-gray-900 p-4 rounded-lg shadow-md border border-gray-300 dark:border-slate-800 max-w-2xl mx-auto">
+        <div class="bg-white dark:bg-slate-800 text-gray-900 p-4 rounded-lg shadow-md border border-gray-300 dark:border-slate-800 max-w-5xl mx-auto">
             <!-- Back Button -->
             <div class="mb-4">
                 <a href="{{ route('shiftkaryawan.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
@@ -75,7 +75,7 @@
                 <!-- Save Button -->
                 <div class="mt-6 text-center">
                     <button type="submit" 
-                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-md font-bold">
+                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-20 rounded-md font-bold">
                         Simpan
                     </button>
                 </div>
