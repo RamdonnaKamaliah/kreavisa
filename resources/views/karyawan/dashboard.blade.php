@@ -4,25 +4,20 @@
     <div>
         <div class="flex-1 p-6 max-w-7xl mx-auto text-gray-900">
             <div class="flex flex-wrap -mx-3">
-
                 <!-- Card 1 - Total Kehadiran -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Total Kehadiran
-                                        </p>
-                                        <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalHadir }} Hari</h5>
-                                    </div>
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Total Kehadiran
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalHadir }} Hari</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div
-                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-emerald-500 to-blue-500">
+                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-emerald-500 to-blue-500">
                                         <i class='bx bx-check-shield text-lg text-white'></i>
                                     </div>
                                 </div>
@@ -30,25 +25,21 @@
                         </div>
                     </div>
                 </div>
-
+            
                 <!-- Card 2 - Izin/Sakit -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Izin / Sakit
-                                        </p>
-                                        <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalIzinSakit }} Hari</h5>
-                                    </div>
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Izin / Sakit
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalIzinSakit }} Hari</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div
-                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-rose-500 to-pink-400">
+                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-rose-500 to-pink-400">
                                         <i class='bx bx-first-aid text-lg text-white'></i>
                                     </div>
                                 </div>
@@ -56,25 +47,21 @@
                         </div>
                     </div>
                 </div>
-
+            
                 <!-- Card 3 - Absen Hari Ini -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Absen Hari Ini
-                                        </p>
-                                        <h5 class="mb-2 font-bold dark:text-white mt-8">{{ ucfirst($absenHariIni) }}</h5>
-                                    </div>
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Absen Hari Ini
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">{{ ucfirst($absenHariIni) }}</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div
-                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-orange-500 to-yellow-400">
+                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-orange-500 to-yellow-400">
                                         <i class='bx bx-time-five text-lg text-white'></i>
                                     </div>
                                 </div>
@@ -82,41 +69,35 @@
                         </div>
                     </div>
                 </div>
-
+            
                 <!-- Card 4 - Cuaca Hari Ini -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Cuaca Hari Ini
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Cuaca Hari Ini
+                                    </p>
+                                    <div class="text-left">
+                                        <p id="temperature" class="text-2xl font-semibold text-black dark:text-white">--°C</p>
+                                        <p id="weatherDescription" class="mb-2 font-bold text-gray-600 dark:text-white">
+                                            Memuat...
                                         </p>
-                                        
-                                        <div class="text-left">
-                                            <p id="temperature" class="text-2xl font-semibold text-black dark:text-white">
-                                                --°C</p>
-                                            <p id="weatherDescription" class="mb-2 font-bold text-gray-600 dark:text-white">
-                                                Memuat...</p>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
-                                    <div
-                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-sky-500 to-slate-400">
-                                        <img id="weatherIcon" src="" alt="Cuaca"
-                                            class="w-full h-full object-contain">
+                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-sky-500 to-slate-400">
+                                        <img id="weatherIcon" src="" alt="Cuaca" class="w-full h-full object-contain">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
+            
         </div>
 
 
