@@ -43,13 +43,15 @@
                         </div>
 
                         <!-- Tombol-tombol dengan spacing yang rapi -->
+                        <!-- Semua tombol disatukan agar sejajar -->
                         <div class="flex justify-center items-center gap-4 flex-wrap mb-8">
                             <!-- Tombol Ambil Foto -->
                             <button type="button" id="captureBtn"
-                                class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 flex items-center">
+                                class="w-[180px] px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 flex items-center justify-center">
                                 <i class="fas fa-camera mr-2"></i>
                                 <span>Ambil Foto</span>
                             </button>
+
 
                             <!-- Tombol Ambil Ulang -->
                             <button type="button" id="retakeBtn"
@@ -57,18 +59,18 @@
                                 <i class="fas fa-redo mr-2"></i>
                                 <span>Ambil Ulang</span>
                             </button>
-                        </div>
 
-                        <input type="hidden" name="foto" id="fotoInput">
-
-                        <!-- Tombol Simpan Absen -->
-                        <div class="flex justify-center pb-8">
+                            <!-- Tombol Simpan Absen -->
                             <button type="submit"
-                                class="w-full max-w-lg px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium flex items-center justify-center gap-2">
+                                class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 flex items-center justify-center gap-2 font-medium"
+                                style="min-width: 180px;">
                                 <span class="iconify w-6 h-6" data-icon="majesticons:save-line" data-inline="false"></span>
                                 Simpan Absen
                             </button>
                         </div>
+
+                        <input type="hidden" name="foto" id="fotoInput">
+
                     </div>
             </form>
         </div>

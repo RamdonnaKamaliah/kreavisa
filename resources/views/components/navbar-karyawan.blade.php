@@ -66,58 +66,64 @@
             $menus = [
                 [
                     'route' => 'karyawan.dashboard',
+                    'prefix' => 'karyawan.dashboard',
                     'icon' => 'bx-home',
                     'label' => 'Dashboard',
                     'color' => 'text-blue-500',
                 ],
                 [
                     'route' => 'karyawan.absen.index',
+                    'prefix' => 'karyawan.absen',
                     'icon' => 'bx-check-circle',
                     'label' => 'Absensi',
                     'color' => 'text-green-500',
                 ],
                 [
                     'route' => 'karyawan.jadwal.index',
+                    'prefix' => 'karyawan.jadwal',
                     'icon' => 'bx-calendar',
                     'label' => 'Jadwal Kerja',
                     'color' => 'text-purple-500',
                 ],
                 [
                     'route' => 'gajiKaryawan.index',
+                    'prefix' => 'gajiKaryawan',
                     'icon' => 'bx-wallet',
                     'label' => 'Rekap Gaji',
                     'color' => 'text-amber-500',
                 ],
                 [
                     'route' => 'kinerja.index',
+                    'prefix' => 'kinerja',
                     'icon' => 'bx-bar-chart',
                     'label' => 'Kinerja',
                     'color' => 'text-lime-500',
                 ],
             ];
         @endphp
-
+    
         @foreach ($menus as $menu)
             @php
-                $isActive = Request::routeIs($menu['route']);
+                $currentRoute = Route::currentRouteName();
+                $isActive = str_starts_with($currentRoute, $menu['prefix']);
             @endphp
             <li>
                 <a href="{{ route($menu['route']) }}"
                     class="flex items-center space-x-3 p-3 rounded-lg relative group transition duration-200
-                {{ $isActive ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
-
+                    {{ $isActive ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
+    
                     <span
                         class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r
-                    {{ $isActive ? 'block' : 'hidden group-hover:block' }}">
+                        {{ $isActive ? 'block' : 'hidden group-hover:block' }}">
                     </span>
-
+    
                     <i class='bx {{ $menu['icon'] }} w-5 h-5 {{ $menu['color'] }}'></i>
                     <span class="font-medium text-gray-800 dark:text-white">{{ $menu['label'] }}</span>
                 </a>
             </li>
         @endforeach
-
     </ul>
+    
 
 
     <!-- Logout Button -->
