@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Lihat Data Karyawan')
+@section('page-title', 'View Data Karyawan')
 @section('content')
     <div id="layoutSidenav_content">
         <div class="relative flex justify-center items-center py-8 px-6 bg-white dark:bg-slate-850 max-w-4xl mx-auto rounded-xl shadow-md">

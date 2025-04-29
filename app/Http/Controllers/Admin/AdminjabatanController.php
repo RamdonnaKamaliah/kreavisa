@@ -29,17 +29,17 @@ class AdminJabatanController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'nama_jabatan' => 'required|string|max:50|unique:jabatan_karyawans,nama_jabatan',
-    ]);
+    {
+        $request->validate([
+            'nama_jabatan' => 'required|string|max:50|unique:jabatan_karyawans,nama_jabatan',
+        ]);
 
-    JabatanKaryawan::create([
-        'nama_jabatan' => $request->nama_jabatan,
-    ]);
+        JabatanKaryawan::create([
+            'nama_jabatan' => $request->nama_jabatan,
+        ]);
 
-    return redirect()->route('jabatankaryawan.index')->with('added', 'true');
-}
+        return redirect()->route('jabatankaryawan.index')->with('added', 'true');
+    }
 
 
     /**
@@ -65,18 +65,18 @@ class AdminJabatanController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'nama_jabatan' => 'required|string|max:50|unique:jabatan_karyawans,nama_jabatan,'.$id,
-    ]);
+    {
+        $request->validate([
+            'nama_jabatan' => 'required|string|max:50|unique:jabatan_karyawans,nama_jabatan,'.$id,
+        ]);
 
-    $jabatan = JabatanKaryawan::findOrFail($id);
-    $jabatan->update([
-        'nama_jabatan' => $request->nama_jabatan,
-    ]);
+        $jabatan = JabatanKaryawan::findOrFail($id);
+        $jabatan->update([
+            'nama_jabatan' => $request->nama_jabatan,
+        ]);
 
-    return redirect()->route('jabatankaryawan.index')->with('edited', 'true');
-}
+        return redirect()->route('jabatankaryawan.index')->with('edited', 'true');
+    }
 
     /**
      * Remove the specified resource from storage.

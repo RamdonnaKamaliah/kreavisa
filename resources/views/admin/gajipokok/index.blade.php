@@ -7,8 +7,8 @@
             <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-full">
-                    <option value="gajiKaryawan">Laporan Gaji Karyawan</option>
-                    <option value="gajiPokok">Laporan Gaji Pokok</option>
+                    <option value="gajiKaryawan">Rekap Gaji Karyawan</option>
+                    <option value="gajiPokok">Gaji Pokok</option>
                 </select>
             </div>
         </div>

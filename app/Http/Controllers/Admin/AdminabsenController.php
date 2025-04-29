@@ -37,42 +37,42 @@ class AdminabsenController extends Controller
     }
 
     public function updateLokasi(Request $request)
-{
-    $request->validate([
-        'google_maps_link' => 'required|url',
-        'radius' => 'required|integer|min:1',
-    ]);
+    {
+        $request->validate([
+            'google_maps_link' => 'required|url',
+            'radius' => 'required|integer|min:1',
+        ]);
 
-    // Ekstrak koordinat dari link Google Maps
-    $coords = $this->extractCoordinates($request->google_maps_link);
-    
-    if (!$coords) {
-        return redirect()->back()
-            ->with('error', 'Link Google Maps tidak valid. Pastikan link mengandung koordinat lokasi.')
-            ->withInput();
+        // Ekstrak koordinat dari link Google Maps
+        $coords = $this->extractCoordinates($request->google_maps_link);
+        
+        if (!$coords) {
+            return redirect()->back()
+                ->with('error', 'Link Google Maps tidak valid. Pastikan link mengandung koordinat lokasi.')
+                ->withInput();
+        }
+
+        // Cari atau buat record baru jika tidak ada
+        $lokasi = LokasiAbsen::firstOrCreate(
+            ['id' => 1], // Asumsi kita gunakan ID 1 untuk data utama
+            [
+                'nama_lokasi' => 'Lokasi Kantor',
+                'latitude' => 0,
+                'longitude' => 0,
+                'radius' => 100,
+                'alamat' => null
+            ]
+        );
+
+        // Update data
+        $lokasi->latitude = $coords['lat'];
+        $lokasi->longitude = $coords['lng'];
+        $lokasi->radius = $request->radius;
+        $lokasi->save();
+
+        return redirect()->route('absenkaryawan.index')
+            ->with('success', 'Lokasi absen berhasil diperbarui');
     }
-
-    // Cari atau buat record baru jika tidak ada
-    $lokasi = LokasiAbsen::firstOrCreate(
-        ['id' => 1], // Asumsi kita gunakan ID 1 untuk data utama
-        [
-            'nama_lokasi' => 'Lokasi Kantor',
-            'latitude' => 0,
-            'longitude' => 0,
-            'radius' => 100,
-            'alamat' => null
-        ]
-    );
-
-    // Update data
-    $lokasi->latitude = $coords['lat'];
-    $lokasi->longitude = $coords['lng'];
-    $lokasi->radius = $request->radius;
-    $lokasi->save();
-
-    return redirect()->route('absenkaryawan.index')
-        ->with('success', 'Lokasi absen berhasil diperbarui');
-}
 
     // Fungsi untuk ekstrak koordinat dari link Google Maps
     private function extractCoordinates($url)

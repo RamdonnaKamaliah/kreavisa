@@ -6,7 +6,7 @@
             <!-- Dropdown Pilihan -->
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-4">
-                    <label for="viewSelect" class="text-gray-700 dark:text-gray-300 text-lg">Pilih Tampilan:</label>
+                    <label for="viewSelect" class="text-gray-700 dark:text-gray-300 text-lg">Pilih:</label>
                     <select id="viewSelect"
                         class="p-2 border border-gray-400 rounded-md w-64 dark:bg-gray-700 dark:text-white">
                         <option value="performanceView">Ringkasan Kinerja</option>
@@ -44,7 +44,7 @@
                                 {{ number_format($averages['tanggung_jawab'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-slate-50 dark:bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['tanggung_jawab'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -66,7 +66,7 @@
                                 {{ number_format($averages['produktivitas'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['produktivitas'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -88,7 +88,7 @@
                                 {{ number_format($averages['kehadiran_ketepatan_waktu'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['kehadiran_ketepatan_waktu'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -110,7 +110,7 @@
                                 {{ number_format($averages['kerja_sama_tim'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['kerja_sama_tim'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -132,7 +132,7 @@
                                 {{ number_format($averages['kemampuan_komunikasi'], 1) }}/5
                             </p>
                         </div>
-                        <div class="w-full bg-gray-700 rounded-full h-3">
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                             <div class="bg-blue-500 h-3 rounded-full" style="width: {{ ($averages['kemampuan_komunikasi'] / 5) * 100 }}%"></div>
                         </div>
                         <p class="text-sm text-black dark:text-white">
@@ -149,9 +149,9 @@
             <!-- Container untuk Riwayat Penilaian (Awalnya Disembunyikan) -->
             <div id="historyViewContainer" class="hidden">
                 <div class="bg-slate-50 dark:bg-gray-800 rounded-xl py-4 px-6 shadow-lg mt-4">
-                    <h3 class="text-lg font-semibold text-black dark:text-white mb-4">Riwayat Penilaian</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-black dark:text-white mb-4 text-center">Riwayat Penilaian</h3>
+                    <div class="overflow-x-auto dark:text-white">
+                        <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">
                             <thead class="bg-gray-200 text-gray-800 dark:bg-slate-700 dark:text-gray-100">
                                 <tr>
                                     <th class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">Nama Lengkap</th>
@@ -169,9 +169,6 @@
                                         <td class="border border-gray-300 px-2 py-1 md:px-4 md:py-2">{{ $item->total_skor }}</td>
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="4" class="border border-gray-300 px-2 py-1 md:px-4 md:py-2 text-center">Belum ada data penilaian</td>
-                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -233,7 +230,7 @@
                 datasets: [{
                     label: 'Skor Kinerja',
                     data: [actualScore, maxScore - actualScore],
-                    backgroundColor: ['#3B82F6', '#1F2937'],
+                    backgroundColor: ['#3B82F6', '#9ca3afa1'],
                     borderWidth: 0
                 }]
             },
@@ -262,7 +259,7 @@
                     const text = `${Math.round(actualScore)}/${maxScore}`,
                         textX = Math.round((width - ctx.measureText(text).width) / 2),
                         textY = height / 2;
-                    ctx.fillStyle = '#fff';
+                    ctx.fillStyle = '#9ca3afa1';
                     ctx.fillText(text, textX, textY);
                     ctx.save();
                 }

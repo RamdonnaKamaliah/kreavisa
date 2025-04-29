@@ -1,9 +1,8 @@
 @extends('layout.main')
-
+@section('page-title', 'Create Shift Karyawan')
 @section('content')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
     <div id="layoutSidenav_content pt-1">
         <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
             
@@ -16,11 +15,12 @@
                 </div>
 
                 <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">Create Shift Karyawan</h1>
+                @if($users->count() > 0)
                 <form action="{{ route('shiftkaryawan.store') }}" method="POST">
                     @csrf
 
                     <div class="mb-4">
-                        <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Karyawan</label>
+                        <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Karyawan<span class="text-red-500">*</label>
                         <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
                             <option value="">Pilih Karyawan</option>
                             @foreach ($users as $user)
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2">Jabatan</label>
+                        <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Jabatan</label>
                         <select id="jabatan_id" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed" disabled>
                             <option value="">Pilih Jabatan</option>
                             @foreach ($jabatans as $jabatan)
@@ -59,20 +59,20 @@
                     </script>
 
                     <div class="mb-4">
-                        <h2 class="text-lg font-semibold text-gray-700">Shift 1</h2>
-                        <label for="shift_1_masuk" class="block text-gray-700 font-semibold mt-2">Jam Masuk</label>
+                        <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Shift 1<span class="text-red-500">*</h2>
+                        <label for="shift_1_masuk" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Masuk</label>
                         <input type="text" id="shift_1_masuk" name="shift_1_masuk" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
 
-                        <label for="shift_1_pulang" class="block text-gray-700 font-semibold mt-2">Jam Pulang</label>
+                        <label for="shift_1_pulang" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Pulang</label>
                         <input type="text" id="shift_1_pulang" name="shift_1_pulang" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
                     </div>
 
                     <div class="mb-4">
-                        <h2 class="text-lg font-semibold text-gray-700">Shift 2</h2>
-                        <label for="shift_2_masuk" class="block text-gray-700 font-semibold mt-2">Jam Masuk</label>
+                        <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Shift 2<span class="text-red-500">*</h2>
+                        <label for="shift_2_masuk" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Masuk</label>
                         <input type="text" id="shift_2_masuk" name="shift_2_masuk" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
 
-                        <label for="shift_2_pulang" class="block text-gray-700 font-semibold mt-2">Jam Pulang</label>
+                        <label for="shift_2_pulang" class="block text-gray-700 font-semibold mt-2 dark:text-gray-400">Jam Pulang</label>
                         <input type="text" id="shift_2_pulang" name="shift_2_pulang" class="timepicker w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
                     </div>
 
@@ -91,6 +91,12 @@
                         Simpan
                     </button>
                 </form>
+                @else
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+                    <p>Tidak ada karyawan yang tersedia untuk ditambahkan shift. Semua karyawan sudah memiliki shift.</p>
+                </div>
+                <a href="{{ route('shiftkaryawan.index') }}" class="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">Kembali ke Daftar Shift</a>
+            @endif
             </div>
         </div>
     </div>
@@ -103,18 +109,17 @@
             @endforeach
 
             Swal.fire({
-    icon: 'error',
-    title: 'Oops... Terjadi Kesalahan',
-    text: errorMessages,
-    confirmButtonText: 'OK',
-    confirmButtonColor: '#d33',
-    customClass: {
-        confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700'
-    }
-}).then(() => {
-    window.location.href = "{{ route('shiftkaryawan.create') }}";
-});
-
+            icon: 'error',
+            title: 'Oops... Terjadi Kesalahan',
+            text: errorMessages,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#d33',
+            customClass: {
+                confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700'
+            }
+            }).then(() => {
+                window.location.href = "{{ route('shiftkaryawan.create') }}";
+            });
         });
     </script>
 @endif

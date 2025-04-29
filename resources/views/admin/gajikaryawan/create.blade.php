@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Buat Gaji Karyawan')
+@section('page-title', 'Create Gaji Karyawan')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Form Create Gaji Karyawan -->
@@ -15,7 +15,7 @@
                         </ul>
                     </div>
                 </div>
-            @endif
+                @endif
                 <!-- Tombol Back dengan Ikon Panah -->
                 <div class="mb-4">
                     <a href="{{ route('gajikaryawan.index') }}"
@@ -33,7 +33,7 @@
 
                     <!-- Pilih Karyawan -->
                     <div>
-                        <label for="user_id" class="block text-gray-700 font-medium dark:text-gray-200">Nama Karyawan</label>
+                        <label for="user_id" class="block text-gray-700 font-medium dark:text-gray-200">Nama Karyawan<span class="text-red-500">*</label>
                         <select id="user_id" name="user_id"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
                             onchange="getGajiPokok()">
@@ -55,14 +55,14 @@
 
                     <!-- Tanggal -->
                     <div>
-                        <label for="tanggal" class="block text-gray-700 font-medium dark:text-gray-200">Tanggal</label>
+                        <label for="tanggal" class="block text-gray-700 font-medium dark:text-gray-200">Tanggal<span class="text-red-500">*</label>
                         <input type="date" id="tanggal" name="tanggal"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                     </div>
 
                     <!-- Tipe Pembayaran -->
                     <div>
-                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium dark:text-gray-200">Tipe Pembayaran</label>
+                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium dark:text-gray-200">Tipe Pembayaran<span class="text-red-500">*</label>
                         <select id="tipe_pembayaran" name="tipe_pembayaran"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
                             onchange="handleTipePembayaran()">
@@ -79,20 +79,20 @@
                     </div>
 
                     <!-- Bonus -->
-<div>
-    <label for="bonus" class="block text-gray-700 font-medium dark:text-gray-200">Bonus (Rp)</label>
-    <input type="text" id="bonus" name="bonus"
-           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
-           oninput="formatRupiah(this)">
-</div>
+                    <div>
+                        <label for="bonus" class="block text-gray-700 font-medium dark:text-gray-200">Bonus (Rp)</label>
+                        <input type="text" id="bonus" name="bonus"
+                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                            oninput="formatRupiah(this)">
+                    </div>
 
-<!-- Potongan -->
-<div class="md:col-span-2">
-    <label for="potongan" class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
-    <input type="text" id="potongan" name="potongan"
-           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
-           oninput="formatRupiah(this)">
-</div>
+                    <!-- Potongan -->
+                    <div class="md:col-span-2">
+                        <label for="potongan" class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
+                        <input type="text" id="potongan" name="potongan"
+                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
+                            oninput="formatRupiah(this)">
+                    </div>
 
                     <!-- Tombol Submit -->
                     <div class="col-span-1 md:col-span-2">
@@ -104,58 +104,56 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    
-<script>
-    function formatRupiah(input) {
-        // Hapus semua karakter non-digit
-        let value = input.value.replace(/[^\d]/g, '');
-        
-        // Format dengan titik sebagai pemisah ribuan
-        if (value.length > 3) {
-            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-        
-        // Update nilai input
-        input.value = value;
-        
-        // Update nilai raw untuk gaji pokok
-        if (input.id === 'gaji_pokok') {
-            document.getElementById('gaji_pokok_raw').value = value.replace(/\./g, '');
-        }
-    }
-
-    function getGajiPokok() {
-        var userId = document.getElementById('user_id').value;
-        if (userId) {
-            fetch(`/get-gaji-pokok/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const gajiPokok = data.gaji_pokok ?? 0;
-                    // Format nilai gaji pokok
-                    const formatted = gajiPokok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    document.getElementById('gaji_pokok').value = formatted;
-                    document.getElementById('gaji_pokok_raw').value = gajiPokok;
-                })
-                .catch(error => console.error('Error:', error));
-        } else {
-            document.getElementById('gaji_pokok').value = '';
-            document.getElementById('gaji_pokok_raw').value = '';
-        }
-    }
-
-    function handleTipePembayaran() {
-            var tipePembayaran = document.getElementById('tipe_pembayaran').value;
-            var nomorRekening = document.getElementById('nomor_rekening');
-
-            if (tipePembayaran === 'tunai') {
-                nomorRekening.value = '-';
-                nomorRekening.readOnly = true;
-            } else {
-                nomorRekening.value = '';
-                nomorRekening.readOnly = false;
+    </div>   
+    <script>
+        function formatRupiah(input) {
+            // Hapus semua karakter non-digit
+            let value = input.value.replace(/[^\d]/g, '');
+            
+            // Format dengan titik sebagai pemisah ribuan
+            if (value.length > 3) {
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+            
+            // Update nilai input
+            input.value = value;
+            
+            // Update nilai raw untuk gaji pokok
+            if (input.id === 'gaji_pokok') {
+                document.getElementById('gaji_pokok_raw').value = value.replace(/\./g, '');
             }
         }
-</script>
+
+        function getGajiPokok() {
+            var userId = document.getElementById('user_id').value;
+            if (userId) {
+                fetch(`/get-gaji-pokok/${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const gajiPokok = data.gaji_pokok ?? 0;
+                        // Format nilai gaji pokok
+                        const formatted = gajiPokok.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        document.getElementById('gaji_pokok').value = formatted;
+                        document.getElementById('gaji_pokok_raw').value = gajiPokok;
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                document.getElementById('gaji_pokok').value = '';
+                document.getElementById('gaji_pokok_raw').value = '';
+            }
+        }
+
+        function handleTipePembayaran() {
+                var tipePembayaran = document.getElementById('tipe_pembayaran').value;
+                var nomorRekening = document.getElementById('nomor_rekening');
+
+                if (tipePembayaran === 'tunai') {
+                    nomorRekening.value = '-';
+                    nomorRekening.readOnly = true;
+                } else {
+                    nomorRekening.value = '';
+                    nomorRekening.readOnly = false;
+                }
+            }
+    </script>
 @endsection

@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Create Jabatan Karyawan')
 @section('content')
     <div id="layoutSidenav_content pt-1">
         <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
@@ -18,7 +19,7 @@
 
                     <!-- Input Nama Jabatan -->
                     <div class="mb-4">
-                        <label for="nama_jabatan" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Nama Jabatan</label>
+                        <label for="nama_jabatan" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Nama Jabatan<span class="text-red-500">*</label>
                         <input type="text" id="nama_jabatan" name="nama_jabatan" placeholder="Input Nama Jabatan"
                             value="{{ old('nama_jabatan') }}"
                             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition"
@@ -64,6 +65,4 @@
         });
     </script>
 @endif
-
-
 @endsection

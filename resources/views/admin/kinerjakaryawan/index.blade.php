@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Kinerja Karyawan')
 @section('content') 
     <div class="p-4 md:p-6 overflow-x-hidden">
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
@@ -6,46 +7,46 @@
             <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Kinerja Karyawan</h2>
             
             <!-- Search and Export Section -->
-<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
-    <!-- Left side - Search and Filter -->
-    <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-        <!-- Combined Date Filter with Search Icon -->
-        <div class="relative w-full md:w-48">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <i class="fas fa-calendar-alt text-gray-400"></i>
-            </div>
-            <input type="month" id="filterDate" 
-                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                   value="{{ request('date') ?? '' }}">
-            @if(request('date'))
-            <button onclick="resetDateFilter()" 
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-red-500">
-                <i class="fas fa-times"></i>
-            </button>
-            @endif
-        </div>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+                <!-- Left side - Search and Filter -->
+                <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+                    <!-- Combined Date Filter with Search Icon -->
+                    <div class="relative w-full md:w-48">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="fas fa-calendar-alt text-gray-400"></i>
+                        </div>
+                        <input type="month" id="filterDate" 
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                            value="{{ request('date') ?? '' }}">
+                        @if(request('date'))
+                        <button onclick="resetDateFilter()" 
+                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-red-500">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        @endif
+                    </div>
 
-        <!-- Export Button -->
-        <form action="{{ route('kinerjakaryawan.export') }}" method="GET" class="w-full md:w-auto">
-            <input type="hidden" name="date" id="exportDate" value="{{ request('date') ?? '' }}">
-            <button type="submit" 
-                    class="flex items-center justify-center px-4 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors w-full md:w-auto">
-                <i class="fas fa-file-export mr-2"></i>
-                Export Excel
-            </button>
-        </form>
-    </div>
-    
-    <!-- Tambah Data Button -->
-    <div class="w-full md:w-auto">
-        <a href="{{ route('kinerjakaryawan.create') }}" class="block w-full md:w-auto">
-            <button class="flex items-center justify-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 w-full md:w-auto">
-                Tambah Data
-            </button>
-        </a>
-    </div>
-</div>
-            
+                    <!-- Export Button -->
+                    <form action="{{ route('kinerjakaryawan.export') }}" method="GET" class="w-full md:w-auto">
+                        <input type="hidden" name="date" id="exportDate" value="{{ request('date') ?? '' }}">
+                        <button type="submit" 
+                                class="flex items-center justify-center px-4 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors w-full md:w-auto">
+                            <i class="fas fa-file-export mr-2"></i>
+                            Export Excel
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Tambah Data Button -->
+                <div class="w-full md:w-auto">
+                    <a href="{{ route('kinerjakaryawan.create') }}" class="block w-full md:w-auto">
+                        <button class="flex items-center justify-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 w-full md:w-auto">
+                            Tambah Data
+                        </button>
+                    </a>
+                </div>
+            </div>
+                        
             <!-- Table Section -->
             <div class="overflow-x-auto mt-4">
                 <table id="myTable" class="w-full border border-gray-300 text-xs md:text-sm dark:border-gray-600">

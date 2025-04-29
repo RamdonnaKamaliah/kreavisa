@@ -12,10 +12,8 @@ class LokasiAbsen extends Model
     protected $table = 'lokasi_absen';
     
     protected $fillable = [
-        'nama_lokasi',
         'latitude',
         'longitude',
         'radius',
-        'alamat'
     ];
 }

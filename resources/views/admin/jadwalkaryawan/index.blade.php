@@ -1,5 +1,5 @@
 @extends('layout.main')
-
+@section('page-title', 'Jadwal Karyawan')
 @section('content')
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Dropdown Pilihan Tabel & Tombol Tambah Data -->
@@ -7,8 +7,8 @@
             <div class="flex items-center gap-4">
                 <label for="tableSelect" class="text-white text-lg">Pilih Laporan:</label>
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-64">
-                    <option value="jadwalKaryawan">Laporan Jadwal Karyawan</option>
-                    <option value="shiftKaryawan">Laporan Shift Karyawan</option>
+                    <option value="jadwalKaryawan">Jadwal Karyawan</option>
+                    <option value="shiftKaryawan">Shift Karyawan</option>
                 </select>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
         <!-- Laporan Jadwal Karyawan -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 p-4 rounded-lg shadow-md border border-gray-300 dark:border-slate-800">
-            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Jadwal Karyawan</h2>
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Jadwal Karyawan</h2>
             <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 gap-4">
                 <!-- Form Filter -->
                 <form action="{{ route('jadwalkaryawan.index') }}" method="GET" class="flex flex-col sm:flex-row items-center gap-4">
@@ -112,18 +112,28 @@
                             @endphp
                             
                             @for ($i = 1; $i <= 31; $i++)
-    @php
-        $jamKerja = $jadwal ? $jadwal->getShiftForDay($i) : null;
-        $date = \DateTime::createFromFormat('Y-m-d', $tahun . '-' . $bulan . '-' . $i);
-        $isSunday = $date->format('w') == 0;
-        
-        $warna = $isSunday ? 'style=background-color:#C5172E;color:white;' : 
-                ($jamKerja ? 'style=background-color:#3b82f6;color:black;' : '');
-    @endphp
-    <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
-        {{ $isSunday ? 'Libur' : ($jamKerja ?? '') }}
-    </td>
-@endfor
+                            @php
+                                $jamKerja = $jadwal ? $jadwal->getShiftForDay($i) : null;
+                                $date = \DateTime::createFromFormat('Y-m-d', $tahun . '-' . $bulan . '-' . $i);
+                                $isSunday = $date->format('w') == 0;
+                                
+                                // Tentukan warna berdasarkan perbandingan dengan shift_1 dan shift_2
+                                $warna = '';
+                                if ($isSunday) {
+                                    $warna = 'style=background-color:#C5172E;color:white;';
+                                } elseif ($jamKerja && $jadwal && $jadwal->shift) {
+                                    // Bandingkan jam kerja dengan shift_1 dan shift_2
+                                    if ($jamKerja == $jadwal->shift->shift_1) {
+                                        $warna = 'style=background-color:#0118D8;color:white;'; // Biru untuk shift 1
+                                    } elseif ($jamKerja == $jadwal->shift->shift_2) {
+                                        $warna = 'style=background-color:#27548A;color:white;'; // Hijau untuk shift 2
+                                    }
+                                }
+                            @endphp
+                            <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap" {!! $warna !!}>
+                                {{ $isSunday ? 'Libur' : ($jamKerja ?? '') }}
+                            </td>
+                        @endfor
                                                     
 
                             <td class="border border-gray-400 px-2 py-1 md:px-4 md:py-2 whitespace-nowrap">

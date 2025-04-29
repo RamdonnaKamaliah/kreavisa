@@ -102,9 +102,9 @@
             <!-- Container untuk Riwayat Absen (Awalnya Disembunyikan) -->
             <div id="riwayatAbsenContainer" class="hidden">
                 <div
-                    class="max-w-[1020px] mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
+                    class="dark:text-white max-w-[1020px] mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
                     <h2 class="text-center text-xl font-semibold mb-4 dark:text-white">Riwayat Absen Saya</h2>
-                    <table class="w-full text-sm text-left">
+                    <table id="myTable" class="w-full text-sm text-left">
                         <thead>
                             <tr
                                 class="text-gray-600 dark:text-gray-300 uppercase text-xs border-b border-gray-200 dark:border-gray-700">
@@ -141,7 +141,7 @@
                                     <td class="py-3 text-blue-600 dark:text-blue-400">
                                         @if ($item->lokasi)
                                             <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}"
-                                                target="_blank" class="hover:underline">Lihat Maps</a>
+                                                target="_blank" class="hover:underline"><i class="fa-solid fa-location-dot"></i><span> Lihat Maps</span></a>
                                         @else
                                             -
                                         @endif
@@ -187,7 +187,7 @@
                                                 @else
                                                     <a href="{{ asset($item->file_surat) }}" target="_blank"
                                                         class="text-blue-600 hover:underline dark:text-blue-400">
-                                                        Open File
+                                                        <i class="fas fa-file-alt mr-1"></i> Open File
                                                     </a>
                                                 @endif
                                             @else
@@ -199,10 +199,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="5" class="py-4 text-center text-gray-500 dark:text-gray-400">Tidak ada
-                                        riwayat absen.</td>
-                                </tr>
+                    
                             @endforelse
                         </tbody>
                     </table>

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ManualBookController;
 
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
@@ -112,6 +113,9 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
     // Jadwal
     Route::get('karyawan/jadwal', [KaryawanJadwalController::class, 'index'])->name('karyawan.jadwal.index');
 });
+
+//bantuan
+Route::get('/manualbook', [ManualBookController::class, 'index'])->name('manualbook.index');
 
 
 require __DIR__.'/auth.php';

@@ -25,6 +25,22 @@
 
             <!-- Grid Kalender -->
             <div class="grid grid-cols-7 gap-2 text-center text-gray-700 dark:text-white text-lg font-medium mt-2" id="calendarDays"></div>
+            
+            <!-- Legend -->
+            <div class="flex justify-center mt-4 space-x-4">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+                    <span class="text-sm">Shift 1</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                    <span class="text-sm">Shift 2</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-red-500 rounded mr-2"></div>
+                    <span class="text-sm">Libur</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -32,6 +48,7 @@
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let jadwals = @json($jadwals);
+        let shifts = @json($shifts); // Pastikan mengirim data shifts dari controller
 
         function updateCalendar() {
             const monthNames = [
@@ -76,12 +93,24 @@
                 }
 
                 // Cek apakah ada shift untuk hari ini
-                shiftData.forEach(jadwal => {
-                    if (jadwal[`day_${i}`] && !isSunday) {
-                        shiftText +=
-                            `<div class="mt-1 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">${jadwal[`day_${i}`]}</div>`;
-                    }
-                });
+    shiftData.forEach(jadwal => {
+        if (jadwal[`day_${i}`] && !isSunday) {
+            // Cari data shift yang sesuai
+            const shift = shifts.find(s => s.id == jadwal.shift_id);
+            
+            if (shift) {
+                // Bandingkan jam kerja dengan shift_1 dan shift_2
+                if (jadwal[`day_${i}`] === shift.shift_1) {
+                    bgColor = 'bg-blue-600'; // Shift 1
+                } else if (jadwal[`day_${i}`] === shift.shift_2) {
+                    bgColor = 'bg-green-600'; // Shift 2
+                }
+            }
+            
+            shiftText +=
+                `<div class="mt-1 ${bgColor} text-white text-xs font-bold px-2 py-1 rounded">${jadwal[`day_${i}`]}</div>`;
+        }
+    });
 
                 calendarHTML += `
                     <div class="${dayClass}">

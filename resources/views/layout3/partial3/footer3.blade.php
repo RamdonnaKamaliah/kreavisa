@@ -10,34 +10,41 @@
         <a href="#" class="hover:underline hover:text-blue-500 dark:hover:text-blue-300 transition">Contact</a>
     </div>
 </footer>
-<div fixed-plugin>
-    <a fixed-plugin-button id="settingsButto"
-        class="fixed px-4 py-2 text-xl bg-white shadow-lg cursor-pointer bottom-8 right-8 z-990 rounded-circle text-slate-700">
-        <i class="py-2 pointer-events-none fa fa-cog"> </i>
-    </a>
-    <div id="settingsDropdown"
-        class="hidden absolute top-12 right-0 mt-2 w-48 bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg shadow-lg p-4 z-[9999] space-y-4">
-        <label class="flex items-center justify-between">
-            <span>Navbar Fixed</span>
-            <input type="checkbox" id="toggleNavbarFixed" class="form-checkbox h-5 w-5 text-blue-600">
-        </label>
-        <a href="#"
-            class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
-            <i class="fas fa-question-circle mr-2"></i>Bantuan
-        </a>
-    </div>
-</div>
+<button id="backToTop" class="hidden fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-200 z-50">
+    <i class="bx bx-chevron-up text-2xl"></i>
+</button>
 
-<div id="settingsDropdown"
-    class="hidden absolute top-12 right-0 mt-2 w-48 bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg shadow-lg p-4 z-[9999] space-y-4">
-    <label class="flex items-center justify-between">
-        <span>Navbar Fixed</span>
-        <input type="checkbox" id="toggleNavbarFixed" class="form-checkbox h-5 w-5 text-blue-600">
-    </label>
-    <a href="#"
-        class="block text-sm text-blue-600 hover:text-blue-800 dark:text-yellow-300 dark:hover:text-yellow-400 transition duration-200">
-        <i class="fas fa-question-circle mr-2"></i>Bantuan
-    </a>
-</div>
-</div>
+
+<style>
+/* Ini opsional kalau mau pastiin tombol hidden awalnya */
+#backToTop {
+    display: none;
+}
+
+</style>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTop");
+
+// Muncul setelah scroll 100px (2 kali scroll mouse kira-kira)
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+        backToTopBtn.style.display = "block";
+    } else {
+        backToTopBtn.style.display = "none";
+    }
+});
+
+// Scroll smooth ke atas saat tombol diklik
+backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+
+</script>
+
+
 

@@ -1,16 +1,17 @@
 @extends('layout.main')
 @section('page-title', 'Data Karyawan')
 @section('content')
-@if (session('email_error'))
-    <div class="alert alert-warning">
-        {{ session('email_error') }}
-    </div>
-@endif
+
+    @if (session('email_error'))
+        <div class="alert alert-warning">
+            {{ session('email_error') }}
+        </div>
+    @endif
 
     <div class="p-4 md:p-6 overflow-x-hidden">
         <!-- Laporan Stok Masuk -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
-            <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Laporan Data Karyawan</h2>
+            <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Data Karyawan</h2>
             <div class="flex flex-wrap justify-end gap-2">
                 <a href="{{ route('datakaryawan.create') }}">
                     <button

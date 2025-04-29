@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('page-title', 'Tambah Data Karyawan')
+@section('page-title', 'Create Data Karyawan')
 @section('content')
     <div id="layoutSidenav_content">
 
@@ -32,19 +32,19 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4"> <!-- Ubah grid jadi 3 kolom -->
                             <div class="space-y-4">
-                                <label for="nama_lengkap" class="block text-gray-700 font-medium dark:text-gray-300">Nama Lengkap</label>
+                                <label for="nama_lengkap" class="block text-gray-700 font-medium dark:text-gray-300">Nama Lengkap<span class="text-red-500">*</label>
                                 <input type="text" id="nama_lengkap" name="nama_lengkap" placeholder="Input Nama Lengkap"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                             </div>
 
                             <div class="space-y-4">
-                                <label for="name" class="block text-gray-700 font-medium dark:text-gray-300">Username</label>
+                                <label for="name" class="block text-gray-700 font-medium dark:text-gray-300">Username<span class="text-red-500">*</label>
                                 <input type="text" id="name" name="name" placeholder="Input Username"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                             </div>
 
                             <div class="space-y-4">
-                                <label for="gender" class="block text-gray-700 font-medium dark:text-gray-300">Gender</label>
+                                <label for="gender" class="block text-gray-700 font-medium dark:text-gray-300">Gender<span class="text-red-500">*</label>
                                 <select id="gender" name="gender"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                                     <option value="" disabled selected>Pilih Gender</option>
@@ -54,19 +54,19 @@
                             </div>
 
                             <div class="space-y-4">
-                                <label for="email" class="block text-gray-700 font-medium dark:text-gray-300">Email</label>
+                                <label for="email" class="block text-gray-700 font-medium dark:text-gray-300">Email<span class="text-red-500">*</label>
                                 <input name="email" type="email" id="email" placeholder="Input Email"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                             </div>
 
                             <div class="space-y-4">
-                                <label for="phone" class="block text-gray-700 font-medium dark:text-gray-300">No Telpon</label>
+                                <label for="phone" class="block text-gray-700 font-medium dark:text-gray-300">No Telpon<span class="text-red-500">*</label>
                                 <input name="no_telepon" type="tel" id="phone" placeholder="Input No Telpon"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                             </div>
 
                             <div class="space-y-4">
-                                <label for="position" class="block text-gray-700 font-medium dark:text-gray-300">Jabatan</label>
+                                <label for="position" class="block text-gray-700 font-medium dark:text-gray-300">Jabatan<span class="text-red-500">*</label>
                                 <select name="jabatan_id" id="position"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
                                     <option value="" disabled selected>Pilih Jabatan</option>
@@ -80,7 +80,7 @@
                             
 
                             <div class="md:col-span-3 space-y-4">
-                                <label for="dob" class="block text-gray-700 font-medium dark:text-gray-300">Tanggal Lahir</label>
+                                <label for="dob" class="block text-gray-700 font-medium dark:text-gray-300">Tanggal Lahir<span class="text-red-500">*</label>
                                 <input name="tanggal_lahir" type="date" id="dob"
                                     class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                             </div>

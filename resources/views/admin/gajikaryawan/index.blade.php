@@ -7,8 +7,8 @@
             <label for="tableSelect" class="block text-white text-lg mb-2">Pilih Laporan:</label>
             <div class="max-w-xs">
                 <select id="tableSelect" class="p-2 border border-gray-400 rounded-md w-full">
-                    <option value="gajiKaryawan">Laporan Gaji Karyawan</option> 
-                    <option value="gajiPokok">Laporan Gaji Pokok</option> 
+                    <option value="gajiKaryawan">Rekap Gaji Karyawan</option> 
+                    <option value="gajiPokok">Gaji Pokok</option> 
                 </select>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
         <!-- Laporan Gaji Karyawan -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
-            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Laporan Gaji Karyawan</h2>
+            <h2 class="text-center text-xl font-bold mb-4 dark:text-white">Rekap Gaji Karyawan</h2>
             <div class="flex justify-between items-center mb-4">
                 <form action="{{ route('gajikaryawan.export') }}" method="GET" class="flex items-center gap-2">
                     <input type="date" name="date" class="p-2 border border-gray-300 rounded-md dark:bg-slate-700 dark:border-gray-600 dark:text-white">

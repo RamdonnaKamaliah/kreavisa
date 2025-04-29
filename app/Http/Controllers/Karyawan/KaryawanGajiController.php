@@ -43,15 +43,15 @@ class KaryawanGajiController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-{
-    // Ambil data gaji berdasarkan ID dengan relasi user dan jabatan
-    $gaji = GajiKaryawan::with(['user', 'user.jabatan'])
-                ->where('id', $id)
-                ->where('user_id', auth('web')->id()) // Pastikan hanya pemilik gaji yang bisa melihat
-                ->firstOrFail();
+    {
+        // Ambil data gaji berdasarkan ID dengan relasi user dan jabatan
+        $gaji = GajiKaryawan::with(['user', 'user.jabatan'])
+                    ->where('id', $id)
+                    ->where('user_id', auth('web')->id()) // Pastikan hanya pemilik gaji yang bisa melihat
+                    ->firstOrFail();
 
-    return view('karyawan.gaji.show', compact('gaji'));
-}
+        return view('karyawan.gaji.show', compact('gaji'));
+    }
 
     /**
      * Show the form for editing the specified resource.

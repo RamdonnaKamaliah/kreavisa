@@ -5,7 +5,7 @@
         <!-- row 1 -->
         <div class="flex flex-wrap -mx-3">
             <!-- card1 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4">
@@ -39,7 +39,7 @@
             </div>
 
             <!-- card2 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4">
@@ -50,7 +50,8 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase text-black dark:text-white">
                                         Jumlah Absen Hari ini
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($absenkaryawan) }} Karyawan
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">
+                                        {{ app(\App\Models\AbsenKaryawan::class)->whereDate('tanggal_absensi', \Carbon\Carbon::today())->count() }} Karyawan
                                     </h5>
                                 </div>
                             </div>
@@ -71,7 +72,7 @@
             </div>
 
             <!-- card3 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4">
@@ -82,7 +83,7 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase text-black dark:text-white">
                                         Jumlah Jabatan Karyawan
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($stokmasuk) }} Stok</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($jabatankaryawan) }} Jabatan</h5>
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">
@@ -102,7 +103,7 @@
             </div>
 
             <!-- card4 -->
-            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 xl:w-1/4">
+            <div class="w-1/2 md:w-1/2 xl:w-1/4 px-3 mb-6">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                     <div class="flex-auto p-4 min-h-[150px]">
@@ -242,6 +243,7 @@
                                     display: false,
                                 },
                                 datalabels: {
+                                    display: false,
                                     color: document.documentElement.classList.contains('dark') ? '#fff' :
                                         '#333',
                                     font: {
@@ -271,9 +273,9 @@
 
                     // Ambil data absensi dari Laravel (Menggunakan absenkaryawan)
                     const absenKaryawan = @json($absenkaryawan);
-                    const labels = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+                    const labels = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
                     const values = labels.map(day => absenKaryawan[day] || 0);
-                    const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981"];
+                    const colors = ["#3B82F6", "#F472B6", "#F59E0B", "#FACC15", "#10B981", "#EF4444"];
 
                     window.absensiChart = new Chart(ctxAbsensi, {
                         type: "bar",
@@ -302,6 +304,9 @@
                                         label: (tooltipItem) => ` ${tooltipItem.raw} Absensi`,
                                     },
                                 },
+                                datalabels: { // Tambahkan ini jika ada plugin datalabels
+                                    display: false
+                                }
                             },
                             scales: {
                                 y: {
@@ -410,7 +415,6 @@
                     </button>
                 </a>
             </div>
-
         </div>
     </div>
 @endsection

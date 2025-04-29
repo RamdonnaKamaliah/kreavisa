@@ -1,4 +1,5 @@
 @extends('layout.main')
+@section('page-title', 'Ceate Jadwal Karyawan')
 @section('content')
 
 <div id="layoutSidenav_content pt-1">
@@ -15,162 +16,162 @@
             <form action="{{ route('jadwalkaryawan.store') }}" method="POST">
                 @csrf
 
-        <!-- Pilih User -->
-<div class="mb-4">
-    <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Karyawan</label>
-    <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
-        <option value="">Pilih Karyawan</option>
-        @foreach ($usersWithShifts as $user)
-            <option value="{{ $user->id }}" data-jabatan="{{ $user->jabatan_id }}">
-                {{ $user->nama_lengkap }}
-            </option>
-        @endforeach
-    </select>
-    
-    @if($usersWithShifts->isEmpty())
-        <div class="mt-2 text-red-500 text-sm">
-            Tidak ada karyawan yang memiliki shift. Silakan buat shift terlebih dahulu.
-        </div>
-    @endif
-</div>
+                <!-- Pilih User -->
+                <div class="mb-4">
+                    <label for="user_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Karyawan<span class="text-red-500">*</label>
+                    <select id="user_id" name="user_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
+                        <option value="">Pilih Karyawan</option>
+                        @foreach ($usersWithShifts as $user)
+                            <option value="{{ $user->id }}" data-jabatan="{{ $user->jabatan_id }}">
+                                {{ $user->nama_lengkap }}
+                            </option>
+                        @endforeach
+                    </select>
+                    
+                    @if($usersWithShifts->isEmpty())
+                        <div class="mt-2 text-red-500 text-sm">
+                            Tidak ada karyawan yang memiliki shift. Silakan buat shift terlebih dahulu.
+                        </div>
+                    @endif
+                </div>
 
-<script>
-    document.getElementById("user_id").addEventListener("change", function() {
-        let userId = this.value;
-        let shiftSelect = document.getElementById("shift_id");
+                <script>
+                    document.getElementById("user_id").addEventListener("change", function() {
+                        let userId = this.value;
+                        let shiftSelect = document.getElementById("shift_id");
 
-        // Kosongkan dropdown shift sebelum mengisi ulang
-        shiftSelect.innerHTML = '<option value="">Pilih Shift</option>';
+                        // Kosongkan dropdown shift sebelum mengisi ulang
+                        shiftSelect.innerHTML = '<option value="">Pilih Shift</option>';
 
-        // Jika tidak ada user yang dipilih, keluar
-        if (!userId) return;
+                        // Jika tidak ada user yang dipilih, keluar
+                        if (!userId) return;
 
-        // Ambil daftar shift dari server
-        let shifts = @json($shifts);
+                        // Ambil daftar shift dari server
+                        let shifts = @json($shifts);
 
-        let userShifts = shifts.filter(shift => shift.user_id == userId);
-        
-        if (userShifts.length === 0) {
-            let option = document.createElement("option");
-            option.value = "";
-            option.textContent = "Tidak ada shift tersedia";
-            option.disabled = true;
-            option.selected = true;
-            shiftSelect.appendChild(option);
-            return;
-        }
+                        let userShifts = shifts.filter(shift => shift.user_id == userId);
+                        
+                        if (userShifts.length === 0) {
+                            let option = document.createElement("option");
+                            option.value = "";
+                            option.textContent = "Tidak ada shift tersedia";
+                            option.disabled = true;
+                            option.selected = true;
+                            shiftSelect.appendChild(option);
+                            return;
+                        }
 
-        userShifts.forEach(shift => {
-            // Tambahkan shift 1 ke dropdown
-            let option1 = document.createElement("option");
-            option1.value = shift.id;
-            option1.textContent = "Shift 1: " + shift.shift_1;
-            option1.setAttribute("data-shift-type", "1");
-            shiftSelect.appendChild(option1);
+                        userShifts.forEach(shift => {
+                            // Tambahkan shift 1 ke dropdown
+                            let option1 = document.createElement("option");
+                            option1.value = shift.id;
+                            option1.textContent = "Shift 1: " + shift.shift_1;
+                            option1.setAttribute("data-shift-type", "1");
+                            shiftSelect.appendChild(option1);
 
-            // Tambahkan shift 2 ke dropdown
-            let option2 = document.createElement("option");
-            option2.value = shift.id;
-            option2.textContent = "Shift 2: " + shift.shift_2;
-            option2.setAttribute("data-shift-type", "2");
-            shiftSelect.appendChild(option2);
-        });
+                            // Tambahkan shift 2 ke dropdown
+                            let option2 = document.createElement("option");
+                            option2.value = shift.id;
+                            option2.textContent = "Shift 2: " + shift.shift_2;
+                            option2.setAttribute("data-shift-type", "2");
+                            shiftSelect.appendChild(option2);
+                        });
 
-        // Update input tersembunyi saat shift dipilih
-        shiftSelect.addEventListener("change", function() {
-            let selectedOption = this.options[this.selectedIndex];
-            let shiftType = selectedOption.getAttribute("data-shift-type");
-            document.getElementById("shift_type").value = shiftType || "";
-        });
-    });
-</script>
+                        // Update input tersembunyi saat shift dipilih
+                        shiftSelect.addEventListener("change", function() {
+                            let selectedOption = this.options[this.selectedIndex];
+                            let shiftType = selectedOption.getAttribute("data-shift-type");
+                            document.getElementById("shift_type").value = shiftType || "";
+                        });
+                    });
+                </script>
 
-<!-- Pilih Jabatan (Otomatis berdasarkan Karyawan) -->
-<div class="mb-4">
-    <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Jabatan</label>
-    <input type="text" id="jabatan_text" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed" disabled>
-    <input type="hidden" name="jabatan_id" id="hidden_jabatan_id">
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let userSelect = document.getElementById("user_id");
-        let jabatanText = document.getElementById("jabatan_text");
-        let hiddenJabatanId = document.getElementById("hidden_jabatan_id");
+                <!-- Pilih Jabatan (Otomatis berdasarkan Karyawan) -->
+                <div class="mb-4">
+                    <label for="jabatan_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Jabatan</label>
+                    <input type="text" id="jabatan_text" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed" disabled>
+                    <input type="hidden" name="jabatan_id" id="hidden_jabatan_id">
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        let userSelect = document.getElementById("user_id");
+                        let jabatanText = document.getElementById("jabatan_text");
+                        let hiddenJabatanId = document.getElementById("hidden_jabatan_id");
 
-        // Data Jabatan dari server
-        let jabatans = @json($jabatans);
+                        // Data Jabatan dari server
+                        let jabatans = @json($jabatans);
 
-        userSelect.addEventListener("change", function() {
-            let selectedOption = this.options[this.selectedIndex];
-            let jabatanId = selectedOption.getAttribute("data-jabatan");
+                        userSelect.addEventListener("change", function() {
+                            let selectedOption = this.options[this.selectedIndex];
+                            let jabatanId = selectedOption.getAttribute("data-jabatan");
 
-            if (jabatanId) {
-                let jabatanNama = jabatans.find(j => j.id == jabatanId)?.nama_jabatan || "Tidak Diketahui";
-                jabatanText.value = jabatanNama;
-                hiddenJabatanId.value = jabatanId;
-            } else {
-                jabatanText.value = "";
-                hiddenJabatanId.value = "";
-            }
-        });
-    });
-</script>
+                            if (jabatanId) {
+                                let jabatanNama = jabatans.find(j => j.id == jabatanId)?.nama_jabatan || "Tidak Diketahui";
+                                jabatanText.value = jabatanNama;
+                                hiddenJabatanId.value = jabatanId;
+                            } else {
+                                jabatanText.value = "";
+                                hiddenJabatanId.value = "";
+                            }
+                        });
+                    });
+                </script>
 
 
-               <!-- Pilih Shift -->
-<div class="mb-4">
-    <label for="shift_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Shift</label>
-    <select id="shift_id" name="shift_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
-        <option value="">Pilih Shift</option>
-    </select>
-    <!-- Input tersembunyi untuk menyimpan informasi shift (1 atau 2) -->
-    <input type="hidden" id="shift_type" name="shift_type">
-</div>
+                            <!-- Pilih Shift -->
+                <div class="mb-4">
+                    <label for="shift_id" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Shift<span class="text-red-500">*</label>
+                    <select id="shift_id" name="shift_id" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition" required>
+                        <option value="">Pilih Shift</option>
+                    </select>
+                    <!-- Input tersembunyi untuk menyimpan informasi shift (1 atau 2) -->
+                    <input type="hidden" id="shift_type" name="shift_type">
+                </div>
 
-<script>
-    document.getElementById("user_id").addEventListener("change", function() {
-        let userId = this.value;
-        let shiftSelect = document.getElementById("shift_id");
+                <script>
+                    document.getElementById("user_id").addEventListener("change", function() {
+                        let userId = this.value;
+                        let shiftSelect = document.getElementById("shift_id");
 
-        // Kosongkan dropdown shift sebelum mengisi ulang
-        shiftSelect.innerHTML = '<option value="">Pilih Shift</option>';
+                        // Kosongkan dropdown shift sebelum mengisi ulang
+                        shiftSelect.innerHTML = '<option value="">Pilih Shift</option>';
 
-        // Jika tidak ada user yang dipilih, keluar
-        if (!userId) return;
+                        // Jika tidak ada user yang dipilih, keluar
+                        if (!userId) return;
 
-        // Ambil daftar shift dari server
-        let shifts = @json($shifts);
+                        // Ambil daftar shift dari server
+                        let shifts = @json($shifts);
 
-        shifts.forEach(shift => {
-            if (shift.user_id == userId) {
-                // Tambahkan shift 1 ke dropdown
-                let option1 = document.createElement("option");
-                option1.value = shift.id; // Hanya shift.id (integer)
-                option1.textContent = "Shift 1: " + shift.shift_1;
-                option1.setAttribute("data-shift-type", "1"); // Simpan informasi shift 1
-                shiftSelect.appendChild(option1);
+                        shifts.forEach(shift => {
+                            if (shift.user_id == userId) {
+                                // Tambahkan shift 1 ke dropdown
+                                let option1 = document.createElement("option");
+                                option1.value = shift.id; // Hanya shift.id (integer)
+                                option1.textContent = "Shift 1: " + shift.shift_1;
+                                option1.setAttribute("data-shift-type", "1"); // Simpan informasi shift 1
+                                shiftSelect.appendChild(option1);
 
-                // Tambahkan shift 2 ke dropdown
-                let option2 = document.createElement("option");
-                option2.value = shift.id; // Hanya shift.id (integer)
-                option2.textContent = "Shift 2: " + shift.shift_2;
-                option2.setAttribute("data-shift-type", "2"); // Simpan informasi shift 2
-                shiftSelect.appendChild(option2);
-            }
-        });
+                                // Tambahkan shift 2 ke dropdown
+                                let option2 = document.createElement("option");
+                                option2.value = shift.id; // Hanya shift.id (integer)
+                                option2.textContent = "Shift 2: " + shift.shift_2;
+                                option2.setAttribute("data-shift-type", "2"); // Simpan informasi shift 2
+                                shiftSelect.appendChild(option2);
+                            }
+                        });
 
-        // Update input tersembunyi saat shift dipilih
-        shiftSelect.addEventListener("change", function() {
-            let selectedOption = this.options[this.selectedIndex];
-            let shiftType = selectedOption.getAttribute("data-shift-type");
-            document.getElementById("shift_type").value = shiftType;
-        });
-    });
-</script>
+                        // Update input tersembunyi saat shift dipilih
+                        shiftSelect.addEventListener("change", function() {
+                            let selectedOption = this.options[this.selectedIndex];
+                            let shiftType = selectedOption.getAttribute("data-shift-type");
+                            document.getElementById("shift_type").value = shiftType;
+                        });
+                    });
+                </script>
 
                 <!-- Pilih Bulan (Checkbox) -->
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Bulan</label>
+                    <label class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Bulan<span class="text-red-500">*</label>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                         @php
                             $months = [
@@ -189,7 +190,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="tahun" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Tahun</label>
+                    <label for="tahun" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Tahun<span class="text-red-500">*</label>
                     <div class="relative">
                         <input type="number" 
                                id="tahun" 
@@ -296,5 +297,4 @@
         });
     </script>
 @endif
-
 @endsection

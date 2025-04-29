@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JadwalKaryawan;
+use App\Models\ShiftKaryawan;
 use Illuminate\Support\Facades\Auth;
 
 class KaryawanJadwalController extends Controller
@@ -13,25 +14,25 @@ class KaryawanJadwalController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $userId = Auth::id();
-    
-    $jadwals = JadwalKaryawan::with('shift')
-        ->where('user_id', $userId)
-        ->get()
-        ->map(function ($jadwal) {
-            // Tambahkan informasi hari untuk setiap tanggal
-            for ($i = 1; $i <= 31; $i++) {
-                if (!is_null($jadwal["day_$i"])) {
-                    $date = \DateTime::createFromFormat('Y-m-d', $jadwal->tahun . '-' . $jadwal->bulan . '-' . $i);
-                    $jadwal["is_sunday_$i"] = ($date->format('w') == 0); // 0 = Minggu
+    {
+        $userId = Auth::id();
+        $shifts = ShiftKaryawan::all();
+        $jadwals = JadwalKaryawan::with('shift')
+            ->where('user_id', $userId)
+            ->get()
+            ->map(function ($jadwal) {
+                // Tambahkan informasi hari untuk setiap tanggal
+                for ($i = 1; $i <= 31; $i++) {
+                    if (!is_null($jadwal["day_$i"])) {
+                        $date = \DateTime::createFromFormat('Y-m-d', $jadwal->tahun . '-' . $jadwal->bulan . '-' . $i);
+                        $jadwal["is_sunday_$i"] = ($date->format('w') == 0); // 0 = Minggu
+                    }
                 }
-            }
-            return $jadwal;
-        });
-    
-    return view('karyawan.jadwal.index', compact('jadwals'));
-}
+                return $jadwal;
+            });
+        
+        return view('karyawan.jadwal.index', compact('jadwals', 'shifts'));
+    }
 
     /**
      * Show the form for creating a new resource.

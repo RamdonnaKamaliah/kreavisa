@@ -42,13 +42,6 @@
                     class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg transition shadow-md font-medium text-center">
                     Edit Profile
                 </a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                        class="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-lg transition shadow-md font-medium w-full sm:w-auto">
-                        Logout
-                    </button>
-                </form>
             </div>
         </div>
 

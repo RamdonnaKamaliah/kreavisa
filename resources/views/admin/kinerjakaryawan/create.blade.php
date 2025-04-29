@@ -1,11 +1,21 @@
 @extends('layout.main')
+@section('page-title', 'Create Kinerja Karyawan')
 @section('content')
 
 <div class="p-4 md:p-6 overflow-x-hidden">
     <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
         <div class="card-header pb-0">
-            <h1 class="text-xl font-bold text-center dark:text-white">Create Penilaian Karyawan</h1>
+            <h1 class="text-xl font-bold text-center dark:text-white">Create Kinerja Karyawan</h1>
         </div>
+        @if($errors->any())
+            <div class="px-4 mb-4">
+                <div class="bg-red-50 dark:bg-red-900/30 p-3 rounded-lg">
+                    @foreach($errors->get('user_ids') as $error)
+                        <p class="text-red-600 dark:text-red-400">{{ $error }}</p>
+                    @endforeach
+                </div>
+            </div>
+        @endif
         <div class="card-body px-0 pt-0 pb-2">
             <form action="{{ route('kinerjakaryawan.store') }}" method="POST">
                 @csrf
@@ -15,7 +25,7 @@
                 <div class="row p-4">
                     <div class="col-md-12 mb-4">
                         <div class="form-group">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pilih Karyawan</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pilih Karyawan<span class="text-red-500">*</label>
                             <div class="mt-1 space-y-2 max-h-60 overflow-y-auto border border-gray-300 rounded-md p-2 dark:border-gray-600">
                                 @foreach($users as $user)
                                     <div class="flex items-center">
@@ -73,7 +83,7 @@
                                                     <th class="px-4 py-3 text-left w-10 sticky left-0 bg-gray-200 dark:bg-slate-700 z-10">No.</th>
                                                     <th class="px-4 py-3 text-left w-40 sticky left-10 bg-gray-200 dark:bg-slate-700 z-10">Aspek</th>
                                                     <th class="px-4 py-3 text-left min-w-[200px]">Detail Aspek</th>
-                                                    <th class="px-4 py-3 text-center min-w-[250px]">Penilaian (1-5)</th>
+                                                    <th class="px-4 py-3 text-center min-w-[250px]">Penilaian (1-5)<span class="text-red-500">*</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="divide-y divide-gray-300 dark:divide-gray-600">
@@ -195,5 +205,4 @@
         </div>
     </div>
 </div>
-
 @endsection

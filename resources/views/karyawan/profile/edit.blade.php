@@ -1,9 +1,10 @@
 @extends('layout3.karyawan3')
-<title class="text-black dark:text-white">@section('page-title', 'Edit Profile')</title>
+@section('page-title', 'Edit Profile')
 @section('content')
 
-    <div
-        class="max-w-5xl mx-auto py-16 px-8 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl mt-10 border border-gray-200 dark:border-slate-700 text-white dark:text-gray-900">
+<div
+class="max-w-5xl mx-auto py-16 px-8 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl pt-4 border border-gray-200 dark:border-slate-700 text-white dark:text-gray-900">
+<h1 class="text-center justify-center mx-auto text-xl text-black dark:text-white font-bold font-poppins">Edit Profile</h1>
         <!-- Back Button -->
         <div class="mb-4">
             <a href="{{ route('profile.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
@@ -100,43 +101,43 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                    <label for="nama_lengkap" class="block text-white font-medium dark:text-gray-600">Nama Lengkap</label>
+                    <label for="nama_lengkap" class="block text-black font-medium dark:text-white">Nama Lengkap</label>
                     <input type="text" id="nama_lengkap" name="nama_lengkap"
                         value="{{ old('nama_lengkap', $user->nama_lengkap) }}"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
                     @error('nama_lengkap')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="name" class="block text-white font-medium dark:text-gray-600">Username</label>
+                    <label for="name" class="block text-black font-medium dark:text-white">Username</label>
                     <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
                     @error('name')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="email" class="block text-white font-medium dark:text-gray-600">Email</label>
+                    <label for="email" class="block text-black font-medium dark:text-white">Email</label>
                     <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
                     @error('email')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="no_telepon" class="block text-white font-medium dark:text-gray-600">No Telepon</label>
+                    <label for="no_telepon" class="block text-black font-medium dark:text-white">No Telepon</label>
                     <input type="text" id="no_telepon" name="no_telepon"
                         value="{{ old('no_telepon', $user->no_telepon) }}"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
                     @error('no_telepon')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="gender" class="block text-white font-medium dark:text-gray-600">Gender</label>
+                    <label for="gender" class="block text-black font-medium dark:text-white">Gender</label>
                     <select id="gender" name="gender"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black">
                         <option value="Laki-laki" {{ old('gender', $user->gender) == 'Laki-laki' ? 'selected' : '' }}>
                             Laki-laki</option>
                         <option value="Perempuan" {{ old('gender', $user->gender) == 'Perempuan' ? 'selected' : '' }}>
@@ -147,18 +148,18 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="tanggal_lahir" class="block text-white font-medium dark:text-gray-600">Tanggal Lahir</label>
+                    <label for="tanggal_lahir" class="block text-black font-medium dark:text-white">Tanggal Lahir</label>
                     <input type="date" id="tanggal_lahir" name="tanggal_lahir"
                         value="{{ old('tanggal_lahir', $user->tanggal_lahir) }}"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
                     @error('tanggal_lahir')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="usia" class="block text-white font-medium dark:text-gray-600">Usia</label>
+                    <label for="usia" class="block text-black font-medium dark:text-white">Usia</label>
                     <input type="number" id="usia" name="usia" value="{{ old('usia', $user->usia) }}"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                         readonly>
                     @error('usia')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -198,11 +199,8 @@
             </div>
 
             <div class="mt-8 flex justify-end gap-4">
-                <a href="{{ route('profile.index') }}"
-                    class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition duration-300 shadow-lg">Batal</a>
                 <button type="submit"
-                    class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-lg">Simpan
-                    Perubahan</button>
+                    class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-lg">Simpan</button>
             </div>
         </form>
     </div>

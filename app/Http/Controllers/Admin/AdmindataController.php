@@ -37,40 +37,40 @@ class AdmindataController extends Controller
      */
  
 
-     public function store(Request $request)
-     {
-         $request->validate([
-             'nama_lengkap' => 'required|string|max:100',
-             'name' => 'required|string|max:100|unique:users,name',
-             'usia' => 'required|integer|min:0',
-             'gender' => 'required|in:Laki-laki,Perempuan',
-             'tanggal_lahir' => 'required|date',
-             'no_telepon' => 'required|string|unique:users,no_telepon',
-             'email' => 'required|email|unique:users,email',
-             'jabatan_id' => 'required|exists:jabatan_karyawans,id',
-             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-         ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:100',
+            'name' => 'required|string|max:100|unique:users,name',
+            'usia' => 'required|integer|min:0',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'tanggal_lahir' => 'required|date',
+            'no_telepon' => 'required|string|unique:users,no_telepon',
+            'email' => 'required|email|unique:users,email',
+            'jabatan_id' => 'required|exists:jabatan_karyawans,id',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
      
-         // Cek apakah user sudah ada berdasarkan email atau username
-         $existingUser = User::where('email', $request->email)
-                             ->orWhere('name', $request->name)
-                             ->exists();
+        // Cek apakah user sudah ada berdasarkan email atau username
+        $existingUser = User::where('email', $request->email)
+            ->orWhere('name', $request->name)
+            ->exists();
          
-         if ($existingUser) {
-             return redirect()->route('datakaryawan.create')
-                 ->with('error', 'Data sudah ada! Silakan cek kembali.')
-                 ->withInput();
-         }
+        if ($existingUser) {
+            return redirect()->route('datakaryawan.create')
+                ->with('error', 'Data sudah ada! Silakan cek kembali.')
+                ->withInput();
+        }
      
-         // Generate password random
-         $randomPassword = Str::random(8);
+        // Generate password random
+        $randomPassword = Str::random(8);
      
-         $data = $request->except('password', 'foto');
-         $data['password'] = Hash::make($randomPassword);
+        $data = $request->except('password', 'foto');
+        $data['password'] = Hash::make($randomPassword);
      
-         // Tentukan usertype berdasarkan jabatan
-         $jabatan = JabatanKaryawan::find($request->jabatan_id);
-         // Pada method store
+        // Tentukan usertype berdasarkan jabatan
+        $jabatan = JabatanKaryawan::find($request->jabatan_id);
+        // Pada method store
         $data['usertype'] = 'karyawan'; // Selalu set sebagai karyawan
      
          // Simpan foto jika ada
@@ -95,10 +95,6 @@ class AdmindataController extends Controller
      
          return redirect()->route('datakaryawan.index')->with('added', true);
      }
-     
-     
-
-
 
 
     /**
@@ -115,35 +111,33 @@ class AdmindataController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-{
-    $karyawan = User::findOrFail($id);
+    {
+        $karyawan = User::findOrFail($id);
 
-    $request->validate([
-        'jabatan_id' => 'required|exists:jabatan_karyawans,id',
-    ]);
+        $request->validate([
+            'jabatan_id' => 'required|exists:jabatan_karyawans,id',
+        ]);
 
-    // Ambil data jabatan berdasarkan ID
-    $jabatan = JabatanKaryawan::findOrFail($request->jabatan_id);
-    
-    $usertype = 'karyawan'; // Selalu set sebagai karyawan
+        // Ambil data jabatan berdasarkan ID
+        $jabatan = JabatanKaryawan::findOrFail($request->jabatan_id);
+        
+        $usertype = 'karyawan'; // Selalu set sebagai karyawan
 
-    // Update jabatan dan usertype di database
-    $karyawan->update([
-        'jabatan_id' => $request->jabatan_id,
-        'usertype' => $usertype,
-    ]);
+        // Update jabatan dan usertype di database
+        $karyawan->update([
+            'jabatan_id' => $request->jabatan_id,
+            'usertype' => $usertype,
+        ]);
 
 
-    return redirect()->route('datakaryawan.index')->with('edited', true);
-}
+        return redirect()->route('datakaryawan.index')->with('edited', true);
+    } 
 
-    
-
-public function show($id)
-{
-    $datakaryawan = User::with('jabatan')->findOrFail($id);
-    return view('admin.datakaryawan.show', compact('datakaryawan'));
-}
+    public function show($id)
+    {
+        $datakaryawan = User::with('jabatan')->findOrFail($id);
+        return view('admin.datakaryawan.show', compact('datakaryawan'));
+    }
 
 
     /**

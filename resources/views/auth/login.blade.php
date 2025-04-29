@@ -76,13 +76,12 @@
                     </button>
                 </form>
 
-                <!-- Forgot Password -->
-                {{-- <div class="text-center mt-4">
+                 <!-- Forgot Password -->
+                 <div class="text-center mt-4">
                     @if (Route::has('password.request'))
-                        <a class="text-blue-500 hover:underline" href="{{ route('password.request') }}">Forgot your
-                            password?</a>
+                    <a href="{{ route('password.request') }}" class="text-blue-500 hover:underline">Lupa Password?</a>
                     @endif
-                </div> --}}
+                </div>
             </div>
 
             <!-- Ilustrasi -->
