@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Karyawan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\GajiKaryawan;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class KaryawanGajiController extends Controller
 {
@@ -22,6 +24,21 @@ class KaryawanGajiController extends Controller
         // Kirim data ke view gudang.gaji.index
         return view('karyawan.gaji.index', compact('gajiKaryawan'));
     }
+
+    public function downloadPdf($id)
+{
+    // Ambil data gaji
+    $gaji = GajiKaryawan::with(['user', 'user.jabatan'])
+                ->where('id', $id)
+                ->where('user_id', auth('web')->id())
+                ->firstOrFail();
+
+    // Generate PDF
+    $pdf = Pdf::loadView('karyawan.gaji.pdf', compact('gaji'));
+    
+    // Download PDF dengan nama file spesifik
+    return $pdf->download('rekap-gaji-'.$gaji->user->nama_lengkap.'-'.$gaji->tanggal.'.pdf');
+}
 
     /**
      * Show the form for creating a new resource.

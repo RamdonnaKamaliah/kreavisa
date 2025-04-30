@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail; // Add this line
 use App\Mail\SendPasswordEmail; // Add this line
 use Illuminate\Support\Str;
+use App\Imports\KaryawanImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class AdmindataController extends Controller
@@ -32,11 +34,32 @@ class AdmindataController extends Controller
         return view('admin.datakaryawan.create', compact('jabatanKaryawan'));
     }
 
+
+    
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+    
+        $import = new KaryawanImport();
+        Excel::import($import, $request->file('file'));
+        
+        $errors = $import->getErrors();
+        
+        if (!empty($errors)) {
+            return redirect()->back()
+                ->with('import_errors', $errors)
+                ->with('error', 'Beberapa data gagal diimport. Silakan cek detail error.');
+        }
+        
+        return redirect()->route('datakaryawan.index')
+        ->with('added', true);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
- 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -47,7 +70,7 @@ class AdmindataController extends Controller
             'tanggal_lahir' => 'required|date',
             'no_telepon' => 'required|string|unique:users,no_telepon',
             'email' => 'required|email|unique:users,email',
-            'jabatan_id' => 'required|exists:jabatan_karyawans,id',
+            'jabatan_id' => 'nullable|exists:jabatan_karyawans,id', // Ubah menjadi nullable
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
      
