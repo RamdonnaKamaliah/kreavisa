@@ -2,23 +2,19 @@
 @section('page-title', 'Dashboard')
 @section('content')
     <div>
-        <div class="flex-1 p-6 max-w-7xl mx-auto text-gray-900">
+        <div class="flex-1 p-6 max-w-7xl mx-auto text-gray-900 overflow-x-hidden">
             <div class="flex flex-wrap -mx-3">
-
                 <!-- Card 1 - Total Kehadiran -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Total Kehadiran
-                                        </p>
-                                        <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalHadir }} Hari</h5>
-                                    </div>
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Total Kehadiran
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalHadir }} Hari</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
                                     <div
@@ -32,19 +28,16 @@
                 </div>
 
                 <!-- Card 2 - Izin/Sakit -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Izin / Sakit
-                                        </p>
-                                        <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalIzinSakit }} Hari</h5>
-                                    </div>
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Izin / Sakit
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">{{ $totalIzinSakit }} Hari</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
                                     <div
@@ -58,19 +51,16 @@
                 </div>
 
                 <!-- Card 3 - Absen Hari Ini -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Absen Hari Ini
-                                        </p>
-                                        <h5 class="mb-2 font-bold dark:text-white mt-8">{{ ucfirst($absenHariIni) }}</h5>
-                                    </div>
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Absen Hari Ini
+                                    </p>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-8">{{ ucfirst($absenHariIni) }}</h5>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
                                     <div
@@ -84,24 +74,21 @@
                 </div>
 
                 <!-- Card 4 - Cuaca Hari Ini -->
-                <div class="w-1/2 px-3 mb-6 xl:w-1/4">
+                <div class="w-1/2 xl:w-1/4 px-3 mb-6">
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-850 shadow-xl dark:shadow-dark-xl rounded-2xl bg-clip-border transition-transform hover:scale-105">
                         <div class="flex-auto p-4 min-h-[120px]">
                             <div class="flex flex-row -mx-3">
                                 <div class="flex-none w-2/3 max-w-full px-3">
-                                    <div>
-                                        <p
-                                            class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                            Cuaca Hari Ini
+                                    <p class="mb-0 text-sm font-semibold uppercase dark:text-white dark:opacity-60">
+                                        Cuaca Hari Ini
+                                    </p>
+                                    <div class="text-left">
+                                        <p id="temperature" class="text-2xl font-semibold text-black dark:text-white">--°C
                                         </p>
-                                        
-                                        <div class="text-left">
-                                            <p id="temperature" class="text-2xl font-semibold text-black dark:text-white">
-                                                --°C</p>
-                                            <p id="weatherDescription" class="mb-2 font-bold text-gray-600 dark:text-white">
-                                                Memuat...</p>
-                                        </div>
+                                        <p id="weatherDescription" class="mb-2 font-bold text-gray-600 dark:text-white">
+                                            Memuat...
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
@@ -115,8 +102,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
         </div>
 
 
@@ -124,7 +111,8 @@
 
     {{-- kartu ucapan --}}
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pl-6 pr-3 -mt-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 sm:px-6
+ -mt-8">
 
         <div
             class="bg-gradient-to-r from-blue-100 via-white to-purple-100 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 p-8 rounded-xl shadow-lg dark:shadow-dark-xl flex items-center justify-between w-full backdrop-blur-md relative overflow-hidden order-1 md:order-1">
@@ -285,13 +273,14 @@
 
     </div>
     <div id="riwayatAbsenTable"
-    class="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
-    <div class="mb-4 text-center">
-    <h2 class="text-xl font-semibold mb-2">Riwayat Absen Saya</h2>
-    <div class="text-sm text-gray-500 dark:text-gray-400">
-        Minggu: {{ \Carbon\Carbon::parse($startOfWeek)->isoFormat('D MMM') }} - {{ \Carbon\Carbon::parse($endOfWeek)->isoFormat('D MMM YYYY') }}
-    </div>
-</div>
+        class="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto px-4 py-5 bg-white dark:bg-[#1f1f1f] mt-6 rounded-xl shadow-md overflow-x-auto">
+        <div class="mb-4 text-center">
+            <h2 class="text-xl font-semibold mb-2">Riwayat Absen Saya</h2>
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                Minggu: {{ \Carbon\Carbon::parse($startOfWeek)->isoFormat('D MMM') }} -
+                {{ \Carbon\Carbon::parse($endOfWeek)->isoFormat('D MMM YYYY') }}
+            </div>
+        </div>
 
         <table class="w-full text-sm text-left">
             <thead>
@@ -328,7 +317,8 @@
 ">
                             @if ($item->lokasi)
                                 <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($item->lokasi) }}"
-                                    target="_blank" class="hover:underline"><i class="fa-solid fa-location-dot"></i> Lihat Maps</a>
+                                    target="_blank" class="hover:underline"><i class="fa-solid fa-location-dot"></i>
+                                    Lihat Maps</a>
                             @else
                                 -
                             @endif

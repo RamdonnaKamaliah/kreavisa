@@ -111,9 +111,6 @@
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg font-medium">
                         Simpan
                     </button>
-                    <a href="{{ route('jadwalkaryawan.index', ['bulan' => $jadwal->bulan, 'tahun' => $jadwal->tahun]) }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-6 rounded-lg font-medium">
-                        Batal
-                    </a>
                 </div>
             </form>
         </div>
