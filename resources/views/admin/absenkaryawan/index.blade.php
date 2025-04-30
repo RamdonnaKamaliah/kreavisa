@@ -101,9 +101,7 @@
                     </thead>
                     <tbody>
                         @if ($absen->isEmpty())
-                        <tr>
-                            <td colspan="7" class="text-center py-4 text-gray-500">Tabel kosong</td> <!-- Sesuaikan colspan -->
-                        </tr>
+
                         @else
                         @foreach ($absen as $item)
                         <tr>
