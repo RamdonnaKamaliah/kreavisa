@@ -18,15 +18,28 @@
                     @csrf
 
                     <!-- Input Nama Jabatan -->
+                    <!-- Input Nama Jabatan -->
                     <div class="pt-10 mb-4">
                         <label for="nama_jabatan" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">
                             Nama Jabatan<span class="text-red-500">*</span>
                         </label>
+
                         <input type="text" id="nama_jabatan" name="nama_jabatan" placeholder="Input Nama Jabatan"
-                            value="{{ old('nama_jabatan') }}"
-                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition"
-                            required>
+                            value="{{ old('nama_jabatan') }}" @class([
+                                'w-full p-3 rounded-lg transition',
+                                'border border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
+                                    'nama_jabatan'),
+                                'border border-gray-300 focus:ring-blue-400 focus:border-blue-500' => !$errors->has(
+                                    'nama_jabatan'),
+                            ])>
+
+                        {{-- Tampilkan pesan error jika ada --}}
+                        @error('nama_jabatan')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
+
+
 
 
                     <!-- Tombol Submit -->
@@ -56,17 +69,6 @@
                         @endphp
                     @endif
                 @endforeach
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops... Terjadi Kesalahan',
-                    text: "{{ $errorMessage }}",
-                    confirmButtonText: 'Tutup',
-                    customClass: {
-                        confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400'
-                    },
-                    buttonsStyling: false
-                });
             });
         </script>
     @endif

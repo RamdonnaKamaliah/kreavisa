@@ -5,22 +5,11 @@
         <!-- Form Create Gaji Karyawan -->
         <div class="flex justify-center items-center min-h-screen py-10">
             <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-8 rounded-lg shadow-lg">
-                @if ($errors->any())
-                <div class="mb-4 col-span-1 md:col-span-2">
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-                @endif
                 <!-- Tombol Back dengan Ikon Panah -->
                 <div class="mb-4">
                     <a href="{{ route('gajikaryawan.index') }}"
                         class="text-blue-600 hover:text-blue-800 font-medium transition flex items-center">
-                        <i class="fas fa-arrow-left mr-2"></i> 
+                        <i class="fas fa-arrow-left mr-2"></i>
                     </a>
                 </div>
 
@@ -28,54 +17,82 @@
                     Create Gaji Karyawan
                 </h1>
 
-                <form action="{{ route('gajikaryawan.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form action="{{ route('gajikaryawan.store') }}" method="POST"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @csrf
 
                     <!-- Pilih Karyawan -->
                     <div>
-                        <label for="user_id" class="block text-gray-700 font-medium dark:text-gray-200">Nama Karyawan<span class="text-red-500">*</label>
-                        <select id="user_id" name="user_id"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
-                            onchange="getGajiPokok()">
+                        <label for="user_id" class="block text-gray-700 font-medium dark:text-gray-200">Nama Karyawan<span
+                                class="text-red-500">*</label>
+                        <select id="user_id" name="user_id" @class([
+                            'w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400',
+                            'border-gray-300 focus:ring-blue-400 focus:border-blue-500' => !$errors->has(
+                                'user_id'),
+                            'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
+                                'user_id'),
+                        ]) onchange="getGajiPokok()">
                             <option value="">-- Pilih Karyawan --</option>
                             @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->nama_lengkap }}</option>
+                                <option value="{{ $user->id }}">{{ $user->nama_lengkap }}</option>
                             @endforeach
                         </select>
+                        @error('user_id')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Gaji Pokok -->
                     <div>
-                        <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok (Rp)</label>
+                        <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok
+                            (Rp)</label>
                         <input type="text" id="gaji_pokok" name="gaji_pokok"
-                            class="w-full p-3 border rounded-lg bg-gray-100" required readonly
-                            oninput="formatRupiah(this)">
+                            class="w-full p-3 border rounded-lg bg-gray-100" required readonly oninput="formatRupiah(this)">
                         <input type="hidden" id="gaji_pokok_raw" name="gaji_pokok_raw">
                     </div>
 
                     <!-- Tanggal -->
                     <div>
-                        <label for="tanggal" class="block text-gray-700 font-medium dark:text-gray-200">Tanggal<span class="text-red-500">*</label>
-                        <input type="date" id="tanggal" name="tanggal"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+                        <label for="tanggal" class="block text-gray-700 font-medium dark:text-gray-200">Tanggal<span
+                                class="text-red-500">*</label>
+                        <input type="date" id="tanggal" name="tanggal" @class([
+                            'w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400',
+                            'border-gray-300 focus:ring-blue-400 focus:border-blue-500' => !$errors->has(
+                                'tanggal'),
+                            'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
+                                'tanggal'),
+                        ])>
+                        @error('tanggal')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Tipe Pembayaran -->
                     <div>
-                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium dark:text-gray-200">Tipe Pembayaran<span class="text-red-500">*</label>
-                        <select id="tipe_pembayaran" name="tipe_pembayaran"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
+                        <label for="tipe_pembayaran" class="block text-gray-700 font-medium dark:text-gray-200">Tipe
+                            Pembayaran<span class="text-red-500">*</label>
+                        <select id="tipe_pembayaran" name="tipe_pembayaran" @class([
+                            'w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400',
+                            'border-gray-300 focus:ring-blue-400 focus:border-blue-500' => !$errors->has(
+                                'tipe_pembayaran'),
+                            'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
+                                'tipe_pembayaran'),
+                        ])
                             onchange="handleTipePembayaran()">
                             <option value="non_tunai">Non Tunai</option>
                             <option value="tunai">Tunai</option>
                         </select>
+                        @error('tipe_pembayaran')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Nomor Rekening -->
                     <div>
-                        <label for="nomor_rekening" class="block text-gray-700 font-medium dark:text-gray-200">Nomor Rekening</label>
+                        <label for="nomor_rekening" class="block text-gray-700 font-medium dark:text-gray-200">Nomor
+                            Rekening</label>
                         <input type="text" id="nomor_rekening" name="nomor_rekening"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
                     </div>
 
                     <!-- Bonus -->
@@ -88,7 +105,8 @@
 
                     <!-- Potongan -->
                     <div class="md:col-span-2">
-                        <label for="potongan" class="block text-gray-700 font-medium dark:text-gray-200">Potongan (Rp)</label>
+                        <label for="potongan" class="block text-gray-700 font-medium dark:text-gray-200">Potongan
+                            (Rp)</label>
                         <input type="text" id="potongan" name="potongan"
                             class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
                             oninput="formatRupiah(this)">
@@ -104,20 +122,20 @@
                 </form>
             </div>
         </div>
-    </div>   
+    </div>
     <script>
         function formatRupiah(input) {
             // Hapus semua karakter non-digit
             let value = input.value.replace(/[^\d]/g, '');
-            
+
             // Format dengan titik sebagai pemisah ribuan
             if (value.length > 3) {
                 value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             }
-            
+
             // Update nilai input
             input.value = value;
-            
+
             // Update nilai raw untuk gaji pokok
             if (input.id === 'gaji_pokok') {
                 document.getElementById('gaji_pokok_raw').value = value.replace(/\./g, '');
@@ -144,16 +162,16 @@
         }
 
         function handleTipePembayaran() {
-                var tipePembayaran = document.getElementById('tipe_pembayaran').value;
-                var nomorRekening = document.getElementById('nomor_rekening');
+            var tipePembayaran = document.getElementById('tipe_pembayaran').value;
+            var nomorRekening = document.getElementById('nomor_rekening');
 
-                if (tipePembayaran === 'tunai') {
-                    nomorRekening.value = '-';
-                    nomorRekening.readOnly = true;
-                } else {
-                    nomorRekening.value = '';
-                    nomorRekening.readOnly = false;
-                }
+            if (tipePembayaran === 'tunai') {
+                nomorRekening.value = '-';
+                nomorRekening.readOnly = true;
+            } else {
+                nomorRekening.value = '';
+                nomorRekening.readOnly = false;
             }
+        }
     </script>
 @endsection

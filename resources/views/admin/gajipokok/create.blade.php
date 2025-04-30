@@ -15,89 +15,78 @@
                 <!-- Judul -->
                 <h1 class="text-center text-2xl font-bold text-gray-800 mb-6 dark:text-white">Create Gaji Pokok</h1>
 
-                @if($jabatan->count() > 0)
-      
-                <!-- Form -->
-                <form action="{{ route('gajipokok.store') }}" method="POST" class="space-y-4">
-                    @csrf
+                @if ($jabatan->count() > 0)
 
-                    <div>
-                        <label for="jabatan_id" class="block text-gray-700 font-medium dark:text-gray-200">Jabatan<span class="text-red-500">*</span></label>
-                        <select id="jabatan_id" name="jabatan_id"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
-                            @if($jabatan->count() > 0)
-                                @foreach ($jabatan as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama_jabatan }}</option>
-                                @endforeach
-                            @else
-                                <option value="">Semua jabatan sudah memiliki gaji pokok</option>
-                            @endif
-                        </select>
-                    </div>
+                    <!-- Form -->
+                    <form action="{{ route('gajipokok.store') }}" method="POST" class="space-y-4">
+                        @csrf
 
-                    <!-- Input Gaji Pokok -->
-                    <div>
-                        <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok (Rp)<span class="text-red-500">*</label>
-                        <input type="text" id="gaji_pokok" name="gaji_pokok"
-                            class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required
-                            oninput="formatRupiah(this)"
-                            placeholder="Masukkan gaji pokok">
-                    </div>
+                        <div>
+                            <label for="jabatan_id" class="block text-gray-700 font-medium dark:text-gray-200">Jabatan<span
+                                    class="text-red-500">*</span></label>
+                            <select id="jabatan_id" name="jabatan_id"
+                                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+                                @if ($jabatan->count() > 0)
+                                    @foreach ($jabatan as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_jabatan }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">Semua jabatan sudah memiliki gaji pokok</option>
+                                @endif
+                            </select>
+                        </div>
 
-                    <script>
-                        function formatRupiah(input) {
-                            // Hapus semua karakter non-digit
-                            let value = input.value.replace(/[^\d]/g, '');
-                            
-                            // Format dengan titik sebagai pemisah ribuan
-                            if (value.length > 3) {
-                                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        <!-- Input Gaji Pokok -->
+                        <div>
+                            <label for="gaji_pokok" class="block text-gray-700 font-medium dark:text-gray-200">Gaji Pokok
+                                (Rp)<span class="text-red-500">*</label>
+                            <input type="text" id="gaji_pokok" name="gaji_pokok" @class([
+                                'w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400',
+                                'border-gray-300 focus:ring-blue-400 focus:border-blue-500' => !$errors->has(
+                                    'gaji_pokok'),
+                                'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
+                                    'gaji_pokok'),
+                            ])
+                                oninput="formatRupiah(this)" placeholder="Masukkan gaji pokok">
+
+                            @error('gaji_pokok')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <script>
+                            function formatRupiah(input) {
+                                // Hapus semua karakter non-digit
+                                let value = input.value.replace(/[^\d]/g, '');
+
+                                // Format dengan titik sebagai pemisah ribuan
+                                if (value.length > 3) {
+                                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                                }
+
+                                // Update nilai input
+                                input.value = value;
                             }
-                            
-                            // Update nilai input
-                            input.value = value;
-                        }
 
-                        // Tambahkan event listener untuk form submission
-                        document.querySelector('form').addEventListener('submit', function(e) {
-                            // Hilangkan titik sebelum submit
-                            const gajiInput = document.getElementById('gaji_pokok');
-                            gajiInput.value = gajiInput.value.replace(/\./g, '');
-                        });
-                    </script>
+                            // Tambahkan event listener untuk form submission
+                            document.querySelector('form').addEventListener('submit', function(e) {
+                                // Hilangkan titik sebelum submit
+                                const gajiInput = document.getElementById('gaji_pokok');
+                                gajiInput.value = gajiInput.value.replace(/\./g, '');
+                            });
+                        </script>
 
-                    <!-- Tombol Submit -->
-                    <button type="submit"
-                        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Simpan</button>
-                </form>
+                        <!-- Tombol Submit -->
+                        <button type="submit"
+                            class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Simpan</button>
+                    </form>
                 @else
-                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
-                    <p>Tidak ada jabatan yang tersedia untuk ditambahkan gaji pokok. Semua jabatan sudah memiliki gaji pokok.</p>
-                </div>
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+                        <p>Tidak ada jabatan yang tersedia untuk ditambahkan gaji pokok. Semua jabatan sudah memiliki gaji
+                            pokok.</p>
+                    </div>
                 @endif
             </div>
         </main>
     </div>
-
-    @if ($errors->any()) 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let errorMessages = "";
-            @foreach ($errors->all() as $error)
-                errorMessages += "{{ $error }}\n";
-            @endforeach
-
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops... Terjadi Kesalahan',
-                text: errorMessages,
-                confirmButtonText: 'Tutup',
-                customClass: {
-                    confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400'
-                },
-                buttonsStyling: false
-            });
-        });
-    </script>
-@endif
 @endsection
