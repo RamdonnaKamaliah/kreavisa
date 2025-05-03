@@ -29,7 +29,8 @@
                         ])>
                             <option>Pilih Karyawan</option>
                             @foreach ($usersWithShifts as $user)
-                                <option value="{{ $user->id }}" data-jabatan="{{ $user->jabatan_id }}">
+                                <option value="{{ $user->id }}" data-jabatan="{{ $user->jabatan_id }}"
+                                    {{ old('user_id') == $user->id ? 'selected' : '' }}>
                                     {{ $user->nama_lengkap }}
                                 </option>
                             @endforeach
@@ -115,20 +116,27 @@
                             // Data Jabatan dari server
                             let jabatans = @json($jabatans);
 
-                            userSelect.addEventListener("change", function() {
-                                let selectedOption = this.options[this.selectedIndex];
+                            function updateJabatan() {
+                                let selectedOption = userSelect.options[userSelect.selectedIndex];
                                 let jabatanId = selectedOption.getAttribute("data-jabatan");
 
                                 if (jabatanId) {
-                                    let jabatanNama = jabatans.find(j => j.id == jabatanId)?.nama_jabatan ||
-                                        "Tidak Diketahui";
+                                    let jabatanNama = jabatans.find(j => j.id == jabatanId)?.nama_jabatan || "Tidak Diketahui";
                                     jabatanText.value = jabatanNama;
                                     hiddenJabatanId.value = jabatanId;
                                 } else {
                                     jabatanText.value = "";
                                     hiddenJabatanId.value = "";
                                 }
-                            });
+                            }
+
+                            // Bind change event
+                            userSelect.addEventListener("change", updateJabatan);
+
+                            // Jalankan sekali saat load jika ada value yang sudah dipilih
+                            if (userSelect.value) {
+                                updateJabatan();
+                            }
                         });
                     </script>
 
@@ -144,52 +152,70 @@
                             'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
                                 'shift_1_pulang'),
                         ])>
-                            <option value="">Pilih Shift</option>
+                            <option value="{{ old('shift_id') }}">Pilih Shift</option>
                         </select>
                         <!-- Input tersembunyi untuk menyimpan informasi shift (1 atau 2) -->
                         <input type="hidden" id="shift_type" name="shift_type">
                     </div>
 
                     <script>
-                        document.getElementById("user_id").addEventListener("change", function() {
-                            let userId = this.value;
-                            let shiftSelect = document.getElementById("shift_id");
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const userSelect = document.getElementById("user_id");
+                            const shiftSelect = document.getElementById("shift_id");
+                            const shiftTypeInput = document.getElementById("shift_type");
+                            const shifts = @json($shifts);
+                            const oldUserId = "{{ old('user_id') }}";
+                            const oldShiftId = "{{ old('shift_id') }}";
 
-                            // Kosongkan dropdown shift sebelum mengisi ulang
-                            shiftSelect.innerHTML = '<option value="">Pilih Shift</option>';
+                            function populateShifts(userId) {
+                                shiftSelect.innerHTML = '<option value="">Pilih Shift</option>';
 
-                            // Jika tidak ada user yang dipilih, keluar
-                            if (!userId) return;
+                                shifts.forEach(shift => {
+                                    if (shift.user_id == userId) {
+                                        // Shift 1
+                                        const option1 = document.createElement("option");
+                                        option1.value = shift.id;
+                                        option1.textContent = "Shift 1: " + shift.shift_1;
+                                        option1.setAttribute("data-shift-type", "1");
+                                        if (shift.id == oldShiftId && !shiftSelect.querySelector('option[selected]')) {
+                                            option1.selected = true;
+                                            shiftTypeInput.value = "1";
+                                        }
+                                        shiftSelect.appendChild(option1);
 
-                            // Ambil daftar shift dari server
-                            let shifts = @json($shifts);
+                                        // Shift 2
+                                        const option2 = document.createElement("option");
+                                        option2.value = shift.id;
+                                        option2.textContent = "Shift 2: " + shift.shift_2;
+                                        option2.setAttribute("data-shift-type", "2");
+                                        if (shift.id == oldShiftId && !shiftSelect.querySelector('option[selected]')) {
+                                            option2.selected = true;
+                                            shiftTypeInput.value = "2";
+                                        }
+                                        shiftSelect.appendChild(option2);
+                                    }
+                                });
+                            }
 
-                            shifts.forEach(shift => {
-                                if (shift.user_id == userId) {
-                                    // Tambahkan shift 1 ke dropdown
-                                    let option1 = document.createElement("option");
-                                    option1.value = shift.id; // Hanya shift.id (integer)
-                                    option1.textContent = "Shift 1: " + shift.shift_1;
-                                    option1.setAttribute("data-shift-type", "1"); // Simpan informasi shift 1
-                                    shiftSelect.appendChild(option1);
-
-                                    // Tambahkan shift 2 ke dropdown
-                                    let option2 = document.createElement("option");
-                                    option2.value = shift.id; // Hanya shift.id (integer)
-                                    option2.textContent = "Shift 2: " + shift.shift_2;
-                                    option2.setAttribute("data-shift-type", "2"); // Simpan informasi shift 2
-                                    shiftSelect.appendChild(option2);
-                                }
+                            // Trigger saat user diganti
+                            userSelect.addEventListener("change", function() {
+                                populateShifts(this.value);
                             });
 
-                            // Update input tersembunyi saat shift dipilih
+                            // Update shift_type saat shift dipilih
                             shiftSelect.addEventListener("change", function() {
-                                let selectedOption = this.options[this.selectedIndex];
-                                let shiftType = selectedOption.getAttribute("data-shift-type");
-                                document.getElementById("shift_type").value = shiftType;
+                                const selectedOption = this.options[this.selectedIndex];
+                                const shiftType = selectedOption.getAttribute("data-shift-type");
+                                shiftTypeInput.value = shiftType || "";
                             });
+
+                            // Jika ada old user_id (form reload karena error), isi otomatis
+                            if (oldUserId) {
+                                populateShifts(oldUserId);
+                            }
                         });
                     </script>
+
 
                     <!-- Pilih Bulan (Checkbox) -->
                     <div class="mb-4">
@@ -211,6 +237,7 @@
                                     11 => 'November',
                                     12 => 'Desember',
                                 ];
+                                $oldBulan = old('bulan', []);
                             @endphp
                             @foreach ($months as $key => $month)
                                 <label class="flex items-center space-x-2">
@@ -225,19 +252,16 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="mb-4">
-                        <label for="tahun" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih
-                            Tahun<span class="text-red-500">*</label>
+                        <label for="tahun" class="block text-gray-700 font-semibold mb-2 dark:text-gray-300">Pilih Tahun
+                            <span class="text-red-500">*</span>
+                        </label>
                         <div class="relative">
-                            <input type="number" id="tahun" name="tahun" @class([
-                                'w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition pr-4',
-                                'border-gray-300 focus:ring-blue-400 focus:border-blue-500' => !$errors->has(
-                                    'tahun'),
-                                'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
-                                    'tahun'),
-                            ])
-                                value="{{ date('Y') }}" min="{{ date('Y') }}" max="{{ date('Y') + 5 }}">
+                            <input type="number" id="tahun" name="tahun"
+                                class="w-full p-3 border rounded-lg transition pr-4
+                                    {{ $errors->has('tahun') ? 'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' : 'border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-500' }}"
+                                value="{{ old('tahun', date('Y')) }}" min="{{ date('Y') }}"
+                                max="{{ date('Y') + 5 }}">
                         </div>
                         @error('tahun')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
