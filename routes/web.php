@@ -71,6 +71,7 @@ Route::post('/login-karyawan', [AuthenticatedSessionController::class, 'storeKar
 Route::middleware(['auth', Admin::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('/admin/datakaryawan', AdmindataController::class);
+    Route::post('/datakaryawan/import', [AdmindataController::class, 'import'])->name('datakaryawan.import');
     Route::resource('/admin/jabatankaryawan', AdminjabatanController::class);
     Route::resource('/admin/shiftkaryawan', AdminShiftController::class);
     Route::resource('/admin/kinerjakaryawan', AdminKinerjaController::class);
@@ -109,7 +110,8 @@ Route::middleware(['auth', Karyawan::class])->group(function () {
     // Gaji
     Route::get('/karyawan/gaji', [KaryawanGajiController::class, 'index'])->name('gajiKaryawan.index');
     Route::get('/karyawan/gaji/{id}', [KaryawanGajiController::class, 'show'])->name('gajiKaryawan.show');
-    
+    Route::get('/gaji-karyawan/{id}/download-pdf', [KaryawanGajiController::class, 'downloadPdf'])
+    ->name('gajikaryawan.download.pdf');
     // Jadwal
     Route::get('karyawan/jadwal', [KaryawanJadwalController::class, 'index'])->name('karyawan.jadwal.index');
 });

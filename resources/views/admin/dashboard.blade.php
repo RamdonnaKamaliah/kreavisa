@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('page-title', 'Dashboard')
 @section('content')
-<div class="w-full max-w-full overflow-x-hidden px-6 py-6 mx-auto">
+    <div class="w-full max-w-full overflow-x-hidden px-6 py-6 mx-auto">
         <!-- row 1 -->
         <div class="flex flex-wrap -mx-3">
             <!-- card1 -->
@@ -22,7 +22,8 @@
 
                                 </div>
                             </div>
-                            <div class="px-3 text-right basis-1/3">
+                            <div
+                                class="px-3 text-right basis-1/3 -translate-x-2 sm:translate-x-4 transition-transform duration-200">
                                 <div
                                     class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-blue-500 to-violet-500">
                                     <i class='bx bx-group text-lg text-white'></i>
@@ -51,11 +52,13 @@
                                         Jumlah Absen Hari ini
                                     </p>
                                     <h5 class="mb-2 font-bold dark:text-white mt-4">
-                                        {{ app(\App\Models\AbsenKaryawan::class)->whereDate('tanggal_absensi', \Carbon\Carbon::today())->count() }} Karyawan
+                                        {{ app(\App\Models\AbsenKaryawan::class)->whereDate('tanggal_absensi', \Carbon\Carbon::today())->count() }}
+                                        Karyawan
                                     </h5>
                                 </div>
                             </div>
-                            <div class="px-3 text-right basis-1/3">
+                            <div
+                                class="px-3 text-right basis-1/3 -translate-x-2 sm:translate-x-2 transition-transform duration-200">
                                 <div
                                     class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-red-600 to-orange-600">
                                     <i class='bx bx-time-five text-lg text-white'></i>
@@ -83,10 +86,11 @@
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase text-black dark:text-white">
                                         Jumlah Jabatan Karyawan
                                     </p>
-                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($jabatankaryawan) }} Jabatan</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white mt-4">{{ count($jabatankaryawan) }} Jabatan
+                                    </h5>
                                 </div>
                             </div>
-                            <div class="px-3 text-right basis-1/3">
+                            <div class="px-3 text-right basis-1/3 -translate-x-2 sm:translate-x-0 transition-transform duration-200">
                                 <div
                                     class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tl from-emerald-500 to-teal-400">
                                     <i class="bx bx-box text-lg text-white"></i>

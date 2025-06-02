@@ -80,12 +80,12 @@ class KaryawanAbsenController extends Controller
             'lokasi' => 'required|string',
         ]);
         
-        // Ambil koordinat pengguna dari input lokasi
+        // Ambil koordinat pengguna dari input lokasi hidden
         list($userLat, $userLng) = explode(',', $request->lokasi);
         $userLat = floatval(trim($userLat));
         $userLng = floatval(trim($userLng));
 
-        // Ambil lokasi absen dari database
+        // Ambil lokasi absen yang ditentukan admin
         $lokasiAbsen = \App\Models\LokasiAbsen::first();
         
         if (!$lokasiAbsen) {
@@ -101,7 +101,7 @@ class KaryawanAbsenController extends Controller
             $lokasiAbsen->longitude
         );
 
-        // Validasi apakah berada dalam radius yang diizinkan
+        // Validasi radius
         if ($jarak > $lokasiAbsen->radius) {
             return redirect()->back()
                 ->withErrors([
@@ -210,7 +210,7 @@ class KaryawanAbsenController extends Controller
                 'user_id' => Auth::id(),
                 'jabatan_id' => Auth::user()->jabatan_id,
                 'file_surat' => $filePath,
-                'foto' => 'default.png',
+                'foto' => null, // Biarkan NULL
                 'status' => 'sakit',
                 'tanggal_absensi' => now(),
                 'jam_absensi' => now(),
@@ -258,6 +258,7 @@ class KaryawanAbsenController extends Controller
             'user_id' => Auth::id(),
             'jabatan_id' => Auth::user()->jabatan_id,
             'file_surat' => $filePath,
+            'foto' => null, // Biarkan NULL
             'status' => 'izin',
             'tanggal_absensi' => now(),
             'jam_absensi' => now(),

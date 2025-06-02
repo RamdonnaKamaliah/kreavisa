@@ -146,23 +146,14 @@
                                             -
                                         @endif
                                     </td>
-                                    <td class="py-3">
-                                        @if ($item->foto)
-                                            @php
-                                                $fotoPath = public_path($item->foto);
-                                            @endphp
-                                            @if (file_exists($fotoPath))
-                                                <a href="{{ asset($item->foto) }}" target="_blank">
-                                                    <img src="{{ asset($item->foto) }}" alt="Foto Absen"
-                                                        class="w-10 h-10 object-cover rounded-lg">
-                                                </a>
-                                            @else
-                                                <img src="{{ asset('images/default.png') }}" alt="Foto Default"
-                                                    class="w-10 h-10 object-cover rounded-lg">
-                                            @endif
+                                    <td class="py-3 text-center">
+                                        @if (!empty($item->foto) && file_exists(public_path($item->foto)))
+                                            <a href="{{ asset($item->foto) }}" target="_blank">
+                                                <img src="{{ asset($item->foto) }}" alt="Foto Absen"
+                                                    class="w-10 h-10 object-cover rounded-lg mx-auto">
+                                            </a>
                                         @else
-                                            <img src="{{ asset('images/default.png') }}" alt="Foto Default"
-                                                class="w-10 h-10 object-cover rounded-lg">
+                                            <span class="text-gray-500">-</span>
                                         @endif
                                     </td>
                                     <td class="py-3">

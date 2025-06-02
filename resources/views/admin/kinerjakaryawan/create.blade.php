@@ -109,8 +109,7 @@
                                                         <td
                                                             class="px-4 py-3 font-medium sticky left-10 bg-white dark:bg-slate-800 z-10">
                                                             Tanggung Jawab</td>
-                                                        <td class="px-4 py-3">Kemampuan menyelesaikan tugas dengan
-                                                            bertanggung jawab dan mandiri</td>
+                                                        <td class="px-4 py-3">Mengukur tingkat tanggung jawab karyawan terhadap tugas dan pekerjaannya.</td>
                                                         <td class="px-4 py-3">
                                                             <div class="flex justify-between items-center min-w-[250px]">
                                                                 @for ($i = 1; $i <= 5; $i++)
@@ -132,8 +131,8 @@
                                                         <td
                                                             class="px-4 py-3 font-medium sticky left-10 bg-white dark:bg-slate-800 z-10">
                                                             Kehadiran & Ketepatan Waktu</td>
-                                                        <td class="px-4 py-3">Konsistensi kehadiran dan ketepatan waktu
-                                                            dalam menyelesaikan tugas</td>
+                                                        <td class="px-4 py-3">Menilai kedisiplinan karyawan dalam hal kehadiran dan ketepatan waktu dalam menjalankan tugas. Ini juga mencakup absensi, sakit, dan izin.
+                                                        </td>
                                                         <td class="px-4 py-3">
                                                             <div class="flex justify-between items-center min-w-[250px]">
                                                                 @for ($i = 1; $i <= 5; $i++)
@@ -155,8 +154,7 @@
                                                         <td
                                                             class="px-4 py-3 font-medium sticky left-10 bg-white dark:bg-slate-800 z-10">
                                                             Produktivitas</td>
-                                                        <td class="px-4 py-3">Kuantitas dan kualitas hasil kerja dalam
-                                                            periode penilaian</td>
+                                                        <td class="px-4 py-3">Mengukur seberapa banyak atau seberapa cepat karyawan dapat menyelesaikan tugas yang diberikan.</td>
                                                         <td class="px-4 py-3">
                                                             <div class="flex justify-between items-center min-w-[250px]">
                                                                 @for ($i = 1; $i <= 5; $i++)
@@ -178,8 +176,7 @@
                                                         <td
                                                             class="px-4 py-3 font-medium sticky left-10 bg-white dark:bg-slate-800 z-10">
                                                             Kerja Sama Tim</td>
-                                                        <td class="px-4 py-3">Kemampuan bekerja sama dalam tim dan
-                                                            berkolaborasi</td>
+                                                        <td class="px-4 py-3">Menilai kemampuan karyawan untuk bekerja sama dengan rekan kerja lainnya dalam satu tim.</td>
                                                         <td class="px-4 py-3">
                                                             <div class="flex justify-between items-center min-w-[250px]">
                                                                 @for ($i = 1; $i <= 5; $i++)

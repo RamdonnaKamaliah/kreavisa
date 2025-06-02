@@ -1,4 +1,5 @@
 @extends('layout3.karyawan3')
+@section('page-title', 'Detail Rekap Gaji')
 @section('content')
     @push('page-title')
         Detail Rekap Gaji - {{ $gaji->user->nama_lengkap }}
@@ -6,15 +7,22 @@
     
     <div class="p-6 md:p-8 overflow-x-hidden">
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
-            <!-- Header -->
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold dark:text-white">Detail Rekap Gaji</h2>
-                <a href="{{ route('gajiKaryawan.index') }}" 
-                   class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                    <i class="fas fa-arrow-left mr-2"></i> Kembali
+             <!-- Back Button -->
+             <div class="mb-4">
+                <a href="{{ route('gajikaryawan.index') }}" class="text-blue-600 hover:text-blue-800 flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i>
                 </a>
             </div>
 
+             <!-- Judul Absen Hadir di tengah -->
+             <h1 class="text-2xl font-semibold text-gray-800 mb-4 text-center dark:text-white">Detail Rekap Gaji</h1>
+             <div class="float-right">
+                <!-- Tombol Export PDF -->
+                <a href="{{ route('gajikaryawan.download.pdf', $gaji->id) }}" 
+   class="btn btn-danger">
+   <i class="fas fa-file-pdf"></i> Export PDF
+</a>
+            </div>
             <!-- Informasi Karyawan -->
             <div class="mb-8 p-4 border border-gray-300 rounded-lg">
                 <h3 class="text-xl font-medium mb-4 border-b pb-2 dark:text-white">Informasi Karyawan</h3>

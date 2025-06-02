@@ -4,7 +4,7 @@
 
     <div id="layoutSidenav_content pt-1">
         <div class="flex justify-center items-center min-h-[80vh] py-6 px-4">
-            <div class="w-full max-w-4xl bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
+            <div class="w-full max-w-5xl bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
 
                 <div class="mb-4">
                     <a href="{{ route('jadwalkaryawan.index') }}" class="text-blue-600 hover:text-blue-800">
@@ -148,14 +148,19 @@
                         <select id="shift_id" name="shift_id" @class([
                             'w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition',
                             'border-gray-300 focus:ring-blue-400 focus:border-blue-500' => !$errors->has(
-                                'shift_1_pulang'),
+                                'shift_id'),
                             'border-2 border-red-500 focus:ring-red-400 focus:border-red-500' => $errors->has(
-                                'shift_1_pulang'),
+                                'shift_id'),
                         ])>
                             <option value="{{ old('shift_id') }}">Pilih Shift</option>
                         </select>
                         <!-- Input tersembunyi untuk menyimpan informasi shift (1 atau 2) -->
                         <input type="hidden" id="shift_type" name="shift_type">
+                        @error('shift_id')
+                            <p class="mt-2 text-red-500 text-sm">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
 
                     <script>

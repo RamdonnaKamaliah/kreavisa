@@ -1,7 +1,7 @@
 @extends('layout3.karyawan3')
 @section('page-title', 'Rekap Gaji')
 @section('content')
-    <div class="p-4 md:p-6 overflow-x-hidden mt-10">
+    <div class="p-4 md:p-6 min-h-screen overflow-x-hidden mt-10">
         <!-- Laporan Rekap Gaji -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
             <h2 class="text-center text-xl font-bold mb-4 text-black dark:text-white">Rekap Gaji</h2>

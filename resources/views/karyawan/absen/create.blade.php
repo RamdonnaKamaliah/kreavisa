@@ -216,7 +216,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const lokasiInput = document.getElementById('lokasi');
-
+            //Kode ini mengambil lokasi GPS perangkat dan menyimpannya dalam input hidden.
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
