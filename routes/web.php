@@ -45,10 +45,13 @@ Route::get('/test-email', function () {
         return view('welcome');
     });
 
-    Route::get('/register', function () {
-        return view('register');
-    });
+    // Route::get('/register', function () {
+    //     return view('register');
+    // });
 
+    Route::get('/register', function () {
+        return view('erors.404');
+    });
     // Ubah route name dari login.karyawan-gudang menjadi login.karyawan
 Route::get('/login-karyawan', [AuthenticatedSessionController::class, 'createKaryawan'])->name('login.karyawan');
 Route::post('/login-karyawan', [AuthenticatedSessionController::class, 'storeKaryawan'])->name('login.karyawan.process');

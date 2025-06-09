@@ -14,7 +14,7 @@
     @include('layout3.partial3.header3')
 
     @yield('content')
-
+nn    
     @include('layout3.partial3.footer3')
     </main>
 
