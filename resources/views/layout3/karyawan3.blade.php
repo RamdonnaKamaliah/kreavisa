@@ -13,11 +13,9 @@
     class="max-w-screen m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500 overflow-x-hidden">
     @include('layout3.partial3.header3')
 
-    @yield('content')
-nn    
+    @yield('content')    
     @include('layout3.partial3.footer3')
     </main>
-
 
 </body>
 @include('layout3.partial3.script3')

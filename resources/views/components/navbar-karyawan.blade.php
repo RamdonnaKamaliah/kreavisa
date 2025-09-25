@@ -101,7 +101,7 @@
                 ],
             ];
         @endphp
-    
+
         @foreach ($menus as $menu)
             @php
                 $currentRoute = Route::currentRouteName();
@@ -111,19 +111,19 @@
                 <a href="{{ route($menu['route']) }}"
                     class="flex items-center space-x-3 p-3 rounded-lg relative group transition duration-200
                     {{ $isActive ? 'bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-200 dark:hover:bg-gray-700' }}">
-    
+
                     <span
                         class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r
                         {{ $isActive ? 'block' : 'hidden group-hover:block' }}">
                     </span>
-    
+
                     <i class='bx {{ $menu['icon'] }} w-5 h-5 {{ $menu['color'] }}'></i>
                     <span class="font-medium text-gray-800 dark:text-white">{{ $menu['label'] }}</span>
                 </a>
             </li>
         @endforeach
     </ul>
-    
+
 
 
     <!-- Logout Button -->
