@@ -61,7 +61,7 @@ class AdminHomeController extends Controller
         return redirect()->route('home.index')->with(key:'added', value:'true');
     }
 
-    /**
+    /**     
      * Display the specified resource.
      */
     public function show(string $id)

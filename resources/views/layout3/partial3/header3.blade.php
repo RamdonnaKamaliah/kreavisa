@@ -30,10 +30,6 @@
         navbar-main navbar-scroll="false" id="navbar-main">
         <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
             <nav>
-                <h2 class="text-black dark:text-white text-lg font-semibold mb-2">
-                    @yield('page-title')
-                </h2>
-
                 <h3 class="mb-0 text-black dark:text-white capitalize">Yo, {{ auth()->user()->name }}!
                     Semangat bekerja hari ini! Jangan lupa untuk selalu memberikan yang terbaik 🚀
                 </h3>

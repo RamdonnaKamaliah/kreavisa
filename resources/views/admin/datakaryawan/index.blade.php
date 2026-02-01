@@ -9,7 +9,6 @@
     @endif
 
     <div class="p-4 md:p-6 overflow-x-hidden">
-        <!-- Laporan Stok Masuk -->
         <div class="bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 p-4 rounded-lg shadow-md dark:shadow-lg">
             <h2 class="text-center text-xl font-bold mb-4 text-gray-800 dark:text-white">Data Karyawan</h2>
             <div class="flex flex-wrap justify-end gap-2">

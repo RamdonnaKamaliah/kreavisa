@@ -58,7 +58,7 @@
                 </span>
             </div>
         </div>
-    </a>
+    </a>    
     
         <li>
             <a href="{{ route('admin.dashboard') }}"
@@ -144,7 +144,5 @@
                 <span class="font-medium text-gray-800 dark:text-white">Kinerja Karyawan</span>
             </a>
         </li>
-
-
     </ul>
 </aside>
